@@ -1,0 +1,409 @@
+# Production Auto-Scaling Configuration for Ainflue Platform
+# Implements: CPU 70%, Memory 80%, Custom metrics, Multi-AZ, Spot instances, 99.99% SLA
+
+---
+# HPA for main backend with CPU 70%, Memory 80%, and custom metrics
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-backend-hpa
+  namespace: ainflue
+  labels:
+    app: ainflue-backend
+    tier: production
+    component: autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-backend
+  minReplicas: 3
+  maxReplicas: 50
+  metrics:
+    # CPU utilization target 70%
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    # Memory utilization target 80%
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+    # Custom metric: Request rate (RPS)
+    - type: Pods
+      pods:
+        metric:
+          name: http_requests_per_second
+        target:
+          type: AverageValue
+          averageValue: "100"
+    # Custom metric: Queue length for Celery tasks
+    - type: Pods
+      pods:
+        metric:
+          name: celery_queue_length
+        target:
+          type: AverageValue
+          averageValue: "50"
+    # Custom metric: AI processing GPU utilization
+    - type: Pods
+      pods:
+        metric:
+          name: nvidia_gpu_utilization
+        target:
+          type: AverageValue
+          averageValue: "75"
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 60
+      selectPolicy: Max
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+        - type: Pods
+          value: 2
+          periodSeconds: 120
+      selectPolicy: Min
+
+---
+# HPA for AI processing workloads
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-ai-processing-hpa
+  namespace: ainflue
+  labels:
+    app: ainflue-ai-processing
+    tier: production
+    component: autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-ai-processing
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+    # Custom metric: GPU utilization for AI workloads
+    - type: Pods
+      pods:
+        metric:
+          name: nvidia_gpu_memory_utilization
+        target:
+          type: AverageValue
+          averageValue: "80"
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 120
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 600
+      policies:
+        - type: Percent
+          value: 5
+          periodSeconds: 120
+
+---
+# HPA for Content Protection services
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-content-protection-hpa
+  namespace: ainflue
+  labels:
+    app: ainflue-content-protection
+    tier: production
+    component: autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-content-protection
+  minReplicas: 2
+  maxReplicas: 15
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+    # Custom metric: Fingerprinting queue length
+    - type: Pods
+      pods:
+        metric:
+          name: fingerprinting_queue_length
+        target:
+          type: AverageValue
+          averageValue: "25"
+
+---
+# Multi-AZ Cluster Autoscaler with Spot instances support
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+  labels:
+    app: cluster-autoscaler
+    tier: infrastructure
+    component: autoscaling
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cluster-autoscaler
+  template:
+    metadata:
+      labels:
+        app: cluster-autoscaler
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8085"
+    spec:
+      priorityClassName: system-cluster-critical
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        fsGroup: 65534
+      serviceAccountName: cluster-autoscaler
+      containers:
+        - image: k8s.gcr.io/autoscaling/cluster-autoscaler:v1.27.3
+          name: cluster-autoscaler
+          resources:
+            limits:
+              cpu: 200m
+              memory: 600Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
+          command:
+            - ./cluster-autoscaler
+            - --v=4
+            - --stderrthreshold=info
+            - --cloud-provider=aws
+            - --skip-nodes-with-local-storage=false
+            - --expander=priority
+            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/ainflue-prod
+            # Multi-AZ configuration
+            - --balance-similar-node-groups=true
+            - --skip-nodes-with-system-pods=false
+            # Cost optimization
+            - --scale-down-enabled=true
+            - --scale-down-delay-after-add=10m
+            - --scale-down-unneeded-time=10m
+            - --scale-down-utilization-threshold=0.5
+            - --scale-down-gpu-utilization-threshold=0.5
+            - --scale-down-delay-after-delete=10s
+            - --scale-down-delay-after-failure=3m
+            # Spot instances support
+            - --aws-use-static-instance-list=false
+            - --ignore-daemonsets-utilization=true
+            # 99.99% SLA support
+            - --max-node-provision-time=15m
+            - --max-nodes-total=200
+            - --cores-total=0:1000
+            - --memory-total=0:8000
+          env:
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_STS_REGIONAL_ENDPOINTS
+              value: regional
+          livenessProbe:
+            httpGet:
+              path: /health-check
+              port: 8085
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: ssl-certs
+              mountPath: /etc/ssl/certs/ca-certificates.crt
+              readOnly: true
+          imagePullPolicy: "Always"
+      volumes:
+        - name: ssl-certs
+          hostPath:
+            path: "/etc/ssl/certs/ca-certificates.crt"
+
+---
+# Node pools for Multi-AZ with spot instances
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-nodes-us-east-1a-spot
+  labels:
+    kops.k8s.io/cluster: ainflue-prod.k8s.local
+spec:
+  role: Node
+  machineType: m5.large
+  minSize: 1
+  maxSize: 20
+  zones:
+    - us-east-1a
+  # Spot instances for cost optimization
+  spotPrice: "0.08"
+  spotDurationInMinutes: 60
+  nodeLabels:
+    node.kubernetes.io/instance-type: spot
+    topology.kubernetes.io/zone: us-east-1a
+    node-role: worker
+  taints:
+    - key: spot-instance
+      value: "true"
+      effect: NoSchedule
+  subnets:
+    - us-east-1a.ainflue-prod.k8s.local
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-nodes-us-east-1b-spot
+  labels:
+    kops.k8s.io/cluster: ainflue-prod.k8s.local
+spec:
+  role: Node
+  machineType: m5.large
+  minSize: 1
+  maxSize: 20
+  zones:
+    - us-east-1b
+  spotPrice: "0.08"
+  spotDurationInMinutes: 60
+  nodeLabels:
+    node.kubernetes.io/instance-type: spot
+    topology.kubernetes.io/zone: us-east-1b
+    node-role: worker
+  taints:
+    - key: spot-instance
+      value: "true"
+      effect: NoSchedule
+  subnets:
+    - us-east-1b.ainflue-prod.k8s.local
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-nodes-us-east-1c-spot
+  labels:
+    kops.k8s.io/cluster: ainflue-prod.k8s.local
+spec:
+  role: Node
+  machineType: m5.large
+  minSize: 1
+  maxSize: 20
+  zones:
+    - us-east-1c
+  spotPrice: "0.08"
+  spotDurationInMinutes: 60
+  nodeLabels:
+    node.kubernetes.io/instance-type: spot
+    topology.kubernetes.io/zone: us-east-1c
+    node-role: worker
+  taints:
+    - key: spot-instance
+      value: "true"
+      effect: NoSchedule
+  subnets:
+    - us-east-1c.ainflue-prod.k8s.local
+
+---
+# On-demand instances for critical workloads (99.99% SLA)
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-nodes-us-east-1a-ondemand
+  labels:
+    kops.k8s.io/cluster: ainflue-prod.k8s.local
+spec:
+  role: Node
+  machineType: m5.xlarge
+  minSize: 1
+  maxSize: 10
+  zones:
+    - us-east-1a
+  nodeLabels:
+    node.kubernetes.io/instance-type: on-demand
+    topology.kubernetes.io/zone: us-east-1a
+    node-role: critical
+  subnets:
+    - us-east-1a.ainflue-prod.k8s.local
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-nodes-us-east-1b-ondemand
+  labels:
+    kops.k8s.io/cluster: ainflue-prod.k8s.local
+spec:
+  role: Node
+  machineType: m5.xlarge
+  minSize: 1
+  maxSize: 10
+  zones:
+    - us-east-1b
+  nodeLabels:
+    node.kubernetes.io/instance-type: on-demand
+    topology.kubernetes.io/zone: us-east-1b
+    node-role: critical
+  subnets:
+    - us-east-1b.ainflue-prod.k8s.local
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-nodes-us-east-1c-ondemand
+  labels:
+    kops.k8s.io/cluster: ainflue-prod.k8s.local
+spec:
+  role: Node
+  machineType: m5.xlarge
+  minSize: 1
+  maxSize: 10
+  zones:
+    - us-east-1c
+  nodeLabels:
+    node.kubernetes.io/instance-type: on-demand
+    topology.kubernetes.io/zone: us-east-1c
+    node-role: critical
+  subnets:
+    - us-east-1c.ainflue-prod.k8s.local
