@@ -50,6 +50,12 @@ class ChallengeType(str, Enum):
     COMMUNITY = "community"
     SEASONAL = "seasonal"
     MILESTONE = "milestone"
+    # Specialized challenge types for requirements
+    MONTHLY_CREATIVE = "monthly_creative"
+    TECHNICAL_SEO = "technical_seo"
+    TECHNICAL_REVENUE = "technical_revenue"
+    GLOBAL_COMPETITION = "global_competition"
+    SPECIAL_EVENT = "special_event"
 
 
 class ChallengeDifficulty(str, Enum):
