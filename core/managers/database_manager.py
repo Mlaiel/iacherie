@@ -940,8 +940,8 @@ Gestion des connexions PostgreSQL/MongoDB
     - Gestion d'erreurs avec circuit breaker
     - Nettoyage automatique des ressources
     """
-    
-    def __init__(self, config: DatabaseManagerConfig = None):
+
+def __init__(self, config: DatabaseManagerConfig = None):
         self.config = config or DatabaseManagerConfig()
         self._pool = []
         self._active_connections = 0

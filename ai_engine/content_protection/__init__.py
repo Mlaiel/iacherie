@@ -473,7 +473,8 @@ be prosecuted under international intellectual property law.
 For licensing inquiries, contact: {__email__}
 
 {'='*80}
-"""    print(notice)
+"""
+    print(notice)
 
 
 def print_system_banner():
