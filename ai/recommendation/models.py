@@ -251,6 +251,38 @@ class ContentOpportunity:
     deadline: Optional[datetime] = None
 
 
+@dataclass
+class RecommendationRequest:
+    """Request for recommendations from the system."""
+    user_id: str
+    request_type: str = "content"
+    parameters: Dict[str, Any] = field(default_factory=dict)
+    limit: int = 10
+    platform_filter: Optional[List[Platform]] = None
+    content_type_filter: Optional[List[ContentType]] = None
+    
+    def __post_init__(self):
+        if self.platform_filter is None:
+            self.platform_filter = []
+        if self.content_type_filter is None:
+            self.content_type_filter = []
+
+
+@dataclass
+class RecommendationResponse:
+    """Response containing recommendations from the system."""
+    request_id: str
+    recommendations: List[Dict[str, Any]] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    confidence_scores: List[float] = field(default_factory=list)
+    processing_time: float = 0.0
+    total_candidates: int = 0
+    
+    def get_top_recommendations(self, n: int) -> List[Dict[str, Any]]:
+        """Get top N recommendations."""
+        return self.recommendations[:n]
+
+
 # Export all models
 __all__ = [
     'Platform',
@@ -267,5 +299,7 @@ __all__ = [
     'TrendInsight',
     'AudienceInsight',
     'RevenueStrategy',
-    'ContentOpportunity'
+    'ContentOpportunity',
+    'RecommendationRequest',
+    'RecommendationResponse'
 ]
