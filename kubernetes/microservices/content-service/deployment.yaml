@@ -1,0 +1,172 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-service
+  namespace: production
+  labels:
+    app: content-service
+    component: backend
+    tier: service
+    version: v1.0.0
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: content-service
+  template:
+    metadata:
+      labels:
+        app: content-service
+        component: backend
+        tier: service
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: content-service
+      containers:
+      - name: content-service
+        image: ainflue/content-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: content_db_url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: url
+        - name: S3_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: s3-secret
+              key: bucket_name
+        - name: S3_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: s3-secret
+              key: access_key
+        - name: S3_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: s3-secret
+              key: secret_key
+        - name: S3_REGION
+          valueFrom:
+            secretKeyRef:
+              name: s3-secret
+              key: region
+        - name: CDN_URL
+          valueFrom:
+            configMapKeyRef:
+              name: content-service-config
+              key: cdn_url
+        - name: MAX_FILE_SIZE
+          value: "1073741824"  # 1GB
+        - name: ALLOWED_EXTENSIONS
+          value: "mp3,wav,flac,mp4,avi,mov,jpg,jpeg,png,gif,txt,pdf"
+        - name: ENVIRONMENT
+          value: "production"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: ENABLE_METRICS
+          value: "true"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "300m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: uploads
+          mountPath: /app/uploads
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: uploads
+        persistentVolumeClaim:
+          claimName: content-uploads-pvc
+      - name: config
+        configMap:
+          name: content-service-config
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - content-service
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-service
+  namespace: production
+  labels:
+    app: content-service
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app: content-service
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: content-service
+  namespace: production
+  labels:
+    app: content-service

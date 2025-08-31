@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-service-config
+  namespace: production
+  labels:
+    app: ai-service
+data:
+  app.yaml: |
+    service:
+      name: ai-service
+      port: 8000
+      host: "0.0.0.0"
+      
+    ml_models:
+      audio_fingerprinting:
+        model_name: "chromaprint"
+        model_path: "/models/audio/chromaprint.pkl"
+        confidence_threshold: 0.85
+      video_fingerprinting:
+        model_name: "opencv_hash"
+        model_path: "/models/video/opencv.pkl"
+        confidence_threshold: 0.90
+      image_fingerprinting:
+        model_name: "clip"
+        model_path: "/models/image/clip.pkl"
+        confidence_threshold: 0.88
+      text_analysis:
+        model_name: "bert"
+        model_path: "/models/text/bert.pkl"
+        confidence_threshold: 0.82
+        
+    processing:
+      batch_size: 32
+      max_concurrent_jobs: 4
+      job_timeout: 300
+      retry_attempts: 3
+      
+    gpu:
+      enable_gpu: true
+      memory_fraction: 0.8
+      allow_growth: true
+      
+    monitoring:
+      enable_prometheus: true
+      enable_jaeger: true
+      log_level: "INFO"
+      metrics_interval: 30
