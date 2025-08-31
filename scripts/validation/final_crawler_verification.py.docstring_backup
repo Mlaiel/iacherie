@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Final Crawler Verification Suite.
-
+"""Final Crawler Verification Suite
 ================================
 
 Comprehensive verification addressing: "Identifier crawlers avec implémentation réelle vs stub - vérifier fonctionnalité"

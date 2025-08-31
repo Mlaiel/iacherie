@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Crawler Functional Verification Test.
-
+"""Crawler Functional Verification Test
 ====================================
 
 Enhanced functional verification for crawler implementations beyond static analysis.

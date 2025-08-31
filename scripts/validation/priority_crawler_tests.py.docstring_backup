@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Priority Crawler Functionality Tests.
-
+"""Priority Crawler Functionality Tests
 ====================================
 
 Comprehensive tests for Spotify, YouTube, and Instagram crawlers to verify:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Comprehensive Test Runner for Ainflue Platform.
+"""Comprehensive Test Runner for Ainflue Platform
 
 Runs all integration tests and performance tests to validate
 API endpoints and system performance characteristics.

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Enhanced Crawler Import and Mock Test.
-
+"""Enhanced Crawler Import and Mock Test
 =====================================
 
 Tests crawler imports and basic functionality using mocks to avoid dependency issues.

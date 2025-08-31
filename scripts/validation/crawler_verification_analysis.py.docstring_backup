@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Crawler Implementation Verification Tool.
-
+"""Crawler Implementation Verification Tool
 ========================================
 
 This tool analyzes all crawler implementations to distinguish between:
