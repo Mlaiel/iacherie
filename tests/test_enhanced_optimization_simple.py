@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Test adapté automatiquement pour le projet Ainflue
+================================================
+
+Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
+Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Ajouter le répertoire racine au Python path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 """
 Test Enhanced Performance Optimization
 
@@ -5,6 +21,9 @@ Simple test for the enhanced performance optimization features
 """
 
 import pytest
+import sys
+import os
+from pathlib import Path
 import time
 from datetime import datetime, timedelta
 from core.enhanced_performance_optimization import (
@@ -491,4 +510,4 @@ class TestIntegrationScenarios:
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    pytest.main([str(Path(__file__)), "-v"])

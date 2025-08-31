@@ -1,75 +1,80 @@
 """
-Minimal pytest configuration for Ainflue platform tests.
-Bypasses complex configuration to enable test execution.
+Configuration pytest principale pour le projet Ainflue
+====================================================
 
-Author: Copilot Assistant
-Purpose: Enable unit test execution by providing minimal fixtures
+Configuration centralisée pour tous les tests du projet,
+importée et adaptée de l'ancien projet IA-Influencer.
+
+Author: GitHub Copilot (adapté du projet original)
+Date: 2025-08-31
 """
 
 import pytest
 import asyncio
+import logging
 import os
 import sys
-from unittest.mock import Mock, AsyncMock
 from pathlib import Path
+from typing import Dict, Any, List
 
-# Add project root to Python path
-project_root = Path(__file__).parent
-sys.path.insert(0, str(project_root))
+# Configuration du logging pour les tests
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Ajouter le répertoire racine au Python path
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+# Configuration pytest
+def pytest_configure(config):
+    """Configuration pytest principale"""
+    # Marqueurs de test
+    config.addinivalue_line("markers", "unit: Tests unitaires")
+    config.addinivalue_line("markers", "integration: Tests d'intégration") 
+    config.addinivalue_line("markers", "performance: Tests de performance")
+    config.addinivalue_line("markers", "security: Tests de sécurité")
+    config.addinivalue_line("markers", "slow: Tests lents")
+    config.addinivalue_line("markers", "fast: Tests rapides")
+    config.addinivalue_line("markers", "ai: Tests IA")
+    config.addinivalue_line("markers", "business: Tests logique métier")
+    config.addinivalue_line("markers", "api: Tests API")
+    config.addinivalue_line("markers", "database: Tests base de données")
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Create an instance of the default event loop for the test session."""
-    loop = asyncio.get_event_loop_policy().new_event_loop()
+    """Event loop pour les tests asyncio"""
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     yield loop
     loop.close()
 
-@pytest.fixture
-def mock_redis() -> AsyncMock:
-    """Mock Redis client for testing."""
-    redis_mock = AsyncMock()
-    redis_mock.get.return_value = None
-    redis_mock.set.return_value = True
-    redis_mock.delete.return_value = 1
-    redis_mock.exists.return_value = 0
-    redis_mock.incr.return_value = 1
-    redis_mock.expire.return_value = True
-    return redis_mock
-
-@pytest.fixture
-def mock_ai_model():
-    """Mock AI model for testing."""
-    mock = AsyncMock()
-    mock.encode.return_value = [0.1, 0.2, 0.3, 0.4, 0.5] * 153  # 768 dimensions
-    mock.predict.return_value = {'similarity': 0.95, 'confidence': 0.98}
-    return mock
-
-@pytest.fixture
-def sample_audio_file():
-    """Create sample audio file for testing."""
-    return "/tmp/test_audio.mp3"
-
-@pytest.fixture
-def sample_video_file():
-    """Create sample video file for testing."""
-    return "/tmp/test_video.mp4"
-
-@pytest.fixture
-def test_user_data():
-    """Sample user data for testing."""
+@pytest.fixture(scope="session")
+def test_config():
+    """Configuration de test globale"""
     return {
-        'email': 'test@example.com',
-        'username': 'testuser',
-        'password': 'TestPassword123!',
-        'full_name': 'Test User',
-        'country': 'US',
-        'language': 'en'
+        "test_env": "pytest",
+        "project_root": str(PROJECT_ROOT),
+        "test_data_dir": str(PROJECT_ROOT / "tests" / "data"),
+        "temp_dir": "/tmp/ainflue_tests"
     }
 
-@pytest.fixture(autouse=True)
-def setup_minimal_environment():
-    """Setup minimal test environment."""
-    os.environ['ENVIRONMENT'] = 'testing'
-    os.environ['DEBUG'] = 'true'
-    yield
-    # Cleanup is optional for minimal setup
+@pytest.fixture
+def temp_dir(tmp_path):
+    """Répertoire temporaire pour les tests"""
+    return tmp_path
+
+# Hook pour modifier la collection de tests
+def pytest_collection_modifyitems(config, items):
+    """Modifie la collection de tests"""
+    for item in items:
+        # Ajouter des marqueurs automatiquement basés sur le nom
+        if "performance" in item.name.lower():
+            item.add_marker(pytest.mark.performance)
+        if "security" in item.name.lower():
+            item.add_marker(pytest.mark.security)
+        if "slow" in item.name.lower():
+            item.add_marker(pytest.mark.slow)
+        if "integration" in item.name.lower():
+            item.add_marker(pytest.mark.integration)
+
+logger.info("🧪 Configuration pytest Ainflue chargée")

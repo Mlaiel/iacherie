@@ -1,8 +1,27 @@
+# -*- coding: utf-8 -*-
+"""
+Test adapté automatiquement pour le projet Ainflue
+================================================
+
+Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
+Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Ajouter le répertoire racine au Python path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 """
 Comprehensive API endpoint tests
 Tests all critical API routes for functionality, security, and performance
 """
 import pytest
+import sys
+import os
+from pathlib import Path
 import asyncio
 from unittest.mock import Mock, patch, AsyncMock
 import json
@@ -663,4 +682,4 @@ class TestAPIErrorHandling:
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    pytest.main([str(Path(__file__)), "-v"])

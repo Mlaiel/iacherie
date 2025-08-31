@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Test adapté automatiquement pour le projet Ainflue
+================================================
+
+Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
+Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Ajouter le répertoire racine au Python path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 """
 Centralized Unit Tests for Mobile Infrastructure
 Comprehensive test suite for mobile platform components
@@ -8,6 +24,9 @@ Business Logic: Test coverage for creators → upload multi-format → AI proces
 
 import asyncio
 import pytest
+import sys
+import os
+from pathlib import Path
 import json
 import tempfile
 from datetime import datetime, timedelta
@@ -698,4 +717,4 @@ class TestMobileIntegration:
 
 # Run tests if executed directly
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    pytest.main([str(Path(__file__)), "-v"])

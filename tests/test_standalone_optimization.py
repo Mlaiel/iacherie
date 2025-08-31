@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Test adapté automatiquement pour le projet Ainflue
+================================================
+
+Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
+Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Ajouter le répertoire racine au Python path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 """
 Standalone Test for Enhanced Performance Optimization
 
@@ -5,6 +21,9 @@ Test the performance optimization functionality without importing core modules
 """
 
 import pytest
+import sys
+import os
+from pathlib import Path
 import sys
 import os
 
@@ -309,4 +328,4 @@ def test_comprehensive_workflow():
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    pytest.main([str(Path(__file__)), "-v"])

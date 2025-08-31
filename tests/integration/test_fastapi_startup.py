@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Test adapté automatiquement pour le projet Ainflue
+================================================
+
+Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
+Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Ajouter le répertoire racine au Python path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 """
 Integration Test: Complete FastAPI Application Startup
 =====================================================
@@ -17,6 +33,9 @@ import time
 import sys
 import requests
 import pytest
+import sys
+import os
+from pathlib import Path
 from pathlib import Path
 
 # Add project root to Python path
@@ -156,5 +175,5 @@ if __name__ == "__main__":
     print("=" * 60)
     
     # Run with pytest
-    exit_code = pytest.main([__file__, "-v", "--tb=short"])
+    exit_code = pytest.main([str(Path(__file__)), "-v", "--tb=short"])
     sys.exit(exit_code)

@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Test adapté automatiquement pour le projet Ainflue
+================================================
+
+Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
+Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Ajouter le répertoire racine au Python path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 """
 Enterprise Features Module Tests
 ===============================
@@ -15,6 +31,9 @@ will result in immediate legal action under international copyright laws.
 """
 
 import pytest
+import sys
+import os
+from pathlib import Path
 import asyncio
 import json
 from datetime import datetime, timezone, timedelta
@@ -847,4 +866,4 @@ class TestEnterpriseErrorHandling:
 
 if __name__ == "__main__":
     # Run tests if executed directly
-    pytest.main([__file__, "-v"])
+    pytest.main([str(Path(__file__)), "-v"])

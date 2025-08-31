@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Test adapté automatiquement pour le projet Ainflue
+================================================
+
+Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
+Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
+"""
+
+import sys
+import os
+from pathlib import Path
+
+# Ajouter le répertoire racine au Python path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 """
 Comprehensive API Integration Tests
 Tests all API endpoints for functionality, error handling, and response formats.
@@ -7,6 +23,9 @@ Purpose: Complete integration test coverage for API endpoints
 """
 
 import pytest
+import sys
+import os
+from pathlib import Path
 import asyncio
 import json
 from typing import Dict, Any, List
@@ -737,4 +756,4 @@ class TestAPIIntegrationScenarios:
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v", "--tb=short", "--maxfail=5"])
+    pytest.main([str(Path(__file__)), "-v", "--tb=short", "--maxfail=5"])
