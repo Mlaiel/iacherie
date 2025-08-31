@@ -1,11 +1,9 @@
-"""
-AI Deployment Module
+"""AI Deployment Module
 Enterprise AI model deployment and management system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .model_serving import (
     ModelServer,
     ModelConfig,

@@ -1,5 +1,4 @@
-"""
-Professional web crawling and content discovery system for creator protection.
+"""Professional web crawling and content discovery system for creator protection.
 
 This module implements advanced crawling capabilities for detecting unauthorized
 content usage, monitoring brand mentions, competitor analysis, and automated
@@ -26,7 +25,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 from typing import Dict, Any, List, Optional, Union, Set, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -64,8 +62,7 @@ from ..core.models import BaseModel
 
 
 class CrawlerType(Enum):
-    """Types of web crawlers."""
-    SOCIAL_MEDIA = "social_media"
+    """Types of web crawlers."""    SOCIAL_MEDIA = "social_media"
     E_COMMERCE = "e_commerce"
     NEWS_MEDIA = "news_media"
     BLOG_CONTENT = "blog_content"
@@ -78,8 +75,7 @@ class CrawlerType(Enum):
 
 
 class CrawlingStrategy(Enum):
-    """Crawling strategy approaches."""
-    BREADTH_FIRST = "breadth_first"
+    """Crawling strategy approaches."""    BREADTH_FIRST = "breadth_first"
     DEPTH_FIRST = "depth_first"
     FOCUSED_CRAWLING = "focused_crawling"
     ADAPTIVE_CRAWLING = "adaptive_crawling"
@@ -87,8 +83,7 @@ class CrawlingStrategy(Enum):
 
 
 class ContentType(Enum):
-    """Types of content to extract."""
-    TEXT = "text"
+    """Types of content to extract."""    TEXT = "text"
     IMAGES = "images"
     VIDEOS = "videos"
     AUDIO = "audio"
@@ -101,8 +96,7 @@ class ContentType(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms for crawling."""
-    INSTAGRAM = "instagram"
+    """Supported platforms for crawling."""    INSTAGRAM = "instagram"
     TWITTER = "twitter"
     FACEBOOK = "facebook"
     TIKTOK = "tiktok"
@@ -119,8 +113,7 @@ class PlatformType(Enum):
 
 @dataclass
 class CrawlTarget:
-    """Crawling target configuration."""
-    target_id: str
+    """Crawling target configuration."""    target_id: str
     name: str
     base_urls: List[str]
     platform_type: PlatformType
@@ -138,8 +131,7 @@ class CrawlTarget:
 
 @dataclass
 class CrawlResult:
-    """Result from crawling operation."""
-    crawl_id: str
+    """Result from crawling operation."""    crawl_id: str
     target_id: str
     url: str
     title: Optional[str] = None
@@ -157,8 +149,7 @@ class CrawlResult:
 
 @dataclass
 class CrawlSession:
-    """Crawling session tracking."""
-    session_id: str
+    """Crawling session tracking."""    session_id: str
     target_id: str
     crawler_type: CrawlerType
     strategy: CrawlingStrategy
@@ -173,8 +164,7 @@ class CrawlSession:
 
 
 class WebCrawler:
-    """
-    Advanced web crawling engine with anti-detection capabilities.
+    """    Advanced web crawling engine with anti-detection capabilities.
     
     Provides comprehensive crawling functionality including:
     - Multiple crawling strategies (BFS, DFS, Focused)
@@ -183,8 +173,7 @@ class WebCrawler:
     - Content extraction and analysis
     - Similarity detection for copyright protection
     - Distributed crawling support
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("crawler.web")
@@ -212,8 +201,7 @@ class WebCrawler:
         self.logger.info("WebCrawler initialized successfully")
     
     def _initialize_crawler_components(self):
-        """Initialize crawler components and sessions."""
-        try:
+        """Initialize crawler components and sessions."""        try:
             # HTTP session with connection pooling
             self.session_connector = aiohttp.TCPConnector(
                 limit=self.max_concurrent_requests,
@@ -246,8 +234,7 @@ class WebCrawler:
             raise CrawlerException(f"Crawler initialization error: {e}")
     
     def _setup_browser_automation(self):
-        """Set up browser automation with Selenium."""
-        try:
+        """Set up browser automation with Selenium."""        try:
             # Chrome options for headless browsing
             self.chrome_options = Options()
             self.chrome_options.add_argument('--headless')
@@ -277,8 +264,7 @@ class WebCrawler:
             self.browser_automation = False
     
     def _get_default_user_agents(self) -> List[str]:
-        """Get list of realistic user agents for anti-detection."""
-        return [
+        """Get list of realistic user agents for anti-detection."""        return [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/89.0',
@@ -291,13 +277,11 @@ class WebCrawler:
         self,
         target_config: Dict[str, Any]
     ) -> CrawlTarget:
-        """
-        Create new crawling target configuration.
+        """        Create new crawling target configuration.
         
         Sets up comprehensive crawling target with platform-specific
         settings, content filters, and extraction rules.
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating crawl target: {target_config.get('name', 'Unknown')}")
             
             # Generate unique target ID
@@ -342,8 +326,7 @@ class WebCrawler:
             raise CrawlerException(f"Crawl target creation error: {e}")
     
     async def _apply_platform_specific_config(self, crawl_target: CrawlTarget):
-        """Apply platform-specific crawling configurations."""
-        platform = crawl_target.platform_type
+        """Apply platform-specific crawling configurations."""        platform = crawl_target.platform_type
         
         if platform == PlatformType.INSTAGRAM:
             # Instagram-specific settings
@@ -386,13 +369,11 @@ class WebCrawler:
         crawler_type: CrawlerType = CrawlerType.SOCIAL_MEDIA,
         strategy: CrawlingStrategy = CrawlingStrategy.BREADTH_FIRST
     ) -> str:
-        """
-        Start new crawling session for target.
+        """        Start new crawling session for target.
         
         Initiates comprehensive crawling session with specified strategy
         and begins content discovery and analysis process.
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting crawl session for target: {target_id}")
             
             # Validate target exists
@@ -426,8 +407,7 @@ class WebCrawler:
             raise CrawlerException(f"Crawl session start error: {e}")
     
     async def _execute_crawl_session(self, session_id: str):
-        """Execute crawling session with specified strategy."""
-        session = self.active_sessions[session_id]
+        """Execute crawling session with specified strategy."""        session = self.active_sessions[session_id]
         target = self.crawl_targets[session.target_id]
         
         try:
@@ -463,8 +443,7 @@ class WebCrawler:
         session: CrawlSession,
         target: CrawlTarget
     ):
-        """Execute breadth-first crawling strategy."""
-        url_queue = asyncio.Queue()
+        """Execute breadth-first crawling strategy."""        url_queue = asyncio.Queue()
         visited_urls: Set[str] = set()
         
         # Initialize queue with base URLs
@@ -515,8 +494,7 @@ class WebCrawler:
         session: CrawlSession,
         target: CrawlTarget
     ):
-        """Execute depth-first crawling strategy."""
-        async with aiohttp.ClientSession(
+        """Execute depth-first crawling strategy."""        async with aiohttp.ClientSession(
             connector=self.session_connector,
             timeout=aiohttp.ClientTimeout(total=self.request_timeout)
         ) as http_session:
@@ -544,8 +522,7 @@ class WebCrawler:
         visited_urls: Set[str],
         semaphore: asyncio.Semaphore
     ):
-        """Recursive depth-first crawling."""
-        if (url in visited_urls or 
+        """Recursive depth-first crawling."""        if (url in visited_urls or 
             depth > target.max_depth or 
             session.pages_crawled >= target.max_pages):
             return
@@ -570,8 +547,7 @@ class WebCrawler:
         session: CrawlSession,
         target: CrawlTarget
     ):
-        """Execute focused crawling strategy based on content relevance."""
-        url_queue = asyncio.PriorityQueue()
+        """Execute focused crawling strategy based on content relevance."""        url_queue = asyncio.PriorityQueue()
         visited_urls: Set[str] = set()
         
         # Initialize with base URLs (priority 0)
@@ -623,8 +599,7 @@ class WebCrawler:
         session: CrawlSession,
         target: CrawlTarget
     ):
-        """Execute adaptive crawling strategy that adjusts based on results."""
-        # Start with breadth-first approach
+        """Execute adaptive crawling strategy that adjusts based on results."""        # Start with breadth-first approach
         await self._execute_breadth_first_crawl(session, target)
         
         # Analyze results and adapt strategy if needed
@@ -642,8 +617,7 @@ class WebCrawler:
         session: CrawlSession,
         semaphore: asyncio.Semaphore
     ) -> Union[CrawlResult, Exception]:
-        """Crawl single URL and extract content."""
-        async with semaphore:
+        """Crawl single URL and extract content."""        async with semaphore:
             try:
                 # Rate limiting
                 await self._apply_rate_limiting(url, target.rate_limit_delay)
@@ -686,8 +660,7 @@ class WebCrawler:
                 return e
     
     async def _apply_rate_limiting(self, url: str, delay: float):
-        """Apply rate limiting based on domain."""
-        domain = urlparse(url).netloc
+        """Apply rate limiting based on domain."""        domain = urlparse(url).netloc
         current_time = time.time()
         
         # Check if we need to wait
@@ -708,8 +681,7 @@ class WebCrawler:
         )
     
     def _prepare_request_headers(self, target: CrawlTarget) -> Dict[str, str]:
-        """Prepare HTTP request headers with anti-detection measures."""
-        headers = {
+        """Prepare HTTP request headers with anti-detection measures."""        headers = {
             'User-Agent': random.choice(self.user_agents),
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -744,8 +716,7 @@ class WebCrawler:
         target: CrawlTarget,
         response_time: float
     ) -> CrawlResult:
-        """Process crawl response and extract content."""
-        # Determine content type
+        """Process crawl response and extract content."""        # Determine content type
         content_type_header = response.headers.get('content-type', '')
         content_type = self._determine_content_type(content_type_header, url)
         
@@ -796,8 +767,7 @@ class WebCrawler:
         return result
     
     def _determine_content_type(self, content_type_header: str, url: str) -> ContentType:
-        """Determine content type from headers and URL."""
-        content_type_header = content_type_header.lower()
+        """Determine content type from headers and URL."""        content_type_header = content_type_header.lower()
         
         if 'image' in content_type_header:
             return ContentType.IMAGES
@@ -825,8 +795,7 @@ class WebCrawler:
         content_type: ContentType,
         target_types: List[ContentType]
     ) -> str:
-        """Extract content based on specified content types."""
-        if content_type not in target_types:
+        """Extract content based on specified content types."""        if content_type not in target_types:
             return ""
         
         if content_type == ContentType.TEXT:
@@ -841,8 +810,7 @@ class WebCrawler:
             return self._extract_text_content(soup)
     
     def _extract_text_content(self, soup: BeautifulSoup) -> str:
-        """Extract main text content from HTML."""
-        # Remove script and style elements
+        """Extract main text content from HTML."""        # Remove script and style elements
         for script in soup(["script", "style"]):
             script.extract()
         
@@ -874,8 +842,7 @@ class WebCrawler:
         return content_text[:10000]  # Limit content length
     
     def _extract_social_posts(self, soup: BeautifulSoup) -> str:
-        """Extract social media posts content."""
-        # Platform-specific selectors
+        """Extract social media posts content."""        # Platform-specific selectors
         post_selectors = [
             '[data-testid="tweet"]',  # Twitter
             '.post', '.entry', '.status-content',  # Generic
@@ -894,8 +861,7 @@ class WebCrawler:
         return '\n\n'.join(posts)
     
     def _extract_product_listings(self, soup: BeautifulSoup) -> str:
-        """Extract product listing information."""
-        product_selectors = [
+        """Extract product listing information."""        product_selectors = [
             '.product-item', '.product-card', '.listing-item',
             '[data-testid="product"]', '.search-result-item'
         ]
@@ -921,8 +887,7 @@ class WebCrawler:
         return '\n'.join(products)
     
     def _extract_comments(self, soup: BeautifulSoup) -> str:
-        """Extract comments and user-generated content."""
-        comment_selectors = [
+        """Extract comments and user-generated content."""        comment_selectors = [
             '.comment', '.comment-content', '.user-comment',
             '[data-testid="comment"]', '.review-content'
         ]
@@ -938,8 +903,7 @@ class WebCrawler:
         return '\n\n'.join(comments)
     
     def _extract_links(self, soup: BeautifulSoup, base_url: str) -> List[str]:
-        """Extract and normalize links from page."""
-        links = []
+        """Extract and normalize links from page."""        links = []
         base_domain = urlparse(base_url).netloc
         
         for link_elem in soup.find_all('a', href=True):
@@ -963,8 +927,7 @@ class WebCrawler:
         base_url: str,
         target_types: List[ContentType]
     ) -> List[str]:
-        """Extract media URLs from page."""
-        media_urls = []
+        """Extract media URLs from page."""        media_urls = []
         
         if ContentType.IMAGES in target_types:
             # Extract image URLs
@@ -992,8 +955,7 @@ class WebCrawler:
         return list(set(media_urls))[:50]  # Remove duplicates and limit
     
     def _calculate_content_similarity(self, content_hash: str) -> float:
-        """Calculate content similarity score for potential infringement detection."""
-        if content_hash in self.content_hashes:
+        """Calculate content similarity score for potential infringement detection."""        if content_hash in self.content_hashes:
             return 1.0  # Exact match
         
         # Check cached similarities
@@ -1036,8 +998,7 @@ class WebCrawler:
         parent_result: CrawlResult,
         target: CrawlTarget
     ) -> float:
-        """Calculate priority score for link in focused crawling."""
-        priority = 0.0
+        """Calculate priority score for link in focused crawling."""        priority = 0.0
         
         # Base priority from parent result similarity
         priority += parent_result.similarity_score * 10
@@ -1072,8 +1033,7 @@ class WebCrawler:
         target_id: str,
         filters: Dict[str, Any] = None
     ) -> List[CrawlResult]:
-        """Get crawl results with optional filtering."""
-        if target_id not in self.crawl_results:
+        """Get crawl results with optional filtering."""        if target_id not in self.crawl_results:
             return []
         
         results = self.crawl_results[target_id]
@@ -1090,8 +1050,7 @@ class WebCrawler:
         return filtered_results
     
     def _matches_filters(self, result: CrawlResult, filters: Dict[str, Any]) -> bool:
-        """Check if crawl result matches specified filters."""
-        # Minimum similarity score filter
+        """Check if crawl result matches specified filters."""        # Minimum similarity score filter
         if 'min_similarity' in filters:
             if result.similarity_score < filters['min_similarity']:
                 return False
@@ -1125,8 +1084,7 @@ class WebCrawler:
         return True
     
     async def cleanup_crawler_resources(self):
-        """Clean up crawler resources and connections."""
-        try:
+        """Clean up crawler resources and connections."""        try:
             # Close HTTP connector
             if hasattr(self, 'session_connector') and self.session_connector:
                 await self.session_connector.close()

@@ -1,5 +1,4 @@
-"""
-Monetization Database Module - IA Influencer Agent + Content Protection Platform
+"""Monetization Database Module - IA Influencer Agent + Content Protection Platform
 
 Ultra-advanced monetization database system for multi-format content creators
 including revenue tracking, licensing, payment processing, and financial analytics.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 # Revenue tracking and analytics
 from .revenue_models import *
 from .revenue_analytics import *

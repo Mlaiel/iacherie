@@ -1,5 +1,4 @@
-"""
-Advanced Blockchain Infrastructure for IA Influencer Agent Platform
+"""Advanced Blockchain Infrastructure for IA Influencer Agent Platform
 Enterprise-grade blockchain integration for content protection and monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +15,6 @@ Key Features:
 - NFT minting for premium content protection
 - Real-time transaction monitoring and analytics
 """
-
 from .copyright_registry import (
     CopyrightRegistryManager,
     CopyrightAsset,

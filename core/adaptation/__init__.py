@@ -1,5 +1,4 @@
-"""
-Enterprise Adaptation Engine - Ultra-Advanced Content Adaptation System
+"""Enterprise Adaptation Engine - Ultra-Advanced Content Adaptation System
 
 This ultra-sophisticated adaptation module provides industrial-strength content transformation
 capabilities with real-time optimization, multi-platform targeting, and AI-driven enhancement.
@@ -45,7 +44,6 @@ Creator Types Supported:
 - Influencers: Multi-format optimization, platform targeting, viral analysis
 - Comedians: Video timing analysis, audience optimization, engagement prediction
 """
-
 from .adaptation_engine import (
     AdaptationEngine,
     AdaptationWorkflow,

@@ -1,5 +1,4 @@
-"""
-Distribution Module - IA Influencer Agent
+"""Distribution Module - IA Influencer Agent
 
 Enterprise-grade multi-platform content distribution system with AI-powered optimization.
 Provides comprehensive content distribution, analytics, revenue tracking, and intelligent scheduling.
@@ -39,7 +38,6 @@ or distribution is strictly prohibited and will result in legal action.
 YouTube, Instagram, TikTok, Twitter, LinkedIn, Spotify, Facebook, Pinterest, 
 Snapchat, Twitch, Reddit, Discord, Telegram, Medium, Substack
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -178,29 +176,24 @@ MODULE_CONFIG = {
 
 
 class DistributionModuleError(Exception):
-    """Base exception for distribution module"""
-    pass
+    """Base exception for distribution module"""    pass
 
 
 class PlatformIntegrationError(DistributionModuleError):
-    """Exception for platform integration issues"""
-    pass
+    """Exception for platform integration issues"""    pass
 
 
 class ContentProcessingError(DistributionModuleError):
-    """Exception for content processing issues"""
-    pass
+    """Exception for content processing issues"""    pass
 
 
 class AnalyticsError(DistributionModuleError):
-    """Exception for analytics processing issues"""
-    pass
+    """Exception for analytics processing issues"""    pass
 
 
 @dataclass
 class ModuleStatus:
-    """Distribution module status information"""
-    is_healthy: bool
+    """Distribution module status information"""    is_healthy: bool
     active_platforms: List[PlatformType]
     processing_queue_size: int
     cache_status: str
@@ -213,11 +206,9 @@ class ModuleStatus:
 
 
 class DistributionModuleManager:
-    """
-    Central manager for the distribution module.
+    """    Central manager for the distribution module.
     Coordinates all components and provides unified interface.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client=None):
         self.db = db_session
         self.redis_client = redis_client
@@ -250,8 +241,7 @@ class DistributionModuleManager:
         self._startup_time = datetime.utcnow()
         
     async def initialize(self):
-        """Initialize all distribution module components"""
-        try:
+        """Initialize all distribution module components"""        try:
             logger.info("Initializing IA Influencer Agent Distribution Module...")
             
             # Initialize platform manager
@@ -294,8 +284,7 @@ class DistributionModuleManager:
             raise DistributionModuleError(f"Module initialization failed: {e}")
     
     async def shutdown(self):
-        """Shutdown all distribution module components"""
-        try:
+        """Shutdown all distribution module components"""        try:
             logger.info("Shutting down Distribution Module...")
             
             # Shutdown components in reverse order
@@ -327,8 +316,7 @@ class DistributionModuleManager:
             logger.error(f"Error during Distribution Module shutdown: {e}")
     
     async def get_module_status(self) -> ModuleStatus:
-        """Get current module status and health information"""
-        if not self._initialized:
+        """Get current module status and health information"""        if not self._initialized:
             return self.status
         
         try:
@@ -343,8 +331,7 @@ class DistributionModuleManager:
             return self.status
     
     async def _perform_health_check(self):
-        """Perform comprehensive health check of all components"""
-        try:
+        """Perform comprehensive health check of all components"""        try:
             # Check database connectivity
             self.status.database_status = "connected" if self.db else "disconnected"
             
@@ -374,8 +361,7 @@ class DistributionModuleManager:
             self.status.error_count += 1
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information"""
-        return {
+        """Get comprehensive module information"""        return {
             "module_config": MODULE_CONFIG,
             "status": self.status,
             "initialization_time": self._startup_time,
@@ -394,71 +380,60 @@ class DistributionModuleManager:
 
 # Factory functions for easy component creation
 async def create_distribution_manager(db_session, redis_client=None) -> DistributionModuleManager:
-    """Create and initialize a distribution module manager"""
-    manager = DistributionModuleManager(db_session, redis_client)
+    """Create and initialize a distribution module manager"""    manager = DistributionModuleManager(db_session, redis_client)
     await manager.initialize()
     return manager
 
 
 async def create_platform_manager(db_session) -> PlatformDistributionManager:
-    """Create and initialize a platform distribution manager"""
-    manager = PlatformDistributionManager(db_session)
+    """Create and initialize a platform distribution manager"""    manager = PlatformDistributionManager(db_session)
     await manager.__aenter__()
     return manager
 
 
 async def create_analytics_tracker(db_session) -> AdvancedAnalyticsTracker:
-    """Create and initialize an analytics tracker"""
-    tracker = AdvancedAnalyticsTracker(db_session)
+    """Create and initialize an analytics tracker"""    tracker = AdvancedAnalyticsTracker(db_session)
     await tracker.__aenter__()
     return tracker
 
 
 async def create_revenue_tracker(db_session) -> RevenueTracker:
-    """Create and initialize a revenue tracker"""
-    tracker = RevenueTracker(db_session)
+    """Create and initialize a revenue tracker"""    tracker = RevenueTracker(db_session)
     await tracker.__aenter__()
     return tracker
 
 
 async def create_scheduler(db_session) -> ContentDistributionScheduler:
-    """Create and initialize a content scheduler"""
-    scheduler = ContentDistributionScheduler(db_session)
+    """Create and initialize a content scheduler"""    scheduler = ContentDistributionScheduler(db_session)
     await scheduler.__aenter__()
     return scheduler
 
 
 async def create_content_adapter(db_session) -> EnterpriseContentAdapter:
-    """Create and initialize a content adapter"""
-    adapter = EnterpriseContentAdapter(db_session)
+    """Create and initialize a content adapter"""    adapter = EnterpriseContentAdapter(db_session)
     await adapter.__aenter__()
     return adapter
 
 
 # Utility functions
 def get_supported_platforms() -> List[PlatformType]:
-    """Get list of all supported platforms"""
-    return list(PlatformType)
+    """Get list of all supported platforms"""    return list(PlatformType)
 
 
 def get_supported_content_formats() -> List[ContentFormat]:
-    """Get list of all supported content formats"""
-    return list(ContentFormat)
+    """Get list of all supported content formats"""    return list(ContentFormat)
 
 
 def get_available_strategies() -> List[DistributionStrategy]:
-    """Get list of all available distribution strategies"""
-    return list(DistributionStrategy)
+    """Get list of all available distribution strategies"""    return list(DistributionStrategy)
 
 
 def get_module_version() -> str:
-    """Get module version"""
-    return __version__
+    """Get module version"""    return __version__
 
 
 def get_module_info() -> Dict[str, Any]:
-    """Get basic module information"""
-    return MODULE_CONFIG
+    """Get basic module information"""    return MODULE_CONFIG
 
 # Export all public components
 __all__ = [
@@ -544,8 +519,7 @@ __all__ = [
 
 
 # Module initialization message
-logger.info(f"""
-🚀 IA Influencer Agent Distribution Module v{__version__} Loaded
+logger.info(f"""🚀 IA Influencer Agent Distribution Module v{__version__} Loaded
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 👨‍💻 Author: {__author__}
@@ -581,25 +555,21 @@ _component_registry = {
 
 
 def get_component_registry() -> Dict[str, Any]:
-    """Get the component registry for dependency injection"""
-    return _component_registry.copy()
+    """Get the component registry for dependency injection"""    return _component_registry.copy()
 
 
 def register_component(name: str, component_class: Any) -> None:
-    """Register a new component in the module"""
-    _component_registry[name] = component_class
+    """Register a new component in the module"""    _component_registry[name] = component_class
     logger.info(f"Registered new component: {name}")
 
 
 def get_component(name: str) -> Optional[Any]:
-    """Get a component class from the registry"""
-    return _component_registry.get(name)
+    """Get a component class from the registry"""    return _component_registry.get(name)
 
 
 # Performance monitoring
 class ModulePerformanceMonitor:
-    """Monitor module performance and health"""
-    
+    """Monitor module performance and health"""    
     def __init__(self):
         self.start_time = datetime.utcnow()
         self.component_load_times = {}
@@ -607,12 +577,10 @@ class ModulePerformanceMonitor:
         self.usage_stats = {}
     
     def record_component_load(self, component_name: str, load_time: float):
-        """Record component loading time"""
-        self.component_load_times[component_name] = load_time
+        """Record component loading time"""        self.component_load_times[component_name] = load_time
     
     def record_error(self, component_name: str, error_type: str):
-        """Record component error"""
-        if component_name not in self.error_counts:
+        """Record component error"""        if component_name not in self.error_counts:
             self.error_counts[component_name] = {}
         
         if error_type not in self.error_counts[component_name]:
@@ -621,8 +589,7 @@ class ModulePerformanceMonitor:
         self.error_counts[component_name][error_type] += 1
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get performance statistics"""
-        uptime = (datetime.utcnow() - self.start_time).total_seconds()
+        """Get performance statistics"""        uptime = (datetime.utcnow() - self.start_time).total_seconds()
         
         return {
             "uptime": uptime,
@@ -634,8 +601,7 @@ class ModulePerformanceMonitor:
         }
     
     def _get_memory_usage(self) -> Dict[str, Any]:
-        """Get memory usage statistics"""
-        import psutil
+        """Get memory usage statistics"""        import psutil
         process = psutil.Process()
         memory_info = process.memory_info()
         
@@ -647,8 +613,7 @@ class ModulePerformanceMonitor:
         }
     
     def _calculate_health_score(self) -> float:
-        """Calculate overall module health score"""
-        total_errors = sum(
+        """Calculate overall module health score"""        total_errors = sum(
             sum(errors.values()) for errors in self.error_counts.values()
         )
         
@@ -664,14 +629,12 @@ performance_monitor = ModulePerformanceMonitor()
 
 
 def get_performance_stats() -> Dict[str, Any]:
-    """Get module performance statistics"""
-    return performance_monitor.get_performance_stats()
+    """Get module performance statistics"""    return performance_monitor.get_performance_stats()
 
 
 # Module health check
 async def health_check() -> Dict[str, Any]:
-    """Perform module health check"""
-    health_status = {
+    """Perform module health check"""    health_status = {
         "status": "healthy",
         "timestamp": datetime.utcnow(),
         "version": __version__,
@@ -700,7 +663,6 @@ async def health_check() -> Dict[str, Any]:
 
 # Cleanup function
 def cleanup():
-    """Cleanup module resources"""
-    logger.info("Cleaning up Distribution Module resources...")
+    """Cleanup module resources"""    logger.info("Cleaning up Distribution Module resources...")
     # Add cleanup logic here if needed
     logger.info("Distribution Module cleanup completed")

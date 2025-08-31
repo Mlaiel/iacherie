@@ -1,5 +1,4 @@
-"""
-🗄️ Data Models Module - IA Influencer Agent Platform Enterprise
+"""🗄️ Data Models Module - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/models/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ BUSINESS LOGIC MODELS PIPELINE:
 Creator Registration → Content Upload → AI Validation → Metadata Extraction → 
 Vector Indexing → Protection Activation → Analytics Processing → Revenue Optimization
 """
-
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
@@ -126,12 +124,10 @@ MODEL_REGISTRY = {
 }
 
 def get_model(model_name: str):
-    """Get model class by name"""
-    return MODEL_REGISTRY.get(model_name.lower())
+    """Get model class by name"""    return MODEL_REGISTRY.get(model_name.lower())
 
 def list_available_models():
-    """List all available model names"""
-    return list(MODEL_REGISTRY.keys())
+    """List all available model names"""    return list(MODEL_REGISTRY.keys())
 
 # Export all models
 __all__ = [

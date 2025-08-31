@@ -1,5 +1,4 @@
-"""
-Neural Networks Module for IA-Influencer-Agent
+"""Neural Networks Module for IA-Influencer-Agent
 
 Advanced neural network architectures for content processing, analysis, and generation.
 Supports multi-modal content understanding and creator assistance.
@@ -13,7 +12,6 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Toute utilisation non autorisée est strictement interdite.
 """
-
 from .transformer_models import (
     ContentTransformer,
     MultiModalTransformer,

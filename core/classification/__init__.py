@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Classification Core Module
+"""IA Influencer Agent - Classification Core Module
 
 Enterprise-grade multi-format content classification system for content protection,
 monetization, and intelligent routing. Provides advanced AI-powered classification
@@ -18,7 +17,6 @@ copying, modification, distribution, or use of this code without explicit writte
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will
 result in legal action under German and international copyright law.
 """
-
 from typing import Dict, List, Optional, Union, Any
 
 # Core classification modules

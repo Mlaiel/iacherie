@@ -1,5 +1,4 @@
-"""
-Content Protection Core Module for IA Influencer Agent Platform
+"""Content Protection Core Module for IA Influencer Agent Platform
 
 This module provides comprehensive content protection services including:
 - AI-powered fingerprinting for multi-format content (audio, video, image, text)
@@ -20,7 +19,6 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .fingerprint_engine import FingerprintEngine
 from .content_monitor import ContentMonitor
 from .violation_detector import ViolationDetector

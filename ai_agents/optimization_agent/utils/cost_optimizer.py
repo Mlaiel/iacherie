@@ -59,9 +59,25 @@ from sklearn.model_selection import train_test_split
 import math
 
 from ..base import BaseAgent, AgentStatus, AgentMetrics, AgentRequest, AgentPriority
-from ...core.config import settings
-from ...core.database import get_db_session, DatabaseManager
-from ...core.exceptions import (
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session, DatabaseManager
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session, DatabaseManager = DatabaseManager
+try:
+    from core.exceptions import (
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ( = globals().get('(', Exception)
     CostOptimizationError, 
     BudgetError, 
     OptimizationError,

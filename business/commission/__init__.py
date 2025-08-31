@@ -1,5 +1,4 @@
-"""
-Commission Business Logic Module for IA Influencer Agent
+"""Commission Business Logic Module for IA Influencer Agent
 Advanced commission management and fee calculation system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -31,7 +30,6 @@ AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 - DevOps Engineer: High-availability deployment and payment processing infrastructure
 - IA Prompt Engineer: Intelligent commission optimization and pricing strategy automation
 """
-
 # Core Module Exports
 from .manager import (
     CommissionManager,

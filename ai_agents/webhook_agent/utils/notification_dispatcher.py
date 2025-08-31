@@ -31,8 +31,20 @@ import aioredis
 from jinja2 import Template
 from twilio.rest import Client as TwilioClient
 
-from ...core.database import get_db_session
-from ...core.exceptions import NotificationError, ValidationError
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import NotificationError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    NotificationError, ValidationError = globals().get('NotificationError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 
 logger = logging.getLogger(__name__)

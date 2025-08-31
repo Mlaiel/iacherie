@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Creator Matching Business Module
+"""IA Influencer Agent - Advanced Creator Matching Business Module
 ==============================================================
 
 Professional Multi-Format Creator Matching & Collaboration System
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 from .matching_engine import (
     CreatorMatchingEngine,
     CompatibilityAnalyzer,

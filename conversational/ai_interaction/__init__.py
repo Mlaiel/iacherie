@@ -1,5 +1,4 @@
-"""
-🚀 Ultra-Advanced AI Interaction Engine - IA Influencer Agent Platform
+"""🚀 Ultra-Advanced AI Interaction Engine - IA Influencer Agent Platform
 =====================================================================
 
 Revolutionary enterprise-grade conversational AI ecosystem specifically engineered for 
@@ -46,7 +45,6 @@ This revolutionary AI platform is the EXCLUSIVE intellectual property of Fahed M
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
-
 from .interaction_engine import (
     InteractionEngine,
     InteractionContext,

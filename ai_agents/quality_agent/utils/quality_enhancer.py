@@ -38,8 +38,19 @@ from PIL import Image, ImageEnhance, ImageFilter
 import spacy
 from textstat import flesch_kincaid_grade
 
-from ...core.exceptions import EnhancementError, ValidationError, ProcessingError
-from ...core.config import settings
+try:
+    from core.exceptions import EnhancementError, ValidationError, ProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    EnhancementError, ValidationError, ProcessingError = globals().get('EnhancementError, ValidationError, ProcessingError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.content_processor import ContentProcessor
 from ...utils.ai_enhancer import AIEnhancer
 from ...ml.enhancement_models import EnhancementModelManager

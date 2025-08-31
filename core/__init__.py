@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Core Module
+"""IA-Influencer-Agent Core Module
 ================================================================================
 Module: backend/core/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,7 +22,6 @@ Monétisation avancée
 MISSION: Moteur fondamental de la plateforme IA-Influencer-Agent pour créateurs
 ARCHITECTURE: 22 modules core enterprise-grade pour production industrielle
 """
-
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -520,8 +518,7 @@ MODULE_METADATA = {
 }
 
 # Legal notice
-LEGAL_NOTICE = """
-⚠️  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE ⚠️
+LEGAL_NOTICE = """⚠️  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE ⚠️
 
 Ce code et tous les concepts associés sont la propriété exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou redistribution non autorisée est 
@@ -534,7 +531,6 @@ Pour toute demande de licence ou autorisation: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 """
-
 def get_legal_notice() -> str:
     """Retourne l'avertissement légal"""
     return LEGAL_NOTICE

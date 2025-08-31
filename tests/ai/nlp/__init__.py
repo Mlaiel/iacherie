@@ -1,5 +1,4 @@
-"""
-NLP Module Tests Package for IA Influencer Agent Platform
+"""NLP Module Tests Package for IA Influencer Agent Platform
 
 Comprehensive test suite for Natural Language Processing components
 covering all modules with industrial-grade testing standards.
@@ -21,7 +20,6 @@ Team Expertise:
 ✅ DevOps Engineer - Fahed Mlaiel
 ✅ IA Prompt Engineer - Fahed Mlaiel
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -49,20 +47,16 @@ from .test_analysis import TextAnalysisTests, AdvancedTextAnalysisTests
 
 # Create additional test classes
 class SentimentAnalysisTests(TextAnalysisTests):
-    """Specialized tests for sentiment analysis"""
-    pass
+    """Specialized tests for sentiment analysis"""    pass
 
 class ContentGenerationTests(TextAnalysisTests):
-    """Specialized tests for content generation"""
-    pass
+    """Specialized tests for content generation"""    pass
 
 class LanguageDetectionTests(TextAnalysisTests):
-    """Specialized tests for language detection"""
-    pass
+    """Specialized tests for language detection"""    pass
 
 class TranslationTests(TextAnalysisTests):
-    """Specialized tests for translation"""
-    pass
+    """Specialized tests for translation"""    pass
 
 # Export test classes
 __all__ = [

@@ -1,5 +1,4 @@
-"""
-GDPR Compliance Agent Module
+"""GDPR Compliance Agent Module
 Advanced Data Protection and Privacy Compliance System
 
 Project: IA-Influencer Agent
@@ -9,7 +8,6 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
-
 # Core compliance components
 from .manager import GDPRComplianceManager
 from .data_handler import DataPrivacyHandler

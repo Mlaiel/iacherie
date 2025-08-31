@@ -1,5 +1,4 @@
-"""
-High-Performance Enterprise Crawler Database Module
+"""High-Performance Enterprise Crawler Database Module
 
 Advanced SQLAlchemy-based database layer for multi-platform content crawling,
 real-time monitoring, and intelligent data management.
@@ -9,7 +8,6 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
-
 from .index import CrawlerDatabaseManager
 from .analytics import CrawlerAnalyticsManager
 from .content_discoveries import ContentDiscoveryManager
@@ -143,13 +141,11 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """
-    Get comprehensive module information and capabilities.
+    """    Get comprehensive module information and capabilities.
     
     Returns:
         Dict containing module metadata, capabilities, and team information
-    """
-    return {
+    """    return {
         "module_name": "Enterprise Crawling Database Module",
         "version": "2.0.0",
         "description": "Advanced database layer for multi-platform web surveillance, crawling operations, and content discovery with AI-powered protection",

@@ -1,5 +1,4 @@
-"""
-Deployment Monitoring Module for IA Influencer Agent Platform
+"""Deployment Monitoring Module for IA Influencer Agent Platform
 =============================================================
 
 Industrial-grade monitoring and observability system for multi-tenant
@@ -40,7 +39,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
-
 from .metrics_collector import (
     MetricsCollector, 
     MetricPoint, 
@@ -248,13 +246,11 @@ __all__ = [
 
 # Initialize monitoring system
 def initialize_monitoring_system(config: Dict[str, Any] = None) -> MonitoringOrchestrator:
-    """
-    Initialize the complete monitoring system with all components.
+    """    Initialize the complete monitoring system with all components.
     
     Args:
         config: Configuration dictionary for monitoring components
         
     Returns:
         MonitoringOrchestrator: Configured monitoring orchestrator
-    """
-    return MonitoringOrchestrator(config or {})
+    """    return MonitoringOrchestrator(config or {})

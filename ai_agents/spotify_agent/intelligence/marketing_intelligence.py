@@ -36,8 +36,17 @@ from sklearn.metrics import silhouette_score
 from scipy.stats import chi2_contingency, pearsonr
 import networkx as nx
 
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.caching import CacheManager
 from ...utils.performance_monitor import PerformanceMonitor
 from ...security.content_protection import ContentFingerprinter

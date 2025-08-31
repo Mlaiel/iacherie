@@ -1,5 +1,4 @@
-"""
-Vector Agent Module - Ultra-Advanced Vector Database Management
+"""Vector Agent Module - Ultra-Advanced Vector Database Management
 
 Comprehensive vector database management system with FAISS integration,
 multi-modal similarity search, and enterprise-grade performance optimization.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 # Core vector agent components
 from .vector_orchestrator import VectorOrchestrator
 from .faiss_manager import FAISSManager, FAISSIndexManager
@@ -70,21 +68,18 @@ from ..base import BaseAgent, AgentRequest, AgentResponse
 
 
 class VectorAgent(BaseAgent):
-    """
-    Ultra-Advanced Vector Database Agent
+    """    Ultra-Advanced Vector Database Agent
     
     Enterprise-grade vector database management with FAISS integration,
     multi-modal similarity search, and intelligent caching.
-    """
-    
+    """    
     def __init__(self, agent_id: str = "vector_agent", config: dict = None):
         super().__init__(agent_id=agent_id, config=config)
         self.orchestrator: VectorOrchestrator = None
         self.service_registry: VectorServiceRegistry = None
         
     async def initialize(self) -> bool:
-        """Initialize the vector agent"""
-        try:
+        """Initialize the vector agent"""        try:
             # Create vector configuration
             vector_config = get_config_for_environment()
             
@@ -102,8 +97,7 @@ class VectorAgent(BaseAgent):
             return False
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """Process vector agent requests"""
-        try:
+        """Process vector agent requests"""        try:
             if not self.orchestrator:
                 return AgentResponse(
                     success=False,
@@ -121,8 +115,7 @@ class VectorAgent(BaseAgent):
             )
     
     async def shutdown(self) -> None:
-        """Shutdown the vector agent"""
-        try:
+        """Shutdown the vector agent"""        try:
             if self.service_registry:
                 await self.service_registry.shutdown()
             
@@ -133,8 +126,7 @@ class VectorAgent(BaseAgent):
             self.logger.error(f"Vector agent shutdown error: {e}")
     
     async def health_check(self) -> dict:
-        """Perform health check on vector agent"""
-        try:
+        """Perform health check on vector agent"""        try:
             if not self.service_registry:
                 return {"status": "unhealthy", "reason": "Not initialized"}
             
@@ -144,8 +136,7 @@ class VectorAgent(BaseAgent):
             return {"status": "unhealthy", "error": str(e)}
     
     async def get_statistics(self) -> dict:
-        """Get vector agent statistics"""
-        try:
+        """Get vector agent statistics"""        try:
             if not self.service_registry:
                 return {"error": "Vector agent not initialized"}
             
@@ -236,5 +227,4 @@ __all__ = [
 ]
 
 def create_vector_agent():
-    """Factory function to create configured vector agent"""
-    return VectorOrchestrator()
+    """Factory function to create configured vector agent"""    return VectorOrchestrator()

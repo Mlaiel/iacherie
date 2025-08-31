@@ -1,5 +1,4 @@
-"""
-Core Licensing Management System - Ultra-Industrial IP Rights & Revenue Optimization Engine
+"""Core Licensing Management System - Ultra-Industrial IP Rights & Revenue Optimization Engine
 ==========================================================================================
 
 Enterprise-grade licensing management system providing comprehensive intellectual
@@ -47,7 +46,6 @@ Core Licensing Components:
 - Advanced Analytics & Intelligence: Predictive insights and performance metrics
 - Cross-Platform Distribution: Automated multi-channel deployment
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
 from enum import Enum
@@ -108,8 +106,7 @@ from .index import (
 
 # Global licensing configuration
 class LicensingConfig:
-    """Central configuration for licensing system"""
-    DEFAULT_LICENSE_DURATION = 365  # days
+    """Central configuration for licensing system"""    DEFAULT_LICENSE_DURATION = 365  # days
     MAX_ROYALTY_PERCENTAGE = 50.0
     MIN_REVENUE_THRESHOLD = 100.0  # USD
     SUPPORTED_CURRENCIES = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD"]
@@ -178,8 +175,7 @@ logger.info("Ultra-Industrial Licensing Management System initialized successful
 
 # System health check
 def system_health_check() -> Dict[str, bool]:
-    """Perform comprehensive system health check"""
-    return {
+    """Perform comprehensive system health check"""    return {
         "licensing_engine": True,
         "contract_generation": True,
         "rights_allocation": True,
@@ -330,15 +326,13 @@ __copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - All Rights Reserved"
 
 # Legal warning
-__legal_notice__ = """
-⚠️  INTELLECTUAL PROPERTY WARNING:
+__legal_notice__ = """⚠️  INTELLECTUAL PROPERTY WARNING:
 This entire module, its architecture, and business logic are the EXCLUSIVE 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 distribution, or commercialization is strictly prohibited and will result 
 in immediate legal action including criminal prosecution.
 Contact mlaiel@live.de for licensing rights.
 """
-
 # Core exports for simplified imports
 __all__ = [
     # Core Engine
@@ -409,13 +403,11 @@ __all__ = [
 
 # Business logic validation
 def validate_business_logic_flow() -> bool:
-    """
-    Validates the complete business logic flow for the licensing system
+    """    Validates the complete business logic flow for the licensing system
     
     Flow: Creator Upload → AI Analysis → SEO Optimization → Collaboration 
           → Distribution → Licensing → Revenue Management
-    """
-    required_components = [
+    """    required_components = [
         "UltraAdvancedLicensingEngine",
         "UltraAdvancedContractGenerator", 
         "UltraAdvancedRoyaltyProcessor",
@@ -432,8 +424,7 @@ def validate_business_logic_flow() -> bool:
 
 # Professional quality assurance
 def get_module_integrity_hash() -> str:
-    """Generate integrity hash for module validation"""
-    import hashlib
+    """Generate integrity hash for module validation"""    import hashlib
     content = f"{__version__}_{__author__}_{len(__all__)}"
     return hashlib.sha256(content.encode()).hexdigest()
 

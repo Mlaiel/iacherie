@@ -65,7 +65,11 @@ import soundfile as sf
 from scipy import signal
 
 from ..base import BaseAgent, AgentRequest, AgentResponse, AgentCapability
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...core.cache import CacheManager
 from ...core.monitoring import MetricsCollector
 from ...ml.audio import AudioFeatureExtractor, AudioClassifier

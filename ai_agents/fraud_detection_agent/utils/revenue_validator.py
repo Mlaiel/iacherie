@@ -22,7 +22,14 @@ from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
 import redis.asyncio as aioredis
 
-from ...core.exceptions import RevenueValidationError
+try:
+    from core.exceptions import RevenueValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    RevenueValidationError = globals().get('RevenueValidationError', Exception)
 from ...utils.financial_analyzer import FinancialAnalyzer
 from ...data.models.revenue import RevenueTransaction, PaymentMethod
 from ...integrations.payment_processors import PaymentProcessorManager

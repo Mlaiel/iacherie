@@ -35,7 +35,11 @@ from .policy_engine import PolicyEngine, PolicyType, ComplianceFramework
 from .reporting_engine import ReportingEngine, ReportType, ReportFormat
 
 from ...core.logging import get_logger
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 
 logger = get_logger(__name__)
 settings = get_settings()

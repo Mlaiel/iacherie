@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Core Optimization Module
+"""IA Influencer Agent - Core Optimization Module
 Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 UNAUTHORIZED ACCESS, COPYING, DISTRIBUTION, OR MODIFICATION 
@@ -16,7 +15,6 @@ This module provides advanced optimization capabilities for:
 Lead Developer: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 """
-
 from .performance import (
     ModelOptimizer,
     FingerprintingOptimizer,

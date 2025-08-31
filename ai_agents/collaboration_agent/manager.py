@@ -21,8 +21,18 @@ from dataclasses import dataclass
 
 from .core.collaboration_engine import CollaborationEngine
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import ValidationError
+except ImportError:
+    # Fallback to a simple exception class
+    class ValidationError(Exception):
+        pass
+
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,4 @@
-"""
-Data Licensing Module - IA Influencer Agent
+"""Data Licensing Module - IA Influencer Agent
 ==========================================
 
 Advanced licensing data management for content monetization and rights protection.
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Infrastructure automation and deployment optimization
 - AI Prompt Engineer: Natural language processing and conversational AI systems
 """
-
 from .models import (
     LicenseAgreement,
     RoyaltyCalculation,

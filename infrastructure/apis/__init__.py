@@ -1,11 +1,9 @@
-"""
-Module backend/infrastructure/apis - IA-Influencer-Agent
+"""Module backend/infrastructure/apis - IA-Influencer-Agent
 Module: backend/infrastructure/apis/__init__.py
 Architecture: IA-Influencer-Agent Backend (Max 3 niveaux)
 Créé: 2025-07-31 06:08:40
 Équipe: Experts GitHub Copilot
 """
-
 __version__ = "1.0.0"
 __author__ = "IA-Influencer-Agent Team"
 __email__ = "dev@ia-influencer-agent.com"

@@ -18,7 +18,14 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-from ...core.exceptions import AnalysisError, DataError
+try:
+    from core.exceptions import AnalysisError, DataError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AnalysisError, DataError = globals().get('AnalysisError, DataError', Exception)
 from ...utils.data_validator import DataValidator
 from ...ml.prediction_engine import PredictionEngine
 

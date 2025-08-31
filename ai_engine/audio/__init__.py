@@ -1,5 +1,4 @@
-"""
-Audio Package - Complete Audio Processing and Management Infrastructure
+"""Audio Package - Complete Audio Processing and Management Infrastructure
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,7 +13,6 @@ This package provides comprehensive audio processing, analysis, protection,
 monetization, collaboration, and distribution capabilities for the
 IA Influencer Agent platform.
 """
-
 import logging
 
 # Import all modules for easy access

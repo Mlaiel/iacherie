@@ -1,5 +1,4 @@
-"""
-Enterprise Observability Module
+"""Enterprise Observability Module
 
 This module provides comprehensive observability capabilities for the IA Influencer Agent platform,
 including metrics collection, health monitoring, distributed tracing, alerting, and SLA monitoring.
@@ -16,7 +15,6 @@ Violations will be prosecuted under applicable laws.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .metrics import MetricsCollector, ContentMetricsCollector, AIMetricsCollector
 from .health import HealthChecker, ServiceHealthMonitor, DatabaseHealthChecker
 from .tracing import TracingManager, DistributedTracer, RequestTracer

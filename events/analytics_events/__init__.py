@@ -1,5 +1,4 @@
-"""
-Analytics Events Module for IA Influencer Agent
+"""Analytics Events Module for IA Influencer Agent
 
 This module handles all analytics-related events for multi-format content creators.
 Supports real-time tracking, business intelligence, and predictive analytics.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 from .audience_engagement_events import (
     AudienceEngagementEventHandler,
     AudienceEngagementTracker,

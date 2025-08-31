@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Data Quality Management Module
+"""IA Influencer Agent - Data Quality Management Module
 ===================================================
 
 Ultra-industrial data quality management system for enterprise multi-format content processing.
@@ -37,7 +36,6 @@ Components:
 - ComplianceChecker: Regulatory and business rule compliance
 - QualityReporter: Quality reporting and analytics system
 """
-
 from .orchestrator import QualityOrchestrator
 from .validator import ContentValidator, AudioQualityValidator, VideoQualityValidator, ImageQualityValidator, TextQualityValidator
 from .metrics import QualityMetricsEngine, ContentQualityScorer, PerformanceMetricsCalculator

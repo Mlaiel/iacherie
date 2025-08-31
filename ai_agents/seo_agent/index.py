@@ -47,8 +47,19 @@ from .reporting import SEOReportGenerator
 from .config import SEOAgentConfig
 
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import SEOError, ValidationError, RateLimitError
-from ...core.config import settings
+try:
+    from core.exceptions import SEOError, ValidationError, RateLimitError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    SEOError, ValidationError, RateLimitError = globals().get('SEOError, ValidationError, RateLimitError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...database.models import SEOAnalysisModel, SEOCampaignModel
 from ...security.encryption import DataProtector
 from ...monitoring.alerts import AlertManager

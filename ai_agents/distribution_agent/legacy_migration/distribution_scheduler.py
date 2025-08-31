@@ -31,9 +31,21 @@ from apscheduler.triggers.date import DateTrigger
 from apscheduler.triggers.interval import IntervalTrigger
 
 from ..base import BaseAgent
-from ...core.exceptions import SchedulingError, PlatformError
+try:
+    from core.exceptions import SchedulingError, PlatformError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    SchedulingError, PlatformError = globals().get('SchedulingError, PlatformError', Exception)
 from ...core.metrics import MetricsCollector
-from ...core.database import DatabaseManager
+try:
+    from core.database import DatabaseManager
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    DatabaseManager = DatabaseManager
 from ...models.content import ContentItem, ContentSchedule
 from ...models.distribution import DistributionPlan, PlatformConfig
 

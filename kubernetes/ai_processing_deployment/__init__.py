@@ -1,5 +1,4 @@
-"""
-AI Processing Deployment Module for IA Influencer Agent Platform
+"""AI Processing Deployment Module for IA Influencer Agent Platform
 ================================================================
 
 Enterprise-grade AI processing deployment infrastructure for multi-format content
@@ -24,7 +23,6 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .core import AIProcessingDeployment
 from .orchestrator import ProcessingOrchestrator
 from .pipeline import ProcessingPipeline

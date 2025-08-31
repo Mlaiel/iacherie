@@ -1,5 +1,4 @@
-"""
-Utility modules for IA Influencer Agent Platform
+"""Utility modules for IA Influencer Agent Platform
 Comprehensive utility functions and classes for the entire platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 # Audio Processing Utilities
 from .audio_processing import (
     AudioAnalyzer,

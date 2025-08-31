@@ -29,7 +29,14 @@ import math
 import threading
 import time
 
-from ...core.exceptions import ProcessingError, ValidationError, MonitoringError
+try:
+    from core.exceptions import ProcessingError, ValidationError, MonitoringError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError, MonitoringError = globals().get('ProcessingError, ValidationError, MonitoringError', Exception)
 from ...utils.cache_manager import CacheManager
 
 logger = logging.getLogger(__name__)

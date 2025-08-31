@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Services Layer
+"""IA Influencer Agent - Services Layer
 Professional-grade services orchestrating business logic and AI processing
 Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -14,7 +13,6 @@ Unauthorized copying, distribution, modification or use without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .content_ingestion import ContentIngestionService
 from .analytics import AnalyticsService
 from .collaboration_matching import CollaborationMatchingService

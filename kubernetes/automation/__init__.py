@@ -1,5 +1,4 @@
-"""
-Deployment Automation Module - IA Influencer Agent
+"""Deployment Automation Module - IA Influencer Agent
 
 Enterprise-grade deployment automation system providing comprehensive
 orchestration, environment management, service deployment, monitoring,
@@ -26,7 +25,6 @@ Core Components:
 - Deployment Recorder: Comprehensive deployment tracking and audit trails
 - Pipeline Executor: Advanced pipeline orchestration and execution engine
 """
-
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

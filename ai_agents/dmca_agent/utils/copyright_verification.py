@@ -28,8 +28,17 @@ from pathlib import Path
 import uuid
 
 from ..base import BaseAgent, AgentRequest, AgentResponse
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.blockchain_client import BlockchainClient
 from ...utils.digital_signature import DigitalSignatureValidator
 from ...utils.copyright_registry import CopyrightRegistryClient

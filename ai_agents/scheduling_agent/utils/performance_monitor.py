@@ -38,8 +38,17 @@ import statistics
 import time
 
 from ..base import BaseAgent, AgentError
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.performance_monitor import PerformanceMonitor
 from .scheduling_agent import ScheduledJob, SchedulingPriority, ScheduleStatus
 

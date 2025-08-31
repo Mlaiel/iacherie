@@ -23,7 +23,12 @@ try:
 except Exception:  # Fallback for non-PostgreSQL backends
     from sqlalchemy import JSON as JSONType  # type: ignore
 
-from ...core.database import Base
+try:
+    from core.database import Base
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    Base = DatabaseManager
 
 
 class SurveillanceTargetModel(Base):

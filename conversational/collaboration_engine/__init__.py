@@ -1,5 +1,4 @@
-"""
-Collaboration Engine Module - AI-Powered Creator Partnership Orchestration
+"""Collaboration Engine Module - AI-Powered Creator Partnership Orchestration
 
 Revolutionary enterprise-grade collaboration ecosystem implementing intelligent creator
 matching, automated partnership facilitation, and cross-platform collaboration
@@ -36,7 +35,6 @@ This revolutionary collaboration platform is the EXCLUSIVE intellectual property
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
-
 from .creator_collaboration import (
     CreatorCollaborationEngine,
     CreatorProfile,

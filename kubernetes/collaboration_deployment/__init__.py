@@ -11,8 +11,7 @@
 # 
 # Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 
-"""
-Advanced Collaboration Deployment Module for IA Influencer Agent
+"""Advanced Collaboration Deployment Module for IA Influencer Agent
 
 This module handles the deployment, scaling, and management of collaboration
 services for multi-format content creators, AI processing, protection,
@@ -28,7 +27,6 @@ User (musician/blogger/photographer/influencer/comedian)
 
 Industry-grade, production-ready collaboration deployment system.
 """
-
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
 from enum import Enum

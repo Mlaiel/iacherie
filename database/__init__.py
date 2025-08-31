@@ -1,5 +1,4 @@
-"""
-Database Module - IA Influencer Agent + Content Protection Platform
+"""Database Module - IA Influencer Agent + Content Protection Platform
 
 This module provides comprehensive database management for the IA Influencer Agent platform,
 including content fingerprinting, protection alerts, monetization tracking, and vector operations.
@@ -19,7 +18,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Core database components
 from .connections import *
 from .models import *

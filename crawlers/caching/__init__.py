@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer Cache System - Industrial-Grade Caching Infrastructure
+"""IA-Influencer Cache System - Industrial-Grade Caching Infrastructure
 ===================================================================
 
 Complete industrial cache system for IA-Influencer platform providing
@@ -38,7 +37,6 @@ Main Components:
 - PolicyEngine: Advanced policy management
 - CacheSerializer: Data serialization system
 """
-
 # Core cache management
 from .cache_manager import (
     IndustrialCacheManager as CacheManager,
@@ -385,8 +383,7 @@ __url__ = "https://github.com/Mlaiel/IA-influencer"
 
 # Compatibility and feature detection
 def get_available_features():
-    """Get list of available cache features and components."""
-    features = {
+    """Get list of available cache features and components."""    features = {
         'core_caching': True,
         'memory_cache': True,
         'redis_cache': False,
@@ -428,8 +425,7 @@ def get_available_features():
     return features
 
 def check_system_requirements():
-    """Check if system meets minimum requirements for cache system."""
-    import sys
+    """Check if system meets minimum requirements for cache system."""    import sys
     import psutil
     
     requirements = {
@@ -444,8 +440,7 @@ def check_system_requirements():
 _default_cache_manager = None
 
 def get_default_cache_manager():
-    """Get the default cache manager instance."""
-    global _default_cache_manager
+    """Get the default cache manager instance."""    global _default_cache_manager
     
     if _default_cache_manager is None:
         _default_cache_manager = CacheManager()
@@ -453,30 +448,25 @@ def get_default_cache_manager():
     return _default_cache_manager
 
 def configure_default_cache(config: CacheConfig):
-    """Configure the default cache manager with custom configuration."""
-    global _default_cache_manager
+    """Configure the default cache manager with custom configuration."""    global _default_cache_manager
     _default_cache_manager = CacheManager(config)
 
 # Convenience functions for quick cache operations
 async def quick_set(key: str, value: any, ttl: int = 3600):
-    """Quick cache set operation using default manager."""
-    cache = get_default_cache_manager()
+    """Quick cache set operation using default manager."""    cache = get_default_cache_manager()
     return await cache.set(key, value, ttl)
 
 async def quick_get(key: str, default=None):
-    """Quick cache get operation using default manager."""
-    cache = get_default_cache_manager()
+    """Quick cache get operation using default manager."""    cache = get_default_cache_manager()
     return await cache.get(key, default)
 
 async def quick_delete(key: str):
-    """Quick cache delete operation using default manager."""
-    cache = get_default_cache_manager()
+    """Quick cache delete operation using default manager."""    cache = get_default_cache_manager()
     return await cache.delete(key)
 
 # Performance monitoring helpers
 def get_cache_performance_summary():
-    """Get a summary of cache performance across all components."""
-    cache = get_default_cache_manager()
+    """Get a summary of cache performance across all components."""    cache = get_default_cache_manager()
     return {
         'cache_stats': cache.get_stats(),
         'system_requirements': check_system_requirements(),
@@ -598,16 +588,14 @@ __all__ = [
 
 # Module-level utility functions
 async def create_enterprise_cache_system(config: dict = None) -> CacheManager:
-    """
-    Create a complete enterprise cache system with all components.
+    """    Create a complete enterprise cache system with all components.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         Fully configured CacheManager instance
-    """
-    from .cache_manager import CacheManager, CacheConfig
+    """    from .cache_manager import CacheManager, CacheConfig
     
     # Default enterprise configuration
     default_config = {
@@ -645,13 +633,11 @@ async def create_enterprise_cache_system(config: dict = None) -> CacheManager:
     return cache_manager
 
 def get_cache_system_info() -> dict:
-    """
-    Get information about the cache system capabilities.
+    """    Get information about the cache system capabilities.
     
     Returns:
         Dictionary with system information
-    """
-    return {
+    """    return {
         'version': __version__,
         'author': __author__,
         'components': {

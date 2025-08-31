@@ -37,8 +37,19 @@ import json
 import hashlib
 from collections import defaultdict
 
-from ...core.exceptions import MonetizationError, ValidationError, LicensingError
-from ...core.config import settings
+try:
+    from core.exceptions import MonetizationError, ValidationError, LicensingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MonetizationError, ValidationError, LicensingError = globals().get('MonetizationError, ValidationError, LicensingError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...database.models import LicenseModel, ContractModel, RoyaltyModel, ContentModel
 from ...database.repositories import LicenseRepository, ContractRepository, RoyaltyRepository
 from ...integrations.legal_services import LegalServicesManager

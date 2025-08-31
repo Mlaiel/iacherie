@@ -1,5 +1,4 @@
-"""
-Blockchain Business Logic Module for IA-Influencer-Agent
+"""Blockchain Business Logic Module for IA-Influencer-Agent
 
 This module provides comprehensive blockchain infrastructure for content creators,
 including smart contracts for content protection, immutable rights management,
@@ -31,7 +30,6 @@ Team Specialties:
 - DevOps Engineer: Blockchain infrastructure deployment, node management, monitoring
 - IA Prompt Engineer: AI-powered smart contract generation, natural language blockchain queries
 """
-
 from .smart_contracts import (
     ContentProtectionContract,
     LicensingContract,

@@ -1,5 +1,4 @@
-"""
-Advanced Monetization Engine Module
+"""Advanced Monetization Engine Module
 ===================================
 
 Professional monetization and revenue tracking system for content creators.
@@ -26,7 +25,6 @@ LEGAL NOTICE: Any attempt to steal, copy, reverse engineer, or use this intellec
 property without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) 
 will result in immediate legal action under German and international copyright law.
 """
-
 # Core Monetization Components
 from .revenue_calculator import (
     RevenueCalculator, RevenueMetrics, RevenueProjection, RevenueReport,

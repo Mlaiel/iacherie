@@ -1,5 +1,4 @@
-"""
-Core Content Management Module - IA Influencer Agent Platform
+"""Core Content Management Module - IA Influencer Agent Platform
 ================================================================
 
 This module provides the core content management functionality for the IA Influencer Agent platform,
@@ -24,7 +23,6 @@ Business Logic Flow:
 User (Creator) → Upload Multi-Format → IA Protection & Rights → SEO Optimization → 
 Matching & Collaboration → Distribution Multi-Platforms → Monetization Tracking
 """
-
 from .manager import ContentManager
 from .processor import ContentProcessor
 from .validator import ContentValidator

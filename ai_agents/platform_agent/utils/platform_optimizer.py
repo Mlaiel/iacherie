@@ -47,7 +47,12 @@ import ffmpeg
 
 from .platform_agent import PlatformType
 from ...core.ai_services import AIModelManager, VisionAnalyzer, AudioAnalyzer, TextAnalyzer
-from ...core.database import DatabaseManager
+try:
+    from core.database import DatabaseManager
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    DatabaseManager = DatabaseManager
 from ...core.cache import CacheManager
 from ...core.monitoring import MetricsCollector, PerformanceTracker
 from ...models.optimization_models import OptimizationJob, OptimizationResult, QualityMetrics

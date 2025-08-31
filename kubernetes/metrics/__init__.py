@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Metrics Deployment Module
+"""IA Influencer Agent - Metrics Deployment Module
 Enterprise metrics collection and monitoring deployment
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -22,7 +21,6 @@ Contact autorisé: mlaiel@live.de
 - Security Specialist: Fahed Mlaiel
 - Audio Processing Expert: Fahed Mlaiel
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

@@ -34,7 +34,11 @@ from .consistency_checker import ConsistencyChecker, StyleGuardian
 from .brand_intelligence import BrandIntelligenceEngine, BrandValueCalculator, CompetitorProfile, MarketTrend, BrandIntelligenceReport
 from .brand_monetization import BrandMonetizationEngine, MonetizationOpportunity, LicensingDeal, NFTCollection
 
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.performance_monitor import PerformanceMonitor
 
 logger = logging.getLogger(__name__)

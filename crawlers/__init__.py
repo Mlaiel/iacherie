@@ -1,5 +1,4 @@
-"""
-Crawlers Module - Main Coordinator
+"""Crawlers Module - Main Coordinator
 ==================================
 
 Professional crawler coordination system for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -70,8 +68,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerConfig:
-    """Crawler system configuration."""
-    max_concurrent_crawlers: int = 50
+    """Crawler system configuration."""    max_concurrent_crawlers: int = 50
     default_rate_limit: float = 1.0
     enable_proxy_rotation: bool = True
     enable_user_agent_rotation: bool = True
@@ -82,8 +79,7 @@ class CrawlerConfig:
     log_level: str = "INFO"
 
 class CrawlerOrchestrator:
-    """
-    Main crawler orchestration system.
+    """    Main crawler orchestration system.
     
     This class coordinates all crawler activities including:
     - Platform-specific crawling
@@ -93,11 +89,9 @@ class CrawlerOrchestrator:
     - Performance monitoring
     - Data persistence
     - Alert management
-    """
-    
+    """    
     def __init__(self, config: Optional[CrawlerConfig] = None):
-        """Initialize crawler orchestrator."""
-        self.config = config or CrawlerConfig()
+        """Initialize crawler orchestrator."""        self.config = config or CrawlerConfig()
         
         # Setup logging
         logging.basicConfig(level=getattr(logging, self.config.log_level))
@@ -158,8 +152,7 @@ class CrawlerOrchestrator:
         self,
         targets: List[Dict[str, Any]]
     ) -> Dict[str, str]:
-        """Start comprehensive monitoring for specified targets."""
-        target_ids = {}
+        """Start comprehensive monitoring for specified targets."""        target_ids = {}
         
         for target_config in targets:
             try:
@@ -196,8 +189,7 @@ class CrawlerOrchestrator:
         platform: str,
         content_type: str = "post"
     ) -> Optional[AnalysisResult]:
-        """Analyze content for violations and similarities."""
-        if not self.content_analyzer:
+        """Analyze content for violations and similarities."""        if not self.content_analyzer:
             logger.warning("Content analysis disabled")
             return None
         
@@ -231,8 +223,7 @@ class CrawlerOrchestrator:
         target: SurveillanceTarget,
         violations: List[Dict[str, Any]]
     ) -> None:
-        """Handle violations detected by surveillance system."""
-        try:
+        """Handle violations detected by surveillance system."""        try:
             logger.warning(
                 f"Surveillance violations detected for {target.platform}/{target.identifier}: "
                 f"{len(violations)} violations"
@@ -253,16 +244,13 @@ class CrawlerOrchestrator:
             logger.error(f"Surveillance violation handling failed: {e}")
     
     async def _handle_surveillance_completion(self, task) -> None:
-        """Handle surveillance task completion."""
-        logger.debug(f"Surveillance task completed: {task.task_id}")
+        """Handle surveillance task completion."""        logger.debug(f"Surveillance task completed: {task.task_id}")
     
     async def _handle_surveillance_error(self, task, error) -> None:
-        """Handle surveillance task errors."""
-        logger.error(f"Surveillance task failed: {task.task_id} - {error}")
+        """Handle surveillance task errors."""        logger.error(f"Surveillance task failed: {task.task_id} - {error}")
     
     async def _handle_content_violation(self, analysis_result: AnalysisResult) -> None:
-        """Handle content violations detected by analysis."""
-        try:
+        """Handle content violations detected by analysis."""        try:
             logger.warning(
                 f"Content violation detected for {analysis_result.content_id}: "
                 f"risk={analysis_result.risk_score:.2f}, "
@@ -302,8 +290,7 @@ class CrawlerOrchestrator:
         target: SurveillanceTarget,
         violations: List[Dict[str, Any]]
     ) -> None:
-        """Persist violation data to disk."""
-        try:
+        """Persist violation data to disk."""        try:
             violations_dir = self.data_dir / "violations"
             violations_dir.mkdir(exist_ok=True)
             
@@ -332,20 +319,16 @@ class CrawlerOrchestrator:
             logger.error(f"Failed to persist violation data: {e}")
     
     def add_violation_callback(self, callback: Callable) -> None:
-        """Add callback for violation events."""
-        self.violation_callbacks.append(callback)
+        """Add callback for violation events."""        self.violation_callbacks.append(callback)
     
     def add_analysis_callback(self, callback: Callable) -> None:
-        """Add callback for analysis events."""
-        self.analysis_callbacks.append(callback)
+        """Add callback for analysis events."""        self.analysis_callbacks.append(callback)
     
     def add_monitoring_callback(self, callback: Callable) -> None:
-        """Add callback for monitoring events."""
-        self.monitoring_callbacks.append(callback)
+        """Add callback for monitoring events."""        self.monitoring_callbacks.append(callback)
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
-        status = {
+        """Get comprehensive system status."""        status = {
             'timestamp': datetime.now().isoformat(),
             'orchestrator': {
                 'config': {
@@ -374,8 +357,7 @@ class CrawlerOrchestrator:
         return status
     
     async def shutdown(self) -> None:
-        """Shutdown orchestrator gracefully."""
-        logger.info("Shutting down crawler orchestrator...")
+        """Shutdown orchestrator gracefully."""        logger.info("Shutting down crawler orchestrator...")
         
         if self.surveillance_engine:
             await self.surveillance_engine.shutdown()

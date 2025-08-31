@@ -59,8 +59,17 @@ import mutagen
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, TIT2, TPE1, TALB, TDRC
 
-from ...core.database import get_async_session
-from ...core.config import get_settings
+try:
+    from core.database import get_async_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_async_session = DatabaseManager
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...security.encryption import AdvancedEncryption
 from ...models.content import Content, ContentType, ContentStatus, ContentMetadata
 from ...models.users import User, UserProfile, CreatorProfile

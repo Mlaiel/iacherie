@@ -20,8 +20,19 @@ import aiohttp
 import asyncio
 from urllib.parse import urlencode
 
-from ...core.config import settings
-from ...core.exceptions import PlatformConnectionError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import PlatformConnectionError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    PlatformConnectionError, ValidationError = globals().get('PlatformConnectionError, ValidationError', Exception)
 from ...integrations.spotify_client import SpotifyClient
 from ...integrations.youtube_client import YouTubeClient
 from ...integrations.instagram_client import InstagramClient

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Data Models Package
+"""IA Influencer Agent Platform - Data Models Package
 ORM models for content, creator, asset tracking, rights protection and monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ will result in legal action.
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .base import BaseModel, TimestampMixin, UUIDMixin, AuditMixin, SoftDeleteMixin
 from .user_models import User, UserProfile, UserSettings, UserSession, UserVerification
 from .creator_models import Creator, CreatorProfile, CreatorStatistics, CreatorSubscription

@@ -1,5 +1,4 @@
-"""
-Platform Integrations Database Module
+"""Platform Integrations Database Module
 
 Module de base de données pour les intégrations avec les plateformes externes
 dans la plateforme IA Influencer Agent.
@@ -25,7 +24,6 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
-
 from typing import List, Dict, Any, Optional, Union
 import logging
 
@@ -168,13 +166,11 @@ __all__ = [
 
 
 def get_module_info() -> Dict[str, Any]:
-    """
-    Retourne les informations complètes du module Platform Integrations.
+    """    Retourne les informations complètes du module Platform Integrations.
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """
-    return {
+    """    return {
         "name": "Platform Integrations Database",
         "version": __version__,
         "author": "Fahed Mlaiel",
@@ -212,13 +208,11 @@ def get_module_info() -> Dict[str, Any]:
 
 
 def get_module_statistics() -> Dict[str, Any]:
-    """
-    Retourne les statistiques du module Platform Integrations.
+    """    Retourne les statistiques du module Platform Integrations.
     
     Returns:
         Dict[str, Any]: Statistiques du module
-    """
-    return {
+    """    return {
         "total_models": 19,
         "connection_models": 4,
         "credential_models": 4, 
@@ -234,13 +228,11 @@ def get_module_statistics() -> Dict[str, Any]:
 
 
 def validate_module_health() -> Dict[str, Any]:
-    """
-    Valide la santé et la cohérence du module Platform Integrations.
+    """    Valide la santé et la cohérence du module Platform Integrations.
     
     Returns:
         Dict[str, Any]: Rapport de santé du module
-    """
-    health_report = {
+    """    health_report = {
         "status": "healthy",
         "warnings": [],
         "errors": [],

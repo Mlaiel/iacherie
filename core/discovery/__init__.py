@@ -1,5 +1,4 @@
-"""
-🔍 CORE DISCOVERY MODULE - Content & Creator Discovery Engine
+"""🔍 CORE DISCOVERY MODULE - Content & Creator Discovery Engine
 ===========================================================
 
 Team Specialties:
@@ -42,7 +41,6 @@ Key Features:
 - Performance optimization with caching strategies
 - Professional analytics and insights
 """
-
 from .content_explorer import (
     ContentExplorer,
     ContentFilter,

@@ -1,5 +1,4 @@
-"""
-Content Protection Deployment Module
+"""Content Protection Deployment Module
 
 Enterprise-grade deployment infrastructure for AI-powered content protection,
 including fingerprinting servers, crawler deployment, detection systems,
@@ -22,7 +21,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .fingerprinting_servers import FingerprintingClusterManager, AudioFingerprintServer
 from .fingerprinting_servers import VideoFingerprintServer, ImageFingerprintServer, TextFingerprintServer
 from .crawler_deployment import ContentCrawlerOrchestrator, PlatformCrawlerManager

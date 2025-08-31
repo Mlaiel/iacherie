@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Marketplace Business Module
+"""IA Influencer Agent - Marketplace Business Module
 Enterprise-grade marketplace system for content creators and AI-powered collaborations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -24,7 +23,6 @@ This module provides comprehensive marketplace functionality including:
 - Multi-format content distribution
 - Revenue sharing and monetization
 """
-
 from .content_manager import ContentManager, ContentMetadata
 from .creator_profile import CreatorProfileManager, CreatorProfile
 from .collaboration_engine import CollaborationEngine, CollaborationOpportunity

@@ -21,7 +21,14 @@ from jinja2 import Template
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-from ...core.exceptions import ReportError
+try:
+    from core.exceptions import ReportError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ReportError = globals().get('ReportError', Exception)
 from ...utils.data_processor import DataProcessor
 from ...utils.chart_generator import ChartGenerator
 

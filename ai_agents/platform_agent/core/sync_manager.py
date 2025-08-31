@@ -40,7 +40,12 @@ from sqlalchemy import select, update, insert, delete, and_, or_
 
 from .platform_agent import PlatformType
 from .platform_connector import PlatformConnector
-from ...core.database import DatabaseManager, AsyncDatabaseSession
+try:
+    from core.database import DatabaseManager, AsyncDatabaseSession
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    DatabaseManager, AsyncDatabaseSession = DatabaseManager
 from ...core.cache import CacheManager, DistributedCache
 from ...core.monitoring import MetricsCollector, PerformanceTracker, AlertManager
 from ...core.websocket import WebSocketManager

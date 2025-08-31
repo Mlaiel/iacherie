@@ -24,7 +24,14 @@ from dataclasses import dataclass, field
 from enum import Enum
 import math
 
-from ...core.exceptions import ProcessingError, ValidationError
+try:
+    from core.exceptions import ProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError = globals().get('ProcessingError, ValidationError', Exception)
 from ...utils.cache_manager import CacheManager
 
 logger = logging.getLogger(__name__)

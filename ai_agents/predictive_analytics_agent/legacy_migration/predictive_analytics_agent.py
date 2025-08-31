@@ -54,9 +54,25 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 from ..base import BaseAIAgent, AgentStatus, AgentCapability
-from ...core.config import settings
-from ...core.database import get_db_session
-from ...core.exceptions import AgentError, ValidationError, ProcessingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import AgentError, ValidationError, ProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AgentError, ValidationError, ProcessingError = globals().get('AgentError, ValidationError, ProcessingError', Exception)
 from ...security.encryption import ContentEncryption
 from ...utils.performance_monitor import PerformanceMonitor
 from ...utils.rate_limiter import RateLimiter

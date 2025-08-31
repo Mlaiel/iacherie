@@ -63,8 +63,19 @@ import plotly.graph_objects as go
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-from ...core.config import settings
-from ...core.exceptions import ProcessingError, ValidationError, MLModelError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ProcessingError, ValidationError, MLModelError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError, MLModelError = globals().get('ProcessingError, ValidationError, MLModelError', Exception)
 from ...models.content import ContentType, ContentMetadata
 from ...models.viral import ViralPrediction, ViralFeatures, ViralityThreshold
 from ...models.engagement import EngagementMetrics, AudienceInsights
@@ -775,8 +786,19 @@ import cv2
 import librosa
 import hashlib
 
-from ...core.config import settings
-from ...core.exceptions import ProcessingError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError = globals().get('ProcessingError, ValidationError', Exception)
 from ...ml.base_model import BaseMLModel
 from ...models.content import ContentType, ContentMetadata, ContentFeatures
 from ...models.viral import ViralityScore, ViralPrediction, ContentRanking

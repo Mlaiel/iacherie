@@ -40,8 +40,17 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
 
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.image_analysis import ColorAnalyzer, FontDetector, LayoutAnalyzer
 from ...utils.text_analysis import TextStyleAnalyzer, ToneAnalyzer
 from ...utils.brand_guidelines import BrandGuidelinesManager

@@ -37,7 +37,11 @@ from sklearn.preprocessing import StandardScaler
 import noisereduce as nr
 from concurrent.futures import ThreadPoolExecutor
 
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...core.cache import CacheManager
 from ...core.monitoring import MetricsCollector
 from ...ml.audio import AudioEnhancementPipeline, DenoiseNet

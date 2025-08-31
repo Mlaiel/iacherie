@@ -21,8 +21,7 @@
 # STRICTLY PROHIBITED and will result in immediate legal action.
 # All rights reserved. Patent pending.
 
-"""
-Computer Vision Tests Module
+"""Computer Vision Tests Module
 
 This module contains comprehensive test suites for all computer vision components
 of the IA Influencer Agent platform. It provides industrial-grade testing
@@ -40,7 +39,6 @@ Business Logic Testing Coverage:
 User Upload → AI Analysis → Content Protection → SEO Optimization → 
 Collaboration Matching → Multi-Platform Distribution → Monetization
 """
-
 import sys
 import os
 import warnings
@@ -76,59 +74,44 @@ __copyright__ = "Copyright © 2024 Fahed Mlaiel. All rights reserved."
 import unittest
 
 class ImageAnalysisTests(unittest.TestCase):
-    """Tests for Image Analysis"""
-    
+    """Tests for Image Analysis"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.analyzer = None  # Will be implemented
+        """Set up test fixtures"""        self.analyzer = None  # Will be implemented
     
     def test_image_analysis(self):
-        """Test image analysis functionality"""
-        pass
+        """Test image analysis functionality"""        pass
 
 class ObjectDetectionTests(unittest.TestCase):
-    """Tests for Object Detection"""
-    
+    """Tests for Object Detection"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.detector = None  # Will be implemented
+        """Set up test fixtures"""        self.detector = None  # Will be implemented
     
     def test_object_detection(self):
-        """Test object detection functionality"""
-        pass
+        """Test object detection functionality"""        pass
 
 class FacialRecognitionTests(unittest.TestCase):
-    """Tests for Facial Recognition"""
-    
+    """Tests for Facial Recognition"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.recognizer = None  # Will be implemented
+        """Set up test fixtures"""        self.recognizer = None  # Will be implemented
     
     def test_facial_recognition(self):
-        """Test facial recognition functionality"""
-        pass
+        """Test facial recognition functionality"""        pass
 
 class SceneAnalysisTests(unittest.TestCase):
-    """Tests for Scene Analysis"""
-    
+    """Tests for Scene Analysis"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.scene_analyzer = None  # Will be implemented
+        """Set up test fixtures"""        self.scene_analyzer = None  # Will be implemented
     
     def test_scene_analysis(self):
-        """Test scene analysis functionality"""
-        pass
+        """Test scene analysis functionality"""        pass
 
 class VisualSearchTests(unittest.TestCase):
-    """Tests for Visual Search"""
-    
+    """Tests for Visual Search"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.visual_search = None  # Will be implemented
+        """Set up test fixtures"""        self.visual_search = None  # Will be implemented
     
     def test_visual_search(self):
-        """Test visual search functionality"""
-        pass
+        """Test visual search functionality"""        pass
 
 # Export main testing classes
 __all__ = [

@@ -27,9 +27,20 @@ import json
 from pathlib import Path
 
 from ..base import BaseAgent, AgentStatus
-from ...core.exceptions import ObjectDetectionError, ValidationError
+try:
+    from core.exceptions import ObjectDetectionError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ObjectDetectionError, ValidationError = globals().get('ObjectDetectionError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,4 @@
-"""
-Intelligence Algorithms Module - IA Influencer Agent Platform
+"""Intelligence Algorithms Module - IA Influencer Agent Platform
 ============================================================
 
 Ultra-advanced conversational intelligence algorithms module providing cutting-edge
@@ -46,7 +45,6 @@ under German and International copyright laws.
 
 Contact: mlaiel@live.de for legal authorization inquiries only.
 """
-
 # Core system modules
 from . import config
 from . import index

@@ -53,8 +53,19 @@ import docx2txt
 from odf import text, teletype
 from odf.opendocument import load
 
-from ...core.config import settings
-from ...core.exceptions import ProcessingError, ValidationError, UnsupportedFormatError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ProcessingError, ValidationError, UnsupportedFormatError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError, UnsupportedFormatError = globals().get('ProcessingError, ValidationError, UnsupportedFormatError', Exception)
 from ...monitoring.metrics import MetricsCollector
 from ...utils.compression_utils import CompressionManager
 

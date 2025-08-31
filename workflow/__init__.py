@@ -1,5 +1,4 @@
-"""
-Advanced workflow orchestration system for IA-Influencer Agent.
+"""Advanced workflow orchestration system for IA-Influencer Agent.
 
 This module provides comprehensive, enterprise-grade workflow orchestration including
 intelligent content processing pipelines, AI-powered automation, multi-platform
@@ -10,7 +9,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
-
 from .pipeline import (
     IntelligentContentPipeline,
     PipelineStep,
@@ -122,8 +120,7 @@ from .quality_assurance import (
 
 # Main Orchestrator
 class AdvancedWorkflowOrchestrator:
-    """
-    Advanced workflow orchestration system for IA Influencer Agent.
+    """    Advanced workflow orchestration system for IA Influencer Agent.
     
     Provides comprehensive, enterprise-grade workflow coordination including:
     - Intelligent content processing pipelines
@@ -133,13 +130,11 @@ class AdvancedWorkflowOrchestrator:
     - Revenue optimization and monetization
     - Collaborative workflow management
     - Automated optimization and learning systems
-    """
-    pass
+    """    pass
 
 # Workflow Types
 class WorkflowType:
-    """Enumeration of supported workflow types."""
-    CONTENT_PROCESSING = "content_processing"
+    """Enumeration of supported workflow types."""    CONTENT_PROCESSING = "content_processing"
     CONTENT_ANALYSIS = "content_analysis"
     CONTENT_PROTECTION = "content_protection"
     MULTI_PLATFORM_DISTRIBUTION = "multi_platform_distribution"
@@ -150,16 +145,14 @@ class WorkflowType:
 
 # Orchestration Modes
 class OrchestrationMode:
-    """Workflow orchestration execution modes."""
-    SEQUENTIAL = "sequential"
+    """Workflow orchestration execution modes."""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     INTELLIGENT = "intelligent"
     CUSTOM = "custom"
 
 # Priority Levels
 class PriorityLevel:
-    """Priority levels for workflow execution."""
-    CRITICAL = "critical"
+    """Priority levels for workflow execution."""    CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -358,68 +351,55 @@ from .collaboration import (
 
 # Workflow factory functions
 def create_content_processing_workflow(config: dict = None):
-    """Create a content processing workflow with optimal configuration."""
-    return ContentProcessingWorkflow(config or {})
+    """Create a content processing workflow with optimal configuration."""    return ContentProcessingWorkflow(config or {})
 
 
 def create_distribution_workflow(config: dict = None):
-    """Create a distribution workflow with multi-platform support."""
-    return DistributionWorkflow(config or {})
+    """Create a distribution workflow with multi-platform support."""    return DistributionWorkflow(config or {})
 
 
 def create_seo_optimization_workflow(config: dict = None):
-    """Create an SEO optimization workflow with AI-powered recommendations."""
-    return SEOOptimizationWorkflow(config or {})
+    """Create an SEO optimization workflow with AI-powered recommendations."""    return SEOOptimizationWorkflow(config or {})
 
 
 def create_monitoring_workflow(config: dict = None):
-    """Create a monitoring workflow with real-time analytics."""
-    return MonitoringWorkflow(config or {})
+    """Create a monitoring workflow with real-time analytics."""    return MonitoringWorkflow(config or {})
 
 
 def create_automation_workflow(config: dict = None):
-    """Create an automation workflow with intelligent triggers."""
-    return AutomationWorkflow(config or {})
+    """Create an automation workflow with intelligent triggers."""    return AutomationWorkflow(config or {})
 
 
 def create_analytics_workflow(config: dict = None):
-    """Create an analytics workflow with comprehensive reporting."""
-    return AnalyticsWorkflow(config or {})
+    """Create an analytics workflow with comprehensive reporting."""    return AnalyticsWorkflow(config or {})
 
 
 def create_security_workflow(config: dict = None):
-    """Create a security workflow with threat detection."""
-    return SecurityWorkflow(config or {})
+    """Create a security workflow with threat detection."""    return SecurityWorkflow(config or {})
 
 
 def create_scheduling_workflow(config: dict = None):
-    """Create a scheduling workflow with optimal timing."""
-    return SchedulingWorkflow(config or {})
+    """Create a scheduling workflow with optimal timing."""    return SchedulingWorkflow(config or {})
 
 
 def create_integration_workflow(config: dict = None):
-    """Create an integration workflow with service connectivity."""
-    return IntegrationWorkflow(config or {})
+    """Create an integration workflow with service connectivity."""    return IntegrationWorkflow(config or {})
 
 
 def create_fingerprinting_workflow(config: dict = None):
-    """Create a content fingerprinting workflow with AI-powered detection."""
-    return ContentFingerprintingWorkflow(config or {})
+    """Create a content fingerprinting workflow with AI-powered detection."""    return ContentFingerprintingWorkflow(config or {})
 
 
 def create_protection_workflow(config: dict = None):
-    """Create a content protection workflow with automated enforcement."""
-    return ContentProtectionWorkflow(config or {})
+    """Create a content protection workflow with automated enforcement."""    return ContentProtectionWorkflow(config or {})
 
 
 def create_revenue_optimization_workflow(config: dict = None):
-    """Create a revenue optimization workflow with monetization intelligence."""
-    return RevenueOptimizationWorkflow(config or {})
+    """Create a revenue optimization workflow with monetization intelligence."""    return RevenueOptimizationWorkflow(config or {})
 
 
 def create_collaboration_workflow(config: dict = None):
-    """Create a collaboration workflow with partner matching and campaign management."""
-    return CollaborationWorkflow(config or {})
+    """Create a collaboration workflow with partner matching and campaign management."""    return CollaborationWorkflow(config or {})
 
 
 # Default configurations
@@ -711,24 +691,20 @@ DEFAULT_CONFIG = {
 }
 
 def get_default_config():
-    """Get default workflow module configuration."""
-    return DEFAULT_CONFIG.copy()
+    """Get default workflow module configuration."""    return DEFAULT_CONFIG.copy()
 
 def create_default_orchestrator(config=None):
-    """Create a default workflow orchestrator with standard configuration."""
-    from .orchestration import ContentWorkflowOrchestrator
+    """Create a default workflow orchestrator with standard configuration."""    from .orchestration import ContentWorkflowOrchestrator
     
     config = config or get_default_config()
     return ContentWorkflowOrchestrator(config=config)
 
 def create_intelligent_pipeline(pipeline_id=None, config=None):
-    """Create an intelligent content pipeline with advanced features."""
-    config = config or get_default_config()
+    """Create an intelligent content pipeline with advanced features."""    config = config or get_default_config()
     return IntelligentContentPipeline(pipeline_id=pipeline_id, config=config)
 
 def create_enterprise_engine(config=None):
-    """Create an enterprise workflow engine with full capabilities."""
-    config = config or get_default_config()
+    """Create an enterprise workflow engine with full capabilities."""    config = config or get_default_config()
     return EnterpriseWorkflowEngine(config=config)
 
 def create_advanced_scheduler(config=None):

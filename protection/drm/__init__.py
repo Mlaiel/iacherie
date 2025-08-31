@@ -1,5 +1,4 @@
-"""
-🔐 Ultra-Industrial Digital Rights Management (DRM) Orchestration
+"""🔐 Ultra-Industrial Digital Rights Management (DRM) Orchestration
 =================================================================
 
 Enterprise-grade DRM ecosystem with advanced access control, blockchain integration,
@@ -52,7 +51,6 @@ UNAUTHORIZED ACCESS IS NATIONAL SECURITY THREAT:
 Contact mlaiel@live.de for MANDATORY national security authorization.
 Unauthorized access triggers automatic homeland security response.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -79,31 +77,27 @@ from .blockchain_integration import BlockchainIntegration, BlockchainNetwork, Tr
 logger = logging.getLogger(__name__)
 
 class AccessLevel(str, Enum):
-    """Content access levels."""
-    PUBLIC = "public"
+    """Content access levels."""    PUBLIC = "public"
     RESTRICTED = "restricted"
     PREMIUM = "premium"
     PRIVATE = "private"
 
 class UsageType(str, Enum):
-    """Types of content usage."""
-    VIEW = "view"
+    """Types of content usage."""    VIEW = "view"
     DOWNLOAD = "download"
     STREAM = "stream"
     SHARE = "share"
     EMBED = "embed"
 
 class LicenseType(str, Enum):
-    """Content license types."""
-    SINGLE_USE = "single_use"
+    """Content license types."""    SINGLE_USE = "single_use"
     TIME_LIMITED = "time_limited"
     UNLIMITED = "unlimited"
     SUBSCRIPTION = "subscription"
 
 @dataclass
 class AccessPolicy:
-    """Content access policy."""
-    content_id: str
+    """Content access policy."""    content_id: str
     access_level: AccessLevel
     allowed_usage: List[UsageType]
     license_type: LicenseType
@@ -113,8 +107,7 @@ class AccessPolicy:
     device_restrictions: Optional[List[str]] = None
 
 class ContentLicense(BaseModel):
-    """Digital content license."""
-    id: Optional[str] = None
+    """Digital content license."""    id: Optional[str] = None
     content_id: str
     user_id: int
     license_type: LicenseType
@@ -129,8 +122,7 @@ class ContentLicense(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class UsageEvent(BaseModel):
-    """Content usage tracking event."""
-    id: Optional[str] = None
+    """Content usage tracking event."""    id: Optional[str] = None
     license_id: str
     content_id: str
     user_id: int
@@ -143,8 +135,7 @@ class UsageEvent(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class DRMService:
-    """
-    Digital Rights Management service for content protection.
+    """    Digital Rights Management service for content protection.
     
     Features:
     - License management and validation
@@ -153,11 +144,9 @@ class DRMService:
     - Geographic and device restrictions
     - Time-based access control
     - Revenue tracking integration
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize DRM service."""
-        self.config = config
+        """Initialize DRM service."""        self.config = config
         self._initialized = False
         
         # License storage
@@ -174,8 +163,7 @@ class DRMService:
         logger.info("DRM Service initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the DRM service."""
-        try:
+        """Initialize the DRM service."""        try:
             # Load existing licenses and policies
             await self._load_persistent_data()
             
@@ -188,8 +176,7 @@ class DRMService:
             return False
 
     async def _load_persistent_data(self) -> None:
-        """Load persistent DRM data."""
-        # Placeholder for loading from database
+        """Load persistent DRM data."""        # Placeholder for loading from database
         logger.debug("Loading persistent DRM data")
 
     async def create_license(
@@ -202,8 +189,7 @@ class DRMService:
         duration_days: Optional[int] = None,
         max_usage_count: Optional[int] = None
     ) -> ContentLicense:
-        """
-        Create a new content license.
+        """        Create a new content license.
         
         Args:
             content_id: ID of the content to license
@@ -216,8 +202,7 @@ class DRMService:
             
         Returns:
             ContentLicense: Created license
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         # Generate license key
@@ -253,8 +238,7 @@ class DRMService:
         return license_obj
 
     def _generate_license_key(self, content_id: str, user_id: int) -> str:
-        """Generate secure license key."""
-        # Combine content ID, user ID, timestamp, and secret
+        """Generate secure license key."""        # Combine content ID, user ID, timestamp, and secret
         timestamp = str(int(datetime.utcnow().timestamp()))
         key_material = f"{content_id}:{user_id}:{timestamp}:{self.encryption_key}"
         
@@ -269,8 +253,7 @@ class DRMService:
         usage_type: UsageType,
         user_context: Optional[Dict[str, Any]] = None
     ) -> Tuple[bool, str, Optional[ContentLicense]]:
-        """
-        Validate a license for content access.
+        """        Validate a license for content access.
         
         Args:
             license_key: License key to validate
@@ -280,8 +263,7 @@ class DRMService:
             
         Returns:
             Tuple[bool, str, ContentLicense]: (is_valid, reason, license)
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             return False, "Service not initialized", None
         
         # Find license by key
@@ -328,8 +310,7 @@ class DRMService:
         policy: AccessPolicy,
         user_context: Dict[str, Any]
     ) -> Tuple[bool, str]:
-        """Validate access policy restrictions."""
-        # Geographic restrictions
+        """Validate access policy restrictions."""        # Geographic restrictions
         if policy.geographic_restrictions:
             user_location = user_context.get('location')
             if user_location and user_location not in policy.geographic_restrictions:
@@ -349,8 +330,7 @@ class DRMService:
         usage_type: UsageType,
         user_context: Optional[Dict[str, Any]] = None
     ) -> UsageEvent:
-        """
-        Record content usage event.
+        """        Record content usage event.
         
         Args:
             license_id: License being used
@@ -359,8 +339,7 @@ class DRMService:
             
         Returns:
             UsageEvent: Recorded usage event
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         # Get license
@@ -392,8 +371,7 @@ class DRMService:
         return usage_event
 
     async def revoke_license(self, license_id: str, reason: str = "Revoked") -> bool:
-        """
-        Revoke a content license.
+        """        Revoke a content license.
         
         Args:
             license_id: License to revoke
@@ -401,8 +379,7 @@ class DRMService:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             if license_id in self.active_licenses:
                 license_obj = self.active_licenses[license_id]
                 license_obj.is_active = False
@@ -424,8 +401,7 @@ class DRMService:
         user_id: int,
         active_only: bool = True
     ) -> List[ContentLicense]:
-        """Get all licenses for a user."""
-        user_licenses = [
+        """Get all licenses for a user."""        user_licenses = [
             license_obj for license_obj in self.active_licenses.values()
             if license_obj.user_id == user_id
         ]
@@ -447,8 +423,7 @@ class DRMService:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get usage analytics for content."""
-        # Filter usage events
+        """Get usage analytics for content."""        # Filter usage events
         content_events = [
             event for event in self.usage_events
             if event.content_id == content_id
@@ -491,8 +466,7 @@ class DRMService:
         content_id: str,
         policy: AccessPolicy
     ) -> bool:
-        """Set access policy for content."""
-        try:
+        """Set access policy for content."""        try:
             self.access_policies[content_id] = policy
             logger.info(f"Set access policy for content {content_id}")
             return True
@@ -501,8 +475,7 @@ class DRMService:
             return False
 
     async def get_drm_statistics(self) -> Dict[str, Any]:
-        """Get DRM service statistics."""
-        active_license_count = sum(
+        """Get DRM service statistics."""        active_license_count = sum(
             1 for lic in self.active_licenses.values()
             if lic.is_active and (
                 not lic.expires_at or lic.expires_at > datetime.utcnow()
@@ -522,8 +495,7 @@ class DRMService:
         }
 
     async def shutdown(self) -> None:
-        """Shutdown the DRM service."""
-        logger.info("Shutting down DRM Service...")
+        """Shutdown the DRM service."""        logger.info("Shutting down DRM Service...")
         
         # Save persistent data
         await self._save_persistent_data()
@@ -532,6 +504,5 @@ class DRMService:
         logger.info("DRM Service shutdown complete")
 
     async def _save_persistent_data(self) -> None:
-        """Save persistent DRM data."""
-        # Placeholder for saving to database
+        """Save persistent DRM data."""        # Placeholder for saving to database
         logger.debug("Saving persistent DRM data")

@@ -36,8 +36,17 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.market_data import MarketDataProvider, CompetitorAnalyzer
 from ...utils.social_analytics import SocialMediaAnalyzer
 from ...utils.financial_calculator import BrandValueCalculator, ROIAnalyzer

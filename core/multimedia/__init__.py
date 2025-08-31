@@ -1,5 +1,4 @@
-"""
-Core Multimedia Module - Enterprise Multimedia Processing Hub
+"""Core Multimedia Module - Enterprise Multimedia Processing Hub
 
 Advanced multimedia processing engine for IA Influencer Agent platform.
 Handles complex multi-format content processing with AI-powered enhancement.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 from .orchestrator import MultimediaOrchestrator
 from .registry import MultimediaRegistry
 from .converter import MultimediaConverter

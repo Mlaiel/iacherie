@@ -1,5 +1,4 @@
-"""
-Database Transactions Module - Core Components
+"""Database Transactions Module - Core Components
 
 Enterprise-grade transaction management system providing distributed transaction
 coordination, ACID compliance, performance monitoring, and security controls.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from .transaction_coordinator import TransactionCoordinator, TransactionContext
 from .distributed_transactions import DistributedTransactionManager, DistributedTransaction
 from .atomicity_manager import AtomicityManager, AtomicOperation

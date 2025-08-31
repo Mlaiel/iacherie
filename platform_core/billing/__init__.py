@@ -1,5 +1,4 @@
-"""
-🚀 Platform Core Billing System - IA Influencer Agent Platform Enterprise
+"""🚀 Platform Core Billing System - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/platform_core/billing/
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Gestion complète de facturation et paiements pour plateforme IA
 - Gestion des taxes internationales (TVA/TPS/HST)
 - Rapports financiers et comptabilité analytique
 """
-
 from .payment_processor import PaymentProcessor, StripeProcessor, PayPalProcessor
 from .invoice_manager import InvoiceManager, Invoice, InvoiceItem
 from .subscription_billing import SubscriptionBilling, BillingCycle

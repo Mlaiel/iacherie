@@ -1,5 +1,4 @@
-"""
-🚀 Configuration Management Module - IA-Influencer-Agent
+"""🚀 Configuration Management Module - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de
 Enterprise-grade deployment configuration management system.
 ==================================================================
 """
-
 from .environment_manager import (
     EnvironmentManager,
     EnvironmentConfiguration,
@@ -568,8 +566,7 @@ __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 class ConfigurationModule:
-    """
-    Master configuration module for deployment management.
+    """    Master configuration module for deployment management.
     
     Provides unified interface for enterprise-grade configuration management
     across multiple environments, cloud platforms, and deployment strategies.
@@ -585,11 +582,9 @@ class ConfigurationModule:
     - Secrets management and rotation
     - Backup and disaster recovery
     - Infrastructure as Code templates
-    """
-    
+    """    
     def __init__(self):
-        """Initialize configuration module with all managers"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize configuration module with all managers"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Core managers
         self.base_config = BaseConfigurationManager()
@@ -628,8 +623,7 @@ class ConfigurationModule:
         security_level: str = "high",
         enable_monitoring: bool = True
     ) -> bool:
-        """
-        Initialize complete configuration for specified environment.
+        """        Initialize complete configuration for specified environment.
         
         Args:
             environment: Target environment (development, staging, production)
@@ -639,8 +633,7 @@ class ConfigurationModule:
             
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info(f"Initializing configuration for environment: {environment}")
             
             # Initialize all managers
@@ -703,8 +696,7 @@ class ConfigurationModule:
         target_environment: str,
         dry_run: bool = False
     ) -> Dict[str, Any]:
-        """
-        Deploy complete environment with all configurations.
+        """        Deploy complete environment with all configurations.
         
         Args:
             target_environment: Target environment to deploy
@@ -712,8 +704,7 @@ class ConfigurationModule:
             
         Returns:
             Dict containing deployment results and metrics
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting deployment to {target_environment} (dry_run={dry_run})")
             
             deployment_id = f"deploy_{target_environment}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -747,8 +738,7 @@ class ConfigurationModule:
             raise
     
     async def get_environment_status(self, environment: str) -> Dict[str, Any]:
-        """Get comprehensive status of specified environment"""
-        try:
+        """Get comprehensive status of specified environment"""        try:
             status = {
                 "environment": environment,
                 "timestamp": datetime.now(),
@@ -787,8 +777,7 @@ class ConfigurationModule:
             raise
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get module information and metadata"""
-        return {
+        """Get module information and metadata"""        return {
             "name": "Deployment Configuration Module",
             "version": __version__,
             "author": __author__,

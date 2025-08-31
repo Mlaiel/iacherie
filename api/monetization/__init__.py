@@ -1,5 +1,4 @@
-"""
-Comprehensive monetization system for IA-Influencer platform.
+"""Comprehensive monetization system for IA-Influencer platform.
 
 This package provides industrial-grade monetization capabilities including:
 - Advanced revenue calculation with AI-powered forecasting
@@ -35,7 +34,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 # Import all monetization modules
 from .revenue_calculator import (
     AdvancedRevenueCalculator,
@@ -97,8 +95,7 @@ from ..core.models import BaseModel
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams available to creators."""
-    SUBSCRIPTION = "subscription"
+    """Types of revenue streams available to creators."""    SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     LICENSING = "licensing"
     SPONSORSHIP = "sponsorship"
@@ -113,8 +110,7 @@ class RevenueStreamType(Enum):
 
 
 class PricingStrategy(Enum):
-    """Pricing strategy models."""
-    FIXED = "fixed"
+    """Pricing strategy models."""    FIXED = "fixed"
     DYNAMIC = "dynamic"
     TIERED = "tiered"
     FREEMIUM = "freemium"
@@ -125,8 +121,7 @@ class PricingStrategy(Enum):
 
 
 class PaymentFrequency(Enum):
-    """Payment frequency options."""
-    ONE_TIME = "one_time"
+    """Payment frequency options."""    ONE_TIME = "one_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -135,8 +130,7 @@ class PaymentFrequency(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies."""
-    USD = "USD"
+    """Supported currencies."""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -149,8 +143,7 @@ class Currency(Enum):
 
 
 class SubscriptionTier(Enum):
-    """Subscription tier levels."""
-    BASIC = "basic"
+    """Subscription tier levels."""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -159,8 +152,7 @@ class SubscriptionTier(Enum):
 
 @dataclass
 class PricingTier:
-    """Pricing tier configuration."""
-    tier_id: str
+    """Pricing tier configuration."""    tier_id: str
     name: str
     description: str
     price: Decimal
@@ -178,8 +170,7 @@ class PricingTier:
 
 @dataclass
 class RevenueStream:
-    """Revenue stream configuration."""
-    stream_id: str
+    """Revenue stream configuration."""    stream_id: str
     creator_id: str
     stream_type: RevenueStreamType
     name: str
@@ -196,8 +187,7 @@ class RevenueStream:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics."""
-    total_revenue: Decimal
+    """Revenue performance metrics."""    total_revenue: Decimal
     monthly_recurring_revenue: Decimal
     average_revenue_per_user: Decimal
     conversion_rate: float
@@ -212,8 +202,7 @@ class RevenueMetrics:
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction record."""
-    transaction_id: str
+    """Payment transaction record."""    transaction_id: str
     user_id: str
     creator_id: str
     revenue_stream_id: str
@@ -229,8 +218,7 @@ class PaymentTransaction:
 
 
 class MonetizationEngine:
-    """
-    Advanced monetization and revenue optimization engine.
+    """    Advanced monetization and revenue optimization engine.
     
     Provides comprehensive revenue generation capabilities including:
     - Multiple revenue stream management
@@ -239,8 +227,7 @@ class MonetizationEngine:
     - Payment processing integration
     - Revenue analytics and forecasting
     - Automated pricing strategies
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("monetization.engine")
@@ -260,8 +247,7 @@ class MonetizationEngine:
         self.logger.info("MonetizationEngine initialized successfully")
     
     def _initialize_monetization_components(self):
-        """Initialize monetization engine components."""
-        try:
+        """Initialize monetization engine components."""        try:
             # Revenue stream storage
             self.revenue_streams: Dict[str, RevenueStream] = {}
             self.pricing_tiers: Dict[str, List[PricingTier]] = {}
@@ -282,8 +268,7 @@ class MonetizationEngine:
             raise MonetizationException(f"Monetization initialization error: {e}")
     
     def _initialize_payment_processors(self) -> Dict[str, Any]:
-        """Initialize payment processing integrations."""
-        processors = {}
+        """Initialize payment processing integrations."""        processors = {}
         
         try:
             # Stripe integration (placeholder)
@@ -321,13 +306,11 @@ class MonetizationEngine:
         creator_id: str,
         stream_config: Dict[str, Any]
     ) -> RevenueStream:
-        """
-        Create new revenue stream for creator.
+        """        Create new revenue stream for creator.
         
         Sets up comprehensive revenue stream with pricing strategy,
         payment processing integration, and analytics tracking.
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating revenue stream for creator: {creator_id}")
             
             # Generate unique stream ID
@@ -383,8 +366,7 @@ class MonetizationEngine:
         tier_config: Dict[str, Any],
         currency: Currency
     ) -> PricingTier:
-        """Create pricing tier from configuration."""
-        tier_id = f"tier_{uuid.uuid4().hex[:8]}"
+        """Create pricing tier from configuration."""        tier_id = f"tier_{uuid.uuid4().hex[:8]}"
         
         return PricingTier(
             tier_id=tier_id,
@@ -403,8 +385,7 @@ class MonetizationEngine:
         )
     
     async def _initialize_stream_analytics(self, stream_id: str):
-        """Initialize analytics tracking for revenue stream."""
-        self.pricing_performance[stream_id] = {
+        """Initialize analytics tracking for revenue stream."""        self.pricing_performance[stream_id] = {
             "views": 0,
             "conversions": 0,
             "revenue": Decimal('0.00'),
@@ -415,8 +396,7 @@ class MonetizationEngine:
         }
     
     async def _configure_payment_processing(self, revenue_stream: RevenueStream):
-        """Configure payment processing for revenue stream."""
-        try:
+        """Configure payment processing for revenue stream."""        try:
             # Select appropriate payment processor
             preferred_processors = self._get_preferred_processors(
                 revenue_stream.currency,
@@ -441,8 +421,7 @@ class MonetizationEngine:
         currency: Currency,
         stream_type: RevenueStreamType
     ) -> List[str]:
-        """Get preferred payment processors for currency and stream type."""
-        preferred = []
+        """Get preferred payment processors for currency and stream type."""        preferred = []
         
         # Add processors based on currency support
         for processor, config in self.payment_processors.items():
@@ -464,8 +443,7 @@ class MonetizationEngine:
         processor: str,
         revenue_stream: RevenueStream
     ):
-        """Set up processor-specific configuration."""
-        # This would integrate with actual payment processors in production
+        """Set up processor-specific configuration."""        # This would integrate with actual payment processors in production
         # For now, we store configuration metadata
         processor_config = {
             "processor": processor,
@@ -488,13 +466,11 @@ class MonetizationEngine:
         user_id: str,
         payment_details: Dict[str, Any]
     ) -> PaymentTransaction:
-        """
-        Process payment for revenue stream.
+        """        Process payment for revenue stream.
         
         Handles payment processing through configured gateways
         and updates revenue analytics and creator earnings.
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing payment for stream: {stream_id}")
             
             # Validate revenue stream
@@ -566,8 +542,7 @@ class MonetizationEngine:
         revenue_stream: RevenueStream,
         payment_details: Dict[str, Any]
     ) -> Decimal:
-        """Calculate payment amount based on pricing strategy."""
-        if revenue_stream.pricing_strategy == PricingStrategy.FIXED:
+        """Calculate payment amount based on pricing strategy."""        if revenue_stream.pricing_strategy == PricingStrategy.FIXED:
             return revenue_stream.base_price
         
         elif revenue_stream.pricing_strategy == PricingStrategy.TIERED:
@@ -594,8 +569,7 @@ class MonetizationEngine:
         revenue_stream: RevenueStream,
         payment_details: Dict[str, Any]
     ) -> Decimal:
-        """Calculate dynamic price based on various factors."""
-        base_price = revenue_stream.base_price
+        """Calculate dynamic price based on various factors."""        base_price = revenue_stream.base_price
         
         # Get stream performance metrics
         performance = self.pricing_performance.get(revenue_stream.stream_id, {})
@@ -631,8 +605,7 @@ class MonetizationEngine:
         return dynamic_price.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _get_time_based_pricing_factor(self) -> Decimal:
-        """Calculate time-based pricing factor."""
-        now = datetime.utcnow()
+        """Calculate time-based pricing factor."""        now = datetime.utcnow()
         
         # Holiday seasons (example)
         holiday_periods = [
@@ -652,8 +625,7 @@ class MonetizationEngine:
         amount: Decimal,
         payment_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through payment gateway."""
-        # In production, this would integrate with actual payment gateways
+        """Process payment through payment gateway."""        # In production, this would integrate with actual payment gateways
         # For now, simulate successful payment processing
         
         processor = payment_details.get("preferred_processor", "stripe")
@@ -677,8 +649,7 @@ class MonetizationEngine:
         amount: Decimal,
         processor: str
     ) -> Decimal:
-        """Calculate payment processing fees."""
-        # Typical payment processor fees
+        """Calculate payment processing fees."""        # Typical payment processor fees
         fee_structures = {
             "stripe": {"rate": Decimal('0.029'), "fixed": Decimal('0.30')},  # 2.9% + $0.30
             "paypal": {"rate": Decimal('0.034'), "fixed": Decimal('0.00')},   # 3.4%
@@ -702,8 +673,7 @@ class MonetizationEngine:
         stream_id: str,
         transaction: PaymentTransaction
     ):
-        """Update payment analytics for revenue stream."""
-        if stream_id not in self.pricing_performance:
+        """Update payment analytics for revenue stream."""        if stream_id not in self.pricing_performance:
             await self._initialize_stream_analytics(stream_id)
         
         performance = self.pricing_performance[stream_id]
@@ -744,8 +714,7 @@ class MonetizationEngine:
         transaction: PaymentTransaction,
         payment_details: Dict[str, Any]
     ):
-        """Activate subscription after successful payment."""
-        subscription_id = f"sub_{uuid.uuid4().hex[:12]}"
+        """Activate subscription after successful payment."""        subscription_id = f"sub_{uuid.uuid4().hex[:12]}"
         
         # Determine subscription period
         tier_id = payment_details.get("tier_id")
@@ -796,8 +765,7 @@ class MonetizationEngine:
         self.logger.info(f"Subscription activated: {subscription_id}")
     
     async def _notify_payment_received(self, transaction: PaymentTransaction):
-        """Notify creator of received payment."""
-        # In production, this would send actual notifications
+        """Notify creator of received payment."""        # In production, this would send actual notifications
         self.logger.info(
             f"Payment received notification: Creator {transaction.creator_id} "
             f"received ${transaction.net_amount} from user {transaction.user_id}"
@@ -808,13 +776,11 @@ class MonetizationEngine:
         creator_id: str,
         period_days: int = 30
     ) -> RevenueMetrics:
-        """
-        Calculate comprehensive revenue metrics for creator.
+        """        Calculate comprehensive revenue metrics for creator.
         
         Provides detailed analytics including revenue trends,
         conversion rates, customer lifetime value, and growth metrics.
-        """
-        try:
+        """        try:
             self.logger.info(f"Calculating revenue metrics for creator: {creator_id}")
             
             # Filter transactions for creator and period
@@ -889,8 +855,7 @@ class MonetizationEngine:
         creator_id: str,
         transactions: List[PaymentTransaction]
     ) -> Decimal:
-        """Calculate monthly recurring revenue."""
-        mrr = Decimal('0.00')
+        """Calculate monthly recurring revenue."""        mrr = Decimal('0.00')
         
         # Get active subscriptions for creator
         creator_subscriptions = []
@@ -919,8 +884,7 @@ class MonetizationEngine:
         return mrr
     
     async def _calculate_conversion_rate(self, creator_id: str) -> float:
-        """Calculate overall conversion rate for creator."""
-        # This would typically integrate with view/impression tracking
+        """Calculate overall conversion rate for creator."""        # This would typically integrate with view/impression tracking
         # For now, calculate from available performance data
         
         total_views = 0
@@ -942,8 +906,7 @@ class MonetizationEngine:
         return 0.0
     
     async def _calculate_churn_rate(self, creator_id: str) -> float:
-        """Calculate subscription churn rate for creator."""
-        # Count expired subscriptions in last 30 days
+        """Calculate subscription churn rate for creator."""        # Count expired subscriptions in last 30 days
         cutoff_date = datetime.utcnow() - timedelta(days=30)
         
         expired_count = 0
@@ -964,8 +927,7 @@ class MonetizationEngine:
         return 0.0
     
     async def _calculate_customer_lifetime_value(self, creator_id: str) -> Decimal:
-        """Calculate average customer lifetime value."""
-        # Group transactions by user
+        """Calculate average customer lifetime value."""        # Group transactions by user
         user_revenues = {}
         for txn in self.transaction_history:
             if txn.creator_id == creator_id:
@@ -985,8 +947,7 @@ class MonetizationEngine:
         creator_id: str,
         period_days: int
     ) -> float:
-        """Calculate revenue growth rate."""
-        current_period_end = datetime.utcnow()
+        """Calculate revenue growth rate."""        current_period_end = datetime.utcnow()
         current_period_start = current_period_end - timedelta(days=period_days)
         previous_period_start = current_period_start - timedelta(days=period_days)
         
@@ -1011,8 +972,7 @@ class MonetizationEngine:
         return 0.0 if current_revenue == 0 else 1.0  # 100% growth from zero
     
     async def _count_active_subscriptions(self, creator_id: str) -> int:
-        """Count active subscriptions for creator."""
-        count = 0
+        """Count active subscriptions for creator."""        count = 0
         now = datetime.utcnow()
         
         for user_subs in self.active_subscriptions.values():
@@ -1025,8 +985,7 @@ class MonetizationEngine:
         return count
     
     async def _get_top_revenue_streams(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get top performing revenue streams for creator."""
-        stream_revenues = {}
+        """Get top performing revenue streams for creator."""        stream_revenues = {}
         
         # Calculate revenue per stream
         for txn in self.transaction_history:
@@ -1067,13 +1026,11 @@ class MonetizationEngine:
         stream_id: str,
         optimization_goal: str = "revenue"
     ) -> Dict[str, Any]:
-        """
-        Optimize pricing for revenue stream using performance data.
+        """        Optimize pricing for revenue stream using performance data.
         
         Uses machine learning and statistical analysis to recommend
         optimal pricing strategies for maximum revenue or conversion.
-        """
-        try:
+        """        try:
             self.logger.info(f"Optimizing pricing for stream: {stream_id}")
             
             if stream_id not in self.revenue_streams:
@@ -1142,8 +1099,7 @@ class MonetizationEngine:
         self,
         performance_history: List[Dict[str, Any]]
     ) -> float:
-        """Calculate price elasticity from performance history."""
-        if len(performance_history) < 10:
+        """Calculate price elasticity from performance history."""        if len(performance_history) < 10:
             return 0.0  # Not enough data
         
         # Group by similar time periods and calculate elasticity
@@ -1180,8 +1136,7 @@ class MonetizationEngine:
         price_elasticity: float,
         optimization_goal: str
     ) -> List[Dict[str, Any]]:
-        """Generate pricing recommendations based on analysis."""
-        current_price = revenue_stream.base_price
+        """Generate pricing recommendations based on analysis."""        current_price = revenue_stream.base_price
         recommendations = []
         
         if optimization_goal == "revenue":
@@ -1239,8 +1194,7 @@ class MonetizationEngine:
         revenue_stream: RevenueStream,
         recommendations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Suggest A/B testing configuration for price optimization."""
-        current_price = float(revenue_stream.base_price)
+        """Suggest A/B testing configuration for price optimization."""        current_price = float(revenue_stream.base_price)
         
         # Create test variations based on recommendations
         test_variants = [
@@ -1263,8 +1217,7 @@ class MonetizationEngine:
         start_date: datetime = None,
         end_date: datetime = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive earnings report for creator."""
-        try:
+        """Generate comprehensive earnings report for creator."""        try:
             if start_date is None:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if end_date is None:
@@ -1372,13 +1325,11 @@ class MonetizationEngine:
 
 
 class SubscriptionManager:
-    """
-    Advanced subscription lifecycle management system.
+    """    Advanced subscription lifecycle management system.
     
     Handles subscription creation, renewal, cancellation,
     plan changes, and automated billing processes.
-    """
-    
+    """    
     def __init__(self, monetization_engine: MonetizationEngine):
         self.monetization_engine = monetization_engine
         self.logger = logging.getLogger("monetization.subscriptions")
@@ -1391,8 +1342,7 @@ class SubscriptionManager:
         self.logger.info("SubscriptionManager initialized successfully")
     
     async def process_subscription_renewals(self):
-        """Process automatic subscription renewals."""
-        try:
+        """Process automatic subscription renewals."""        try:
             now = datetime.utcnow()
             renewal_date = now + timedelta(days=self.renewal_notice_days)
             
@@ -1442,8 +1392,7 @@ class SubscriptionManager:
         subscription_id: str,
         subscription: Dict[str, Any]
     ):
-        """Process individual subscription renewal."""
-        # Prepare renewal payment
+        """Process individual subscription renewal."""        # Prepare renewal payment
         payment_details = {
             "payment_method": subscription["payment_method"],
             "tier_id": subscription.get("tier_id"),

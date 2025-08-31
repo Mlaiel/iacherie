@@ -1,5 +1,4 @@
-"""
-Deployment Security Module for IA Influencer Agent Platform
+"""Deployment Security Module for IA Influencer Agent Platform
 
 This module provides comprehensive security management for deployment environments,
 including certificate management, encrypted configurations, secure communication,
@@ -15,7 +14,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
-
 # Certificate Management
 from .certificate_manager import CertificateManager, TLSConfigGenerator
 

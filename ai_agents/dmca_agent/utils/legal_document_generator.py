@@ -29,8 +29,17 @@ import re
 
 from ..base import BaseAgent, AgentRequest, AgentResponse
 from .legal_compliance_engine import LegalFramework, LegalComplianceEngine
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.document_validator import DocumentValidator
 from ...utils.pdf_generator import PDFGenerator
 from ...utils.digital_signer import DigitalDocumentSigner

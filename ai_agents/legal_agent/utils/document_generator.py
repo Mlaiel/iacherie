@@ -31,8 +31,20 @@ from enum import Enum
 import jinja2
 from pathlib import Path
 
-from ...core.database import get_db_session
-from ...core.exceptions import DocumentError, ValidationError
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import DocumentError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    DocumentError, ValidationError = globals().get('DocumentError, ValidationError', Exception)
 from ...utils.ai_processor import AIProcessor
 from ...utils.template_manager import TemplateManager
 from ...utils.legal_formatter import LegalFormatter

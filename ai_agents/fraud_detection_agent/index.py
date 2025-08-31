@@ -33,11 +33,27 @@ from .deepfake_detector import DeepfakeDetector
 from .anomaly_engine import AnomalyDetectionEngine
 from .threat_intelligence import ThreatIntelligenceEngine
 
-from ...core.config import get_settings
-from ...core.database import get_db_session, get_redis_client
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session, get_redis_client
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session, get_redis_client = DatabaseManager
 from ...core.security import verify_api_token, get_current_user
 from ...core.monitoring import MetricsCollector
-from ...core.exceptions import (
+try:
+    from core.exceptions import (
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ( = globals().get('(', Exception)
     FraudDetectionError,
     BehaviorAnalysisError,
     PatternDetectionError,

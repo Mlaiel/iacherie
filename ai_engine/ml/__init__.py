@@ -1,5 +1,4 @@
-"""
-Machine Learning Package - Enterprise Grade AI Platform
+"""Machine Learning Package - Enterprise Grade AI Platform
 
 This package provides comprehensive machine learning capabilities for the IA Influencer Agent backend,
 including model training, inference, data processing, specialized AI models, sentiment analysis,
@@ -18,7 +17,6 @@ Business Logic Integration:
 User (musician/blogger/photographer/influencer/comedian) → Multi-format Upload → 
 AI Rights Protection → Professional SEO → Collaboration Matching → Multi-platform Distribution
 """
-
 import logging
 import warnings
 from typing import Dict, List, Optional, Union, Any
@@ -320,16 +318,14 @@ MODEL_CONFIGS = {
 
 # Initialize default configurations
 def initialize_ml_environment(config: Optional[Dict] = None) -> Dict[str, Any]:
-    """
-    Initialize the ML environment with production-ready configurations.
+    """    Initialize the ML environment with production-ready configurations.
     
     Args:
         config: Optional configuration overrides
         
     Returns:
         Dict containing initialization status and configuration
-    """
-    default_config = {
+    """    default_config = {
         "device": "cuda" if torch.cuda.is_available() else "cpu",
         "batch_size": 32,
         "max_workers": 4,
@@ -753,24 +749,19 @@ QUALITY_METRICS = {
 }
 
 def get_available_models() -> dict:
-    """Get dictionary of all available ML models"""
-    return AVAILABLE_MODELS.copy()
+    """Get dictionary of all available ML models"""    return AVAILABLE_MODELS.copy()
 
 def get_model_categories() -> dict:
-    """Get model categories for organization"""
-    return MODEL_CATEGORIES.copy()
+    """Get model categories for organization"""    return MODEL_CATEGORIES.copy()
 
 def get_default_config(model_type: str) -> dict:
-    """Get default configuration for a model type"""
-    return DEFAULT_MODEL_CONFIGS.get(model_type, {})
+    """Get default configuration for a model type"""    return DEFAULT_MODEL_CONFIGS.get(model_type, {})
 
 def get_training_config(model_architecture: str) -> dict:
-    """Get training configuration for a model architecture"""
-    return TRAINING_CONFIGS.get(model_architecture, {})
+    """Get training configuration for a model architecture"""    return TRAINING_CONFIGS.get(model_architecture, {})
 
 def create_model(model_type: str, config: dict = None):
-    """Factory function to create a model instance"""
-    if model_type not in AVAILABLE_MODELS:
+    """Factory function to create a model instance"""    if model_type not in AVAILABLE_MODELS:
         raise ValueError(f"Unknown model type: {model_type}")
     
     model_class = AVAILABLE_MODELS[model_type]
@@ -782,8 +773,7 @@ def create_model(model_type: str, config: dict = None):
     return model_class(config=model_config)
 
 def validate_model_performance(model_type: str, metrics: dict) -> bool:
-    """Validate if model meets performance requirements"""
-    category = None
+    """Validate if model meets performance requirements"""    category = None
     for cat, models in MODEL_CATEGORIES.items():
         if model_type in models:
             category = cat
@@ -805,8 +795,7 @@ def validate_model_performance(model_type: str, metrics: dict) -> bool:
     return True
 
 def get_quality_metrics_for_model(model_type: str) -> list:
-    """Get appropriate quality metrics for a model type"""
-    for category, models in MODEL_CATEGORIES.items():
+    """Get appropriate quality metrics for a model type"""    for category, models in MODEL_CATEGORIES.items():
         if model_type in models:
             if "generation" in category or "content_creation" in category:
                 return QUALITY_METRICS["generation"]

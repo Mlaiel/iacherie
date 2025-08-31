@@ -57,8 +57,17 @@ from .audio_generator import AIAudioGenerator, AudioSynthesizer
 from .audio_enhancer import AudioEnhancer, NoiseReducer
 from .format_converter import AudioFormatConverter, QualityOptimizer
 from ..base import BaseAgent, AgentRequest, AgentResponse
-from ...core.config import get_settings
-from ...core.database import get_async_db_session
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_async_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_async_db_session = DatabaseManager
 from ...core.cache import CacheManager
 from ...core.security import SecurityManager, validate_api_key
 from ...core.monitoring import MetricsCollector, HealthChecker

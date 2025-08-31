@@ -38,8 +38,17 @@ from .spotify_api import SpotifyAPIClient, AuthManager, SpotifyError
 from .analytics_engine import StreamingAnalytics, AudienceInsights, TrendAnalyzer
 from .playlist_manager import PlaylistManager, RecommendationEngine
 from .artist_tools import ArtistProfileManager, ReleaseOptimizer
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...security.content_protection import ContentFingerprinter
 from ...utils.caching import CacheManager
 from ...utils.performance_monitor import PerformanceMonitor

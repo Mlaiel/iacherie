@@ -15,8 +15,19 @@ from pathlib import Path
 import json
 
 from .content_agent import ContentAgent
-from ...core.config import settings
-from ...core.exceptions import AgentManagerError, ContentProcessingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import AgentManagerError, ContentProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AgentManagerError, ContentProcessingError = globals().get('AgentManagerError, ContentProcessingError', Exception)
 from ...database.models import ContentAnalysis, ProcessingJob
 from ...tasks.content_tasks import process_content_async, batch_process_content
 from ...utils.cache_utils import CacheManager

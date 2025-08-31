@@ -1,5 +1,4 @@
-"""
-Campaign Management Module for IA Influencer Agent Platform
+"""Campaign Management Module for IA Influencer Agent Platform
 ===========================================================
 
 This module handles comprehensive campaign management for multi-format content creators,
@@ -34,7 +33,6 @@ Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from .campaign_manager import CampaignManager
 from .campaign_analytics import CampaignAnalytics
 from .campaign_optimization import CampaignOptimization

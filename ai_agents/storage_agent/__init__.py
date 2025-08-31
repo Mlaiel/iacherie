@@ -1,5 +1,4 @@
-"""
-Storage Agent - Enterprise Multi-Backend Storage System
+"""Storage Agent - Enterprise Multi-Backend Storage System
 =======================================================
 
 Intelligent storage management system supporting AWS S3, MinIO, local storage,
@@ -20,7 +19,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
 """
-
 from .storage_orchestrator import (
     StorageOrchestrator, StorageStrategy, FileCategory, 
     StorageRequest, StorageResponse
@@ -92,64 +90,54 @@ __all__ = [
 ]
 
 def create_storage_agent(config=None):
-    """
-    Factory function to create configured storage agent
+    """    Factory function to create configured storage agent
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         StorageOrchestrator: Configured storage orchestrator instance
-    """
-    return StorageOrchestrator(config)
+    """    return StorageOrchestrator(config)
 
 def create_backend_manager(config=None):
-    """
-    Factory function to create backend manager
+    """    Factory function to create backend manager
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         BackendManager: Configured backend manager instance
-    """
-    return BackendManager(config or {})
+    """    return BackendManager(config or {})
 
 def create_file_processor(config=None):
-    """
-    Factory function to create file processor
+    """    Factory function to create file processor
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         FileProcessor: Configured file processor instance
-    """
-    return FileProcessor(config)
+    """    return FileProcessor(config)
 
 def create_content_optimizer(config=None):
-    """
-    Factory function to create content optimizer
+    """    Factory function to create content optimizer
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         ContentOptimizer: Configured content optimizer instance
-    """
-    return ContentOptimizer(config)
+    """    return ContentOptimizer(config)
 
 def create_backup_manager(config=None):
-    """
-    Factory function to create backup manager
+    """    Factory function to create backup manager
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         BackupManager: Configured backup manager instance
-    """
-    return BackupManager(config)
+    """    return BackupManager(config)
 
 # Version information
 __version__ = "1.0.0"

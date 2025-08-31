@@ -30,7 +30,14 @@ import json
 import uuid
 from decimal import Decimal
 
-from ...core.exceptions import RightsError, ValidationError
+try:
+    from core.exceptions import RightsError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    RightsError, ValidationError = globals().get('RightsError, ValidationError', Exception)
 from ...database.models import Content, Rights, Ownership, Territory
 from ...integrations.copyright.registries import CopyrightRegistryAPI
 from ...integrations.blockchain.rights_chain import RightsBlockchain

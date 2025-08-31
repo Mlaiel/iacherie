@@ -1,5 +1,4 @@
-"""
-Configuration Database Module for IA-Influencer Agent Platform
+"""Configuration Database Module for IA-Influencer Agent Platform
 =============================================================
 
 Professional database configuration management for multi-tenant content protection
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .postgresql_config import PostgreSQLConfig
 try:
     from .mongodb_config import MongoDBConfig  

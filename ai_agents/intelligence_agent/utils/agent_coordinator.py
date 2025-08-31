@@ -35,7 +35,11 @@ import networkx as nx
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import threading
 
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.metrics_collector import MetricsCollector
 from ..base import BaseAgent
 

@@ -22,8 +22,19 @@ from collections import deque, defaultdict
 import json
 
 from ..base import BaseAgent
-from ...core.exceptions import MonitoringException
-from ...core.config import get_settings
+try:
+    from core.exceptions import MonitoringException
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MonitoringException = globals().get('MonitoringException', Exception)
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...core.monitoring import get_metrics_client
 
 

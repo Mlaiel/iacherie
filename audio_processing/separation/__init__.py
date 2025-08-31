@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Audio Source Separation Module
+"""IA Influencer Agent - Audio Source Separation Module
 
 Professional audio separation engine for content creators using advanced AI models.
 Enables vocal isolation, instrument separation, and stem extraction for music production.
@@ -21,7 +20,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 - Batch processing for production workflows
 - Industry-standard output formats
 """
-
 from .core import (
     SeparationEngine, 
     SeparationConfig,
@@ -139,8 +137,7 @@ except Exception as e:
 
 # Module information for introspection
 def get_module_info():
-    """Get comprehensive module information."""
-    return {
+    """Get comprehensive module information."""    return {
         "name": "audio.separation",
         "version": __version__,
         "author": __author__, 

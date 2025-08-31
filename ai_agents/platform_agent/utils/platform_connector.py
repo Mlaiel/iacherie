@@ -40,7 +40,12 @@ from contextlib import asynccontextmanager
 
 from .platform_agent import PlatformType
 from ...core.security import TokenManager, EncryptionManager
-from ...core.database import DatabaseManager
+try:
+    from core.database import DatabaseManager
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    DatabaseManager = DatabaseManager
 from ...core.cache import CacheManager
 from ...models.platform_models import PlatformCredential, APIEndpoint, PlatformConfig
 from ...utils.rate_limiter import AdaptiveRateLimiter

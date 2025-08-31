@@ -1,5 +1,4 @@
-"""
-Audio Configuration Module for IA-Influencer Agent Platform
+"""Audio Configuration Module for IA-Influencer Agent Platform
 ===========================================================
 
 Professional audio processing and analysis configuration management.
@@ -17,7 +16,6 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .audio_processing_config import AudioProcessingConfig
 from .codec_config import CodecConfig
 from .audio_fingerprint_config import AudioFingerprintConfig

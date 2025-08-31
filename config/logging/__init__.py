@@ -1,5 +1,4 @@
-"""
-Enterprise Logging Configuration Module for IA-Influencer Agent Platform
+"""Enterprise Logging Configuration Module for IA-Influencer Agent Platform
 ========================================================================
 
 Industrial-grade logging and audit trail configuration management for multi-format
@@ -23,7 +22,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
-
 # Import main enterprise logging system
 from .index import (
     EnterpriseLoggingSystem,

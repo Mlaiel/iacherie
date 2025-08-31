@@ -1,5 +1,4 @@
-"""
-Session Management Module - IA Influencer Agent
+"""Session Management Module - IA Influencer Agent
 
 Enterprise-grade session management for multi-format content creators
 with advanced conversation persistence, state management, and cross-platform
@@ -35,7 +34,6 @@ Creator (musician/blogger/photographer/influencer/comedian) →
 Multi-format upload → AI processing → Rights protection → 
 Professional SEO → Collaboration matching → Multi-platform distribution
 """
-
 from .session_lifecycle_manager import (
     SessionLifecycleManager,
     SessionCreationHandler,

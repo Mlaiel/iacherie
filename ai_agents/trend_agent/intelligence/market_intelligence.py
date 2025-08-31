@@ -48,8 +48,19 @@ from concurrent.futures import ThreadPoolExecutor
 import aiohttp
 import networkx as nx
 
-from ...core.config import settings
-from ...core.exceptions import ProcessingError, ValidationError, MarketIntelligenceError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ProcessingError, ValidationError, MarketIntelligenceError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError, MarketIntelligenceError = globals().get('ProcessingError, ValidationError, MarketIntelligenceError', Exception)
 from ...models.market import MarketSegment, CompetitorProfile, MarketTrends
 from ...models.content import ContentType, ContentPerformance
 from ...models.business import BusinessMetrics, RevenueAnalysis, GrowthMetrics

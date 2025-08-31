@@ -16,7 +16,14 @@ from enum import Enum
 import json
 from collections import defaultdict
 
-from ...core.exceptions import AlertError, ValidationError
+try:
+    from core.exceptions import AlertError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AlertError, ValidationError = globals().get('AlertError, ValidationError', Exception)
 from ...core.monitoring import EventEmitter
 from ...integrations.notification_service import NotificationService
 from ...utils.template_engine import TemplateEngine

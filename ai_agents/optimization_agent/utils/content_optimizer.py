@@ -51,7 +51,11 @@ from transformers import AutoModel, AutoTokenizer
 import torch
 
 # Internal imports
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...models.optimization import ContentOptimizationRequest, OptimizationResponse
 from ...models.content import ContentMetrics, ContentFormat
 from ...utils.logger import get_logger

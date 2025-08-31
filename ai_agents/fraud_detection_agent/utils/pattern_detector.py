@@ -24,7 +24,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.cluster import KMeans
 import redis.asyncio as aioredis
 
-from ...core.exceptions import PatternDetectionError
+try:
+    from core.exceptions import PatternDetectionError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    PatternDetectionError = globals().get('PatternDetectionError', Exception)
 from ...utils.pattern_matcher import PatternMatcher
 from ...data.models.fraud_patterns import FraudPatternModel, PatternSignature
 

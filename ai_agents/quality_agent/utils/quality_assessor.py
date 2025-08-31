@@ -37,8 +37,19 @@ import nltk
 from textstat import flesch_kincaid_grade, gunning_fog
 import spacy
 
-from ...core.exceptions import AssessmentError, ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import AssessmentError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AssessmentError, ValidationError = globals().get('AssessmentError, ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.content_analyzer import ContentAnalyzer
 from ...utils.metrics_calculator import MetricsCalculator
 from ...ml.quality_models import QualityModelManager

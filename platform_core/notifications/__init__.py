@@ -1,5 +1,4 @@
-"""
-🚀 Platform Core Notifications - IA Influencer Agent Platform Enterprise
+"""🚀 Platform Core Notifications - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/platform_core/notifications/
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Notifications intelligentes avec templates et targeting avancé
 - Scheduling et automation de campagnes
 - Analytics et tracking des engagements
 """
-
 from .notification_manager import (
     NotificationManager,
     TemplateManager,

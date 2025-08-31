@@ -1,5 +1,4 @@
-"""
-Storage Module Initialization
+"""Storage Module Initialization
 ============================
 
 Professional storage system for IA-Influencer-Agent platform with enterprise-grade features.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import logging
 from typing import Dict, List, Optional, Any
 
@@ -378,8 +376,7 @@ def create_storage_manager(
     enable_monitoring: bool = True,
     enable_failover: bool = True
 ) -> StorageManager:
-    """
-    Create a fully configured storage manager instance.
+    """    Create a fully configured storage manager instance.
     
     Args:
         config_path: Path to configuration file (JSON/YAML)
@@ -411,8 +408,7 @@ def create_storage_manager(
         }
         manager = create_storage_manager(config_data=config)
         ```
-    """
-    try:
+    """    try:
         # Initialize configuration manager
         config_manager = StorageConfigurationManager()
         
@@ -447,8 +443,7 @@ def create_database_provider(
     enable_compression: bool = True,
     **kwargs
 ) -> DatabaseStorageProvider:
-    """
-    Create a database storage provider with minimal configuration.
+    """    Create a database storage provider with minimal configuration.
     
     Args:
         provider_id: Unique provider identifier
@@ -468,8 +463,7 @@ def create_database_provider(
             pool_size=20
         )
         ```
-    """
-    config = {
+    """    config = {
         'provider_id': provider_id,
         'database_url': database_url,
         'pool_size': pool_size,
@@ -486,8 +480,7 @@ def create_filesystem_provider(
     enable_compression: bool = True,
     **kwargs
 ) -> FileSystemStorageProvider:
-    """
-    Create a filesystem storage provider with minimal configuration.
+    """    Create a filesystem storage provider with minimal configuration.
     
     Args:
         provider_id: Unique provider identifier
@@ -507,8 +500,7 @@ def create_filesystem_provider(
             enable_indexing=True
         )
         ```
-    """
-    config = {
+    """    config = {
         'provider_id': provider_id,
         'base_path': base_path,
         'enable_indexing': enable_indexing,
@@ -525,8 +517,7 @@ def create_redis_provider(
     default_ttl: int = 3600,
     **kwargs
 ) -> RedisCacheStorageProvider:
-    """
-    Create a Redis cache provider with minimal configuration.
+    """    Create a Redis cache provider with minimal configuration.
     
     Args:
         provider_id: Unique provider identifier
@@ -547,8 +538,7 @@ def create_redis_provider(
             default_ttl=7200
         )
         ```
-    """
-    config = {
+    """    config = {
         'provider_id': provider_id,
         'redis_url': redis_url,
         'database': database,
@@ -566,8 +556,7 @@ def create_s3_provider(
     region_name: str = "us-east-1",
     **kwargs
 ) -> S3ObjectStorageProvider:
-    """
-    Create an S3 object storage provider with minimal configuration.
+    """    Create an S3 object storage provider with minimal configuration.
     
     Args:
         provider_id: Unique provider identifier
@@ -588,8 +577,7 @@ def create_s3_provider(
             region_name="eu-west-1"
         )
         ```
-    """
-    config = {
+    """    config = {
         'provider_id': provider_id,
         'bucket_name': bucket_name,
         'aws_access_key_id': aws_access_key_id,
@@ -601,20 +589,16 @@ def create_s3_provider(
     return S3ObjectStorageProvider(provider_id, config)
 
 def get_provider_types() -> List[str]:
-    """Get list of supported provider types."""
-    return list(STORAGE_PROVIDERS.keys())
+    """Get list of supported provider types."""    return list(STORAGE_PROVIDERS.keys())
 
 def get_content_provider_types() -> List[str]:
-    """Get list of supported content provider types."""
-    return list(CONTENT_PROVIDERS.keys())
+    """Get list of supported content provider types."""    return list(CONTENT_PROVIDERS.keys())
 
 def get_violation_provider_types() -> List[str]:
-    """Get list of supported violation provider types."""
-    return list(VIOLATION_PROVIDERS.keys())
+    """Get list of supported violation provider types."""    return list(VIOLATION_PROVIDERS.keys())
 
 def validate_provider_config(provider_type: str, config: Dict[str, Any]) -> List[str]:
-    """
-    Validate provider configuration and return list of errors.
+    """    Validate provider configuration and return list of errors.
     
     Args:
         provider_type: Provider type to validate
@@ -622,8 +606,7 @@ def validate_provider_config(provider_type: str, config: Dict[str, Any]) -> List
     
     Returns:
         List of validation error messages
-    """
-    errors = []
+    """    errors = []
     
     if provider_type not in STORAGE_PROVIDERS:
         errors.append(f"Unsupported provider type: {provider_type}")

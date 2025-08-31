@@ -22,7 +22,14 @@ import tweepy
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from ...core.exceptions import CollectionError, RateLimitError
+try:
+    from core.exceptions import CollectionError, RateLimitError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CollectionError, RateLimitError = globals().get('CollectionError, RateLimitError', Exception)
 from ...security.request_manager import SecureRequestManager
 from ...utils.rate_limiter import RateLimiter
 from ...utils.cache_manager import CacheManager

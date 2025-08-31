@@ -1,5 +1,4 @@
-"""
-🚀 Analytics Module - IA-Influencer-Agent Enterprise Data Management
+"""🚀 Analytics Module - IA-Influencer-Agent Enterprise Data Management
 ===================================================================
 
 Module analytics professionnel pour créateurs multi-format avec business intelligence avancée.
@@ -23,7 +22,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
-
 # ========== ANALYTICS CORE ENTERPRISE ==========
 
 # Analytics Principal Multi-Format
@@ -208,14 +206,12 @@ from .advanced_enrichment import (
 # ========== FACTORY ENTERPRISE ANALYTICS ==========
 
 class AnalyticsEngineFactory:
-    """
-    🏭 Factory Enterprise - Création Moteurs Analytics IA-Influencer-Agent
+    """    🏭 Factory Enterprise - Création Moteurs Analytics IA-Influencer-Agent
     ====================================================================
     
     Factory class pour créer moteurs analytics avec configuration optimisée
     selon logique métier créateurs multi-format.
-    """
-    
+    """    
     @staticmethod
     def create_creator_analytics_suite(
         db_session, 
@@ -224,16 +220,14 @@ class AnalyticsEngineFactory:
         vector_db,
         creator_type: str = 'all'  # 'musician', 'influencer', 'photographer', 'blogger', 'comedian', 'all'
     ):
-        """
-        Crée suite analytics complète pour type de créateur spécifique.
+        """        Crée suite analytics complète pour type de créateur spécifique.
         
         Args:
             creator_type: Type de créateur ciblé
             
         Returns:
             Suite analytics configurée pour le créateur
-        """
-        base_config = {
+        """        base_config = {
             "db_session": db_session,
             "redis_client": redis_client, 
             "storage_manager": storage_manager,
@@ -301,8 +295,7 @@ class AnalyticsEngineFactory:
     
     @staticmethod
     def create_business_intelligence_suite(db_session, redis_client, storage_manager, vector_db):
-        """Crée suite business intelligence complète enterprise."""
-        return {
+        """Crée suite business intelligence complète enterprise."""        return {
             "market_intelligence": MarketIntelligenceAnalytics(db_session, redis_client, storage_manager, vector_db),
             "competition_intelligence": CompetitionIntelligenceAnalytics(db_session, redis_client, storage_manager, vector_db),
             "predictive_analytics": PredictiveAnalytics(db_session, redis_client, storage_manager, vector_db),
@@ -312,8 +305,7 @@ class AnalyticsEngineFactory:
     
     @staticmethod
     def get_supported_creator_types():
-        """Retourne types de créateurs supportés."""
-        return ['musician', 'influencer', 'photographer', 'blogger', 'comedian', 'all']
+        """Retourne types de créateurs supportés."""        return ['musician', 'influencer', 'photographer', 'blogger', 'comedian', 'all']
 
 # ========== EXPORTS ENTERPRISE IA-INFLUENCER-AGENT ==========
 
@@ -496,13 +488,11 @@ __completion_status__ = "FULLY_IMPLEMENTED_ENTERPRISE"
 # ========== VALIDATION LOGIQUE MÉTIER ==========
 
 def validate_ia_influencer_business_logic():
-    """
-    Valide que tous les moteurs analytics supportent la logique métier IA-Influencer-Agent.
+    """    Valide que tous les moteurs analytics supportent la logique métier IA-Influencer-Agent.
     
     Returns:
         Dict avec statut validation logique métier
-    """
-    business_flow_supported = [
+    """    business_flow_supported = [
         "✅ Upload Contenu Multi-Format (Audio, Vidéo, Image, Texte)",
         "✅ Protection IA Droits d'Auteur Avancée", 
         "✅ Optimisation SEO Professionnelle",
@@ -554,8 +544,7 @@ _ia_influencer_validation = validate_ia_influencer_business_logic()
 # ========== FONCTIONS UTILITAIRES ENTERPRISE ==========
 
 def get_analytics_summary():
-    """Obtient résumé complet des capacités analytics."""
-    return {
+    """Obtient résumé complet des capacités analytics."""    return {
         "module_version": __version__,
         "engines_available": __analytics_engines_count__,
         "creator_types": AnalyticsEngineFactory.get_supported_creator_types(),
@@ -565,8 +554,7 @@ def get_analytics_summary():
     }
 
 def create_analytics_for_creator(creator_type: str, **kwargs):
-    """
-    Fonction helper pour créer analytics optimisés pour type créateur.
+    """    Fonction helper pour créer analytics optimisés pour type créateur.
     
     Args:
         creator_type: Type de créateur ('musician', 'influencer', etc.)
@@ -574,8 +562,7 @@ def create_analytics_for_creator(creator_type: str, **kwargs):
         
     Returns:
         Suite analytics configurée
-    """
-    if creator_type not in AnalyticsEngineFactory.get_supported_creator_types():
+    """    if creator_type not in AnalyticsEngineFactory.get_supported_creator_types():
         raise ValueError(f"Type créateur non supporté: {creator_type}")
     
     return AnalyticsEngineFactory.create_creator_analytics_suite(

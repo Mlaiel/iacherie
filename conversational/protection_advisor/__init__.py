@@ -1,5 +1,4 @@
-"""
-Protection Advisor Module - Enterprise-grade content protection advisory system.
+"""Protection Advisor Module - Enterprise-grade content protection advisory system.
 
 This module provides intelligent, AI-powered recommendations and strategies
 for protecting digital content across multiple platforms and jurisdictions.
@@ -20,7 +19,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
 """
-
 from .advisor_core import (
     ProtectionAdvisorCore,
     ContentAnalysis,

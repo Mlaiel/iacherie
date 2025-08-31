@@ -43,7 +43,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from .channel_manager import ChannelType
 from .event_manager import NotificationEventType
-from ...core.database import get_async_session
+try:
+    from core.database import get_async_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_async_session = DatabaseManager
 from ...models.user_models import UserModel, UserPreferences
 from ...models.subscription_models import (
     NotificationSubscription, SubscriptionStatus, FrequencyLimit

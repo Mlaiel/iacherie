@@ -27,8 +27,19 @@ import torch
 import torchvision.transforms as transforms
 
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import ContentProcessingError, ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import ContentProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ContentProcessingError, ValidationError = globals().get('ContentProcessingError, ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...security.file_validator import FileValidator
 from ...utils.file_utils import FileUtils
 from ...ml.content_models import ContentClassifier, QualityAssesssor

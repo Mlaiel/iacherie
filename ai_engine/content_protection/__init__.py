@@ -1,5 +1,4 @@
-"""
-Ultra-Industrial AI Content Protection Module
+"""Ultra-Industrial AI Content Protection Module
 
 Enterprise-grade content protection ecosystem providing comprehensive security,
 rights management, and compliance solutions for digital creators and enterprises.
@@ -52,7 +51,6 @@ Creator Upload → AI Content Analysis & Classification → Rights Verification 
 → Platform-Specific Enforcement → Revenue Recovery & Analytics
 → Compliance Reporting & Audit Trails
 """
-
 import logging
 import warnings
 from typing import Dict, List, Any, Optional
@@ -381,33 +379,27 @@ SYSTEM_INFO = {
 
 
 def get_system_info() -> Dict[str, Any]:
-    """
-    Get comprehensive system information and capabilities
+    """    Get comprehensive system information and capabilities
     
     Returns:
         System information dictionary
-    """
-    return SYSTEM_INFO.copy()
+    """    return SYSTEM_INFO.copy()
 
 
 def get_module_version() -> str:
-    """
-    Get module version string
+    """    Get module version string
     
     Returns:
         Version string
-    """
-    return __version__
+    """    return __version__
 
 
 def verify_installation() -> Dict[str, Any]:
-    """
-    Verify module installation and dependencies
+    """    Verify module installation and dependencies
     
     Returns:
         Installation verification results
-    """
-    verification = {
+    """    verification = {
         "module_loaded": IMPORT_SUCCESS,
         "version": __version__,
         "dependencies": {},
@@ -455,9 +447,7 @@ def verify_installation() -> Dict[str, Any]:
 
 
 def print_legal_notice():
-    """Print the intellectual property legal notice"""
-    notice = f"""
-{'='*80}
+    """Print the intellectual property legal notice"""    notice = f"""{'='*80}
     ULTRA-INDUSTRIAL AI CONTENT PROTECTION MODULE
     Version: {__version__}
     Author: {__author__} ({__email__})
@@ -473,14 +463,11 @@ be prosecuted under international intellectual property law.
 For licensing inquiries, contact: {__email__}
 
 {'='*80}
-"""
-    print(notice)
+"""    print(notice)
 
 
 def print_system_banner():
-    """Print system startup banner with key information"""
-    banner = f"""
-╔═══════════════════════════════════════════════════════════════════════════════╗
+    """Print system startup banner with key information"""    banner = f"""╔═══════════════════════════════════════════════════════════════════════════════╗
 ║                 ULTRA-INDUSTRIAL CONTENT PROTECTION SYSTEM                   ║
 ║                        Version: {__version__:<25}                        ║
 ║                        Author: {__author__:<26}                         ║
@@ -499,14 +486,12 @@ def print_system_banner():
 ║  Copyright © 2025 Fahed Mlaiel. All rights reserved.                        ║
 ║  Unauthorized use is strictly prohibited.                                    ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
-"""
-    print(banner)
+"""    print(banner)
 
 
 # Initialize logging for the module
 def _init_module_logging():
-    """Initialize module-level logging"""
-    logger = logging.getLogger(__name__)
+    """Initialize module-level logging"""    logger = logging.getLogger(__name__)
     
     if not logger.handlers:
         handler = logging.StreamHandler()
@@ -543,13 +528,11 @@ else:
 
 # Export verification function for external use
 def module_health_check() -> bool:
-    """
-    Perform a quick health check of the module
+    """    Perform a quick health check of the module
     
     Returns:
         True if module is healthy, False otherwise
-    """
-    try:
+    """    try:
         verification = verify_installation()
         return verification["module_loaded"] and len(verification["issues"]) == 0
     except Exception as e:
@@ -562,17 +545,14 @@ __email__ = "mlaiel@live.de"
 
 
 class ContentProtectionSystem:
-    """
-    Unified Content Protection System
+    """    Unified Content Protection System
     
     Main orchestrator for all content protection functionalities
     including fingerprinting, rights management, piracy detection,
     DMCA automation, blockchain verification, and analytics.
-    """
-    
+    """    
     def __init__(self, config=None):
-        """Initialize the complete content protection system"""
-        self.config = config or {}
+        """Initialize the complete content protection system"""        self.config = config or {}
         
         # Initialize all subsystems
         self.fingerprinter = ContentFingerprinter(config.get('fingerprinting', {}))
@@ -585,8 +565,7 @@ class ContentProtectionSystem:
         self.integrations = PlatformIntegrationManager(config.get('integrations', {}))
     
     async def protect_content(self, content_data, content_metadata):
-        """Complete content protection workflow"""
-        # Generate fingerprint
+        """Complete content protection workflow"""        # Generate fingerprint
         fingerprint = await self.fingerprinter.generate_fingerprint(content_data, content_metadata)
         
         # Register rights
@@ -624,5 +603,4 @@ class ContentProtectionSystem:
 
 # Convenience function for quick setup
 def create_protection_system(config=None):
-    """Create a configured content protection system"""
-    return ContentProtectionSystem(config)
+    """Create a configured content protection system"""    return ContentProtectionSystem(config)

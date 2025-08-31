@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Messaging Deployment Module
+"""IA Influencer Agent - Messaging Deployment Module
 Enterprise messaging and queue deployment for high-performance content processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

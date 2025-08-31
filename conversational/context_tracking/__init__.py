@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-🧠 CONTEXT TRACKING MODULE - ENTERPRISE AI CONVERSATIONAL INTELLIGENCE SYSTEM
+"""🧠 CONTEXT TRACKING MODULE - ENTERPRISE AI CONVERSATIONAL INTELLIGENCE SYSTEM
 ===============================================================================
 
 Ultra-advanced conversational context tracking and behavioral intelligence module
@@ -85,7 +84,6 @@ Contact: mlaiel@live.de for enterprise licensing inquiries.
 ✅ No TODOs, placeholders, or incomplete implementations
 ✅ Production-ready, industrial-grade code quality
 """
-
 from .ai_fingerprinting_engine import (
     AIFingerprintingEngine,
     FingerprintType,
@@ -390,14 +388,12 @@ CAPABILITY_OVERVIEW = {
 # - Temporal Analytics Expert : Time-series & Seasonality
 # - Business Logic Architect : Monetization & Strategy
 
-"""
-CRITICAL LEGAL WARNING:
+"""CRITICAL LEGAL WARNING:
 Code propriétaire ultra-confidentiel de l'IA-Influencer-Agent Platform.
 Système de protection de contenu numérique de niveau entreprise.
 Utilisation commerciale et distribution strictement interdites sans licence.
 Copyright 2024 IA-Influencer-Agent. Tous droits réservés.
 """
-
 # Core Context Engines (Existants)
 from .behavioral_context_engine import BehavioralContextEngine, create_behavioral_engine
 from .content_context_analyzer import ContentContextAnalyzer, create_content_analyzer  

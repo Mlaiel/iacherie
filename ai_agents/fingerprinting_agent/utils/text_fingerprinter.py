@@ -100,7 +100,14 @@ from transformers import (
     pipeline
 )
 
-from ...core.exceptions import TextProcessingError, ValidationError
+try:
+    from core.exceptions import TextProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    TextProcessingError, ValidationError = globals().get('TextProcessingError, ValidationError', Exception)
 from ...utils.text_utils import TextProcessor
 from ...ml.text_models import TextEmbeddingModel
 
@@ -606,7 +613,14 @@ class TextFingerprinter:
 import sentence_transformers
 from sentence_transformers import SentenceTransformer
 
-from ...core.exceptions import TextProcessingError, ValidationError
+try:
+    from core.exceptions import TextProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    TextProcessingError, ValidationError = globals().get('TextProcessingError, ValidationError', Exception)
 from ...utils.text_utils import TextProcessor
 from ...ml.text_models import TextEmbeddingModel
 

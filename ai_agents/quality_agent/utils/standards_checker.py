@@ -32,8 +32,19 @@ import json
 import re
 from pathlib import Path
 
-from ...core.exceptions import StandardsError, ValidationError, ComplianceError
-from ...core.config import settings
+try:
+    from core.exceptions import StandardsError, ValidationError, ComplianceError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    StandardsError, ValidationError, ComplianceError = globals().get('StandardsError, ValidationError, ComplianceError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.content_validator import ContentValidator
 from ...utils.compliance_checker import ComplianceChecker
 from ...security.content_scanner import ContentSecurityScanner

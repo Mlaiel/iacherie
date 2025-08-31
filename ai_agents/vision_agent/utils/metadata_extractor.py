@@ -29,7 +29,14 @@ from PIL.ExifTags import TAGS, GPSTAGS
 import exifread
 
 from ..base import BaseAgent, AgentStatus
-from ...core.exceptions import MetadataExtractionError, ValidationError
+try:
+    from core.exceptions import MetadataExtractionError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MetadataExtractionError, ValidationError = globals().get('MetadataExtractionError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 from ...security.data_sanitizer import DataSanitizer
 

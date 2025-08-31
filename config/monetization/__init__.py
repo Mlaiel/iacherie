@@ -1,5 +1,4 @@
-"""
-Monetization Configuration Module for IA-Influencer Agent Platform
+"""Monetization Configuration Module for IA-Influencer Agent Platform
 ==================================================================
 
 Professional monetization and revenue management configuration.
@@ -23,7 +22,6 @@ LEGAL WARNING: Violation of this copyright will result in:
 
 Contact: mlaiel@live.de for licensing inquiries and authorization.
 """
-
 # Core Revenue Management
 from .revenue_config import RevenueTrackingConfig, revenue_config
 

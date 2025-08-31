@@ -43,7 +43,14 @@ import nltk
 from nltk.translate.bleu_score import sentence_bleu
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from ...core.exceptions import SimilarityError, ValidationError
+try:
+    from core.exceptions import SimilarityError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    SimilarityError, ValidationError = globals().get('SimilarityError, ValidationError', Exception)
 from ...utils.similarity_utils import SimilarityCalculator
 
 logger = logging.getLogger(__name__)

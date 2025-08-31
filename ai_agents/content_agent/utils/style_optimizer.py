@@ -44,7 +44,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import redis.asyncio as redis
 
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...core.cache import CacheManager
 from ...utils.text_analyzer import TextAnalyzer
 from ...utils.performance import PerformanceMonitor

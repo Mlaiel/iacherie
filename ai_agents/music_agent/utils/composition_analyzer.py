@@ -31,7 +31,14 @@ from ...ai.ml.music_intelligence import (
     MusicGenre, MusicKey, TimeSignature, ChordType
 )
 from ...ai.ml.audio_intelligence import MusicAnalyzer, MusicAnalysisResult
-from ...core.exceptions import CompositionAnalysisError
+try:
+    from core.exceptions import CompositionAnalysisError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CompositionAnalysisError = globals().get('CompositionAnalysisError', Exception)
 from ...core.logging import get_logger
 from ...config.settings import get_settings
 

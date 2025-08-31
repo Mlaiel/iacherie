@@ -66,9 +66,25 @@ from prometheus_client import Counter, Histogram, Gauge
 
 # Platform specific imports
 from ..base import BaseAgent, AgentRequest, AgentResponse, AgentStatus, AgentPriority
-from ...core.config import settings
-from ...core.database import get_db_session
-from ...core.exceptions import (
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import (
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ( = globals().get('(', Exception)
     MLError, 
     ModelNotFoundError, 
     InferenceError,

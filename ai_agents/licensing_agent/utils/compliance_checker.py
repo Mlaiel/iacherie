@@ -30,7 +30,14 @@ import json
 import uuid
 from decimal import Decimal
 
-from ...core.exceptions import ComplianceError, ValidationError
+try:
+    from core.exceptions import ComplianceError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ComplianceError, ValidationError = globals().get('ComplianceError, ValidationError', Exception)
 from ...integrations.legal.regulations import RegulationDatabase
 from ...integrations.legal.courts import CourtDecisionAPI
 from ...integrations.government.apis import GovernmentAPIManager

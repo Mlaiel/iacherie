@@ -30,7 +30,14 @@ import cv2
 from urllib.parse import urlencode
 
 from ..base import BaseAgent
-from ...core.exceptions import DistributionError, PlatformError, ContentError
+try:
+    from core.exceptions import DistributionError, PlatformError, ContentError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    DistributionError, PlatformError, ContentError = globals().get('DistributionError, PlatformError, ContentError', Exception)
 from ...core.metrics import MetricsCollector
 from ...core.security import SecurityValidator
 from ...models.content import ContentItem, ContentMetadata

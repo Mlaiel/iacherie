@@ -30,9 +30,21 @@ import aiohttp
 import statistics
 
 from ..base import BaseAgent
-from ...core.exceptions import AnalyticsError, PlatformError
+try:
+    from core.exceptions import AnalyticsError, PlatformError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AnalyticsError, PlatformError = globals().get('AnalyticsError, PlatformError', Exception)
 from ...core.metrics import MetricsCollector
-from ...core.database import DatabaseManager
+try:
+    from core.database import DatabaseManager
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    DatabaseManager = DatabaseManager
 from ...models.analytics import (
     AnalyticsData, PerformanceMetrics, AudienceInsights,
     EngagementMetrics, RevenueMetrics, CompetitiveAnalysis

@@ -1,5 +1,4 @@
-"""
-Cloud Deployment Module - Enterprise Multi-Cloud Infrastructure
+"""Cloud Deployment Module - Enterprise Multi-Cloud Infrastructure
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -16,7 +15,6 @@ IA Influencer Agent platform, supporting multi-cloud strategies, automated
 provisioning, scaling, and optimization for creator content protection and
 monetization systems.
 """
-
 from .aws_deployment import AWSDeploymentManager
 from .azure_deployment import AzureDeploymentManager
 from .gcp_deployment import GCPDeploymentManager

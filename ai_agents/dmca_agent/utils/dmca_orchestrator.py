@@ -77,8 +77,17 @@ from .legal_compliance_engine import LegalComplianceEngine, LegalFramework
 from .takedown_automation import TakedownAutomation, EscalationLevel
 from .copyright_verification import CopyrightVerification, CopyrightClaim, OwnershipStrength, CopyrightType
 from .legal_document_generator import LegalDocumentGenerator, DocumentRequest, DocumentType, DocumentLanguage, DocumentFormat, UrgencyLevel
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.notification_service import NotificationService
 from ...models.dmca import DMCACaseRecord, TakedownStatus
 

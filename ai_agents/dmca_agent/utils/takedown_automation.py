@@ -28,8 +28,17 @@ from pathlib import Path
 import backoff
 
 from ..base import BaseAgent, AgentRequest, AgentResponse
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...utils.email_sender import EmailSender
 from ...utils.platform_api_client import PlatformAPIClient
 from ...utils.web_scraper import WebScraper

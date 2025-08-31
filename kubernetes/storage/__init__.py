@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Storage Deployment Module
+"""IA Influencer Agent - Storage Deployment Module
 ================================================================================
 Module: backend/deployment/storage/__init__.py
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,7 +28,6 @@ CDN optimization → Backup strategies → Performance monitoring → Cost optim
 Enterprise Storage Deployment Suite for IA-Influencer-Agent platform
 providing comprehensive storage infrastructure management capabilities.
 """
-
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

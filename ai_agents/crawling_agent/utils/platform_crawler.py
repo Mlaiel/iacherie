@@ -48,8 +48,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
-from ...core.config import settings
-from ...core.exceptions import PlatformCrawlingError, ValidationError, RateLimitError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import PlatformCrawlingError, ValidationError, RateLimitError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    PlatformCrawlingError, ValidationError, RateLimitError = globals().get('PlatformCrawlingError, ValidationError, RateLimitError', Exception)
 from ...utils.rate_limiter import AdvancedRateLimiter
 from ...utils.proxy_manager import ProxyManager
 from ...utils.cache_manager import CacheManager

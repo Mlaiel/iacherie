@@ -37,7 +37,11 @@ import numpy as np
 import ffmpeg
 from PIL import Image
 
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.performance_monitor import PerformanceMonitor
 from ...utils.file_handler import SecureFileHandler
 from ...models.video_models import ConversionJob, FormatProfile

@@ -1,5 +1,4 @@
-"""
-AI Configuration Module for IA-Influencer Agent Platform
+"""AI Configuration Module for IA-Influencer Agent Platform
 ========================================================
 
 Professional AI/ML model configuration for content analysis and protection.
@@ -16,7 +15,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Core AI Configuration Imports
 from .model_config import AIModelConfig, ai_model_config
 from .fingerprint_config import FingerprintAIConfig, fingerprint_ai_config
@@ -80,13 +78,11 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 def get_ai_config_summary():
-    """
-    Get a summary of all AI configuration modules.
+    """    Get a summary of all AI configuration modules.
     
     Returns:
         Dict[str, Any]: Summary of all AI configurations
-    """
-    return {
+    """    return {
         "version": __version__,
         "author": __author__,
         "modules": {

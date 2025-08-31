@@ -1,5 +1,4 @@
-"""
-Database Security Module
+"""Database Security Module
 
 Enterprise-grade database security module providing comprehensive security operations 
 including encryption, access control, audit logging, vulnerability scanning, 
@@ -26,7 +25,6 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
-
 # Core security components
 from .encryption_manager import DatabaseEncryptionManager, EncryptionAlgorithm, KeyType
 from .access_control import DatabaseAccessControl, AccessLevel, PermissionType, ResourceType

@@ -1,5 +1,4 @@
-"""
-Load Balancer Module for IA Influencer Agent Platform
+"""Load Balancer Module for IA Influencer Agent Platform
 
 This module provides enterprise-grade load balancing capabilities for the
 IA Influencer Agent platform, handling high-traffic scenarios for content
@@ -13,7 +12,6 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
-
 from .nginx_manager import NginxManager
 from .haproxy_manager import HAProxyManager
 from .envoy_manager import EnvoyManager
@@ -107,13 +105,10 @@ MODULE_INFO = {
 }
 
 def get_module_info():
-    """Get comprehensive module information"""
-    return MODULE_INFO
+    """Get comprehensive module information"""    return MODULE_INFO
 
 def get_version():
-    """Get module version"""
-    return __version__
+    """Get module version"""    return __version__
 
 def get_available_components():
-    """Get list of available load balancer components"""
-    return __all__
+    """Get list of available load balancer components"""    return __all__

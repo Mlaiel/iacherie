@@ -1,5 +1,4 @@
-"""
-Core interfaces module for IA Influencer Agent with Content Protection.
+"""Core interfaces module for IA Influencer Agent with Content Protection.
 
 This module defines the foundational interfaces for:
 - Content processing and protection
@@ -12,7 +11,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Industrial Content Protection Platform
 © 2025 - All rights reserved. Unauthorized use, copying, or distribution prohibited.
 """
-
 from .content_interfaces import (
     ContentProcessorInterface,
     ContentProtectionInterface,

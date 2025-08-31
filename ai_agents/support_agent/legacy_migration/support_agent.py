@@ -36,8 +36,19 @@ import faiss
 import numpy as np
 
 from ..base import BaseAgent, AgentRequest, AgentResponse
-from ...core.exceptions import SupportError, ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import SupportError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    SupportError, ValidationError = globals().get('SupportError, ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...ml.conversation_models import ConversationModel
 from ...ml.intent_classifier import IntentClassifier
 from ...utils.knowledge_base import KnowledgeBase

@@ -42,7 +42,14 @@ from scipy.spatial.distance import cosine
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-from ...core.exceptions import VideoProcessingError, ValidationError
+try:
+    from core.exceptions import VideoProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    VideoProcessingError, ValidationError = globals().get('VideoProcessingError, ValidationError', Exception)
 from ...utils.video_utils import VideoProcessor
 from ...ml.video_models import VideoEmbeddingModel
 
@@ -92,7 +99,14 @@ from scipy.spatial.distance import cosine
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-from ...core.exceptions import VideoProcessingError, ValidationError
+try:
+    from core.exceptions import VideoProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    VideoProcessingError, ValidationError = globals().get('VideoProcessingError, ValidationError', Exception)
 from ...utils.video_utils import VideoProcessor
 from ...ml.video_models import VideoEmbeddingModel
 from .audio_fingerprinter import AudioFingerprinter

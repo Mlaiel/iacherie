@@ -1,11 +1,9 @@
-"""
-Collaboration Business Logic Module for IA Influencer Agent
+"""Collaboration Business Logic Module for IA Influencer Agent
 Professional collaboration management and workflow orchestration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 # Main collaboration manager and models
 from .manager import CollaborationManager, CollaborationManagerConfig, CollaborationManagerResponse
 

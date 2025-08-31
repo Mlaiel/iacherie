@@ -1,5 +1,4 @@
-"""
-Storage Configuration Module for IA-Influencer Agent Platform
+"""Storage Configuration Module for IA-Influencer Agent Platform
 =============================================================
 
 Professional storage and file management configuration for enterprise content management.
@@ -15,7 +14,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Cloud Storage Configurations
 from .s3_config import S3Config, s3_config
 from .azure_blob_config import AzureBlobConfig, azure_blob_config
@@ -163,12 +161,10 @@ STORAGE_CONFIGS = {
 }
 
 def get_storage_config(storage_type: str):
-    """Get storage configuration by type."""
-    return STORAGE_CONFIGS.get(storage_type)
+    """Get storage configuration by type."""    return STORAGE_CONFIGS.get(storage_type)
 
 def validate_all_storage_configs() -> bool:
-    """Validate all storage configurations."""
-    results = {}
+    """Validate all storage configurations."""    results = {}
     for name, config in STORAGE_CONFIGS.items():
         if hasattr(config, 'validate_configuration'):
             results[name] = config.validate_configuration()
@@ -195,8 +191,7 @@ def validate_all_storage_configs() -> bool:
     return all_valid
 
 def get_storage_statistics() -> dict:
-    """Get comprehensive storage statistics."""
-    stats = {
+    """Get comprehensive storage statistics."""    stats = {
         'timestamp': __import__('datetime').datetime.now().isoformat(),
         'configurations': {}
     }

@@ -1,5 +1,4 @@
-"""
-Revenue Management System - Core Revenue Components
+"""Revenue Management System - Core Revenue Components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -26,7 +25,6 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
-
 # Import all revenue management modules
 from .manager import RevenueManager
 from .allocator import RevenueAllocator, create_revenue_allocator

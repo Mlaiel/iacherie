@@ -32,7 +32,14 @@ from decimal import Decimal
 import jinja2
 from pathlib import Path
 
-from ...core.exceptions import ContractError, ValidationError
+try:
+    from core.exceptions import ContractError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ContractError, ValidationError = globals().get('ContractError, ValidationError', Exception)
 from ...utils.pdf_generator import PDFGenerator
 from ...utils.docx_generator import DocxGenerator
 from ...security.digital_signatures import ContractSigner

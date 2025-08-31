@@ -38,7 +38,12 @@ from contextlib import asynccontextmanager
 
 from ..base import BaseAgent, AgentConfig
 from ...core.security import SecurityManager, EncryptionManager
-from ...core.database import DatabaseManager
+try:
+    from core.database import DatabaseManager
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    DatabaseManager = DatabaseManager
 from ...core.cache import CacheManager
 from ...core.monitoring import MetricsCollector, PerformanceTracker
 from ...models.platform_models import Platform, PlatformCredential, ContentItem, DistributionJob

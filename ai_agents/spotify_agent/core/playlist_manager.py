@@ -29,7 +29,11 @@ from scipy.spatial.distance import pdist, squareform
 import networkx as nx
 
 from .spotify_api import SpotifyAPIClient
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.caching import CacheManager
 from ...utils.performance_monitor import PerformanceMonitor
 

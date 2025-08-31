@@ -1,5 +1,4 @@
-"""
-Audio Format Conversion Module - Professional Multi-Format Processing Engine
+"""Audio Format Conversion Module - Professional Multi-Format Processing Engine
 
 Ultra-advanced audio format conversion and optimization system designed for the IA Influencer Agent platform.
 Provides professional-grade format conversion, quality preservation, and metadata handling capabilities.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 from .converter import (
     AudioFormatConverter,
     ConversionEngine,

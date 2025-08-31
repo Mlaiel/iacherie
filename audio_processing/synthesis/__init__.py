@@ -1,5 +1,4 @@
-"""
-🎵 Audio Synthesis Engine - Professional AI-Powered Audio Generation System
+"""🎵 Audio Synthesis Engine - Professional AI-Powered Audio Generation System
 
 This module provides comprehensive AI-driven audio synthesis, generation, and creation
 capabilities for the IA Influencer Agent platform.
@@ -34,7 +33,6 @@ This module implements state-of-the-art neural audio synthesis technologies:
 - Style Transfer and Voice Cloning capabilities
 - Real-time synthesis optimization for production use
 """
-
 from .neural_vocoder import (
     WaveNetVocoder,
     HiFiGANVocoder,

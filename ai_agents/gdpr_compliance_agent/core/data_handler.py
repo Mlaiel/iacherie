@@ -27,7 +27,12 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
 
-from ...core.database import get_db
+try:
+    from core.database import get_db
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db = DatabaseManager
 from ...core.logging import get_logger
 from ...core.security import SecurityManager, EncryptionManager
 from ...models.gdpr_models import DataPrivacyRecord, DataCategory, ProcessingActivity

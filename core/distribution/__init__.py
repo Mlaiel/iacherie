@@ -1,5 +1,4 @@
-"""
-Distribution System - Advanced Multi-Platform Content Distribution Engine
+"""Distribution System - Advanced Multi-Platform Content Distribution Engine
 =========================================================================
 
 Professional-grade distribution system for AI Influencer Agent platform
@@ -9,7 +8,6 @@ advanced optimization, analytics, and monitoring features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .manager import DistributionManager, DistributionRequest, DistributionResult
 from .publisher import ContentPublisher, PublishingRequest, PublishingResult
 from .scheduler import DistributionScheduler, SchedulingRequest, SchedulingResult

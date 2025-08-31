@@ -1,5 +1,4 @@
-"""
-Platform Crawlers Module
+"""Platform Crawlers Module
 ========================
 
 Enterprise-grade web crawlers for comprehensive social media and content platform monitoring.
@@ -24,7 +23,6 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
-
 # Social Media Platforms
 from .youtube_crawler import YouTubeCrawler
 from .instagram_crawler import InstagramCrawler
@@ -193,8 +191,7 @@ PLATFORM_METADATA = {
 }
 
 def get_crawler_by_platform(platform_name: str):
-    """
-    Get crawler class by platform name.
+    """    Get crawler class by platform name.
     
     Args:
         platform_name: Name of the platform (e.g., 'youtube', 'instagram')
@@ -204,8 +201,7 @@ def get_crawler_by_platform(platform_name: str):
         
     Raises:
         ValueError: If platform is not supported
-    """
-    crawler_mapping = {
+    """    crawler_mapping = {
         'youtube': YouTubeCrawler,
         'instagram': InstagramCrawler,
         'tiktok': TikTokCrawler,
@@ -250,12 +246,10 @@ def get_crawler_by_platform(platform_name: str):
     return crawler_mapping[platform_name.lower()]
 
 def get_supported_platforms():
-    """Get list of all supported platform names."""
-    return list(PLATFORM_METADATA.keys())
+    """Get list of all supported platform names."""    return list(PLATFORM_METADATA.keys())
 
 def get_platforms_by_category(category: str):
-    """Get platforms filtered by category."""
-    return [
+    """Get platforms filtered by category."""    return [
         platform for platform, metadata in PLATFORM_METADATA.items()
         if metadata.get("category") == category
     ]
@@ -335,8 +329,7 @@ PLATFORM_CAPABILITIES = {
 }
 
 def get_platform_crawler(platform: str):
-    """Get crawler instance for specific platform."""
-    crawler_map = {
+    """Get crawler instance for specific platform."""    crawler_map = {
         "youtube": YouTubeCrawler,
         "instagram": InstagramCrawler,
         "tiktok": TikTokCrawler,
@@ -356,9 +349,7 @@ def get_platform_crawler(platform: str):
     return crawler_map[platform]()
 
 def get_supported_platforms():
-    """Get list of supported platforms."""
-    return list(PLATFORM_CAPABILITIES.keys())
+    """Get list of supported platforms."""    return list(PLATFORM_CAPABILITIES.keys())
 
 def get_platform_capabilities(platform: str):
-    """Get capabilities for specific platform."""
-    return PLATFORM_CAPABILITIES.get(platform, {})
+    """Get capabilities for specific platform."""    return PLATFORM_CAPABILITIES.get(platform, {})

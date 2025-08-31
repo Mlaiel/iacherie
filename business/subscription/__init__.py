@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Subscription Management Module
+"""IA Influencer Agent - Subscription Management Module
 
 This module provides comprehensive subscription management for the multi-format creator platform.
 Handles subscription plans, billing cycles, feature access control, and integration with payment processors.
@@ -24,7 +23,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, reprod
 or distribution of this code or any portion of it may result in severe civil and
 criminal penalties, and will be prosecuted to the maximum extent possible under law.
 """
-
 from .subscription_service import SubscriptionService
 from .subscription_manager import SubscriptionManager
 from .billing_engine import BillingEngine

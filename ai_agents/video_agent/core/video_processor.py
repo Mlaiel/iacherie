@@ -42,7 +42,11 @@ from scipy import ndimage
 from skimage import filters, restoration, segmentation
 from sklearn.cluster import KMeans
 
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.performance_monitor import PerformanceMonitor
 from ...utils.file_handler import SecureFileHandler
 from ...models.video_models import VideoContent, ProcessingJob

@@ -1,5 +1,4 @@
-"""
-Core Distribution Module - Enterprise Distribution Engine Components
+"""Core Distribution Module - Enterprise Distribution Engine Components
 
 Ultra-advanced core components for multi-platform content distribution
 with AI-powered optimization and intelligent orchestration.
@@ -7,7 +6,6 @@ with AI-powered optimization and intelligent orchestration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .distribution_engine import (
     DistributionEngine,
     DistributionJob,

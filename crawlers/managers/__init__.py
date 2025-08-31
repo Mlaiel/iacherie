@@ -1,5 +1,4 @@
-"""
-Crawler Managers Module
+"""Crawler Managers Module
 ======================
 
 Enterprise-grade management systems for comprehensive content creation, protection,
@@ -38,7 +37,6 @@ reproduction, distribution, reverse engineering, or commercialization without ex
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in immediate legal action under German and international copyright law.
 """
-
 from .content_discovery_manager import (
     ContentDiscoveryManager,
     DiscoveryTarget,

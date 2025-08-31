@@ -1,5 +1,4 @@
-"""
-Advanced AI Prompts System Tests
+"""Advanced AI Prompts System Tests
 Professional test suite for multi-format content creators prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
-
 import sys
 import os
 from pathlib import Path

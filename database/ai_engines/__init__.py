@@ -1,5 +1,4 @@
-"""
-AI Engines Database Module - IA Influencer Agent + Content Protection Platform
+"""AI Engines Database Module - IA Influencer Agent + Content Protection Platform
 
 This module provides comprehensive database management for artificial intelligence engines,
 including ML model registry, inference engines, training pipelines, performance metrics,
@@ -26,7 +25,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import List, Dict, Any, Optional, Union, Tuple
 import logging
 import asyncio
@@ -202,17 +200,14 @@ __all__ = [
 ]
 
 class AIEnginesManager:
-    """
-    Central manager for all AI engines and ML operations.
+    """    Central manager for all AI engines and ML operations.
     
     This class provides a unified interface to all AI engine components,
     including model registry, inference engines, training pipelines,
     and performance monitoring.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the AI Engines Manager."""
-        self.model_registry = AIModelRegistry()
+        """Initialize the AI Engines Manager."""        self.model_registry = AIModelRegistry()
         self.inference_manager = InferenceEngineManager()
         self.training_orchestrator = TrainingPipelineOrchestrator()
         self.performance_tracker = ModelPerformanceTracker()
@@ -225,13 +220,11 @@ class AIEnginesManager:
         logger.info("AI Engines Manager initialized successfully")
     
     async def initialize(self) -> Dict[str, Any]:
-        """
-        Initialize all AI engine components.
+        """        Initialize all AI engine components.
         
         Returns:
             Dict[str, Any]: Initialization status for each component
-        """
-        try:
+        """        try:
             initialization_status = {}
             
             # Initialize model registry
@@ -271,13 +264,11 @@ class AIEnginesManager:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check on all AI engine components.
+        """        Perform health check on all AI engine components.
         
         Returns:
             Dict[str, Any]: Health status for each component
-        """
-        try:
+        """        try:
             health_status = {}
             
             # Check model registry health
@@ -325,45 +316,37 @@ class AIEnginesManager:
 _ai_engines_manager = None
 
 def get_ai_engines_manager() -> AIEnginesManager:
-    """
-    Get the global AI Engines Manager instance.
+    """    Get the global AI Engines Manager instance.
     
     Returns:
         AIEnginesManager: Global manager instance
-    """
-    global _ai_engines_manager
+    """    global _ai_engines_manager
     if _ai_engines_manager is None:
         _ai_engines_manager = AIEnginesManager()
     return _ai_engines_manager
 
 async def initialize_ai_engines() -> Dict[str, Any]:
-    """
-    Initialize all AI engine components.
+    """    Initialize all AI engine components.
     
     Returns:
         Dict[str, Any]: Initialization status
-    """
-    manager = get_ai_engines_manager()
+    """    manager = get_ai_engines_manager()
     return await manager.initialize()
 
 async def health_check() -> Dict[str, Any]:
-    """
-    Perform health check on all AI engine components.
+    """    Perform health check on all AI engine components.
     
     Returns:
         Dict[str, Any]: Health status
-    """
-    manager = get_ai_engines_manager()
+    """    manager = get_ai_engines_manager()
     return await manager.health_check()
 
 def get_module_info() -> Dict[str, Any]:
-    """
-    Get comprehensive information about the AI Engines module.
+    """    Get comprehensive information about the AI Engines module.
     
     Returns:
         Dict[str, Any]: Module information including version, components, and capabilities
-    """
-    return {
+    """    return {
         "name": "AI Engines Database Module",
         "version": __version__,
         "author": __author__,
@@ -403,13 +386,11 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 async def get_system_status() -> Dict[str, Any]:
-    """
-    Get comprehensive system status for all AI engine components.
+    """    Get comprehensive system status for all AI engine components.
     
     Returns:
         Dict[str, Any]: Detailed system status information
-    """
-    try:
+    """    try:
         manager = get_ai_engines_manager()
         
         # Get basic health check
@@ -441,40 +422,35 @@ async def get_system_status() -> Dict[str, Any]:
 
 # Helper functions for system status
 async def _get_total_models() -> int:
-    """Get total number of registered models."""
-    try:
+    """Get total number of registered models."""    try:
         manager = get_ai_engines_manager()
         return await manager.model_registry.get_total_models_count()
     except:
         return 0
 
 async def _get_active_endpoints() -> int:
-    """Get number of active inference endpoints."""
-    try:
+    """Get number of active inference endpoints."""    try:
         manager = get_ai_engines_manager()
         return await manager.inference_manager.get_active_endpoints_count()
     except:
         return 0
 
 async def _get_running_jobs() -> int:
-    """Get number of running training jobs."""
-    try:
+    """Get number of running training jobs."""    try:
         manager = get_ai_engines_manager()
         return await manager.training_orchestrator.get_running_jobs_count()
     except:
         return 0
 
 async def _get_vector_store_size() -> int:
-    """Get vector store size."""
-    try:
+    """Get vector store size."""    try:
         manager = get_ai_engines_manager()
         return await manager.vector_manager.get_total_vectors_count()
     except:
         return 0
 
 async def _get_resource_utilization() -> Dict[str, Any]:
-    """Get resource utilization metrics."""
-    try:
+    """Get resource utilization metrics."""    try:
         manager = get_ai_engines_manager()
         return await manager.performance_tracker.get_resource_utilization()
     except:

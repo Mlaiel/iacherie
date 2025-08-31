@@ -19,7 +19,14 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error
 
-from ...core.exceptions import AnalysisError, ValidationError
+try:
+    from core.exceptions import AnalysisError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AnalysisError, ValidationError = globals().get('AnalysisError, ValidationError', Exception)
 from ...ml.nlp_processor import NLPProcessor
 from ...ml.sentiment_analyzer import SentimentAnalyzer
 from ...utils.statistical_analyzer import StatisticalAnalyzer

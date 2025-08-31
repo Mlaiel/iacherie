@@ -1,5 +1,4 @@
-"""
-Vector Database Management Module
+"""Vector Database Management Module
 ================================
 
 Advanced vector database integration for similarity search and content matching.
@@ -27,7 +26,6 @@ TEAM SPECIALTIES:
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -73,8 +71,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VectorSearchResult:
-    """Represents a vector search result."""
-    content_id: str
+    """Represents a vector search result."""    content_id: str
     similarity_score: float
     metadata: Dict[str, Any]
     vector: Optional[np.ndarray] = None
@@ -83,8 +80,7 @@ class VectorSearchResult:
 
 @dataclass 
 class VectorIndex:
-    """Represents a vector index configuration."""
-    name: str
+    """Represents a vector index configuration."""    name: str
     dimension: int
     metric: str
     backend: str
@@ -94,34 +90,28 @@ class VectorIndex:
 
 
 class VectorBackend(ABC):
-    """Abstract base class for vector database backends."""
-    
+    """Abstract base class for vector database backends."""    
     @abstractmethod
     async def create_index(self, name: str, dimension: int, metric: str = "cosine") -> bool:
-        """Create a new vector index."""
-        pass
+        """Create a new vector index."""        pass
     
     @abstractmethod
     async def add_vectors(self, index_name: str, vectors: np.ndarray, 
                          ids: List[str], metadata: List[Dict]) -> bool:
-        """Add vectors to an index."""
-        pass
+        """Add vectors to an index."""        pass
     
     @abstractmethod
     async def search(self, index_name: str, query_vector: np.ndarray,
                     k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors."""
-        pass
+        """Search for similar vectors."""        pass
     
     @abstractmethod
     async def delete_vectors(self, index_name: str, ids: List[str]) -> bool:
-        """Delete vectors from an index."""
-        pass
+        """Delete vectors from an index."""        pass
 
 
 class FAISSBackend(VectorBackend):
-    """FAISS vector database backend."""
-    
+    """FAISS vector database backend."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.indices: Dict[str, faiss.Index] = {}
@@ -130,8 +120,7 @@ class FAISSBackend(VectorBackend):
         self.reverse_id_maps: Dict[str, Dict[int, str]] = {}
         
     async def create_index(self, name: str, dimension: int, metric: str = "cosine") -> bool:
-        """Create a new FAISS index."""
-        try:
+        """Create a new FAISS index."""        try:
             if metric == "cosine":
                 # Use IndexFlatIP for cosine similarity
                 index = faiss.IndexFlatIP(dimension)
@@ -156,8 +145,7 @@ class FAISSBackend(VectorBackend):
     
     async def add_vectors(self, index_name: str, vectors: np.ndarray,
                          ids: List[str], metadata: List[Dict]) -> bool:
-        """Add vectors to FAISS index."""
-        try:
+        """Add vectors to FAISS index."""        try:
             if index_name not in self.indices:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -187,8 +175,7 @@ class FAISSBackend(VectorBackend):
     
     async def search(self, index_name: str, query_vector: np.ndarray,
                     k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors in FAISS index."""
-        try:
+        """Search for similar vectors in FAISS index."""        try:
             if index_name not in self.indices:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -234,8 +221,7 @@ class FAISSBackend(VectorBackend):
             return []
     
     async def delete_vectors(self, index_name: str, ids: List[str]) -> bool:
-        """Delete vectors from FAISS index (rebuild required)."""
-        try:
+        """Delete vectors from FAISS index (rebuild required)."""        try:
             if index_name not in self.indices:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -256,16 +242,14 @@ class FAISSBackend(VectorBackend):
 
 
 class ChromaBackend(VectorBackend):
-    """ChromaDB vector database backend."""
-    
+    """ChromaDB vector database backend."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.client = chromadb.Client()
         self.collections: Dict[str, Any] = {}
         
     async def create_index(self, name: str, dimension: int, metric: str = "cosine") -> bool:
-        """Create a new ChromaDB collection."""
-        try:
+        """Create a new ChromaDB collection."""        try:
             collection = self.client.create_collection(
                 name=name,
                 metadata={"dimension": dimension, "metric": metric}
@@ -281,8 +265,7 @@ class ChromaBackend(VectorBackend):
     
     async def add_vectors(self, index_name: str, vectors: np.ndarray,
                          ids: List[str], metadata: List[Dict]) -> bool:
-        """Add vectors to ChromaDB collection."""
-        try:
+        """Add vectors to ChromaDB collection."""        try:
             if index_name not in self.collections:
                 raise ValueError(f"Collection '{index_name}' not found")
             
@@ -307,8 +290,7 @@ class ChromaBackend(VectorBackend):
     
     async def search(self, index_name: str, query_vector: np.ndarray,
                     k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors in ChromaDB collection."""
-        try:
+        """Search for similar vectors in ChromaDB collection."""        try:
             if index_name not in self.collections:
                 raise ValueError(f"Collection '{index_name}' not found")
             
@@ -345,8 +327,7 @@ class ChromaBackend(VectorBackend):
             return []
     
     async def delete_vectors(self, index_name: str, ids: List[str]) -> bool:
-        """Delete vectors from ChromaDB collection."""
-        try:
+        """Delete vectors from ChromaDB collection."""        try:
             if index_name not in self.collections:
                 raise ValueError(f"Collection '{index_name}' not found")
             
@@ -362,13 +343,11 @@ class ChromaBackend(VectorBackend):
 
 
 class VectorDBManager:
-    """
-    Advanced vector database manager with multiple backend support.
+    """    Advanced vector database manager with multiple backend support.
     
     Handles vector indexing, similarity search, and content matching
     across multiple formats and platforms.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.backend_type = config.get('backend', 'faiss')
@@ -392,8 +371,7 @@ class VectorDBManager:
         logger.info(f"VectorDBManager initialized with {self.backend_type} backend")
     
     async def create_content_index(self, content_type: str, metric: str = "cosine") -> bool:
-        """
-        Create a specialized index for a content type.
+        """        Create a specialized index for a content type.
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -401,8 +379,7 @@ class VectorDBManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             index_name = f"{content_type}_index"
             
             # Create backend index
@@ -435,16 +412,14 @@ class VectorDBManager:
             return False
     
     def generate_text_embedding(self, text: str) -> np.ndarray:
-        """
-        Generate embedding vector for text content.
+        """        Generate embedding vector for text content.
         
         Args:
             text: Input text
             
         Returns:
             Embedding vector
-        """
-        try:
+        """        try:
             embedding = self.embedding_model.encode(text)
             return embedding.astype(np.float32)
             
@@ -453,16 +428,14 @@ class VectorDBManager:
             return np.zeros(self.embedding_dimension, dtype=np.float32)
     
     def generate_audio_embedding(self, audio_features: Dict[str, Any]) -> np.ndarray:
-        """
-        Generate embedding vector for audio content.
+        """        Generate embedding vector for audio content.
         
         Args:
             audio_features: Extracted audio features
             
         Returns:
             Embedding vector
-        """
-        try:
+        """        try:
             # Combine different audio features into a single vector
             features = []
             
@@ -494,8 +467,7 @@ class VectorDBManager:
     
     async def add_content_vector(self, content_type: str, content_id: str,
                                embedding: np.ndarray, metadata: Dict[str, Any]) -> bool:
-        """
-        Add content vector to appropriate index.
+        """        Add content vector to appropriate index.
         
         Args:
             content_type: Type of content
@@ -505,8 +477,7 @@ class VectorDBManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -532,8 +503,7 @@ class VectorDBManager:
     
     async def search_similar_content(self, content_type: str, query_embedding: np.ndarray,
                                    k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """
-        Search for similar content in the specified index.
+        """        Search for similar content in the specified index.
         
         Args:
             content_type: Type of content to search
@@ -543,8 +513,7 @@ class VectorDBManager:
             
         Returns:
             List of similar content results
-        """
-        try:
+        """        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -564,8 +533,7 @@ class VectorDBManager:
     
     async def detect_content_similarity(self, content_id_1: str, content_id_2: str,
                                       content_type: str) -> Optional[float]:
-        """
-        Calculate similarity between two specific content items.
+        """        Calculate similarity between two specific content items.
         
         Args:
             content_id_1: First content ID
@@ -574,8 +542,7 @@ class VectorDBManager:
             
         Returns:
             Similarity score or None if not found
-        """
-        try:
+        """        try:
             # This would require storing vectors separately or rebuilding from content
             # For now, return placeholder implementation
             logger.warning("Direct content similarity detection not implemented")
@@ -586,8 +553,7 @@ class VectorDBManager:
             return None
     
     async def remove_content_vector(self, content_type: str, content_id: str) -> bool:
-        """
-        Remove content vector from index.
+        """        Remove content vector from index.
         
         Args:
             content_type: Type of content
@@ -595,8 +561,7 @@ class VectorDBManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -616,16 +581,14 @@ class VectorDBManager:
             return False
     
     def get_index_stats(self, content_type: str) -> Dict[str, Any]:
-        """
-        Get statistics for a content index.
+        """        Get statistics for a content index.
         
         Args:
             content_type: Type of content
             
         Returns:
             Index statistics
-        """
-        try:
+        """        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -658,13 +621,11 @@ class VectorDBManager:
             return {}
     
     def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system status.
+        """        Get comprehensive system status.
         
         Returns:
             System status information
-        """
-        return {
+        """        return {
             'backend_type': self.backend_type,
             'embedding_model': self.embedding_model_name,
             'embedding_dimension': self.embedding_dimension,
@@ -676,13 +637,11 @@ class VectorDBManager:
 
 
 class SimilaritySearcher:
-    """
-    Advanced similarity search engine with content-aware algorithms.
+    """    Advanced similarity search engine with content-aware algorithms.
     
     Provides specialized search for different content types with
     optimized similarity metrics and ranking algorithms.
-    """
-    
+    """    
     def __init__(self, vector_db: VectorDBManager, config: Dict[str, Any]):
         self.vector_db = vector_db
         self.config = config
@@ -695,8 +654,7 @@ class SimilaritySearcher:
     
     async def find_duplicate_content(self, content_type: str, 
                                    embedding: np.ndarray) -> List[VectorSearchResult]:
-        """
-        Find potential duplicate content.
+        """        Find potential duplicate content.
         
         Args:
             content_type: Type of content
@@ -704,8 +662,7 @@ class SimilaritySearcher:
             
         Returns:
             List of potential duplicates
-        """
-        threshold = self.similarity_thresholds.get(content_type, 0.8)
+        """        threshold = self.similarity_thresholds.get(content_type, 0.8)
         
         results = await self.vector_db.search_similar_content(
             content_type, embedding, k=50, threshold=threshold
@@ -720,8 +677,7 @@ class SimilaritySearcher:
     async def find_similar_content(self, content_type: str,
                                  embedding: np.ndarray,
                                  exclude_ids: List[str] = None) -> List[VectorSearchResult]:
-        """
-        Find similar but not duplicate content.
+        """        Find similar but not duplicate content.
         
         Args:
             content_type: Type of content
@@ -730,8 +686,7 @@ class SimilaritySearcher:
             
         Returns:
             List of similar content
-        """
-        base_threshold = self.similarity_thresholds.get(content_type, 0.8)
+        """        base_threshold = self.similarity_thresholds.get(content_type, 0.8)
         similarity_threshold = base_threshold - 0.1  # Lower threshold for similarity
         
         results = await self.vector_db.search_similar_content(
@@ -753,8 +708,7 @@ class SimilaritySearcher:
     
     async def rank_by_relevance(self, results: List[VectorSearchResult],
                               query_metadata: Dict[str, Any]) -> List[VectorSearchResult]:
-        """
-        Rank search results by relevance using metadata.
+        """        Rank search results by relevance using metadata.
         
         Args:
             results: Search results to rank
@@ -762,8 +716,7 @@ class SimilaritySearcher:
             
         Returns:
             Ranked results
-        """
-        try:
+        """        try:
             # Implement relevance scoring based on metadata
             for result in results:
                 relevance_score = result.similarity_score

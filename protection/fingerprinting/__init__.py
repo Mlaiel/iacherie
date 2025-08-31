@@ -1,5 +1,4 @@
-"""
-🔒 Content Fingerprinting System for IA-Influencer-Agent
+"""🔒 Content Fingerprinting System for IA-Influencer-Agent
 ========================================================
 
 Multi-modal content fingerprinting system supporting audio, video, image, and text content.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
-
 # Core services
 from .fingerprinting_service import FingerprintingService
 

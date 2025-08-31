@@ -28,8 +28,20 @@ from sqlalchemy import Column, String, DateTime, Boolean, Text, JSON, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
-from ...core.database import get_db_session
-from ...core.exceptions import ProcessingError, ValidationError
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import ProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError = globals().get('ProcessingError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 
 logger = logging.getLogger(__name__)

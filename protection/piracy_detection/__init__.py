@@ -1,5 +1,4 @@
-"""
-🔍 Ultra-Industrial Anti-Piracy Detection & Enforcement Orchestration
+"""🔍 Ultra-Industrial Anti-Piracy Detection & Enforcement Orchestration
 =====================================================================
 
 Enterprise-grade AI-powered anti-piracy ecosystem with advanced threat detection,
@@ -52,7 +51,6 @@ UNAUTHORIZED ACCESS IS INTERNATIONAL CRIMINAL OFFENSE:
 Contact mlaiel@live.de for MANDATORY law enforcement authorization.
 Unauthorized access triggers automatic Interpol investigation protocols.
 """
-
 import logging
 from typing import Optional, Dict, Any, List
 from datetime import datetime
@@ -113,16 +111,13 @@ DEFAULT_CONFIG = {
 }
 
 class PiracyDetectionSystem:
-    """
-    Comprehensive piracy detection system orchestrator.
+    """    Comprehensive piracy detection system orchestrator.
     
     This class coordinates all piracy detection components and provides
     a unified interface for content protection operations.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the piracy detection system."""
-        self.config = {**DEFAULT_CONFIG, **(config or {})}
+        """Initialize the piracy detection system."""        self.config = {**DEFAULT_CONFIG, **(config or {})}
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -137,8 +132,7 @@ class PiracyDetectionSystem:
         self.initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all system components."""
-        try:
+        """Initialize all system components."""        try:
             self.logger.info("Initializing Piracy Detection System...")
             
             # Initialize core detector
@@ -179,8 +173,7 @@ class PiracyDetectionSystem:
             return False
     
     async def detect_violations(self, content_id: str, **kwargs) -> List[Dict[str, Any]]:
-        """Detect piracy violations for given content."""
-        if not self.initialized:
+        """Detect piracy violations for given content."""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -215,8 +208,7 @@ class PiracyDetectionSystem:
             return []
     
     async def start_monitoring(self, content_ids: List[str]) -> bool:
-        """Start real-time monitoring for content list."""
-        if not self.initialized:
+        """Start real-time monitoring for content list."""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -229,8 +221,7 @@ class PiracyDetectionSystem:
             return False
     
     async def enforce_takedowns(self, violation_ids: List[str]) -> Dict[str, Any]:
-        """Execute automated enforcement actions."""
-        if not self.initialized:
+        """Execute automated enforcement actions."""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -243,8 +234,7 @@ class PiracyDetectionSystem:
             return {}
     
     async def generate_forensic_report(self, violation_id: str) -> Optional[Dict[str, Any]]:
-        """Generate forensic analysis report."""
-        if not self.initialized:
+        """Generate forensic analysis report."""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -257,8 +247,7 @@ class PiracyDetectionSystem:
             return None
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
-        status = {
+        """Get comprehensive system status."""        status = {
             'initialized': self.initialized,
             'version': PIRACY_DETECTION_VERSION,
             'supported_platforms': len(SUPPORTED_PLATFORMS),
@@ -279,8 +268,7 @@ class PiracyDetectionSystem:
         return status
     
     async def close(self) -> None:
-        """Clean up all system components."""
-        try:
+        """Clean up all system components."""        try:
             components = [
                 self.detector, self.monitor, self.analyzer, self.enforcement,
                 self.forensic_analyzer, self.revenue_analyzer, self.social_intelligence
@@ -334,8 +322,7 @@ __all__ = [
 
 # Initialize logging
 def setup_logging(level: str = "INFO") -> None:
-    """Setup logging configuration for piracy detection module."""
-    logging.basicConfig(
+    """Setup logging configuration for piracy detection module."""    logging.basicConfig(
         level=getattr(logging, level.upper()),
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
@@ -370,13 +357,11 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 # Legal notice
-__legal_notice__ = """
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+__legal_notice__ = """⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 # Public API exports
 __all__ = [
     # Core detection system
@@ -417,8 +402,7 @@ RESPONSE_TIME_TARGET_MS = 150
 PLATFORM_COVERAGE_COUNT = 500
 
 class DetectionConfig:
-    """Configuration for piracy detection system."""
-    
+    """Configuration for piracy detection system."""    
     def __init__(self, **kwargs):
         # Detection thresholds
         self.confidence_threshold = kwargs.get('confidence_threshold', 0.85)
@@ -446,8 +430,7 @@ class DetectionConfig:
         self.evidence_preservation = kwargs.get('evidence_preservation', True)
 
 class MonitoringConfig:
-    """Configuration for continuous monitoring."""
-    
+    """Configuration for continuous monitoring."""    
     def __init__(self, **kwargs):
         self.scan_frequency_hours = kwargs.get('scan_frequency_hours', 2)
         self.priority_scan_minutes = kwargs.get('priority_scan_minutes', 15)
@@ -456,8 +439,7 @@ class MonitoringConfig:
         self.revenue_tracking_enabled = kwargs.get('revenue_tracking_enabled', True)
 
 class EnforcementConfig:
-    """Configuration for automated enforcement."""
-    
+    """Configuration for automated enforcement."""    
     def __init__(self, **kwargs):
         self.auto_takedown_enabled = kwargs.get('auto_takedown_enabled', False)
         self.manual_review_threshold = kwargs.get('manual_review_threshold', 0.90)
@@ -465,21 +447,17 @@ class EnforcementConfig:
         self.legal_action_threshold = kwargs.get('legal_action_threshold', 10)
 
 class PiracyDetectionService:
-    """
-    Main service class for the Piracy Detection System.
+    """    Main service class for the Piracy Detection System.
     
     Provides comprehensive piracy detection capabilities with real-time monitoring,
     AI-powered content matching, and automated enforcement across multiple platforms.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Piracy Detection Service.
+        """        Initialize the Piracy Detection Service.
         
         Args:
             config: Optional configuration dictionary
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         self._start_time = datetime.utcnow()
         
@@ -497,13 +475,11 @@ class PiracyDetectionService:
         logger.warning(__legal_notice__)
     
     async def initialize(self) -> bool:
-        """
-        Initialize all piracy detection services.
+        """        Initialize all piracy detection services.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             logger.info("Initializing Piracy Detection Services...")
             
             # Initialize detector
@@ -547,8 +523,7 @@ class PiracyDetectionService:
             return False
     
     async def detect_violations(self, content_id: str, platforms: Optional[List[str]] = None) -> Dict[str, Any]:
-        """
-        Detect potential violations for given content across platforms.
+        """        Detect potential violations for given content across platforms.
         
         Args:
             content_id: Unique identifier for the protected content
@@ -556,15 +531,13 @@ class PiracyDetectionService:
             
         Returns:
             Dict containing detection results and violation details
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized. Call initialize() first.")
             
         return await self.detector.detect_violations(content_id, platforms)
     
     async def start_monitoring(self, content_id: str, monitoring_config: Optional[Dict[str, Any]] = None) -> str:
-        """
-        Start continuous monitoring for a piece of content.
+        """        Start continuous monitoring for a piece of content.
         
         Args:
             content_id: Unique identifier for the content to monitor
@@ -572,15 +545,13 @@ class PiracyDetectionService:
             
         Returns:
             Monitoring session ID
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized. Call initialize() first.")
             
         return await self.monitoring.start_monitoring(content_id, monitoring_config)
     
     async def get_detection_report(self, content_id: str, time_range: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive detection report for content.
+        """        Generate comprehensive detection report for content.
         
         Args:
             content_id: Unique identifier for the content
@@ -588,15 +559,13 @@ class PiracyDetectionService:
             
         Returns:
             Comprehensive detection report
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized. Call initialize() first.")
             
         return await self.reporter.generate_report(content_id, time_range)
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown all services."""
-        logger.info("Shutting down Piracy Detection Services...")
+        """Gracefully shutdown all services."""        logger.info("Shutting down Piracy Detection Services...")
         
         if self.monitoring:
             await self.monitoring.shutdown()

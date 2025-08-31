@@ -1,5 +1,4 @@
-"""
-Vector Stores Module - IA Influencer Agent
+"""Vector Stores Module - IA Influencer Agent
 
 This module provides comprehensive vector database operations for AI fingerprinting, 
 similarity search, real-time streaming, and content protection across multiple vector stores.
@@ -20,7 +19,6 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
-
 # Core vector store implementations
 from .faiss_vector_store import FAISSVectorStore
 from .elasticsearch_vector_store import ElasticsearchVectorStore

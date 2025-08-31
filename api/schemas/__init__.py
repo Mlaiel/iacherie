@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Comprehensive Schemas Module
+"""IA Influencer Agent Platform - Comprehensive Schemas Module
 Professional-grade Pydantic schemas for complete business logic coverage
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -26,7 +25,6 @@ Architecture Overview:
 ├── Blockchain & NFT Integration
 └── Admin & System Management
 """
-
 # Foundation schemas
 from .base import (
     BaseSchema, TimestampSchema, UUIDSchema, AuditSchema,

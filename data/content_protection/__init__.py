@@ -1,5 +1,4 @@
-"""
-🛡️ Content Protection Module Enterprise - IA-Influencer-Agent Platform
+"""🛡️ Content Protection Module Enterprise - IA-Influencer-Agent Platform
 =======================================================================
 
 Système de protection contenu professionnel pour créateurs multi-format avec 
@@ -28,7 +27,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
-
 # Import core managers
 from .content_protection_manager import (
     ContentProtectionManager,

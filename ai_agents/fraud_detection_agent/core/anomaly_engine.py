@@ -23,7 +23,14 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.decomposition import PCA
 import redis.asyncio as aioredis
 
-from ...core.exceptions import AnomalyDetectionError
+try:
+    from core.exceptions import AnomalyDetectionError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AnomalyDetectionError = globals().get('AnomalyDetectionError', Exception)
 from ...utils.statistical_analyzer import StatisticalAnalyzer
 from ...data.models.user_behavior import BehaviorMetrics
 

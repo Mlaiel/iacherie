@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Data Crawlers Module
+"""IA Influencer Agent - Data Crawlers Module
 ==========================================
 
 Advanced multi-platform web crawling system for content protection and discovery.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 # Platform crawlers
 from .platform_crawler import PlatformCrawler
 from .youtube_crawler import YouTubeCrawler

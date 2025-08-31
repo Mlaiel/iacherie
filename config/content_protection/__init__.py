@@ -1,5 +1,4 @@
-"""
-Content Protection Configuration Module for IA-Influencer Agent Platform
+"""Content Protection Configuration Module for IA-Influencer Agent Platform
 =========================================================================
 
 Professional content protection and fingerprinting configuration management.
@@ -42,7 +41,6 @@ FEATURES:
 ✅ Enterprise-grade security and performance
 ✅ Industrial scalability and reliability
 """
-
 from .fingerprint_engine_config import (
     FingerprintEngineConfig,
     ContentType,

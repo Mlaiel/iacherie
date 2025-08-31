@@ -1,5 +1,4 @@
-"""
-Voice Processing Module - IA Influencer Agent Conversational System
+"""Voice Processing Module - IA Influencer Agent Conversational System
 
 Ultra-advanced industrial-grade voice processing platform for conversational AI interactions,
 real-time voice synthesis, speaker identification, emotion detection, and multi-language 
@@ -47,7 +46,6 @@ LEGAL CONSEQUENCES FOR VIOLATIONS:
 For official licensing inquiries ONLY: mlaiel@live.de
 Subject: "IA-Influencer Voice Processing Licensing Request"
 """
-
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass
@@ -300,8 +298,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 def get_voice_processing_info() -> Dict[str, Any]:
-    """Get comprehensive voice processing module information"""
-    return {
+    """Get comprehensive voice processing module information"""    return {
         "module": "Voice Processing",
         "version": __version__,
         "author": __author__,
@@ -312,8 +309,7 @@ def get_voice_processing_info() -> Dict[str, Any]:
     }
 
 async def initialize_voice_processing() -> bool:
-    """Initialize voice processing module with all components"""
-    try:
+    """Initialize voice processing module with all components"""    try:
         logger.info("Initializing IA-Influencer Voice Processing Module...")
         
         # Initialize core components

@@ -26,7 +26,14 @@ from enum import Enum
 import jsonschema
 from jsonschema import validate, ValidationError as JSONSchemaValidationError
 
-from ...core.exceptions import ValidationError, TransformationError
+try:
+    from core.exceptions import ValidationError, TransformationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ValidationError, TransformationError = globals().get('ValidationError, TransformationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 from ...security.encryption import ContentEncryption
 

@@ -1,5 +1,4 @@
-"""
-🎯 Audio Quality Control - Professional Quality Management System
+"""🎯 Audio Quality Control - Professional Quality Management System
 
 Advanced audio quality control system for comprehensive audio content validation,
 monitoring, and optimization. Includes real-time quality assessment, automated
@@ -19,7 +18,6 @@ Unauthorized use, copying, modification, distribution or reproduction of this co
 or concept without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) 
 is strictly prohibited and subject to legal prosecution under German and international law.
 """
-
 from .controller import QualityController
 from .validator import AudioQualityValidator
 from .monitor import QualityMonitor

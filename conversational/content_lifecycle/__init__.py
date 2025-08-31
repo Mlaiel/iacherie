@@ -1,5 +1,4 @@
-"""
-Content Lifecycle Management Module - Enterprise Creator Economy Platform
+"""Content Lifecycle Management Module - Enterprise Creator Economy Platform
 
 This module provides comprehensive content lifecycle orchestration for the creator economy,
 implementing a complete workflow from upload to monetization across multiple platforms.
@@ -32,7 +31,6 @@ Monetization Tracking & Revenue Optimization
 
 Contact: mlaiel@live.de
 """
-
 # Creator economy workflow components - Enterprise Implementation
 from .content_format_processor import (
     ContentFormatProcessor, ContentFormat, ProcessingStage, ContentFile,
@@ -120,13 +118,11 @@ __license__ = "Proprietary - All Rights Reserved"
 __status__ = "Production"
 
 def get_creator_workflow_info():
-    """
-    Get information about the creator economy workflow implementation.
+    """    Get information about the creator economy workflow implementation.
     
     Returns:
         dict: Workflow information including stages and supported platforms
-    """
-    return {
+    """    return {
         "workflow_stages": [
             "Multi-Format Content Upload",
             "AI-Powered Content Processing & Enhancement", 
@@ -161,13 +157,11 @@ def get_creator_workflow_info():
     }
 
 def get_module_status():
-    """
-    Get the current status and health of all content lifecycle modules.
+    """    Get the current status and health of all content lifecycle modules.
     
     Returns:
         dict: Module status and availability information
-    """
-    return {
+    """    return {
         "content_lifecycle_version": __version__,
         "author": __author__,
         "contact": __email__,

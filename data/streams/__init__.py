@@ -1,5 +1,4 @@
-"""
-Data Streams Management Module for IA Influencer Agent Platform
+"""Data Streams Management Module for IA Influencer Agent Platform
 ==============================================================
 
 Professional real-time data streaming layer for multi-format content processing,
@@ -25,7 +24,6 @@ Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Import all core components
 from .manager import DataStreamManager, StreamType, StreamStatus, StreamEvent, StreamMetrics
 from .processor import RealTimeProcessor, ProcessingJob, ProcessingPriority, ProcessingStage, ProcessingMetrics, ProcessingResult, ContentFormat

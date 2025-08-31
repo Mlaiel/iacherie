@@ -1,5 +1,4 @@
-"""
-Advanced Monitoring Tests Module
+"""Advanced Monitoring Tests Module
 
 Enterprise-grade test suite for comprehensive monitoring system in IA Influencer Agent platform.
 Provides full coverage testing for AI performance monitoring, business metrics, and system health.
@@ -25,7 +24,6 @@ Team Specialties:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import pytest
 import logging

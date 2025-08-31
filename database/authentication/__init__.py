@@ -1,5 +1,4 @@
-"""
-Authentication & Authorization Database Module
+"""Authentication & Authorization Database Module
 
 Enterprise-grade authentication and authorization database components for multi-format creators
 (musicians, bloggers, photographers, influencers, comedians) with advanced security features.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from .session_manager import SessionManager, SessionStore, UserSession
 from .token_repository import TokenRepository, RefreshTokenStore, TokenManager
 from .permission_manager import PermissionManager, RoleManager, AccessControl

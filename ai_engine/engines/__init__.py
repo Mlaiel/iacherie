@@ -1,5 +1,4 @@
-"""
-AI Content Generation Engines Module
+"""AI Content Generation Engines Module
 
 Enterprise-grade AI engine orchestration for multi-format content processing and protection.
 Supports advanced content generation, protection, SEO optimization, and monetization workflows.
@@ -32,7 +31,6 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import threading
 import logging
@@ -126,8 +124,7 @@ AVAILABLE_ENGINES = {
 
 
 class ContentEngineManager:
-    """
-    Enterprise-grade engine manager for orchestrating multiple AI content engines.
+    """    Enterprise-grade engine manager for orchestrating multiple AI content engines.
     Handles intelligent routing, load balancing, failover, and optimization across all content types.
     
     Features:
@@ -138,8 +135,7 @@ class ContentEngineManager:
     - Revenue and collaboration tracking
     - SEO optimization coordination
     - Content protection orchestration
-    """
-    
+    """    
     def __init__(self):
         self.engines: Dict[str, BaseContentEngine] = {}
         self.logger = logging.getLogger("ai.engines.manager")
@@ -152,14 +148,12 @@ class ContentEngineManager:
         self._protection_coordinator = {}
         
     async def register_engine(self, engine: BaseContentEngine, is_primary: bool = True):
-        """
-        Register an engine with the manager
+        """        Register an engine with the manager
         
         Args:
             engine: Engine instance to register
             is_primary: Whether this is a primary engine for its content type
-        """
-        await engine.initialize()
+        """        await engine.initialize()
         self.engines[engine.engine_name] = engine
         
         if is_primary:
@@ -174,8 +168,7 @@ class ContentEngineManager:
         priority: ProcessingPriority = ProcessingPriority.NORMAL,
         options: Optional[Dict] = None
     ) -> ProcessingResult:
-        """
-        Intelligently route content to appropriate engines based on type and load
+        """        Intelligently route content to appropriate engines based on type and load
         
         Args:
             content: Content to process
@@ -185,8 +178,7 @@ class ContentEngineManager:
             
         Returns:
             ProcessingResult with enhanced content and business intelligence
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         options = options or {}
         
         # Select optimal engine based on content type and current load
@@ -261,8 +253,7 @@ class ContentEngineManager:
             )
     
     async def _select_optimal_engine(self, content_type: str, priority: ProcessingPriority) -> Optional[BaseContentEngine]:
-        """Select the optimal engine based on content type and current load"""
-        available_engines = []
+        """Select the optimal engine based on content type and current load"""        available_engines = []
         
         for engine_name, engine in self.engines.items():
             if await self._engine_supports_content_type(engine, content_type):
@@ -282,8 +273,7 @@ class ContentEngineManager:
         return available_engines[0][0]
     
     async def _engine_supports_content_type(self, engine: BaseContentEngine, content_type: str) -> bool:
-        """Check if engine supports the given content type"""
-        # This would be based on engine capabilities configuration
+        """Check if engine supports the given content type"""        # This would be based on engine capabilities configuration
         engine_types = {
             'audio': ['audio_processing', 'music_generation', 'voice_synthesis'],
             'video': ['video_processing', 'visual_effects', 'video_compression'],
@@ -296,16 +286,14 @@ class ContentEngineManager:
         return engine.engine_name in supported_engines
     
     async def _get_failover_engine(self, content_type: str) -> Optional[BaseContentEngine]:
-        """Get a failover engine for the given content type"""
-        for engine_name, engine in self.engines.items():
+        """Get a failover engine for the given content type"""        for engine_name, engine in self.engines.items():
             if (await self._engine_supports_content_type(engine, content_type) and 
                 engine.status == EngineStatus.READY):
                 return engine
         return None
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        total_engines = len(self.engines)
+        """Get comprehensive system status"""        total_engines = len(self.engines)
         ready_engines = sum(1 for e in self.engines.values() if e.status == EngineStatus.READY)
         
         total_processed = sum(e.metrics.total_processed for e in self.engines.values())
@@ -323,8 +311,7 @@ class ContentEngineManager:
         }
     
     async def shutdown_all_engines(self):
-        """Gracefully shutdown all engines"""
-        for engine in self.engines.values():
+        """Gracefully shutdown all engines"""        for engine in self.engines.values():
             await engine.shutdown()
         self.logger.info("All engines shutdown completed")
 

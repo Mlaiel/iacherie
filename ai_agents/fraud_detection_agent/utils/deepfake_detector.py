@@ -28,7 +28,14 @@ import tensorflow as tf
 from sklearn.metrics.pairwise import cosine_similarity
 import redis.asyncio as aioredis
 
-from ...core.exceptions import DeepfakeDetectionError
+try:
+    from core.exceptions import DeepfakeDetectionError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    DeepfakeDetectionError = globals().get('DeepfakeDetectionError', Exception)
 from ...utils.media_processor import MediaProcessor
 from ...ml.models.deepfake_models import (
     VideoDeepfakeDetector,

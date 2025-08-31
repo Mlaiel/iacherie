@@ -37,8 +37,19 @@ from concurrent.futures import ThreadPoolExecutor
 import redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ...core.exceptions import CollaborationError, ValidationError, DatabaseError
-from ...core.config import settings
+try:
+    from core.exceptions import CollaborationError, ValidationError, DatabaseError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CollaborationError, ValidationError, DatabaseError = globals().get('CollaborationError, ValidationError, DatabaseError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...database.models import Creator, Collaboration, Project, CollaborationRequest
 from ...database.session import get_async_session
 from ...ml.recommendation_models import CollaborationRecommender

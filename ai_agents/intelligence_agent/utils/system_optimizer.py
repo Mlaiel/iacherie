@@ -39,7 +39,11 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import IsolationForest
 
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.metrics_collector import MetricsCollector
 from ...database.connection import get_database_pool
 

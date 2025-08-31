@@ -1,5 +1,4 @@
-"""
-Enterprise Orchestration Core Module - Advanced Workflow Coordination System
+"""Enterprise Orchestration Core Module - Advanced Workflow Coordination System
 
 This module provides comprehensive orchestration capabilities for the IA Influencer Agent
 platform, managing complex multi-step workflows with AI-powered optimization and 
@@ -8,7 +7,6 @@ intelligent coordination across all business domains.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .workflow_engine import WorkflowEngine
 from .pipeline_coordinator import PipelineCoordinator
 from .task_scheduler import TaskScheduler

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Orchestration Deployment Module
+"""IA Influencer Agent - Orchestration Deployment Module
 Enterprise container orchestration and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -22,7 +21,6 @@ Any unauthorized use, copying, modification, or distribution of this code
 without explicit written permission from the author is strictly prohibited
 and may result in legal action. All rights reserved.
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

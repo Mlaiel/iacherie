@@ -1,5 +1,4 @@
-"""
-Core Analytics Module - Industrial IA Influencer Agent Platform
+"""Core Analytics Module - Industrial IA Influencer Agent Platform
 
 Enterprise-grade analytics framework for multi-format content creators with advanced
 business intelligence, performance monitoring, and predictive analytics capabilities.
@@ -28,7 +27,6 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
-
 from .collector import MetricsCollector, BusinessMetricsCollector
 from .aggregator import DataAggregator, TimeSeriesAggregator
 from .dashboard import AnalyticsDashboard, RealtimeDashboard

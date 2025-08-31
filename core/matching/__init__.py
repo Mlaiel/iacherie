@@ -1,5 +1,4 @@
-"""
-Enterprise Creator Collaboration Matching System
+"""Enterprise Creator Collaboration Matching System
 
 Advanced AI-powered matching engine for creator collaborations with comprehensive
 business intelligence, revenue optimization, and enterprise-grade security.
@@ -18,7 +17,6 @@ Team Specialties:
 - Performance Engineering: High-throughput distributed systems
 - Data Science: Predictive analytics and behavioral modeling
 """
-
 from .scoring import (
     MatchingScoringService,
     ScoreComponent,

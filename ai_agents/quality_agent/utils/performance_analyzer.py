@@ -34,8 +34,19 @@ from pathlib import Path
 import psutil
 import statistics
 
-from ...core.exceptions import PerformanceError, AnalysisError
-from ...core.config import settings
+try:
+    from core.exceptions import PerformanceError, AnalysisError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    PerformanceError, AnalysisError = globals().get('PerformanceError, AnalysisError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.system_monitor import SystemMonitor
 from ...utils.content_profiler import ContentProfiler
 from ...monitoring.metrics_collector import MetricsCollector

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Data Quality Management Module
+"""IA Influencer Agent - Data Quality Management Module
 ===================================================
 
 Professional enterprise-grade data quality management system for multi-format content.
@@ -26,7 +25,6 @@ Components:
 - ReportGenerator: Quality reporting and dashboards
 - AutomatedCleaner: Intelligent data cleaning and repair
 """
-
 from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
@@ -69,16 +67,14 @@ __copyright__ = "Copyright 2025 Fahed Mlaiel. All rights reserved."
 logger = logging.getLogger(__name__)
 
 class QualityLevel(Enum):
-    """Data quality levels with specific thresholds"""
-    EXCELLENT = "excellent"      # 95-100%
+    """Data quality levels with specific thresholds"""    EXCELLENT = "excellent"      # 95-100%
     GOOD = "good"               # 85-94%
     ACCEPTABLE = "acceptable"   # 70-84%
     POOR = "poor"              # 50-69%
     CRITICAL = "critical"      # 0-49%
 
 class ValidationStatus(Enum):
-    """Validation status enumeration"""
-    PASSED = "passed"
+    """Validation status enumeration"""    PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
     PENDING = "pending"
@@ -154,21 +150,17 @@ DEFAULT_QUALITY_CONFIG = {
 }
 
 class QualityManagementSystem:
-    """
-    Central quality management system for the IA Influencer platform.
+    """    Central quality management system for the IA Influencer platform.
     
     Provides comprehensive data quality management including validation,
     monitoring, compliance checking, and automated quality assurance.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the quality management system.
+        """        Initialize the quality management system.
         
         Args:
             config: Optional configuration dictionary
-        """
-        self.config = config or DEFAULT_QUALITY_CONFIG
+        """        self.config = config or DEFAULT_QUALITY_CONFIG
         self.logger = logger
         
         # Initialize core components
@@ -196,8 +188,7 @@ class QualityManagementSystem:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive data quality assessment.
+        """        Perform comprehensive data quality assessment.
         
         Args:
             content_data: Content to assess
@@ -206,8 +197,7 @@ class QualityManagementSystem:
             
         Returns:
             Comprehensive quality assessment results
-        """
-        try:
+        """        try:
             # Start assessment
             start_time = datetime.utcnow()
             
@@ -272,8 +262,7 @@ class QualityManagementSystem:
         content_type: str,
         auto_fix: bool = True
     ) -> Dict[str, Any]:
-        """
-        Validate content and automatically fix issues if possible.
+        """        Validate content and automatically fix issues if possible.
         
         Args:
             content_data: Content to validate and fix
@@ -282,8 +271,7 @@ class QualityManagementSystem:
             
         Returns:
             Validation and fix results
-        """
-        try:
+        """        try:
             # Initial validation
             validation_result = await self.validation_engine.validate_content(
                 content_data, content_type
@@ -322,8 +310,7 @@ class QualityManagementSystem:
         timeframe: Optional[timedelta] = None,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get quality metrics for specified timeframe and content type.
+        """        Get quality metrics for specified timeframe and content type.
         
         Args:
             timeframe: Time period for metrics (default: last 24 hours)
@@ -331,8 +318,7 @@ class QualityManagementSystem:
             
         Returns:
             Quality metrics and statistics
-        """
-        if timeframe is None:
+        """        if timeframe is None:
             timeframe = timedelta(hours=24)
         
         return await self.quality_metrics.get_metrics(timeframe, content_type)
@@ -342,8 +328,7 @@ class QualityManagementSystem:
         report_type: str = "comprehensive",
         timeframe: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """
-        Generate quality report.
+        """        Generate quality report.
         
         Args:
             report_type: Type of report (comprehensive, summary, alerts)
@@ -351,23 +336,20 @@ class QualityManagementSystem:
             
         Returns:
             Generated quality report
-        """
-        return await self.report_generator.generate_report(report_type, timeframe)
+        """        return await self.report_generator.generate_report(report_type, timeframe)
     
     async def run_quality_benchmark(
         self,
         benchmark_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Run quality performance benchmark.
+        """        Run quality performance benchmark.
         
         Args:
             benchmark_type: Type of benchmark to run
             
         Returns:
             Benchmark results with performance metrics
-        """
-        return await self.performance_benchmark.run_comprehensive_benchmark(self)
+        """        return await self.performance_benchmark.run_comprehensive_benchmark(self)
     
     async def detect_quality_anomalies(
         self,
@@ -375,8 +357,7 @@ class QualityManagementSystem:
         current_value: float,
         context: Optional[Dict[str, Any]] = None
     ) -> Optional[Dict[str, Any]]:
-        """
-        Detect quality anomalies using advanced ML techniques.
+        """        Detect quality anomalies using advanced ML techniques.
         
         Args:
             metric_name: Name of the quality metric
@@ -385,8 +366,7 @@ class QualityManagementSystem:
             
         Returns:
             Anomaly detection results if anomaly found
-        """
-        anomaly = await self.business_intelligence.detect_quality_anomalies(
+        """        anomaly = await self.business_intelligence.detect_quality_anomalies(
             metric_name, current_value, context
         )
         return anomaly.__dict__ if anomaly else None
@@ -395,16 +375,14 @@ class QualityManagementSystem:
         self,
         timeframe: Optional[timedelta] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Generate actionable quality insights using advanced analytics.
+        """        Generate actionable quality insights using advanced analytics.
         
         Args:
             timeframe: Analysis timeframe
             
         Returns:
             List of quality insights with recommendations
-        """
-        insights = await self.business_intelligence.generate_quality_insights(timeframe)
+        """        insights = await self.business_intelligence.generate_quality_insights(timeframe)
         return [insight.__dict__ for insight in insights]
     
     async def protect_content_advanced(
@@ -414,8 +392,7 @@ class QualityManagementSystem:
         metadata: Optional[Dict[str, Any]] = None,
         protection_level: str = "enhanced"
     ) -> Dict[str, Any]:
-        """
-        Advanced content protection with comprehensive security analysis.
+        """        Advanced content protection with comprehensive security analysis.
         
         Args:
             content_data: Content data to protect
@@ -425,8 +402,7 @@ class QualityManagementSystem:
             
         Returns:
             Protection analysis results with threat detection
-        """
-        return await self.protection_engine.protect_content(
+        """        return await self.protection_engine.protect_content(
             content_data, content_type, metadata, protection_level
         )
     
@@ -436,8 +412,7 @@ class QualityManagementSystem:
         timeframe: Optional[timedelta] = None,
         analysis_type: str = "descriptive"
     ) -> Dict[str, Any]:
-        """
-        Analyze quality trends with advanced analytics.
+        """        Analyze quality trends with advanced analytics.
         
         Args:
             metric_name: Name of the quality metric
@@ -446,8 +421,7 @@ class QualityManagementSystem:
             
         Returns:
             Comprehensive trend analysis results
-        """
-        from .business_intelligence import AnalysisType
+        """        from .business_intelligence import AnalysisType
         
         analysis_enum = AnalysisType(analysis_type)
         return await self.business_intelligence.analyze_quality_trends(
@@ -455,13 +429,11 @@ class QualityManagementSystem:
         )
     
     def get_system_health(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system health status.
+        """        Get comprehensive system health status.
         
         Returns:
             System health metrics and status
-        """
-        return {
+        """        return {
             "quality_system_status": "operational",
             "core_components": {
                 "data_quality_manager": "active",
@@ -499,16 +471,14 @@ class QualityManagementSystem:
         self,
         output_formats: Optional[List[str]] = None
     ) -> Dict[str, str]:
-        """
-        Generate complete documentation for the quality system.
+        """        Generate complete documentation for the quality system.
         
         Args:
             output_formats: List of output formats (markdown, html, pdf, json)
             
         Returns:
             Dictionary mapping format to output file path
-        """
-        from .documentation_generator import DocumentationFormat
+        """        from .documentation_generator import DocumentationFormat
         
         formats = []
         if output_formats:
@@ -525,8 +495,7 @@ class QualityManagementSystem:
         )
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level based on score"""
-        if score >= 95:
+        """Determine quality level based on score"""        if score >= 95:
             return QualityLevel.EXCELLENT
         elif score >= 85:
             return QualityLevel.GOOD
@@ -544,8 +513,7 @@ class QualityManagementSystem:
         compliance_result: Dict[str, Any],
         content_quality: Dict[str, Any]
     ) -> List[str]:
-        """Generate quality improvement recommendations"""
-        recommendations = []
+        """Generate quality improvement recommendations"""        recommendations = []
         
         # Validation recommendations
         if validation_result.get('score', 0) < 85:
@@ -569,20 +537,17 @@ class QualityManagementSystem:
 quality_system: Optional[QualityManagementSystem] = None
 
 def get_quality_system() -> Optional[QualityManagementSystem]:
-    """Get the global quality management system instance"""
-    return quality_system
+    """Get the global quality management system instance"""    return quality_system
 
 def initialize_quality_system(config: Optional[Dict[str, Any]] = None) -> QualityManagementSystem:
-    """
-    Initialize the global quality management system.
+    """    Initialize the global quality management system.
     
     Args:
         config: Optional configuration
         
     Returns:
         Initialized quality system
-    """
-    global quality_system
+    """    global quality_system
     quality_system = QualityManagementSystem(config)
     return quality_system
 

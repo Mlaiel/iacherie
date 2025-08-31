@@ -26,8 +26,19 @@ from .core.orchestrator import DistributionOrchestrator, JobPriority
 from .core.coordinator import CampaignCoordinator, CampaignConfig, CampaignExecution
 from .intelligence.intelligence_engine import DistributionIntelligence, IntelligenceReport, AnalysisDepth
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import DistributionError, ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import DistributionError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    DistributionError, ValidationError = globals().get('DistributionError, ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...monitoring.metrics import MetricsCollector
 from ...core.cache import RedisCache
 

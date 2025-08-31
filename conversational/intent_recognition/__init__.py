@@ -1,5 +1,4 @@
-"""
-Intent Recognition Module - Initialization
+"""Intent Recognition Module - Initialization
 
 Advanced intent recognition system for creative industry professionals
 including musicians, influencers, photographers, bloggers, and content creators.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
-
 from .intent_classifier import (
     IntentClassifier,
     IntentCategory,

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Client Business Module
+"""IA Influencer Agent - Client Business Module
 
 This module handles all client-related business logic for multi-format creators
 including musicians, bloggers, photographers, influencers, and comedians.
@@ -21,7 +20,6 @@ Export modules:
 - ActivityManager: Client activity tracking and analytics
 - PreferenceManager: User preferences and settings
 """
-
 from .manager import ClientManager
 from .content import ContentManager
 from .profile import ProfileManager

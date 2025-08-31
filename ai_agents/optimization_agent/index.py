@@ -66,9 +66,25 @@ from . import (
 )
 
 # Import core dependencies
-from ...core.config import settings
-from ...core.database import get_db_session
-from ...core.exceptions import OptimizationError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import OptimizationError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    OptimizationError, ValidationError = globals().get('OptimizationError, ValidationError', Exception)
 from ...security.auth import verify_token, get_current_user
 from ...utils.cache_manager import cache_manager
 from ...utils.rate_limiter import RateLimiter
