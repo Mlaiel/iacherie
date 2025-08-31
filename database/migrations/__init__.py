@@ -1,5 +1,4 @@
-"""
-🔄 Database Migrations Module - Ultra-Industrial Enterprise Migration Suite
+"""🔄 Database Migrations Module - Ultra-Industrial Enterprise Migration Suite
 ==========================================================================
 Module: backend/database/migrations/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -27,7 +26,6 @@ Validation Testing → Performance Optimization → Rollback Preparation → Mon
 Core Technologies: Alembic + SQLAlchemy + PostgreSQL + Vector Databases + Redis
 Migration Features: Auto-discovery, Dependency resolution, Rollback safety, Performance optimization
 """
-
 # Core Migration Engine Components
 from .migration_manager import EnterpriseMigrationManager
 from .migration_runner import ProductionMigrationRunner

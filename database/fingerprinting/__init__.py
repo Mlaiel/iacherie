@@ -1,5 +1,4 @@
-"""
-Database Fingerprinting Module
+"""Database Fingerprinting Module
 
 This module handles all database operations related to content fingerprinting storage,
 indexing, and retrieval for AI-powered content protection.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 """
-
 from .fingerprint_storage import FingerprintStorageManager
 from .fingerprint_indexing import FingerprintIndexManager
 from .fingerprint_matching import FingerprintMatchingEngine

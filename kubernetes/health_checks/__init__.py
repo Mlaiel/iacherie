@@ -1,5 +1,4 @@
-"""
-Health Checks Module for IA Influencer Agent Platform
+"""Health Checks Module for IA Influencer Agent Platform
 Advanced deployment health monitoring and verification system
 
 This module provides comprehensive health checking capabilities for:
@@ -22,7 +21,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
-
 # Import core health checking components
 from .core_health import CoreHealthChecker, HealthStatus, HealthCheckResult, SystemMetrics
 from .database_health import DatabaseHealthChecker
@@ -125,8 +123,7 @@ __all__ = [
 ]
 
 # Module docstring with usage examples
-__doc__ = """
-IA Influencer Agent Platform Health Monitoring System
+__doc__ = """IA Influencer Agent Platform Health Monitoring System
 
 COMPREHENSIVE HEALTH MONITORING FOR MULTI-FORMAT CONTENT PROTECTION PLATFORM
 

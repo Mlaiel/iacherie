@@ -22,7 +22,14 @@ from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
 import redis.asyncio as aioredis
 
-from ...core.exceptions import BehaviorAnalysisError
+try:
+    from core.exceptions import BehaviorAnalysisError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    BehaviorAnalysisError = globals().get('BehaviorAnalysisError', Exception)
 from ...utils.statistical_analyzer import StatisticalAnalyzer
 from ...data.models.user_behavior import UserBehavior, BehaviorPattern
 

@@ -1,5 +1,4 @@
-"""
-Business Analytics Module - IA Influencer Agent Platform
+"""Business Analytics Module - IA Influencer Agent Platform
 ========================================================
 
 Advanced analytics system for multi-format content creators with real-time insights,
@@ -11,7 +10,6 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 from .performance_engine import PerformanceAnalyticsEngine
 from .audience_intelligence import AudienceIntelligenceSystem
 from .revenue_optimizer import RevenueOptimizationEngine

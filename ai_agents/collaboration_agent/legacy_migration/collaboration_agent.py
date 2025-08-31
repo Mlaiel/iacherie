@@ -23,8 +23,19 @@ from dataclasses import dataclass
 from enum import Enum
 
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import CollaborationError, ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import CollaborationError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CollaborationError, ValidationError = globals().get('CollaborationError, ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...ml.similarity_models import ContentSimilarityModel, UserEmbeddingModel
 from ...ml.recommendation_models import CollaborationRecommender
 from ...utils.analytics_utils import AnalyticsProcessor

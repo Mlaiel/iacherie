@@ -1,5 +1,4 @@
-"""
-Crawler Engines Module
+"""Crawler Engines Module
 ======================
 
 Advanced crawling engines for comprehensive content discovery and surveillance.
@@ -42,7 +41,6 @@ Localisation: Allemagne
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 from .youtube_engine import (
     YouTubeCrawlerEngine, 
     YouTubeVideoData, 
@@ -719,12 +717,10 @@ __advanced_engines__ = [
 
 # Engine Factory
 class CrawlerEngineFactory:
-    """Factory for creating crawler engines"""
-    
+    """Factory for creating crawler engines"""    
     @staticmethod
     def create_engine(platform: str, **kwargs):
-        """Create a crawler engine for the specified platform"""
-        engine_mapping = {
+        """Create a crawler engine for the specified platform"""        engine_mapping = {
             'youtube': YouTubeCrawlerEngine,
             'instagram': InstagramCrawlerEngine,
             'tiktok': TikTokCrawlerEngine,
@@ -771,8 +767,7 @@ class CrawlerEngineFactory:
 
     @staticmethod
     def get_available_platforms():
-        """Get list of available platforms"""
-        return [
+        """Get list of available platforms"""        return [
             'youtube', 'instagram', 'tiktok', 'twitter', 'spotify',
             'facebook', 'linkedin', 'discord', 'reddit', 'twitch',
             'soundcloud', 'pinterest', 'snapchat', 'telegram', 'vimeo',
@@ -785,8 +780,7 @@ class CrawlerEngineFactory:
 
     @staticmethod
     def get_engines_by_category(category: str):
-        """Get engines by category"""
-        categories = {
+        """Get engines by category"""        categories = {
             'social': __social_engines__,
             'media': __media_engines__,
             'messaging': __messaging_engines__,
@@ -876,8 +870,7 @@ __all__ = [
 
 
 def get_engine_info():
-    """Get comprehensive information about all available engines"""
-    return {
+    """Get comprehensive information about all available engines"""    return {
         'total_engines': len(__engines__),
         'categories': {
             'social': len(__social_engines__),
@@ -899,8 +892,7 @@ def get_engine_info():
 
 
 def validate_engine_compatibility(platform1: str, platform2: str) -> bool:
-    """Check if two platforms are compatible for cross-platform operations"""
-    compatible_groups = [
+    """Check if two platforms are compatible for cross-platform operations"""    compatible_groups = [
         {'youtube', 'vimeo', 'dailymotion', 'bilibili'},  # Video platforms
         {'instagram', 'tiktok', 'snapchat'},  # Visual social
         {'twitter', 'mastodon', 'bluesky', 'threads'},  # Microblogging
@@ -919,8 +911,7 @@ def validate_engine_compatibility(platform1: str, platform2: str) -> bool:
 
 
 def get_recommended_engines_for_content_type(content_type: str) -> List[str]:
-    """Get recommended engines based on content type"""
-    recommendations = {
+    """Get recommended engines based on content type"""    recommendations = {
         'video': ['YouTubeCrawlerEngine', 'TikTokCrawlerEngine', 'VimeoCrawlerEngine', 'TwitchCrawlerEngine'],
         'audio': ['SpotifyCrawlerEngine', 'SoundCloudCrawlerEngine'],
         'image': ['InstagramCrawlerEngine', 'PinterestCrawlerEngine', 'BehanceCrawlerEngine'],
@@ -934,8 +925,7 @@ def get_recommended_engines_for_content_type(content_type: str) -> List[str]:
 
 
 def create_multi_platform_crawler(platforms: List[str], **kwargs):
-    """Create multiple crawler engines for cross-platform monitoring"""
-    engines = {}
+    """Create multiple crawler engines for cross-platform monitoring"""    engines = {}
     for platform in platforms:
         try:
             engines[platform] = CrawlerEngineFactory.create_engine(platform, **kwargs)
@@ -946,32 +936,26 @@ def create_multi_platform_crawler(platforms: List[str], **kwargs):
 
 # Advanced Engine Orchestration
 class EngineOrchestrator:
-    """Orchestrates multiple crawler engines for comprehensive monitoring"""
-    
+    """Orchestrates multiple crawler engines for comprehensive monitoring"""    
     def __init__(self):
         self.engines = {}
         self.active_engines = set()
         
     def register_engine(self, platform: str, **kwargs):
-        """Register a new engine"""
-        self.engines[platform] = CrawlerEngineFactory.create_engine(platform, **kwargs)
+        """Register a new engine"""        self.engines[platform] = CrawlerEngineFactory.create_engine(platform, **kwargs)
         
     def activate_engine(self, platform: str):
-        """Activate an engine for monitoring"""
-        if platform in self.engines:
+        """Activate an engine for monitoring"""        if platform in self.engines:
             self.active_engines.add(platform)
             
     def deactivate_engine(self, platform: str):
-        """Deactivate an engine"""
-        self.active_engines.discard(platform)
+        """Deactivate an engine"""        self.active_engines.discard(platform)
         
     def get_active_engines(self):
-        """Get list of active engines"""
-        return list(self.active_engines)
+        """Get list of active engines"""        return list(self.active_engines)
         
     async def crawl_all_active(self, query: str):
-        """Crawl using all active engines"""
-        results = {}
+        """Crawl using all active engines"""        results = {}
         for platform in self.active_engines:
             if platform in self.engines:
                 try:
@@ -985,8 +969,7 @@ class EngineOrchestrator:
 
 # Specialized Engine Collections
 class SocialMediaEngineCollection:
-    """Collection of social media engines"""
-    
+    """Collection of social media engines"""    
     @staticmethod
     def get_major_platforms():
         return ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook']
@@ -1005,8 +988,7 @@ class SocialMediaEngineCollection:
 
 
 class ContentCreatorEngineCollection:
-    """Collection of content creator engines"""
-    
+    """Collection of content creator engines"""    
     @staticmethod
     def get_monetization_platforms():
         return ['patreon', 'onlyfans', 'substack']
@@ -1064,46 +1046,38 @@ DATA_MODELS = {
 }
 
 def get_engine_class(platform: str):
-    """
-    Get crawler engine class for a specific platform
+    """    Get crawler engine class for a specific platform
     
     Args:
         platform: Platform name (youtube, instagram, tiktok, twitter, spotify, generic)
         
     Returns:
         Engine class or None if not found
-    """
-    return ENGINE_REGISTRY.get(platform.lower())
+    """    return ENGINE_REGISTRY.get(platform.lower())
 
 def get_data_model(model_name: str):
-    """
-    Get data model class for a specific type
+    """    Get data model class for a specific type
     
     Args:
         model_name: Model name (e.g., 'youtube_video', 'instagram_post')
         
     Returns:
         Data model class or None if not found
-    """
-    return DATA_MODELS.get(model_name.lower())
+    """    return DATA_MODELS.get(model_name.lower())
 
 def list_available_engines():
-    """
-    List all available crawler engines
+    """    List all available crawler engines
     
     Returns:
         List of available engine names
-    """
-    return list(ENGINE_REGISTRY.keys())
+    """    return list(ENGINE_REGISTRY.keys())
 
 def list_available_models():
-    """
-    List all available data models
+    """    List all available data models
     
     Returns:
         List of available model names
-    """
-    return list(DATA_MODELS.keys())
+    """    return list(DATA_MODELS.keys())
 
 # Export all main classes and functions
 __all__ = [

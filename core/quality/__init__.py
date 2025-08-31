@@ -1,5 +1,4 @@
-"""
-Quality Management System - Enterprise Core Module
+"""Quality Management System - Enterprise Core Module
 
 Ultra-advanced quality assurance, content validation, and performance monitoring
 system for the IA-Influencer platform with comprehensive quality metrics and
@@ -26,7 +25,6 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .content_validator import ContentQualityValidator
 from .metrics_collector import QualityMetricsCollector
 from .performance_monitor import PerformanceMonitor

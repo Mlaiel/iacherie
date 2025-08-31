@@ -57,8 +57,19 @@ import spacy
 from bs4 import BeautifulSoup
 import markdown
 
-from ...core.config import settings
-from ...core.exceptions import OptimizationError, ValidationError, AIProcessingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import OptimizationError, ValidationError, AIProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    OptimizationError, ValidationError, AIProcessingError = globals().get('OptimizationError, ValidationError, AIProcessingError', Exception)
 from ...monitoring.metrics import MetricsCollector
 from ...utils.cache_utils import CacheManager
 

@@ -1,5 +1,4 @@
-"""
-Professional Multimedia Processing Module for IA Influencer Agent Platform
+"""Professional Multimedia Processing Module for IA Influencer Agent Platform
 Advanced multi-format content processing, protection, and optimization
 
 Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer + 
@@ -16,7 +15,6 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
-
 from .processors import (
     MultimediaProcessor,
     AudioProcessor,

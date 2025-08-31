@@ -1,5 +1,4 @@
-"""
-Licensing Database Module
+"""Licensing Database Module
 
 Enterprise-grade comprehensive licensing and rights management system
 for IA Influencer Agent platform with AI-powered automation and blockchain integration.
@@ -23,7 +22,6 @@ Enterprise Features:
 - Advanced compliance monitoring
 - Enterprise-grade analytics and reporting
 """
-
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime
 import logging
@@ -160,8 +158,7 @@ async def validate_content_licensing_rights(content_id: str,
                                           user_id: str, 
                                           usage_type: str,
                                           commercial: bool = False) -> Dict[str, Any]:
-    """
-    Quick validation of content licensing rights.
+    """    Quick validation of content licensing rights.
     
     Args:
         content_id: ID of the content
@@ -171,15 +168,13 @@ async def validate_content_licensing_rights(content_id: str,
         
     Returns:
         Validation result
-    """
-    return await quick_license_validation(content_id, user_id, usage_type)
+    """    return await quick_license_validation(content_id, user_id, usage_type)
 
 async def create_comprehensive_license(licensor_id: str,
                                      licensee_id: str,
                                      content_id: str,
                                      license_terms: Dict[str, Any]) -> LicensePackageResult:
-    """
-    Create a comprehensive license package.
+    """    Create a comprehensive license package.
     
     Args:
         licensor_id: ID of the rights owner
@@ -189,8 +184,7 @@ async def create_comprehensive_license(licensor_id: str,
         
     Returns:
         Complete license package result
-    """
-    manager = create_licensing_manager()
+    """    manager = create_licensing_manager()
     
     request = LicensePackageRequest(
         licensor_id=licensor_id,
@@ -211,24 +205,20 @@ async def create_comprehensive_license(licensor_id: str,
     return await manager.create_complete_license_package(request)
 
 def get_module_info(module_name: str) -> Dict[str, Any]:
-    """
-    Get information about a specific licensing module.
+    """    Get information about a specific licensing module.
     
     Args:
         module_name: Name of the module
         
     Returns:
         Module information
-    """
-    return MODULE_REGISTRY.get(module_name, {})
+    """    return MODULE_REGISTRY.get(module_name, {})
 
 def list_available_modules() -> List[str]:
-    """List all available licensing modules"""
-    return list(MODULE_REGISTRY.keys())
+    """List all available licensing modules"""    return list(MODULE_REGISTRY.keys())
 
 def get_licensing_statistics() -> Dict[str, Any]:
-    """Get comprehensive licensing system statistics"""
-    return {
+    """Get comprehensive licensing system statistics"""    return {
         'total_modules': len(MODULE_REGISTRY),
         'available_services': [info['service'].__name__ for info in MODULE_REGISTRY.values()],
         'total_model_classes': sum(len(info['models']) for info in MODULE_REGISTRY.values()),
@@ -387,13 +377,11 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """
-    Retourne les informations complètes du module Licensing.
+    """    Retourne les informations complètes du module Licensing.
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """
-    return {
+    """    return {
         "name": "IA Influencer Agent - Licensing Database Module",
         "version": __version__,
         "author": "Fahed Mlaiel",
@@ -424,43 +412,35 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 def create_licensing_manager(db_session) -> LicensingDatabaseManager:
-    """
-    Factory function pour créer une instance du gestionnaire de licensing.
+    """    Factory function pour créer une instance du gestionnaire de licensing.
     
     Args:
         db_session: Session de base de données SQLAlchemy
         
     Returns:
         LicensingDatabaseManager: Instance configurée du gestionnaire
-    """
-    return LicensingDatabaseManager(db_session)
+    """    return LicensingDatabaseManager(db_session)
 
 def get_supported_license_types() -> List[str]:
-    """
-    Retourne la liste des types de licences supportés.
+    """    Retourne la liste des types de licences supportés.
     
     Returns:
         List[str]: Types de licences disponibles
-    """
-    return [license_type.value for license_type in LicenseType]
+    """    return [license_type.value for license_type in LicenseType]
 
 def get_supported_usage_types() -> List[str]:
-    """
-    Retourne la liste des types d'usage supportés.
+    """    Retourne la liste des types d'usage supportés.
     
     Returns:
         List[str]: Types d'usage disponibles  
-    """
-    return [usage_type.value for usage_type in UsageType]
+    """    return [usage_type.value for usage_type in UsageType]
 
 def validate_module_dependencies() -> Dict[str, bool]:
-    """
-    Valide que toutes les dépendances du module sont disponibles.
+    """    Valide que toutes les dépendances du module sont disponibles.
     
     Returns:
         Dict[str, bool]: Statut de chaque dépendance
-    """
-    dependencies = {
+    """    dependencies = {
         "sqlalchemy": True,
         "datetime": True,
         "uuid": True,

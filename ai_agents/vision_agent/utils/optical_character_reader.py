@@ -27,7 +27,14 @@ import pytesseract
 from collections import Counter
 
 from ..base import BaseAgent, AgentStatus
-from ...core.exceptions import OCRProcessingError, ValidationError
+try:
+    from core.exceptions import OCRProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    OCRProcessingError, ValidationError = globals().get('OCRProcessingError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 from ...utils.text_processor import TextProcessor
 

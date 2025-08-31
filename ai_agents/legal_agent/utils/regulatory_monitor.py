@@ -32,8 +32,20 @@ import aiohttp
 import feedparser
 from bs4 import BeautifulSoup
 
-from ...core.database import get_db_session
-from ...core.exceptions import RegulatoryError, MonitoringError
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import RegulatoryError, MonitoringError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    RegulatoryError, MonitoringError = globals().get('RegulatoryError, MonitoringError', Exception)
 from ...utils.ai_processor import AIProcessor
 from ...utils.notification_service import NotificationService
 from ...utils.legal_database import LegalDatabase

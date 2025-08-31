@@ -1,5 +1,4 @@
-"""
-Analytics Module - IA Influencer Agent + Content Protection Platform
+"""Analytics Module - IA Influencer Agent + Content Protection Platform
 
 Enterprise-grade analytics system for multi-format content creators
 (musicians, bloggers, photographers, influencers, comedians) with AI-powered insights.
@@ -24,7 +23,6 @@ Specialties of Project Team:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 # Import all analytics modules
 from .performance_tracker import (
     PerformanceTracker, 

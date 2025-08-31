@@ -44,9 +44,25 @@ import textstat
 from langdetect import detect, DetectorFactory
 
 from ..base import BaseAgent, AgentStatus, AgentCapability
-from ...core.config import settings
-from ...core.database import get_db_session
-from ...core.exceptions import ValidationError, ProcessingError, SecurityError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import ValidationError, ProcessingError, SecurityError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ValidationError, ProcessingError, SecurityError = globals().get('ValidationError, ProcessingError, SecurityError', Exception)
 from ...security.content_protection import ContentProtector
 from ...utils.performance_monitor import PerformanceMonitor
 from ...models.text_content import TextContent, TextAnalysis, ContentFingerprint

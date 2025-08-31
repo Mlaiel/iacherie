@@ -1,5 +1,4 @@
-"""
-Business Billing Module - IA Influencer Agent
+"""Business Billing Module - IA Influencer Agent
 ==============================================
 
 Module de facturation et paiement industriel pour créateurs multi-format
@@ -11,7 +10,6 @@ Architecture: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité +
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 # Core billing services
 from .invoice_generator import InvoiceGeneratorEngine, InvoiceData
 from .payment_processor import PaymentProcessorEngine, PaymentData, BulkPayoutResult

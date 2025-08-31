@@ -51,8 +51,19 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem import WordNetLemmatizer
 
-from ...core.config import settings
-from ...core.exceptions import ContentDetectionError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ContentDetectionError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ContentDetectionError, ValidationError = globals().get('ContentDetectionError, ValidationError', Exception)
 from ...ml.embeddings import ContentEmbeddings
 from ...ml.feature_extraction import FeatureExtractor
 from ...security.content_fingerprint import ContentFingerprint

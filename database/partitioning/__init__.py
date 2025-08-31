@@ -1,5 +1,4 @@
-"""
-Database Partitioning Module
+"""Database Partitioning Module
 
 Ultra-industrial database partitioning system for the IA Influencer Agent + Content Protection Platform.
 Provides enterprise-grade horizontal and vertical partitioning, automated shard management,
@@ -33,7 +32,6 @@ and will be prosecuted to the full extent of the law. Legal action will be taken
 
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 """
-
 from .partition_manager import (
     PartitionManager,
     PartitionStrategy,
@@ -242,12 +240,10 @@ MODULE_CONFIG = {
 }
 
 def get_module_info() -> dict:
-    """Get comprehensive module information"""
-    return MODULE_CONFIG
+    """Get comprehensive module information"""    return MODULE_CONFIG
 
 def initialize_partitioning_system(db_engine, config: dict = None):
-    """
-    Initialize the complete partitioning system
+    """    Initialize the complete partitioning system
     
     Args:
         db_engine: SQLAlchemy database engine
@@ -255,8 +251,7 @@ def initialize_partitioning_system(db_engine, config: dict = None):
         
     Returns:
         PartitionManager: Configured partition manager instance
-    """
-    from .partition_manager import PartitionManager
+    """    from .partition_manager import PartitionManager
     
     manager = PartitionManager(db_engine, config or {})
     manager.initialize()

@@ -1,5 +1,4 @@
-"""
-Advanced Crawlers Module - Professional Content Surveillance & Protection
+"""Advanced Crawlers Module - Professional Content Surveillance & Protection
 ========================================================================
 
 Comprehensive module for advanced web crawling, content monitoring, and 
@@ -26,7 +25,6 @@ Project Team Specialties:
 - DevOps & Infrastructure: Kubernetes orchestration & monitoring
 - Prompt Engineering: Sophisticated AI model optimization
 """
-
 # Core crawler infrastructure
 from .base import BaseCrawler, CrawlResult
 from .config import CrawlerConfig, PlatformConfig, CrawlerType, ContentType

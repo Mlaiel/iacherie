@@ -1,5 +1,4 @@
-"""
-Database Content Protection Module
+"""Database Content Protection Module
 
 Ultra-advanced content protection database system providing comprehensive storage,
 analytics, and management for AI-powered content protection platform.
@@ -18,7 +17,6 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
-
 # Core protection modules
 from .protection_storage import ProtectionStorageManager, ProtectionStorageError
 from .alert_repository import ProtectionAlertRepository, ProtectionAlertRepositoryError

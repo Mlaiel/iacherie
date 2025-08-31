@@ -1,5 +1,4 @@
-"""
-Workflow Automation Module - IA Influencer Agent
+"""Workflow Automation Module - IA Influencer Agent
 
 Enterprise-grade conversational workflow automation system for multi-format content creators
 with advanced AI-powered automation, intelligent task orchestration, context-aware triggers,
@@ -18,7 +17,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
-
 from .automation_engine import (
     AutomationEngine,
     WorkflowOrchestrator,

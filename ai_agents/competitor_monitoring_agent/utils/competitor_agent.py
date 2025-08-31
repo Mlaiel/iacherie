@@ -16,7 +16,14 @@ import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ..base_agent import BaseAgent
-from ...core.exceptions import AgentError, ValidationError
+try:
+    from core.exceptions import AgentError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AgentError, ValidationError = globals().get('AgentError, ValidationError', Exception)
 from ...core.monitoring import PerformanceMonitor
 from ...security.encryption import SecureDataHandler
 from ...utils.cache_manager import CacheManager

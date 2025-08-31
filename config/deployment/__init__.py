@@ -1,5 +1,4 @@
-"""
-Deployment Configuration Module for IA-Influencer Agent Platform
+"""Deployment Configuration Module for IA-Influencer Agent Platform
 ================================================================
 
 Professional deployment and infrastructure configuration management.
@@ -21,7 +20,6 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
-
 from .docker_config import DockerConfig
 from .kubernetes_config import KubernetesConfig
 from .aws_config import AWSConfig

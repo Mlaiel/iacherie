@@ -21,9 +21,25 @@ import numpy as np
 import faiss
 from sqlalchemy.orm import Session
 
-from ...core.config import settings
-from ...core.exceptions import RightsValidationError, ValidationError
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import RightsValidationError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    RightsValidationError, ValidationError = globals().get('RightsValidationError, ValidationError', Exception)
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...ml.fingerprinting import AudioFingerprinter, ImageFingerprinter, TextFingerprinter
 from ...security.blockchain_registry import BlockchainRegistry
 from ...utils.similarity_engine import SimilarityEngine

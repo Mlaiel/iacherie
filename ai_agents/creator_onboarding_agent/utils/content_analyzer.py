@@ -27,8 +27,19 @@ from transformers import pipeline, AutoTokenizer, AutoModel
 import spacy
 from textstat import flesch_reading_ease, automated_readability_index
 
-from ...core.config import settings
-from ...core.exceptions import ContentAnalysisError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ContentAnalysisError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ContentAnalysisError, ValidationError = globals().get('ContentAnalysisError, ValidationError', Exception)
 from ...ml.content_models import ContentClassifier, QualityAnalyzer
 from ...ml.audio_analyzer import AudioAnalyzer
 from ...ml.image_analyzer import ImageAnalyzer

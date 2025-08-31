@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent – Backend App Root
+"""IA Influencer Agent – Backend App Root
 -------------------------------------
 Complete enterprise-grade backend application for IA-Influencer platform with:
 
@@ -44,7 +43,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 # Import all core application modules
 from . import (
     ai,

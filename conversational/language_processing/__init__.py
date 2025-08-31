@@ -1,5 +1,4 @@
-"""
-Enterprise Language Processing Module for IA Influencer Agent
+"""Enterprise Language Processing Module for IA Influencer Agent
 ============================================================
 
 World-class Natural Language Processing capabilities for content creators,
@@ -30,7 +29,6 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
 """
-
 # Core analyzers
 from .text_analyzer import TextAnalyzer, SentimentAnalyzer, SentimentResult, TextAnalysisResult, SentimentLevel, EmotionalTone
 from .language_detector import LanguageDetector, SupportedLanguage, LanguageFamily, Script, LanguageResult
@@ -151,8 +149,7 @@ __all__ = [
 
 # Module initialization
 def _initialize_module():
-    """Initialize the language processing module"""
-    try:
+    """Initialize the language processing module"""    try:
         import logging
         logger = logging.getLogger(__name__)
         logger.info(f"Language Processing Module v{__version__} initialized")

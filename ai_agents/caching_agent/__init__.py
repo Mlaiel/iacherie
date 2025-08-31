@@ -1,5 +1,4 @@
-"""
-Caching Agent Module for IA-Influencer-Agent
+"""Caching Agent Module for IA-Influencer-Agent
 
 This module provides a comprehensive, enterprise-grade caching system
 designed specifically for the IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Contact: mlaiel@live.de
 License: Proprietary - All rights reserved
 Warning: Unauthorized copying, distribution, or use is prohibited by law.
 """
-
 # Core cache manager
 from .manager import CachingManager, CacheConfig, CachePriority
 

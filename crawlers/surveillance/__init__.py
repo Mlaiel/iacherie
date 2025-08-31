@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Professional Surveillance Module
+"""IA Influencer Agent - Professional Surveillance Module
 ========================================================
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
@@ -34,7 +33,6 @@ COMPLETE IMPLEMENTATION FEATURES:
 - WebSocket real-time notifications
 - Scalable enterprise architecture
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable
@@ -107,8 +105,7 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceSystem:
-    """
-    Main surveillance system coordinator.
+    """    Main surveillance system coordinator.
     
     This class orchestrates all surveillance components and provides
     a unified interface for content protection operations.
@@ -124,11 +121,9 @@ class SurveillanceSystem:
     - Performance analytics and system optimization
     - WebSocket real-time notifications
     - Scalable enterprise architecture
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the surveillance system."""
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the surveillance system."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -145,8 +140,7 @@ class SurveillanceSystem:
         self._running = False
     
     async def initialize(self) -> None:
-        """Initialize all surveillance components."""
-        try:
+        """Initialize all surveillance components."""        try:
             self._logger.info("Initializing IA Influencer Agent Professional Surveillance System...")
             
             # Initialize all components
@@ -164,8 +158,7 @@ class SurveillanceSystem:
             raise
     
     async def start_monitoring(self) -> None:
-        """Start the surveillance monitoring operations."""
-        if not self._initialized:
+        """Start the surveillance monitoring operations."""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -186,8 +179,7 @@ class SurveillanceSystem:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop the surveillance monitoring operations."""
-        try:
+        """Stop the surveillance monitoring operations."""        try:
             self._logger.info("Stopping professional surveillance monitoring operations...")
             
             # Stop monitoring components
@@ -210,8 +202,7 @@ class SurveillanceSystem:
         platforms: List[str],
         monitoring_config: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Monitor a specific creator across platforms."""
-        try:
+        """Monitor a specific creator across platforms."""        try:
             await self.monitoring_system.add_creator_monitoring(
                 creator_id, platforms, monitoring_config
             )
@@ -240,8 +231,7 @@ class SurveillanceSystem:
             raise
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status."""
-        return {
+        """Get overall system status."""        return {
             'initialized': self._initialized,
             'running': self._running,
             'monitoring_system': await self.monitoring_system.get_status(),
@@ -252,8 +242,7 @@ class SurveillanceSystem:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the surveillance system gracefully."""
-        try:
+        """Shutdown the surveillance system gracefully."""        try:
             self._logger.info("Shutting down Professional Surveillance System...")
             
             # Stop monitoring if running
@@ -443,8 +432,7 @@ __all__ = [
 ]
 
 class SurveillanceStatus(Enum):
-    """Surveillance task status."""
-    PENDING = "pending"
+    """Surveillance task status."""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -452,8 +440,7 @@ class SurveillanceStatus(Enum):
     CANCELLED = "cancelled"
 
 class SurveillancePriority(Enum):
-    """Surveillance priority levels."""
-    LOW = 1
+    """Surveillance priority levels."""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -461,8 +448,7 @@ class SurveillancePriority(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Surveillance target definition."""
-    target_id: str
+    """Surveillance target definition."""    target_id: str
     platform: str
     target_type: str  # channel, user, hashtag, keyword, url
     identifier: str  # channel_id, username, hashtag, keyword, url
@@ -476,8 +462,7 @@ class SurveillanceTarget:
 
 @dataclass
 class SurveillanceTask:
-    """Surveillance task execution unit."""
-    task_id: str
+    """Surveillance task execution unit."""    task_id: str
     target: SurveillanceTarget
     status: SurveillanceStatus = SurveillanceStatus.PENDING
     scheduled_at: datetime = field(default_factory=datetime.now)
@@ -490,8 +475,7 @@ class SurveillanceTask:
 
 @dataclass
 class SurveillanceMetrics:
-    """Surveillance system metrics."""
-    total_targets: int = 0
+    """Surveillance system metrics."""    total_targets: int = 0
     active_targets: int = 0
     pending_tasks: int = 0
     running_tasks: int = 0
@@ -503,8 +487,7 @@ class SurveillanceMetrics:
     last_update: datetime = field(default_factory=datetime.now)
 
 class SurveillanceEngine:
-    """
-    Professional surveillance coordination system.
+    """    Professional surveillance coordination system.
     
     Features:
     - Multi-platform coordination
@@ -517,11 +500,9 @@ class SurveillanceEngine:
     - Alert management
     - Performance tracking
     - Scalable architecture
-    """
-    
+    """    
     def __init__(self):
-        """Initialize surveillance engine."""
-        # Core managers
+        """Initialize surveillance engine."""        # Core managers
         self.rate_limiter = RateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
@@ -564,8 +545,7 @@ class SurveillanceEngine:
         self._start_background_tasks()
     
     def _start_background_tasks(self) -> None:
-        """Start background monitoring tasks."""
-        asyncio.create_task(self._task_scheduler())
+        """Start background monitoring tasks."""        asyncio.create_task(self._task_scheduler())
         asyncio.create_task(self._task_executor())
         asyncio.create_task(self._metrics_updater())
         asyncio.create_task(self._cleanup_task())
@@ -579,8 +559,7 @@ class SurveillanceEngine:
         frequency: int = 3600,
         metadata: Optional[Dict] = None
     ) -> str:
-        """
-        Add surveillance target.
+        """        Add surveillance target.
         
         Args:
             platform: Platform name (youtube, instagram, etc.)
@@ -592,8 +571,7 @@ class SurveillanceEngine:
             
         Returns:
             Target ID
-        """
-        target_id = f"{platform}_{target_type}_{uuid.uuid4().hex[:8]}"
+        """        target_id = f"{platform}_{target_type}_{uuid.uuid4().hex[:8]}"
         
         target = SurveillanceTarget(
             target_id=target_id,
@@ -618,8 +596,7 @@ class SurveillanceEngine:
         return target_id
     
     async def remove_target(self, target_id: str) -> bool:
-        """Remove surveillance target."""
-        if target_id in self.targets:
+        """Remove surveillance target."""        if target_id in self.targets:
             target = self.targets[target_id]
             target.enabled = False
             
@@ -638,8 +615,7 @@ class SurveillanceEngine:
         return False
     
     async def update_target_frequency(self, target_id: str, frequency: int) -> bool:
-        """Update target check frequency."""
-        if target_id in self.targets:
+        """Update target check frequency."""        if target_id in self.targets:
             target = self.targets[target_id]
             target.frequency = frequency
             target.next_check = datetime.now() + timedelta(seconds=frequency)
@@ -650,8 +626,7 @@ class SurveillanceEngine:
         return False
     
     async def pause_target(self, target_id: str) -> bool:
-        """Pause surveillance for target."""
-        if target_id in self.targets:
+        """Pause surveillance for target."""        if target_id in self.targets:
             self.targets[target_id].enabled = False
             logger.info(f"Paused surveillance for target: {target_id}")
             return True
@@ -659,8 +634,7 @@ class SurveillanceEngine:
         return False
     
     async def resume_target(self, target_id: str) -> bool:
-        """Resume surveillance for target."""
-        if target_id in self.targets:
+        """Resume surveillance for target."""        if target_id in self.targets:
             target = self.targets[target_id]
             target.enabled = True
             target.next_check = datetime.now() + timedelta(seconds=target.frequency)
@@ -671,8 +645,7 @@ class SurveillanceEngine:
         return False
     
     async def _task_scheduler(self) -> None:
-        """Background task scheduler."""
-        while True:
+        """Background task scheduler."""        while True:
             try:
                 current_time = datetime.now()
                 
@@ -704,8 +677,7 @@ class SurveillanceEngine:
                 await asyncio.sleep(30)
     
     async def _task_executor(self) -> None:
-        """Background task executor."""
-        while True:
+        """Background task executor."""        while True:
             try:
                 # Limit concurrent tasks
                 if len(self.running_tasks) >= self.max_concurrent_tasks:
@@ -731,8 +703,7 @@ class SurveillanceEngine:
                 await asyncio.sleep(5)
     
     async def _execute_task(self, task: SurveillanceTask) -> None:
-        """Execute surveillance task."""
-        task_id = task.task_id
+        """Execute surveillance task."""        task_id = task.task_id
         
         try:
             self.running_tasks.add(task_id)
@@ -797,8 +768,7 @@ class SurveillanceEngine:
         target: SurveillanceTarget,
         crawler
     ) -> Optional[Dict[str, Any]]:
-        """Execute surveillance for specific target."""
-        platform = target.platform
+        """Execute surveillance for specific target."""        platform = target.platform
         target_type = target.target_type
         identifier = target.identifier
         
@@ -861,8 +831,7 @@ class SurveillanceEngine:
         target: SurveillanceTarget,
         results: Dict[str, Any]
     ) -> None:
-        """Process surveillance results and detect violations."""
-        try:
+        """Process surveillance results and detect violations."""        try:
             # Extract content items
             content_items = []
             
@@ -906,8 +875,7 @@ class SurveillanceEngine:
         target: SurveillanceTarget,
         content_items: List[Dict]
     ) -> List[Dict[str, Any]]:
-        """Detect content violations."""
-        violations = []
+        """Detect content violations."""        violations = []
         
         # This would integrate with the content analysis module
         # For now, implement basic keyword detection
@@ -951,8 +919,7 @@ class SurveillanceEngine:
         return violations
     
     async def _metrics_updater(self) -> None:
-        """Background metrics updater."""
-        while True:
+        """Background metrics updater."""        while True:
             try:
                 await asyncio.sleep(self.metrics_update_interval)
                 
@@ -976,8 +943,7 @@ class SurveillanceEngine:
                 logger.error(f"Metrics updater error: {e}")
     
     async def _cleanup_task(self) -> None:
-        """Background cleanup task."""
-        while True:
+        """Background cleanup task."""        while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
                 
@@ -1000,24 +966,19 @@ class SurveillanceEngine:
                 logger.error(f"Cleanup task error: {e}")
     
     def add_violation_callback(self, callback: Callable) -> None:
-        """Add violation detection callback."""
-        self.violation_callbacks.append(callback)
+        """Add violation detection callback."""        self.violation_callbacks.append(callback)
     
     def add_completion_callback(self, callback: Callable) -> None:
-        """Add task completion callback."""
-        self.completion_callbacks.append(callback)
+        """Add task completion callback."""        self.completion_callbacks.append(callback)
     
     def add_error_callback(self, callback: Callable) -> None:
-        """Add error callback."""
-        self.error_callbacks.append(callback)
+        """Add error callback."""        self.error_callbacks.append(callback)
     
     def get_metrics(self) -> SurveillanceMetrics:
-        """Get current surveillance metrics."""
-        return self.metrics
+        """Get current surveillance metrics."""        return self.metrics
     
     def get_target_status(self, target_id: str) -> Optional[Dict]:
-        """Get status for specific target."""
-        target = self.targets.get(target_id)
+        """Get status for specific target."""        target = self.targets.get(target_id)
         if not target:
             return None
         
@@ -1049,12 +1010,10 @@ class SurveillanceEngine:
         }
     
     def get_all_targets_status(self) -> List[Dict]:
-        """Get status for all targets."""
-        return [self.get_target_status(target_id) for target_id in self.targets.keys()]
+        """Get status for all targets."""        return [self.get_target_status(target_id) for target_id in self.targets.keys()]
     
     async def force_target_check(self, target_id: str) -> bool:
-        """Force immediate check for target."""
-        target = self.targets.get(target_id)
+        """Force immediate check for target."""        target = self.targets.get(target_id)
         if not target or not target.enabled:
             return False
         
@@ -1072,8 +1031,7 @@ class SurveillanceEngine:
         return True
     
     async def shutdown(self) -> None:
-        """Shutdown surveillance engine gracefully."""
-        logger.info("Shutting down surveillance engine...")
+        """Shutdown surveillance engine gracefully."""        logger.info("Shutting down surveillance engine...")
         
         # Stop accepting new tasks
         while not self.task_queue.empty():

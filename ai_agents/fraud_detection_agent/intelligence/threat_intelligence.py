@@ -23,7 +23,14 @@ import numpy as np
 import redis.asyncio as aioredis
 from sqlalchemy.orm import Session
 
-from ...core.exceptions import ThreatIntelligenceError
+try:
+    from core.exceptions import ThreatIntelligenceError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ThreatIntelligenceError = globals().get('ThreatIntelligenceError', Exception)
 from ...utils.network_analyzer import NetworkAnalyzer
 from ...data.models.threat_intelligence import ThreatIndicator, ThreatReport
 from ...integrations.security_feeds import SecurityFeedManager

@@ -1,5 +1,4 @@
-"""
-Audio Events Module - Industrial Grade Event-Driven Audio Processing
+"""Audio Events Module - Industrial Grade Event-Driven Audio Processing
 ================================================================
 
 This module implements comprehensive event-driven architecture for audio processing,
@@ -23,7 +22,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use, modification, or distribution of this code is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
-
 from .upload_events import (
     AudioUploadStartedEvent,
     AudioUploadCompletedEvent,

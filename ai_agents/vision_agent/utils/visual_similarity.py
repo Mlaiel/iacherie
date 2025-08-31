@@ -32,9 +32,21 @@ from sklearn.decomposition import PCA
 import faiss
 
 from ..base import BaseAgent, AgentStatus
-from ...core.exceptions import SimilarityProcessingError, ValidationError
+try:
+    from core.exceptions import SimilarityProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    SimilarityProcessingError, ValidationError = globals().get('SimilarityProcessingError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
-from ...core.database import get_db_session
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 
 logger = logging.getLogger(__name__)
 

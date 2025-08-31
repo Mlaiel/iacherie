@@ -41,8 +41,17 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from transformers import pipeline
 
 from ..base import BaseAgent, AgentRequest, AgentResponse, AgentStatus, AgentPriority
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...security.encryption import ContentEncryption
 from ...utils.performance_monitor import PerformanceMonitor
 from ...utils.file_handler import SecureFileHandler

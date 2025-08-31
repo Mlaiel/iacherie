@@ -1,5 +1,4 @@
-"""
-Audio Enhancement Module
+"""Audio Enhancement Module
 ========================
 
 Professional audio enhancement system for content creators, musicians, and influencers.
@@ -28,7 +27,6 @@ WARNING: This code is proprietary and confidential. Unauthorized use, reproducti
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
 """
-
 from .processor import (
     AudioEnhancementProcessor,
     EnhancementParameters,
@@ -120,13 +118,11 @@ __all__ = [
 
 
 def create_enhancement_processor(config=None):
-    """Create a new audio enhancement processor instance"""
-    return AudioEnhancementProcessor(config)
+    """Create a new audio enhancement processor instance"""    return AudioEnhancementProcessor(config)
 
 
 def create_realtime_enhancer(buffer_size=512, sample_rate=44100, channels=2, mode=ProcessingMode.BALANCED):
-    """Create a new real-time audio enhancer instance"""
-    config = RealTimeConfig(
+    """Create a new real-time audio enhancer instance"""    config = RealTimeConfig(
         buffer_size=buffer_size,
         sample_rate=sample_rate, 
         channels=channels,
@@ -136,18 +132,15 @@ def create_realtime_enhancer(buffer_size=512, sample_rate=44100, channels=2, mod
 
 
 def create_quality_analyzer():
-    """Create a new audio quality analyzer instance"""
-    return AudioQualityAnalyzer()
+    """Create a new audio quality analyzer instance"""    return AudioQualityAnalyzer()
 
 
 def create_config_manager(config_dir=None):
-    """Create a new enhancement configuration manager instance"""
-    return EnhancementConfigManager(config_dir)
+    """Create a new enhancement configuration manager instance"""    return EnhancementConfigManager(config_dir)
 
 
 def create_enhancement_pipeline(config=None, config_dir=None):
-    """Create a new audio enhancement pipeline instance"""
-    return AudioEnhancementPipeline(config, config_dir)
+    """Create a new audio enhancement pipeline instance"""    return AudioEnhancementPipeline(config, config_dir)
 
 
 # Default configuration presets

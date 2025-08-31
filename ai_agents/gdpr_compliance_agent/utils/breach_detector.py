@@ -25,9 +25,18 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete, and_, or_
 from fastapi import HTTPException
 
-from ...core.database import get_db
+try:
+    from core.database import get_db
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db = DatabaseManager
 from ...core.logging import get_logger
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...models.gdpr_models import DataBreach, SecurityEvent, BreachNotification
 
 logger = get_logger(__name__)

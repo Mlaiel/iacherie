@@ -1,5 +1,4 @@
-"""
-Quality Assessment Tests Module
+"""Quality Assessment Tests Module
 
 Comprehensive test suite for AI-# Métadonnées de la suite de tests
 TEST_SUITE_METADATA = {
@@ -39,7 +38,6 @@ AND WRITTEN AUTHORIZATION WILL FACE SEVERE LEGAL CONSEQUENCES.
 
 Contact: Fahed Mlaiel - mlaiel@live.de
 """
-
 import os
 import tempfile
 from pathlib import Path
@@ -237,8 +235,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ContentQualityTests(unittest.TestCase):
-    """Ultra-Advanced Content Quality Test Suite"""
-    
+    """Ultra-Advanced Content Quality Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Content Quality Tests")
     
@@ -247,8 +244,7 @@ class ContentQualityTests(unittest.TestCase):
         self.assertTrue(True, "Content quality test passed")
 
 class TechnicalQualityTests(unittest.TestCase):
-    """Ultra-Advanced Technical Quality Test Suite"""
-    
+    """Ultra-Advanced Technical Quality Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Technical Quality Tests")
     
@@ -257,8 +253,7 @@ class TechnicalQualityTests(unittest.TestCase):
         self.assertTrue(True, "Technical quality test passed")
 
 class AestheticQualityTests(unittest.TestCase):
-    """Ultra-Advanced Aesthetic Quality Test Suite"""
-    
+    """Ultra-Advanced Aesthetic Quality Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Aesthetic Quality Tests")
     
@@ -267,8 +262,7 @@ class AestheticQualityTests(unittest.TestCase):
         self.assertTrue(True, "Aesthetic quality test passed")
 
 class EngagementPredictionTests(unittest.TestCase):
-    """Ultra-Advanced Engagement Prediction Test Suite"""
-    
+    """Ultra-Advanced Engagement Prediction Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Engagement Prediction Tests")
     
@@ -277,8 +271,7 @@ class EngagementPredictionTests(unittest.TestCase):
         self.assertTrue(True, "Engagement prediction test passed")
 
 class ComplianceTests(unittest.TestCase):
-    """Ultra-Advanced Compliance Test Suite"""
-    
+    """Ultra-Advanced Compliance Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Compliance Tests")
     

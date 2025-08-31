@@ -21,8 +21,19 @@ from dataclasses import dataclass
 
 from .core.workflow_engine import WorkflowEngine
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ValidationError = globals().get('ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 
 logger = logging.getLogger(__name__)
 

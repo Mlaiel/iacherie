@@ -1,5 +1,4 @@
-"""
-Payment Processing Agent - Industrial Payment Ecosystem
+"""Payment Processing Agent - Industrial Payment Ecosystem
 
 Complete payment processing system for content monetization, revenue tracking,
 creator payments, licensing fees, and multi-currency support.
@@ -12,9 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
-"""
-Payment Processing Agent - Industrial Payment Ecosystem
+"""Payment Processing Agent - Industrial Payment Ecosystem
 
 Complete payment processing system for content monetization, revenue tracking,
 creator payments, licensing fees, and multi-currency support.
@@ -27,7 +24,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .payment_agent import PaymentProcessingAgent
 from .index import (
     PaymentProcessingService,

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Business Licensing Module
+"""IA Influencer Agent - Business Licensing Module
 
 This module handles comprehensive licensing management for multi-format content protection,
 automated licensing workflows, revenue distribution, and intellectual property management.
@@ -14,7 +13,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited 
 and will result in legal action under applicable copyright laws.
 """
-
 from .automated_licensing_engine import AutomatedLicensingEngine
 from .copyright_enforcement import CopyrightEnforcementService
 from .contract_management import ContractManagementService

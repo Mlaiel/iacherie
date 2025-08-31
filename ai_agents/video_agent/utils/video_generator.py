@@ -43,7 +43,11 @@ from diffusers import StableDiffusionPipeline, DiffusionPipeline
 import requests
 from moviepy.editor import VideoFileClip, ImageSequenceClip, concatenate_videoclips
 
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.performance_monitor import PerformanceMonitor
 from ...utils.file_handler import SecureFileHandler
 from ...models.video_models import GeneratedVideo, VideoTemplate

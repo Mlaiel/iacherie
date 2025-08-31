@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Data Processors Module
+"""IA Influencer Agent - Data Processors Module
 ============================================
 
 Professional multi-format content processing engine for the IA Influencer Agent platform.
@@ -26,7 +25,6 @@ Components:
 - CompressionProcessor: Intelligent content compression
 - OrchestrationProcessor: Professional workflow orchestration
 """
-
 from typing import Dict, Any, List, Optional, Union
 import asyncio
 import logging
@@ -86,15 +84,13 @@ DEFAULT_CONFIG = {
 }
 
 class ProcessorRegistry:
-    """Registry for all available processors in the system"""
-    
+    """Registry for all available processors in the system"""    
     def __init__(self):
         self._processors = {}
         self._initialize_processors()
     
     def _initialize_processors(self):
-        """Initialize all processor instances"""
-        self._processors = {
+        """Initialize all processor instances"""        self._processors = {
             'audio': AudioProcessor(),
             'video': VideoProcessor(),
             'image': ImageProcessor(),
@@ -109,23 +105,19 @@ class ProcessorRegistry:
         logger.info(f"Initialized {len(self._processors)} processors")
     
     def get_processor(self, processor_type: str):
-        """Get processor instance by type"""
-        return self._processors.get(processor_type)
+        """Get processor instance by type"""        return self._processors.get(processor_type)
     
     def list_processors(self) -> List[str]:
-        """List all available processor types"""
-        return list(self._processors.keys())
+        """List all available processor types"""        return list(self._processors.keys())
 
 # Global processor registry
 processor_registry = ProcessorRegistry()
 
 def get_processor(processor_type: str):
-    """Get processor instance by type"""
-    return processor_registry.get_processor(processor_type)
+    """Get processor instance by type"""    return processor_registry.get_processor(processor_type)
 
 def list_processors() -> List[str]:
-    """List all available processor types"""
-    return processor_registry.list_processors()
+    """List all available processor types"""    return processor_registry.list_processors()
 
 async def process_content(
     content_data: bytes,
@@ -133,8 +125,7 @@ async def process_content(
     format_hint: Optional[str] = None,
     config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """
-    Process content using appropriate processor
+    """    Process content using appropriate processor
     
     Args:
         content_data: Raw content bytes
@@ -144,8 +135,7 @@ async def process_content(
     
     Returns:
         Dict containing processed content and metadata
-    """
-    processor = get_processor(content_type)
+    """    processor = get_processor(content_type)
     if not processor:
         raise ValueError(f"No processor available for content type: {content_type}")
     

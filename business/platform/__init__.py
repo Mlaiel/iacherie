@@ -1,5 +1,4 @@
-"""
-Business Platform Module - Core Platform Management System
+"""Business Platform Module - Core Platform Management System
 
 This module handles the core platform orchestration, multi-format content processing,
 AI-powered protection, and cross-platform distribution for the IA Influencer Agent ecosystem.
@@ -7,7 +6,6 @@ AI-powered protection, and cross-platform distribution for the IA Influencer Age
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .platform_orchestrator import PlatformOrchestrator
 from .content_processor import ContentProcessor
 from .distribution_manager import DistributionManager

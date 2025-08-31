@@ -1,5 +1,4 @@
-"""
-🚀 Platform Core Communication System - IA Influencer Agent Platform Enterprise
+"""🚀 Platform Core Communication System - IA Influencer Agent Platform Enterprise
 ==============================================================================
 Module: backend/platform_core/communication/
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Communication WebSocket et REST API pour coordination des microservices
 - Message queue pour communication asynchrone
 - Load balancing et failover automatique
 """
-
 from .websocket_manager import WebSocketManager, ConnectionManager
 from .rest_client import RestClient, ServiceRegistry
 from .message_queue import MessageQueue, QueueManager

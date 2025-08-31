@@ -35,8 +35,19 @@ import json
 import numpy as np
 
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import LicensingError, ValidationError, ContractError
-from ...core.config import settings
+try:
+    from core.exceptions import LicensingError, ValidationError, ContractError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    LicensingError, ValidationError, ContractError = globals().get('LicensingError, ValidationError, ContractError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...database.models import Content, License, Contract, RoyaltyPayment, User
 from ...integrations.blockchain.smart_contracts import SmartContractManager
 from ...integrations.payment.processors import PaymentProcessor

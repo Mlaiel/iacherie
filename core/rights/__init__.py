@@ -1,5 +1,4 @@
-"""
-Rights Management Core Module for IA Influencer Agent Platform
+"""Rights Management Core Module for IA Influencer Agent Platform
 ================================================================
 
 Comprehensive intellectual property and digital rights management system
@@ -19,7 +18,6 @@ and will result in immediate legal action under German and international copyrig
 All rights reserved. © 2025 Fahed Mlaiel
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .rights_manager import RightsManager
 from .digital_fingerprint import DigitalFingerprintEngine
 from .copyright_detector import CopyrightDetectionService

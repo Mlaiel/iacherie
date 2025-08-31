@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Deployment Module
+"""IA Influencer Agent - Deployment Module
 Enterprise-grade deployment configuration for multi-format creator platform
 
 This module provides production-ready deployment infrastructure for:
@@ -18,7 +17,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .docker import container_manager
 from .kubernetes import cluster_orchestrator
 from .cloud import cloud_provisioner

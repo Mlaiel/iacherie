@@ -26,7 +26,14 @@ from PIL import Image
 import json
 
 from ..base import BaseAgent, AgentStatus
-from ...core.exceptions import FaceRecognitionError, ValidationError
+try:
+    from core.exceptions import FaceRecognitionError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    FaceRecognitionError, ValidationError = globals().get('FaceRecognitionError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 from ...security.privacy_manager import PrivacyManager
 

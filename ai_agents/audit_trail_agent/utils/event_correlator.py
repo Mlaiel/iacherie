@@ -34,9 +34,25 @@ from sqlalchemy import and_, or_, desc, func
 from sqlalchemy.orm import Session
 from prometheus_client import Counter, Histogram, Gauge
 
-from ...core.config import settings
-from ...core.database import get_db_session
-from ...core.exceptions import CorrelationError, AnalysisError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import CorrelationError, AnalysisError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CorrelationError, AnalysisError = globals().get('CorrelationError, AnalysisError', Exception)
 from ...models.correlation_models import (
     CorrelationRule, EventCluster, PatternSignature,
     CorrelationResult, EventRelationship

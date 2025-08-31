@@ -1,5 +1,4 @@
-"""
-Cache Configuration Module for IA-Influencer Agent Platform
+"""Cache Configuration Module for IA-Influencer Agent Platform
 ===========================================================
 
 Professional enterprise-grade caching system with comprehensive configuration management.
@@ -15,7 +14,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Redis Configuration
 from .redis_cache_config import (
     RedisCacheConfig,

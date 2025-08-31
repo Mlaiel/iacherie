@@ -1,5 +1,4 @@
-"""
-Database Schemas Module Initialization
+"""Database Schemas Module Initialization
 
 This module provides comprehensive Pydantic schemas for the IA Influencer Agent platform,
 covering all aspects of content protection, monetization, and platform management.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 # Content management schemas
 from .content_schemas import (
     # Enums
@@ -368,39 +366,33 @@ SCHEMA_REGISTRY = {
 
 
 def get_schema(schema_name: str):
-    """
-    Retrieve a schema class by name from the registry.
+    """    Retrieve a schema class by name from the registry.
     
     Args:
         schema_name: Name of the schema to retrieve
         
     Returns:
         Schema class if found, None otherwise
-    """
-    return SCHEMA_REGISTRY.get(schema_name)
+    """    return SCHEMA_REGISTRY.get(schema_name)
 
 
 def list_schemas():
-    """
-    List all available schemas in the registry.
+    """    List all available schemas in the registry.
     
     Returns:
         List of schema names
-    """
-    return list(SCHEMA_REGISTRY.keys())
+    """    return list(SCHEMA_REGISTRY.keys())
 
 
 def get_schema_info(schema_name: str):
-    """
-    Get information about a specific schema.
+    """    Get information about a specific schema.
     
     Args:
         schema_name: Name of the schema
         
     Returns:
         Dictionary containing schema information
-    """
-    schema_class = get_schema(schema_name)
+    """    schema_class = get_schema(schema_name)
     if not schema_class:
         return None
         

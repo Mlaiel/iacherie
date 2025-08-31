@@ -11,7 +11,6 @@ WARNING: This code is proprietary and confidential. Unauthorized use, copying, o
 is strictly prohibited and will result in legal action. All intellectual property rights
 belong exclusively to Fahed Mlaiel.
 """
-
 from .email import EmailNotifier
 from .sms import SMSNotifier, SMSMessage, SMSDeliveryResult, SMSProvider
 from .push import PushNotifier, PushMessage, PushContent, PushDeliveryResult, PushPlatform, NotificationPriority
@@ -37,7 +36,6 @@ __all__ = [
     # Enums
     "NotificationPriority"
 ]on system: email, SMS, push notifications, webhooks."""
-
 from .email import EmailNotifier
 from .sms import SMSNotifier  
 from .push import PushNotifier

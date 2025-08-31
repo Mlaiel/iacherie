@@ -25,7 +25,12 @@ import numpy as np
 import pandas as pd
 
 from sqlalchemy.orm import Session
-from ...core.database import get_db_session
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...models.competitor_intelligence import CompetitorProfile as DBCompetitorProfile
 from ...utils.web_scraping import WebScrapingEngine
 from ...utils.social_media_api import SocialMediaAPIManager

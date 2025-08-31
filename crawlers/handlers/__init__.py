@@ -1,5 +1,4 @@
-"""
-Handlers Module
+"""Handlers Module
 ==============
 
 Professional handler systems for crawler operations and content processing.
@@ -31,7 +30,6 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
-
 # Import all handlers
 from .content_handler import (
     ContentHandler,

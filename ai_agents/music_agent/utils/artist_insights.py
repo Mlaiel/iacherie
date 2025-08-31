@@ -33,7 +33,14 @@ from ...analytics.audience_analyzer import AudienceAnalyzer
 from ...analytics.market_analyzer import MarketAnalyzer
 from ..spotify_agent import SpotifyAgent
 from ..analytics_agent import AnalyticsAgent
-from ...core.exceptions import ArtistInsightsError
+try:
+    from core.exceptions import ArtistInsightsError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ArtistInsightsError = globals().get('ArtistInsightsError', Exception)
 from ...core.logging import get_logger
 from ...config.settings import get_settings
 

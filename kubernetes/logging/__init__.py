@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Logging Deployment Module
+"""IA Influencer Agent - Logging Deployment Module
 Enterprise logging infrastructure and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +19,6 @@ Team Expertise:
 - Microservices Architect: Distributed Systems
 - IA Prompt Engineer: Advanced AI Integration
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

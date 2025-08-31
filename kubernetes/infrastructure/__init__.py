@@ -1,5 +1,4 @@
-"""
-Infrastructure Deployment Module for IA Influencer Agent Platform
+"""Infrastructure Deployment Module for IA Influencer Agent Platform
 
 This module provides comprehensive infrastructure deployment and management
 capabilities for the IA Influencer Agent platform, supporting multi-cloud
@@ -28,7 +27,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
 """
-
 # Core infrastructure managers
 from .cloud_provider import CloudProviderManager
 from .container_orchestration import ContainerOrchestrationManager

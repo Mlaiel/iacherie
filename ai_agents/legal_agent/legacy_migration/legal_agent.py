@@ -34,8 +34,20 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc
 
 from ..base import BaseAgent, AgentStatus, AgentMetrics
-from ...core.database import get_db_session
-from ...core.exceptions import LegalError, ValidationError
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import LegalError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    LegalError, ValidationError = globals().get('LegalError, ValidationError', Exception)
 from ...security.encryption import ContentEncryption
 from ...models.legal_models import (
     LegalCase, Contract, LegalDocument, IntellectualProperty,

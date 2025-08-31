@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Filters Module
+"""IA Influencer Agent - Filters Module
 ====================================
 
 Professional content filtering system for multi-format content analysis.
@@ -25,7 +24,6 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
-
 # Core engine and configuration
 from .filter_engine import (
     ContentFilterEngine, 
@@ -242,16 +240,14 @@ SECURITY_COMPONENTS = [
 
 # Helper function for module initialization
 def get_available_filters():
-    """Get list of available filter types."""
-    return [
+    """Get list of available filter types."""    return [
         'audio', 'video', 'image', 'text', 
         'security', 'performance', 'quality',
         'monetization', 'collaboration'
     ]
 
 def create_comprehensive_filter_engine(config_path: str = None):
-    """Create a comprehensive filter engine with all components."""
-    from .config import FilterConfigManager
+    """Create a comprehensive filter engine with all components."""    from .config import FilterConfigManager
     
     config_manager = FilterConfigManager(config_path)
     

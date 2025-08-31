@@ -1,5 +1,4 @@
-"""
-🚀 IA-Influencer-Agent - Advanced Business Logic Module
+"""🚀 IA-Influencer-Agent - Advanced Business Logic Module
 =======================================================
 
 This module orchestrates the complete business logic for the IA Influencer Agent platform,
@@ -28,7 +27,6 @@ Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching → Multi-platform Distribution → Revenue Optimization → Analytics
 """
-
 import logging
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
@@ -212,8 +210,7 @@ except Exception as e:
 
 
 class CreatorType(Enum):
-    """Supported creator types"""
-    MUSICIAN = "musician"
+    """Supported creator types"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -225,8 +222,7 @@ class CreatorType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO = "audio"
+    """Supported content formats"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -236,8 +232,7 @@ class ContentFormat(Enum):
 
 
 class BusinessProcessStage(Enum):
-    """Business process stages"""
-    REGISTRATION = "registration"
+    """Business process stages"""    REGISTRATION = "registration"
     CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
     RIGHTS_PROTECTION = "rights_protection"
@@ -250,8 +245,7 @@ class BusinessProcessStage(Enum):
 
 @dataclass
 class BusinessModuleConfig:
-    """Configuration for business modules"""
-    enabled_modules: List[str]
+    """Configuration for business modules"""    enabled_modules: List[str]
     creator_types: List[CreatorType]
     supported_formats: List[ContentFormat]
     ai_protection_enabled: bool = True
@@ -263,8 +257,7 @@ class BusinessModuleConfig:
 
 
 class BusinessOrchestrator:
-    """Central business logic orchestrator"""
-    
+    """Central business logic orchestrator"""    
     def __init__(self, config: BusinessModuleConfig):
         self.config = config
         self.modules = {}
@@ -272,8 +265,7 @@ class BusinessOrchestrator:
         logger.info("Business orchestrator initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all business modules"""
-        try:
+        """Initialize all business modules"""        try:
             # Initialize modules based on configuration
             if "analytics" in self.config.enabled_modules:
                 self.modules["analytics"] = analytics
@@ -347,8 +339,7 @@ class BusinessOrchestrator:
         creator_type: CreatorType,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process complete creator business journey"""
-        if not self.initialized:
+        """Process complete creator business journey"""        if not self.initialized:
             raise RuntimeError("Business orchestrator not initialized")
         
         journey_results = {
@@ -412,38 +403,31 @@ class BusinessOrchestrator:
         return journey_results
     
     async def _process_content_stage(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process content upload and management stage"""
-        # Implementation would connect to content module
+        """Process content upload and management stage"""        # Implementation would connect to content module
         return {"status": "processed", "content_id": f"content_{creator_id}"}
     
     async def _process_protection_stage(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process AI protection and rights management stage"""
-        # Implementation would connect to protection module
+        """Process AI protection and rights management stage"""        # Implementation would connect to protection module
         return {"status": "protected", "protection_id": f"protection_{creator_id}"}
     
     async def _process_seo_stage(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process SEO optimization stage"""
-        # Implementation would optimize content for search
+        """Process SEO optimization stage"""        # Implementation would optimize content for search
         return {"status": "optimized", "seo_score": 95}
     
     async def _process_matching_stage(self, creator_id: str, creator_type: CreatorType) -> Dict[str, Any]:
-        """Process collaboration matching stage"""
-        # Implementation would connect to matching module
+        """Process collaboration matching stage"""        # Implementation would connect to matching module
         return {"status": "matched", "matches_found": 5}
     
     async def _process_distribution_stage(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process multi-platform distribution stage"""
-        # Implementation would connect to platform module
+        """Process multi-platform distribution stage"""        # Implementation would connect to platform module
         return {"status": "distributed", "platforms": ["spotify", "youtube", "instagram"]}
     
     async def _process_monetization_stage(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process revenue optimization stage"""
-        # Implementation would connect to monetization module
+        """Process revenue optimization stage"""        # Implementation would connect to monetization module
         return {"status": "monetized", "revenue_streams": 3}
     
     async def _process_analytics_stage(self, creator_id: str) -> Dict[str, Any]:
-        """Process analytics and insights stage"""
-        # Implementation would connect to analytics module
+        """Process analytics and insights stage"""        # Implementation would connect to analytics module
         return {"status": "analyzed", "insights_generated": True}
 
 
@@ -472,8 +456,7 @@ _orchestrator: Optional[BusinessOrchestrator] = None
 
 
 async def get_business_orchestrator(config: Optional[BusinessModuleConfig] = None) -> BusinessOrchestrator:
-    """Get or create business orchestrator instance"""
-    global _orchestrator
+    """Get or create business orchestrator instance"""    global _orchestrator
     
     if _orchestrator is None:
         config = config or DEFAULT_CONFIG
@@ -484,8 +467,7 @@ async def get_business_orchestrator(config: Optional[BusinessModuleConfig] = Non
 
 
 async def initialize_business_system(config: Optional[BusinessModuleConfig] = None) -> bool:
-    """Initialize the complete business system"""
-    try:
+    """Initialize the complete business system"""    try:
         orchestrator = await get_business_orchestrator(config)
         logger.info("Business system initialized successfully")
         return True

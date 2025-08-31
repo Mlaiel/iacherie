@@ -1,5 +1,4 @@
-"""
-⚙️ Data Processors Module - IA Influencer Agent Platform Enterprise
+"""⚙️ Data Processors Module - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/processors/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -19,7 +18,6 @@ User Upload → Format Detection → Quality Analysis → Metadata Extraction �
 Feature Extraction → AI Fingerprinting → Protection Preparation → Optimization → SEO Enhancement → 
 Collaboration Matching → Distribution Preparation → Monetization Analytics
 """
-
 __version__ = "4.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 

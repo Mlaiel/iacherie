@@ -1,5 +1,4 @@
-"""
-Integrations Configuration Module for IA-Influencer Agent Platform
+"""Integrations Configuration Module for IA-Influencer Agent Platform
 ==================================================================
 
 Professional third-party integrations configuration management for the complete
@@ -25,7 +24,6 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Core integration configurations
 from .oauth_config import (
     OAuthConfig, 

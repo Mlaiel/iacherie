@@ -1,5 +1,4 @@
-"""
-🤝 COLLABORATION SYSTEM - Core Module
+"""🤝 COLLABORATION SYSTEM - Core Module
 ====================================
 
 Developed by: Fahed Mlaiel
@@ -28,7 +27,6 @@ Key Features:
 
 Architecture: Production-ready enterprise system following 3-tier architecture
 """
-
 from .creator_matcher import CreatorMatcher, MatchingCriteria, MatchingResult
 from .partnership_engine import PartnershipEngine, PartnershipType, PartnershipStatus
 from .profile_analyzer import ProfileAnalyzer, CreatorProfile, SkillCompatibility

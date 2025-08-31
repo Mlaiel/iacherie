@@ -1,5 +1,4 @@
-"""
-Collaborative Features Module - IA Influencer Agent
+"""Collaborative Features Module - IA Influencer Agent
 
 Enterprise-grade collaboration system for multi-format content creators
 enabling real-time collaboration, project management, team coordination,
@@ -24,7 +23,6 @@ Project Team Specialties:
 - Security Engineer: Enterprise Security/Compliance
 - Microservices Architect: Distributed Systems
 """
-
 from .team_coordination import (
     TeamManager,
     CollaboratorInviteService,

@@ -1,5 +1,4 @@
-"""
-Workflow Automation Database Module
+"""Workflow Automation Database Module
 
 Enterprise workflow automation system with AI-powered optimization,
 process orchestration, and intelligent task management for 
@@ -25,7 +24,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 # Core workflow components
 from .workflow_engine import (
     Workflow,

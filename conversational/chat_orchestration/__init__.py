@@ -1,5 +1,4 @@
-"""
-Chat Orchestration Module - Enterprise conversational AI orchestration
+"""Chat Orchestration Module - Enterprise conversational AI orchestration
 ======================================================================
 
 Advanced chat orchestration capabilities for multi-format content creators 
@@ -13,7 +12,6 @@ WARNING: This code and concept are proprietary intellectual property of Fahed Ml
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
-
 # Core chat orchestration components
 from .chat_manager import ChatManager
 from .conversation_router import ConversationRouter

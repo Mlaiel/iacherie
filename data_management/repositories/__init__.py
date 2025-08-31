@@ -1,5 +1,4 @@
-"""
-🗄️ Data Repositories Module - IA Influencer Agent Platform Enterprise
+"""🗄️ Data Repositories Module - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/repositories/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -27,7 +26,6 @@ ARCHITECTURE COMPLETE:
 ✅ CollaborationRepository - Matching et partnerships
 ✅ FingerprintRepository - AI identification et duplicates
 """
-
 __version__ = "3.1.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __team__ = "Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer"
@@ -101,16 +99,14 @@ ASYNC_REPOSITORY_REGISTRY = {
 
 # Repository Factory Functions
 def create_repository(repo_type: str, **kwargs):
-    """Create a repository instance with dependency injection"""
-    if repo_type not in REPOSITORY_REGISTRY:
+    """Create a repository instance with dependency injection"""    if repo_type not in REPOSITORY_REGISTRY:
         raise ValueError(f"Unknown repository type: {repo_type}")
     
     repository_class = REPOSITORY_REGISTRY[repo_type]
     return repository_class(**kwargs)
 
 def create_async_repository(repo_type: str, **kwargs):
-    """Create an async repository instance with dependency injection"""
-    if repo_type not in ASYNC_REPOSITORY_REGISTRY:
+    """Create an async repository instance with dependency injection"""    if repo_type not in ASYNC_REPOSITORY_REGISTRY:
         raise ValueError(f"Unknown async repository type: {repo_type}")
     
     repository_class = ASYNC_REPOSITORY_REGISTRY[repo_type]
@@ -222,8 +218,7 @@ REPOSITORY_MODULES = {
 
 # Validation and Health Check
 def validate_repository_health():
-    """Validate that all repositories are properly configured"""
-    health_status = {}
+    """Validate that all repositories are properly configured"""    health_status = {}
     
     for repo_name, repo_class in REPOSITORY_REGISTRY.items():
         try:
@@ -245,8 +240,7 @@ def validate_repository_health():
 
 # Performance Metrics
 def get_repository_metrics():
-    """Get performance metrics for all repositories"""
-    return {
+    """Get performance metrics for all repositories"""    return {
         'total_repositories': len(REPOSITORY_REGISTRY),
         'async_repositories': len(ASYNC_REPOSITORY_REGISTRY),
         'features_count': sum(len(module.get('features', [])) for module in REPOSITORY_MODULES.values()),

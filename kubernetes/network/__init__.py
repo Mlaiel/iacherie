@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Network Deployment Module
+"""IA Influencer Agent - Network Deployment Module
 Enterprise network configuration and security for content protection platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

@@ -1,5 +1,4 @@
-"""
-Deployment Environments Module - IA Influencer Agent
+"""Deployment Environments Module - IA Influencer Agent
 ====================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -17,7 +16,6 @@ Supports development, production, staging, testing, Docker, Kubernetes, cloud,
 performance, security, and monitoring environments.
 ====================================================
 """
-
 # Core Environment Managers
 from .development import DevelopmentEnvironmentManager
 from .production import ProductionEnvironmentManager

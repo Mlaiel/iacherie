@@ -1,5 +1,4 @@
-"""
-Configuration Module - IA Influencer Agent Platform
+"""Configuration Module - IA Influencer Agent Platform
 Complete professional configuration system for production-ready application
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Core configuration management
 from .index import *
 
@@ -33,8 +31,7 @@ TEAM_SPECIALTIES = [
     "IA Prompt Engineer"
 ]
 
-COPYRIGHT_NOTICE = """
-INTELLECTUAL PROPERTY PROTECTION NOTICE
+COPYRIGHT_NOTICE = """INTELLECTUAL PROPERTY PROTECTION NOTICE
 =====================================
 
 This codebase contains proprietary intellectual property belonging to Fahed Mlaiel.
@@ -50,10 +47,8 @@ For licensing inquiries, contact: mlaiel@live.de
 
 Violators will be prosecuted to the full extent of the law.
 """
-
 def print_copyright_notice():
-    """Print copyright and team information"""
-    print(COPYRIGHT_NOTICE)
+    """Print copyright and team information"""    print(COPYRIGHT_NOTICE)
     print(f"\nProject Lead: {__author__}")
     print(f"Contact: {__email__}")
     print("\nTeam Specialties:")

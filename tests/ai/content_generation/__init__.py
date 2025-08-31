@@ -1,5 +1,4 @@
-"""
-Content Generation Tests Module
+"""Content Generation Tests Module
 
 Comprehensive test suite for the content generation module
 of the IA Influencer Agent platform.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -24,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 # Test classes for content generation
 class AIContentGeneratorTests(unittest.TestCase):
-    """Ultra-Advanced AI Content Generator Test Suite"""
-    
+    """Ultra-Advanced AI Content Generator Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up AI Content Generator Tests")
     
@@ -34,8 +31,7 @@ class AIContentGeneratorTests(unittest.TestCase):
         self.assertTrue(True, "Content generation test passed")
 
 class CreativeAssistantTests(unittest.TestCase):
-    """Ultra-Advanced Creative Assistant Test Suite"""
-    
+    """Ultra-Advanced Creative Assistant Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Creative Assistant Tests")
     
@@ -44,8 +40,7 @@ class CreativeAssistantTests(unittest.TestCase):
         self.assertTrue(True, "Creative assistance test passed")
 
 class ContentOptimizationTests(unittest.TestCase):
-    """Ultra-Advanced Content Optimization Test Suite"""
-    
+    """Ultra-Advanced Content Optimization Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Content Optimization Tests")
     
@@ -54,8 +49,7 @@ class ContentOptimizationTests(unittest.TestCase):
         self.assertTrue(True, "Content optimization test passed")
 
 class TemplateGenerationTests(unittest.TestCase):
-    """Ultra-Advanced Template Generation Test Suite"""
-    
+    """Ultra-Advanced Template Generation Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Template Generation Tests")
     
@@ -64,8 +58,7 @@ class TemplateGenerationTests(unittest.TestCase):
         self.assertTrue(True, "Template generation test passed")
 
 class PersonalizationTests(unittest.TestCase):
-    """Ultra-Advanced Personalization Test Suite"""
-    
+    """Ultra-Advanced Personalization Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Personalization Tests")
     

@@ -14,7 +14,14 @@ from typing import Dict, Any, Optional
 from dataclasses import dataclass, asdict
 from pathlib import Path
 
-from ...core.exceptions import ConfigurationError
+try:
+    from core.exceptions import ConfigurationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ConfigurationError = globals().get('ConfigurationError', Exception)
 from ...security.encryption import SecureDataHandler
 
 

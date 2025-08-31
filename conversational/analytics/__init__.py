@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-🧠 CONVERSATIONAL ANALYTICS MODULE - ENTERPRISE INTELLIGENCE PLATFORM
+"""🧠 CONVERSATIONAL ANALYTICS MODULE - ENTERPRISE INTELLIGENCE PLATFORM
 ======================================================================
 
 Ultra-advanced conversational analytics module providing comprehensive business
@@ -70,7 +69,6 @@ Continuous Learning & Optimization → Executive Dashboard & Reporting
 ✅ No TODOs, placeholders, or incomplete implementations
 ✅ Production-ready, industrial-grade code quality
 """
-
 # Import all enterprise analytics engines and core components
 from .performance_analytics import (
     EnterprisePerformanceAnalytics,
@@ -326,8 +324,7 @@ __all__ = [
 
 # Module initialization validation
 def validate_module_integrity():
-    """Validate that all critical components are properly loaded."""
-    required_engines = [
+    """Validate that all critical components are properly loaded."""    required_engines = [
         "EnterprisePerformanceAnalytics",
         "EngagementAnalytics",
         "RevenueAnalytics", 

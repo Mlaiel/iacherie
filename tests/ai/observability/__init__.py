@@ -1,5 +1,4 @@
-"""
-Tests for AI Observability Module - Ultra-Industrial Test Suite
+"""Tests for AI Observability Module - Ultra-Industrial Test Suite
 
 Comprehensive test suite for the observability module including:
 - AI model monitoring and lifecycle management tests
@@ -45,7 +44,6 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 If you think you can steal this work - YOU ARE BEING MONITORED.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 import asyncio
 import pytest

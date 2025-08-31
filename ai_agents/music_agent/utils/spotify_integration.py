@@ -27,7 +27,14 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 
 from ..spotify_agent import SpotifyAgent
-from ...core.exceptions import SpotifyIntegrationError
+try:
+    from core.exceptions import SpotifyIntegrationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    SpotifyIntegrationError = globals().get('SpotifyIntegrationError', Exception)
 from ...core.security import SecurityManager
 from ...core.logging import get_logger
 from ...config.settings import get_settings

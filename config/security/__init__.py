@@ -1,5 +1,4 @@
-"""
-Security Configuration Module for IA Influencer Agent Platform
+"""Security Configuration Module for IA Influencer Agent Platform
 =============================================================
 
 Advanced enterprise-grade security configuration module for the IA Influencer Agent platform.
@@ -18,7 +17,6 @@ Project Team Specialties:
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .authentication import *
 from .authorization import *
 from .encryption import *

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Content Distribution Database Module
+"""IA Influencer Agent - Content Distribution Database Module
 
 Professional content distribution database architecture for the IA Influencer Agent platform.
 Handles content distribution channels, scheduling, optimization, analytics, content protection
@@ -21,7 +20,6 @@ Version: 2.0.0
 Created: December 2024
 Enhanced: January 2025
 """
-
 from .distribution_channels import (
     DistributionChannel,
     ChannelPerformanceMetric,
@@ -323,11 +321,9 @@ __all__ = [
 
 # Business Logic Compliance Validation
 def validate_business_logic_implementation() -> bool:
-    """
-    Validate that all modules implement the required business logic:
+    """    Validate that all modules implement the required business logic:
     User Upload → AI Protection → Enhanced Distribution → Collaboration → Monetization
-    """
-    required_business_components = [
+    """    required_business_components = [
         'ContentProtectionIntegrationManager',  # Protection integration
         'AIContentOptimizationManager',         # AI optimization
         'CollaborationMatchingManager',         # Creator collaboration
@@ -378,13 +374,11 @@ if __name__ != "__main__":
     validate_business_logic_implementation()
 
 def get_module_info() -> dict:
-    """
-    Returns comprehensive information about the Content Distribution Database module.
+    """    Returns comprehensive information about the Content Distribution Database module.
     
     Returns:
         dict: Complete module information including all components and capabilities
-    """
-    return {
+    """    return {
         "name": "IA Influencer Agent - Content Distribution Database Module",
         "version": __version__,
         "author": __author__,

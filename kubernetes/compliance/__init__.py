@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Compliance Module
+"""IA Influencer Agent - Compliance Module
 Comprehensive enterprise-grade compliance system for regulatory adherence
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -15,7 +14,6 @@ This module provides complete compliance functionality including:
 - Regulatory reporting automation
 - External service integrations
 """
-
 from .audit_logger import (
     AuditLogger,
     AuditCategory,

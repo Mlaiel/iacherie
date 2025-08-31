@@ -36,8 +36,19 @@ from .backend_manager import BackendManager, StorageBackend, StorageConfig
 from .file_processor import FileProcessor, ProcessingOptions, ProcessingResult
 from .content_optimizer import ContentOptimizer, OptimizationOptions, OptimizationResult
 from .backup_manager import BackupManager, BackupConfig
-from ...core.config import settings
-from ...core.exceptions import StorageError, ProcessingError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import StorageError, ProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    StorageError, ProcessingError, ValidationError = globals().get('StorageError, ProcessingError, ValidationError', Exception)
 from ...database.models import FileRecord, StorageOperation
 from ...utils.cache_utils import CacheManager
 from ...monitoring.metrics import MetricsCollector

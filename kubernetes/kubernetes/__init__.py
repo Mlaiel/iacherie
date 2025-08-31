@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Kubernetes Deployment Module
+"""IA Influencer Agent - Kubernetes Deployment Module
 Production-ready Kubernetes manifests for enterprise-grade deployment
 
 Copyright (c) 2025 Fahed Mlaiel
@@ -15,7 +14,6 @@ Module: backend.deployment.kubernetes
 Purpose: Kubernetes orchestration for microservices architecture
 Architecture: Cloud-native, scalable, enterprise deployment
 """
-
 from .cluster_orchestrator import (
     KubernetesClusterOrchestrator,
     ClusterConfig,

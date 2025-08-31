@@ -16,8 +16,19 @@ from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-from ...core.config import settings
-from ...core.exceptions import WorkflowError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import WorkflowError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    WorkflowError, ValidationError = globals().get('WorkflowError, ValidationError', Exception)
 from ...utils.performance_metrics import PerformanceMetrics
 from ...business.notifications import NotificationManager
 

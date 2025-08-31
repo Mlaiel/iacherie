@@ -1,5 +1,4 @@
-"""
-⚖️ Ultra-Industrial DMCA Automation & Legal Enforcement Orchestration
+"""⚖️ Ultra-Industrial DMCA Automation & Legal Enforcement Orchestration
 ====================================================================
 
 Enterprise-grade automated legal enforcement system for comprehensive digital
@@ -52,7 +51,6 @@ UNAUTHORIZED ACCESS IS FEDERAL/INTERNATIONAL CRIME:
 Contact mlaiel@live.de for MANDATORY legal authorization.
 Unauthorized access triggers automatic legal action protocols.
 """
-
 # Import all core components
 from .automated_generator import AutomatedNoticeGenerator, GenerationRequest, GenerationResult
 from .compliance_tracker import ComplianceTracker, ComplianceStatus, EscalationLevel

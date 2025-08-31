@@ -1,5 +1,4 @@
-"""
-DMCA Agent - Automated Legal Protection & Takedown System
+"""DMCA Agent - Automated Legal Protection & Takedown System
 ========================================================
 
 Comprehensive enterprise-grade DMCA compliance and automated takedown system
@@ -25,7 +24,6 @@ Project Team Specialties:
 - DevOps Engineer: Automated deployment and monitoring
 - AI Prompt Engineer: Natural language processing optimization
 """
-
 # Import all main classes and functions
 from .dmca_orchestrator import (
     DMCAOrchestrator,
@@ -258,49 +256,39 @@ __all__ = [
 ]
 
 def create_dmca_agent(**kwargs) -> DMCAOrchestrator:
-    """
-    Factory function to create configured DMCA agent
+    """    Factory function to create configured DMCA agent
     
     Returns:
         DMCAOrchestrator: Fully configured DMCA orchestration system
-    """
-    return DMCAOrchestrator(**kwargs)
+    """    return DMCAOrchestrator(**kwargs)
 
 def create_compliance_engine(**kwargs) -> LegalComplianceEngine:
-    """
-    Factory function to create legal compliance engine
+    """    Factory function to create legal compliance engine
     
     Returns:
         LegalComplianceEngine: Configured compliance validation system
-    """
-    return LegalComplianceEngine(**kwargs)
+    """    return LegalComplianceEngine(**kwargs)
 
 def create_takedown_automation(**kwargs) -> TakedownAutomation:
-    """
-    Factory function to create takedown automation system
+    """    Factory function to create takedown automation system
     
     Returns:
         TakedownAutomation: Configured automated takedown system
-    """
-    return TakedownAutomation(**kwargs)
+    """    return TakedownAutomation(**kwargs)
 
 def create_copyright_verification(**kwargs) -> CopyrightVerification:
-    """
-    Factory function to create copyright verification system
+    """    Factory function to create copyright verification system
     
     Returns:
         CopyrightVerification: Configured ownership verification system
-    """
-    return CopyrightVerification(**kwargs)
+    """    return CopyrightVerification(**kwargs)
 
 def create_document_generator(**kwargs) -> LegalDocumentGenerator:
-    """
-    Factory function to create legal document generator
+    """    Factory function to create legal document generator
     
     Returns:
         LegalDocumentGenerator: Configured document generation system
-    """
-    return LegalDocumentGenerator(**kwargs)
+    """    return LegalDocumentGenerator(**kwargs)
 
 # Module metadata for enterprise tracking
 MODULE_INFO = {

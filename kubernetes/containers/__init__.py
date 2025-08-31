@@ -1,5 +1,4 @@
-"""
-🐳 Containers Module - IA-Influencer-Agent Deployment Infrastructure
+"""🐳 Containers Module - IA-Influencer-Agent Deployment Infrastructure
 =====================================================================
 Expert Team: DevOps Engineer + Cloud Architect + Security Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -17,7 +16,6 @@ Contact légal: mlaiel@live.de
 Advanced containerization management for IA-Influencer-Agent platform.
 Includes Docker, Kubernetes, Helm charts, service mesh, and container security.
 """
-
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

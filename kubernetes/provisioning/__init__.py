@@ -1,5 +1,4 @@
-"""
-Infrastructure Provisioning Module
+"""Infrastructure Provisioning Module
 
 Enterprise-grade infrastructure provisioning system for the IA Influencer Agent + Content Protection Platform.
 This module handles automated infrastructure deployment, configuration management, and resource provisioning 
@@ -25,7 +24,6 @@ Business Logic Flow:
 Content Creator → Upload Multi-format → AI Protection → SEO Optimization → 
 Collaboration Matching → Multi-platform Distribution
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

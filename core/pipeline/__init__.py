@@ -1,5 +1,4 @@
-"""
-Core Pipeline Module
+"""Core Pipeline Module
 
 Ultra-advanced pipeline orchestration system for IA Influencer Agent platform.
 Implements complete business workflow: User Upload → AI Protection → SEO → Collaboration → Distribution → Monetization
@@ -17,7 +16,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
-
 from .master_orchestrator import (
     MasterPipelineOrchestrator,
     PipelineRequest,

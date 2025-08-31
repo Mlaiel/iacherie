@@ -1,5 +1,4 @@
-"""
-Business Content Management Module - IA Influencer Agent Platform
+"""Business Content Management Module - IA Influencer Agent Platform
 ================================================================
 
 Industrial-grade multi-format content management system for creators with AI-powered processing,
@@ -16,7 +15,6 @@ result in legal action under German and international copyright laws.
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 # Central orchestration system (NEW)
 from .index import (
     ContentManagementSystem,

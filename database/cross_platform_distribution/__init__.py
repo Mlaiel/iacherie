@@ -1,5 +1,4 @@
-"""
-Cross-Platform Distribution - Enterprise Database Components
+"""Cross-Platform Distribution - Enterprise Database Components
 
 Ultra-advanced comprehensive cross-platform content distribution system providing:
 - Automated content distribution across 15+ platforms (YouTube, Spotify, Instagram, TikTok, etc.)
@@ -34,7 +33,6 @@ All violations will be prosecuted to the FULL EXTENT of international copyright 
 Legal action will be taken immediately against any infringement.
 Contact: mlaiel@live.de for authorized licensing only.
 """
-
 # Import main system components
 from .index import (
     CrossPlatformDistributionSystem,

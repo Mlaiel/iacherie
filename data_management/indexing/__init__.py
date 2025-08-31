@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Data Management Indexing Module
+"""IA Influencer Agent - Data Management Indexing Module
 ====================================================
 
 Advanced indexing system for multi-format content protection and search vectorization.
@@ -17,7 +16,6 @@ and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .engines import (
     VectorSearchEngine,
     ContentIndexEngine,

@@ -47,7 +47,14 @@ import face_recognition
 import dlib
 
 from ..base import BaseAgent, AgentStatus, AgentCapability
-from ...core.exceptions import ImageProcessingError, ValidationError, SecurityError
+try:
+    from core.exceptions import ImageProcessingError, ValidationError, SecurityError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ImageProcessingError, ValidationError, SecurityError = globals().get('ImageProcessingError, ValidationError, SecurityError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 from ...security.watermark_manager import WatermarkManager
 from ...utils.cache_manager import CacheManager

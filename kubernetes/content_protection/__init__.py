@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Content Protection Deployment Module
+"""IA Influencer Agent - Content Protection Deployment Module
 Enterprise-Grade Content Protection Deployment System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -8,7 +7,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This module handles the deployment and orchestration of content protection
 systems for multi-format content monitoring and violation detection.
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

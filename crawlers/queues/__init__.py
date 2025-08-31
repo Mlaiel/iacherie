@@ -1,5 +1,4 @@
-"""
-Advanced Queue Management System - IA-Influencer-Agent
+"""Advanced Queue Management System - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -24,7 +23,6 @@ LOGIQUE MÉTIER:
 Request → Queue routing → Priority analysis → Worker assignment → 
 Load balancing → Execution → Monitoring → Analytics → Optimization
 """
-
 from .crawler_queue_manager import (
     CrawlerQueueManager,
     CrawlerTask,
@@ -196,8 +194,7 @@ async def create_complete_queue_system(
     enable_auto_recovery: bool = True,
     core_queue_manager=None
 ):
-    """
-    Create complete integrated queue management system with all components
+    """    Create complete integrated queue management system with all components
     
     Returns:
         Dict with all initialized components:
@@ -209,8 +206,7 @@ async def create_complete_queue_system(
         - distribution_engine: Task distribution engine
         - monitor: Real-time monitoring system
         - diagnostics: Health diagnostics system
-    """
-    
+    """    
     # Create orchestrator with configuration
     from .queue_orchestrator import OrchestrationConfig
     

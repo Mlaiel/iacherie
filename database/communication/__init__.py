@@ -1,5 +1,4 @@
-"""
-Real-Time Communication Database Module
+"""Real-Time Communication Database Module
 
 Enterprise real-time communication infrastructure for creator collaboration,
 live streaming coordination, and instant messaging with WebSocket management.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from .websocket_manager import WebSocketManager, ConnectionPool
 from .message_broker import MessageBroker, MessageQueue, get_message_broker
 from .notification_engine import NotificationEngine, NotificationChannel

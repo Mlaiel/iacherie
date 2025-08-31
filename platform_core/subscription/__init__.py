@@ -1,5 +1,4 @@
-"""
-🚀 Platform Core Subscription Management - IA Influencer Agent Platform Enterprise
+"""🚀 Platform Core Subscription Management - IA Influencer Agent Platform Enterprise
 ================================================================================
 Module: backend/platform_core/subscription/
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Gestion complète des plans et abonnements avec intelligence artificielle
 - Upgrades/downgrades automatiques et intelligents
 - Analytics d'utilisation et recommandations IA
 """
-
 from .plan_manager import PlanManager, SubscriptionPlan, PlanFeature
 from .subscription_manager import SubscriptionManager, Subscription, SubscriptionStatus
 from .quota_manager import QuotaManager, ResourceQuota, UsageTracker

@@ -1,5 +1,4 @@
-"""
-🔍 Fingerprinting Module Enterprise - IA-Influencer-Agent Platform
+"""🔍 Fingerprinting Module Enterprise - IA-Influencer-Agent Platform
 ================================================================
 
 Système de fingerprinting IA avancé pour protection contenu créateurs multi-format.
@@ -23,7 +22,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
-
 # === MOTEUR FINGERPRINTING ENTERPRISE PRINCIPAL ===
 from .multimodal_fingerprint_engine import (
     MultiModalFingerprintEngine,

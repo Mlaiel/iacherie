@@ -1,5 +1,4 @@
-"""
-Core Cache Module for IA Influencer Agent Platform
+"""Core Cache Module for IA Influencer Agent Platform
 Enterprise-grade, multi-backend caching system for content creators
 
 Business Logic: Creator Upload → AI Processing → Cache Layer → SEO → Distribution → Monetization
@@ -17,7 +16,6 @@ Violations may result in severe civil and criminal penalties.
 
 For licensing inquiries: mlaiel@live.de
 """
-
 # Import everything from the main index module for enhanced functionality
 from .index import *
 

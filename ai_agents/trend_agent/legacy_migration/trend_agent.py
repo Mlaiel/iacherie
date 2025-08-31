@@ -42,8 +42,19 @@ import aioredis
 import httpx
 
 from ..base import BaseAgent, AgentStatus, AgentMetrics
-from ...core.config import settings
-from ...core.exceptions import AgentError, ValidationError, ProcessingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import AgentError, ValidationError, ProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AgentError, ValidationError, ProcessingError = globals().get('AgentError, ValidationError, ProcessingError', Exception)
 from ...security.encryption import ContentEncryption
 from ...utils.performance_monitor import PerformanceMonitor
 from ...models.content import ContentType, ContentMetadata

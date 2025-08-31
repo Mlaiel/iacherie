@@ -1,5 +1,4 @@
-"""
-Fraud Detection Agent - Industrial-Grade Content Fraud Detection System
+"""Fraud Detection Agent - Industrial-Grade Content Fraud Detection System
 
 Advanced AI-powered fraud detection and prevention system for content protection,
 revenue authentication, and platform abuse detection in the IA-Influencer ecosystem.
@@ -22,7 +21,6 @@ Team Expertise:
 - DevOps Engineer: Real-time monitoring and fraud alert infrastructure
 - IA Prompt Engineer: Natural language fraud pattern recognition
 """
-
 from .core import FraudDetectionAgent
 from .behavioral_analyzer import BehaviorAnalyzer
 from .pattern_detector import PatternDetector

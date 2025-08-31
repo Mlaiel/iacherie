@@ -1,5 +1,4 @@
-"""
-Monetization Assistant Module - AI-Powered Revenue Optimization Engine
+"""Monetization Assistant Module - AI-Powered Revenue Optimization Engine
 ====================================================================
 
 Advanced monetization assistant for content creators with AI-driven revenue optimization,
@@ -18,7 +17,6 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
 """
-
 from .revenue_optimizer import RevenueOptimizer
 from .platform_analytics import PlatformAnalyticsEngine
 from .collaboration_matcher import CollaborationMatcher

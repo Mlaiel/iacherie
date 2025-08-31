@@ -1,5 +1,4 @@
-"""
-Data Serializers Module - Professional Serialization System
+"""Data Serializers Module - Professional Serialization System
 ==========================================================
 
 Advanced data serialization and deserialization system for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Type, Union, Protocol
 from datetime import datetime
@@ -68,8 +66,7 @@ from .index import (
 logger = logging.getLogger(__name__)
 
 class SerializationFormat(Enum):
-    """Supported serialization formats."""
-    JSON = "json"
+    """Supported serialization formats."""    JSON = "json"
     ORJSON = "orjson"
     MSGPACK = "msgpack"
     PICKLE = "pickle"
@@ -79,24 +76,21 @@ class SerializationFormat(Enum):
     PARQUET = "parquet"
 
 class CompressionType(Enum):
-    """Supported compression types."""
-    NONE = "none"
+    """Supported compression types."""    NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
     SNAPPY = "snappy"
 
 class EncryptionLevel(Enum):
-    """Data encryption levels."""
-    NONE = "none"
+    """Data encryption levels."""    NONE = "none"
     BASIC = "basic"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
 
 @dataclass
 class SerializationConfig:
-    """Serialization configuration."""
-    default_format: SerializationFormat = SerializationFormat.ORJSON
+    """Serialization configuration."""    default_format: SerializationFormat = SerializationFormat.ORJSON
     compression: CompressionType = CompressionType.ZSTD
     encryption: EncryptionLevel = EncryptionLevel.BASIC
     enable_validation: bool = True
@@ -106,8 +100,7 @@ class SerializationConfig:
     compression_threshold: int = 1024  # 1KB
 
 class SerializationMetrics:
-    """Serialization performance metrics."""
-    
+    """Serialization performance metrics."""    
     def __init__(self):
         self.serialization_count = 0
         self.deserialization_count = 0
@@ -125,8 +118,7 @@ class SerializationMetrics:
         serialized_size: int,
         processing_time: float
     ) -> None:
-        """Record serialization metrics."""
-        self.serialization_count += 1
+        """Record serialization metrics."""        self.serialization_count += 1
         self.total_size_serialized += serialized_size
         self.compression_ratio_sum += original_size / serialized_size if serialized_size > 0 else 1.0
         self.serialization_time_sum += processing_time
@@ -136,18 +128,15 @@ class SerializationMetrics:
         size: int,
         processing_time: float
     ) -> None:
-        """Record deserialization metrics."""
-        self.deserialization_count += 1
+        """Record deserialization metrics."""        self.deserialization_count += 1
         self.total_size_deserialized += size
         self.deserialization_time_sum += processing_time
     
     def record_error(self) -> None:
-        """Record serialization error."""
-        self.error_count += 1
+        """Record serialization error."""        self.error_count += 1
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics."""
-        duration = (datetime.now() - self.last_reset).total_seconds()
+        """Get comprehensive statistics."""        duration = (datetime.now() - self.last_reset).total_seconds()
         
         return {
             'period_duration_seconds': duration,
@@ -175,12 +164,10 @@ class SerializationMetrics:
         }
     
     def reset(self) -> None:
-        """Reset all metrics."""
-        self.__init__()
+        """Reset all metrics."""        self.__init__()
 
 class SerializationRegistry:
-    """Registry for custom serializers."""
-    
+    """Registry for custom serializers."""    
     def __init__(self):
         self._serializers: Dict[str, Type] = {}
         self._deserializers: Dict[str, Type] = {}
@@ -198,21 +185,17 @@ class SerializationRegistry:
         self.register_serializer('export', ExportSerializer)
     
     def register_serializer(self, name: str, serializer_class: Type) -> None:
-        """Register custom serializer."""
-        self._serializers[name] = serializer_class
+        """Register custom serializer."""        self._serializers[name] = serializer_class
         logger.debug(f"Registered serializer: {name}")
     
     def get_serializer(self, name: str) -> Optional[Type]:
-        """Get serializer by name."""
-        return self._serializers.get(name)
+        """Get serializer by name."""        return self._serializers.get(name)
     
     def list_serializers(self) -> List[str]:
-        """List available serializers."""
-        return list(self._serializers.keys())
+        """List available serializers."""        return list(self._serializers.keys())
 
 class SerializerManager:
-    """
-    Central serializer management system.
+    """    Central serializer management system.
     
     Coordinates all serialization operations with:
     - Multiple format support
@@ -222,11 +205,9 @@ class SerializerManager:
     - Error handling
     - Data validation
     - Version management
-    """
-    
+    """    
     def __init__(self, config: Optional[SerializationConfig] = None):
-        """Initialize serializer manager."""
-        self.config = config or SerializationConfig()
+        """Initialize serializer manager."""        self.config = config or SerializationConfig()
         self.metrics = SerializationMetrics()
         self.registry = SerializationRegistry()
         
@@ -239,8 +220,7 @@ class SerializerManager:
         logger.info("Serializer manager initialized successfully")
     
     def _init_compression_engines(self) -> None:
-        """Initialize compression engines."""
-        self.compression_engines = {}
+        """Initialize compression engines."""        self.compression_engines = {}
         
         # GZIP
         self.compression_engines[CompressionType.GZIP] = {
@@ -263,8 +243,7 @@ class SerializerManager:
         }
     
     def _init_encryption(self) -> None:
-        """Initialize encryption systems."""
-        # Basic encryption placeholder
+        """Initialize encryption systems."""        # Basic encryption placeholder
         self.encryption_key = b"default_key_placeholder_32_bytes"
         
         if self.config.encryption != EncryptionLevel.NONE:
@@ -277,8 +256,7 @@ class SerializerManager:
         compression: Optional[CompressionType] = None,
         include_metadata: bool = True
     ) -> bytes:
-        """Serialize data with optional compression and encryption."""
-        start_time = datetime.now()
+        """Serialize data with optional compression and encryption."""        start_time = datetime.now()
         
         try:
             # Use configured defaults
@@ -347,8 +325,7 @@ class SerializerManager:
         data: bytes,
         expected_type: Optional[Type] = None
     ) -> Any:
-        """Deserialize data with automatic format detection."""
-        start_time = datetime.now()
+        """Deserialize data with automatic format detection."""        start_time = datetime.now()
         
         try:
             # Apply decryption if needed
@@ -408,8 +385,7 @@ class SerializerManager:
         data: Any,
         format_type: SerializationFormat
     ) -> bytes:
-        """Serialize data in specified format."""
-        if format_type == SerializationFormat.JSON:
+        """Serialize data in specified format."""        if format_type == SerializationFormat.JSON:
             return json.dumps(data, default=str, ensure_ascii=False).encode('utf-8')
         
         elif format_type == SerializationFormat.ORJSON:
@@ -438,8 +414,7 @@ class SerializerManager:
         format_type: SerializationFormat,
         expected_type: Optional[Type] = None
     ) -> Any:
-        """Deserialize data from specified format."""
-        if format_type == SerializationFormat.JSON:
+        """Deserialize data from specified format."""        if format_type == SerializationFormat.JSON:
             result = json.loads(data.decode('utf-8'))
         
         elif format_type == SerializationFormat.ORJSON:
@@ -468,8 +443,7 @@ class SerializerManager:
         return result
     
     def _compress_data(self, data: bytes, compression: CompressionType) -> bytes:
-        """Compress data using specified algorithm."""
-        if compression == CompressionType.NONE:
+        """Compress data using specified algorithm."""        if compression == CompressionType.NONE:
             return data
         
         engine = self.compression_engines.get(compression)
@@ -479,8 +453,7 @@ class SerializerManager:
         return engine['compress'](data)
     
     def _decompress_data(self, data: bytes, compression: CompressionType) -> bytes:
-        """Decompress data using specified algorithm."""
-        if compression == CompressionType.NONE:
+        """Decompress data using specified algorithm."""        if compression == CompressionType.NONE:
             return data
         
         engine = self.compression_engines.get(compression)
@@ -490,8 +463,7 @@ class SerializerManager:
         return engine['decompress'](data)
     
     def _encrypt_data(self, data: bytes) -> bytes:
-        """Encrypt data based on encryption level."""
-        if self.config.encryption == EncryptionLevel.NONE:
+        """Encrypt data based on encryption level."""        if self.config.encryption == EncryptionLevel.NONE:
             return data
         
         # Basic encryption implementation
@@ -505,8 +477,7 @@ class SerializerManager:
         return cipher.encrypt(data)
     
     def _decrypt_data(self, data: bytes) -> bytes:
-        """Decrypt data based on encryption level."""
-        if self.config.encryption == EncryptionLevel.NONE:
+        """Decrypt data based on encryption level."""        if self.config.encryption == EncryptionLevel.NONE:
             return data
         
         # Basic decryption implementation
@@ -518,28 +489,23 @@ class SerializerManager:
         return cipher.decrypt(data)
     
     def get_serializer(self, name: str) -> Optional[Type]:
-        """Get specialized serializer by name."""
-        return self.registry.get_serializer(name)
+        """Get specialized serializer by name."""        return self.registry.get_serializer(name)
     
     def register_serializer(self, name: str, serializer_class: Type) -> None:
-        """Register custom serializer."""
-        self.registry.register_serializer(name, serializer_class)
+        """Register custom serializer."""        self.registry.register_serializer(name, serializer_class)
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get serialization metrics."""
-        return self.metrics.get_statistics()
+        """Get serialization metrics."""        return self.metrics.get_statistics()
     
     def reset_metrics(self) -> None:
-        """Reset performance metrics."""
-        self.metrics.reset()
+        """Reset performance metrics."""        self.metrics.reset()
     
     async def benchmark_formats(
         self,
         test_data: Any,
         iterations: int = 100
     ) -> Dict[str, Dict[str, float]]:
-        """Benchmark different serialization formats."""
-        results = {}
+        """Benchmark different serialization formats."""        results = {}
         
         for format_type in SerializationFormat:
             try:

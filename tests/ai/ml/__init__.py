@@ -1,5 +1,4 @@
-"""
-Machine Learning Tests Package - Enterprise Grade Test Suite
+"""Machine Learning Tests Package - Enterprise Grade Test Suite
 
 Comprehensive test suite for the IA Influencer Agent ML package,
 covering all models, training, inference, data processing, and business logic.
@@ -28,7 +27,6 @@ All concepts, algorithms, business logic, and implementations are protected
 by intellectual property laws. Unauthorized access or use will be prosecuted
 to the full extent of the law.
 """
-
 import pytest
 import asyncio
 import logging
@@ -60,8 +58,7 @@ pytest_plugins = [
 ]
 
 def cleanup_test_artifacts():
-    """Clean up test artifacts after test runs"""
-    if TEMP_DIR.exists():
+    """Clean up test artifacts after test runs"""    if TEMP_DIR.exists():
         shutil.rmtree(TEMP_DIR, ignore_errors=True)
 
 
@@ -69,59 +66,44 @@ def cleanup_test_artifacts():
 import unittest
 
 class ModelTrainingTests(unittest.TestCase):
-    """Tests for Model Training"""
-    
+    """Tests for Model Training"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.trainer = None  # Will be implemented
+        """Set up test fixtures"""        self.trainer = None  # Will be implemented
     
     def test_model_training(self):
-        """Test model training functionality"""
-        pass
+        """Test model training functionality"""        pass
 
 class InferenceTests(unittest.TestCase):
-    """Tests for Inference"""
-    
+    """Tests for Inference"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.inference = None  # Will be implemented
+        """Set up test fixtures"""        self.inference = None  # Will be implemented
     
     def test_model_inference(self):
-        """Test model inference functionality"""
-        pass
+        """Test model inference functionality"""        pass
 
 class OptimizationTests(unittest.TestCase):
-    """Tests for Optimization"""
-    
+    """Tests for Optimization"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.optimizer = None  # Will be implemented
+        """Set up test fixtures"""        self.optimizer = None  # Will be implemented
     
     def test_model_optimization(self):
-        """Test model optimization functionality"""
-        pass
+        """Test model optimization functionality"""        pass
 
 class ValidationTests(unittest.TestCase):
-    """Tests for Validation"""
-    
+    """Tests for Validation"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.validator = None  # Will be implemented
+        """Set up test fixtures"""        self.validator = None  # Will be implemented
     
     def test_model_validation(self):
-        """Test model validation functionality"""
-        pass
+        """Test model validation functionality"""        pass
 
 class DeploymentTests(unittest.TestCase):
-    """Tests for Deployment"""
-    
+    """Tests for Deployment"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.deployment = None  # Will be implemented
+        """Set up test fixtures"""        self.deployment = None  # Will be implemented
     
     def test_model_deployment(self):
-        """Test model deployment functionality"""
-        pass
+        """Test model deployment functionality"""        pass
 
 # Export main testing classes
 __all__ = [

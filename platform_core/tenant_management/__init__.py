@@ -1,5 +1,4 @@
-"""
-🚀 Platform Core Tenant Management - IA Influencer Agent Platform Enterprise
+"""🚀 Platform Core Tenant Management - IA Influencer Agent Platform Enterprise
 ============================================================================
 Module: backend/platform_core/tenant_management/
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Isolation complète des données et routage intelligent pour architecture SaaS
 - Gestion des quotas et limites en temps réel
 - Facturation et analytics par tenant
 """
-
 from .tenant_manager import (
     TenantManager,
     TenantDataIsolator,

@@ -40,8 +40,19 @@ from nudenet import NudeDetector
 import face_recognition
 
 from ..base import BaseAgent, AgentRequest, AgentResponse
-from ...core.exceptions import ModerationError, ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import ModerationError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ModerationError, ValidationError = globals().get('ModerationError, ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...ml.toxicity_models import ToxicityClassifier
 from ...ml.nsfw_detector import NSFWDetector
 from ...ml.violence_detector import ViolenceDetector

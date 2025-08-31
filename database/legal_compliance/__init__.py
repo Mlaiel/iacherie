@@ -1,5 +1,4 @@
-"""
-Legal Compliance Database Module - IA Influencer Agent + Content Protection Platform
+"""Legal Compliance Database Module - IA Influencer Agent + Content Protection Platform
 
 🚨 INTELLECTUAL PROPERTY WARNING
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
@@ -28,7 +27,6 @@ Expert Team:
 - DevOps Engineer - Production Infrastructure
 - IA Prompt Engineer - AI Integration & Optimization
 """
-
 from typing import List, Dict, Any, Optional
 import logging
 
@@ -197,13 +195,11 @@ __all__ = [
 ]
 
 def get_module_info() -> Dict[str, Any]:
-    """
-    Returns comprehensive information about the Legal Compliance module.
+    """    Returns comprehensive information about the Legal Compliance module.
     
     Returns:
         Dict[str, Any]: Module information including capabilities and compliance features
-    """
-    return {
+    """    return {
         "name": "Legal Compliance Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

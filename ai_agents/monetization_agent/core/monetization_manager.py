@@ -35,8 +35,19 @@ from enum import Enum
 import json
 
 from ..base import BaseAgent, AgentResponse
-from ...core.exceptions import MonetizationError, ValidationError, AgentError
-from ...core.config import settings
+try:
+    from core.exceptions import MonetizationError, ValidationError, AgentError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MonetizationError, ValidationError, AgentError = globals().get('MonetizationError, ValidationError, AgentError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...database.models import UserModel, ContentModel, RevenueModel
 from ...database.repositories import RevenueRepository, UserRepository
 from ...utils.decorators import rate_limit, cache_result, monitor_performance

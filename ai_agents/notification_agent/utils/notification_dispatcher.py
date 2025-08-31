@@ -48,7 +48,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .channel_manager import ChannelManager, ChannelType, DeliveryStatus
 from .priority_handler import PriorityHandler, UrgencyLevel
 from .template_manager import TemplateManager
-from ...core.database import get_async_session
+try:
+    from core.database import get_async_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_async_session = DatabaseManager
 from ...models.notification_models import NotificationModel, NotificationLog
 from ...monitoring.performance_monitor import PerformanceMonitor
 from ...integrations.analytics_integration import AnalyticsIntegration

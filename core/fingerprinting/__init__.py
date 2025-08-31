@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Core Fingerprinting Module
+"""IA Influencer Agent - Core Fingerprinting Module
 Digital fingerprinting system for multimedia content protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -24,7 +23,6 @@ Key Features:
 - Vector-based similarity search (sub-second matching)
 - Enterprise-level security implementations
 """
-
 from .audio_fingerprint import AudioFingerprintEngine
 from .video_fingerprint import VideoFingerprintEngine
 from .image_fingerprint import ImageFingerprintEngine

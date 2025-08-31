@@ -43,7 +43,14 @@ import clip
 # SIFT, ORB, SURF features
 import cv2
 
-from ...core.exceptions import ImageProcessingError, ValidationError
+try:
+    from core.exceptions import ImageProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ImageProcessingError, ValidationError = globals().get('ImageProcessingError, ValidationError', Exception)
 from ...utils.image_utils import ImageProcessor
 from ...ml.image_models import ImageEmbeddingModel
 
@@ -93,7 +100,14 @@ import clip
 # SIFT, ORB, SURF features
 import cv2
 
-from ...core.exceptions import ImageProcessingError, ValidationError
+try:
+    from core.exceptions import ImageProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ImageProcessingError, ValidationError = globals().get('ImageProcessingError, ValidationError', Exception)
 from ...utils.image_utils import ImageProcessor
 from ...ml.image_models import ImageEmbeddingModel
 

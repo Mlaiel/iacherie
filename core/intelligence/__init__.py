@@ -1,5 +1,4 @@
-"""
-🧠 Core Intelligence Module - IA Influencer Agent
+"""🧠 Core Intelligence Module - IA Influencer Agent
 =====================================================
 
 This module provides the central AI intelligence capabilities for content analysis,
@@ -22,7 +21,6 @@ and may result in legal action under applicable copyright laws.
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices 
 - Audio + DevOps + IA Prompt Engineer
 """
-
 # Core Intelligence Components
 from .content_analyzer import ContentAnalyzer, MultiModalAnalyzer, ContentQualityAssessor
 from .decision_engine import DecisionEngine, BusinessRuleEngine, MonetizationDecisionEngine

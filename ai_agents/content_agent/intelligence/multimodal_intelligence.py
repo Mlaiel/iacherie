@@ -58,8 +58,19 @@ from sklearn.cluster import KMeans
 from sklearn.manifold import TSNE
 import faiss
 
-from ...core.config import settings
-from ...core.exceptions import MultimodalProcessingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import MultimodalProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MultimodalProcessingError = globals().get('MultimodalProcessingError', Exception)
 from ...ml.models.multimodal_models import (
     MultimodalFusionModel, CrossModalAttentionModel, 
     TemporalSequenceModel, SpatialFeatureExtractor

@@ -1,5 +1,4 @@
-"""
-🔍 Ultra-Industrial Vector Database Orchestration Service
+"""🔍 Ultra-Industrial Vector Database Orchestration Service
 =========================================================
 
 Enterprise-grade vector similarity search ecosystem for content fingerprint
@@ -40,7 +39,6 @@ and will result in immediate legal action including:
 Contact: mlaiel@live.de for ANY usage authorization.
 All activities monitored and logged for legal compliance.
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -113,8 +111,7 @@ logger = logging.getLogger(__name__)
 
 
 class VectorDatabaseService:
-    """
-    🔍 Ultra-Advanced Vector Database Service
+    """    🔍 Ultra-Advanced Vector Database Service
     ========================================
     
     Enterprise-grade vector database for content fingerprint storage and search.
@@ -152,11 +149,9 @@ class VectorDatabaseService:
     - Enterprise-grade security and rights management
     - Scalable microservices architecture
     - Professional content protection workflows
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize comprehensive vector database service with all advanced components."""
-        self.config = config
+        """Initialize comprehensive vector database service with all advanced components."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorDatabaseService")
         
         # Core services
@@ -188,8 +183,7 @@ class VectorDatabaseService:
         self.logger.info("VectorDatabaseService instance created")
     
     async def initialize(self) -> bool:
-        """Initialize all vector database components"""
-        try:
+        """Initialize all vector database components"""        try:
             self.logger.info("Initializing VectorDatabaseService...")
             
             # Initialize embedding service
@@ -223,8 +217,7 @@ class VectorDatabaseService:
             return False
     
     async def _create_default_storages(self):
-        """Create default storage instances"""
-        storage_configs = {
+        """Create default storage instances"""        storage_configs = {
             'primary': {'backend': 'faiss', 'dimension': 1536},
             'audio': {'backend': 'faiss', 'dimension': 512},
             'video': {'backend': 'faiss', 'dimension': 1024},
@@ -236,13 +229,11 @@ class VectorDatabaseService:
             await self.storage_manager.create_storage(name, StorageBackend.FAISS, config)
     
     async def _create_default_indexes(self):
-        """Create default indexes for all embedding types"""
-        for embedding_type in EmbeddingType:
+        """Create default indexes for all embedding types"""        for embedding_type in EmbeddingType:
             await self.index_manager.create_index(embedding_type)
     
     async def _start_background_tasks(self):
-        """Start background maintenance tasks"""
-        # Auto-save task
+        """Start background maintenance tasks"""        # Auto-save task
         if self.config.get('auto_save_interval', 0) > 0:
             save_task = asyncio.create_task(self._auto_save_loop())
             self._background_tasks.append(save_task)
@@ -259,8 +250,7 @@ class VectorDatabaseService:
         embedding_type: Optional[EmbeddingType] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Add content fingerprint to vector database
+        """        Add content fingerprint to vector database
         
         Args:
             content_id: Unique identifier for content
@@ -270,8 +260,7 @@ class VectorDatabaseService:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -309,16 +298,14 @@ class VectorDatabaseService:
         self,
         content_data: List[Tuple[str, Dict[str, Any], Optional[EmbeddingType], Optional[Dict[str, Any]]]]
     ) -> List[bool]:
-        """
-        Add multiple content fingerprints in batch
+        """        Add multiple content fingerprints in batch
         
         Args:
             content_data: List of (content_id, features, embedding_type, metadata) tuples
             
         Returns:
             List[bool]: Success status for each item
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -366,8 +353,7 @@ class VectorDatabaseService:
         embedding_type: Optional[EmbeddingType] = None,
         metadata_filter: Optional[Dict[str, Any]] = None
     ) -> List[SearchResult]:
-        """
-        Search for similar content fingerprints
+        """        Search for similar content fingerprints
         
         Args:
             query_content_id: ID of query content
@@ -380,8 +366,7 @@ class VectorDatabaseService:
             
         Returns:
             List[SearchResult]: Similar content results
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -417,8 +402,7 @@ class VectorDatabaseService:
         threshold: float = 0.95,
         embedding_type: Optional[EmbeddingType] = None
     ) -> List[List[str]]:
-        """
-        Find groups of duplicate content
+        """        Find groups of duplicate content
         
         Args:
             content_data: List of (content_id, features) tuples
@@ -427,8 +411,7 @@ class VectorDatabaseService:
             
         Returns:
             List[List[str]]: Groups of duplicate content IDs
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -452,8 +435,7 @@ class VectorDatabaseService:
             return []
     
     async def remove_content_fingerprint(self, content_id: str) -> bool:
-        """Remove content fingerprint from database"""
-        try:
+        """Remove content fingerprint from database"""        try:
             # Remove from index manager (handles all indexes)
             success = await self.index_manager.remove_vector(content_id)
             
@@ -467,8 +449,7 @@ class VectorDatabaseService:
             return False
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for content fingerprint"""
-        try:
+        """Update metadata for content fingerprint"""        try:
             # Update in storage manager
             success = await self.storage_manager.route_operation(
                 'update_metadata',
@@ -483,8 +464,7 @@ class VectorDatabaseService:
             return False
     
     async def optimize_indexes(self) -> Dict[str, bool]:
-        """Optimize all vector indexes"""
-        try:
+        """Optimize all vector indexes"""        try:
             results = await self.index_manager.optimize_indexes()
             self.logger.info(f"Index optimization completed: {results}")
             return results
@@ -494,8 +474,7 @@ class VectorDatabaseService:
             return {}
     
     async def save_indexes(self) -> Dict[str, str]:
-        """Save all indexes to disk"""
-        try:
+        """Save all indexes to disk"""        try:
             results = await self.index_manager.save_indexes()
             self.logger.info("All indexes saved successfully")
             return results
@@ -505,8 +484,7 @@ class VectorDatabaseService:
             return {}
     
     async def get_service_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive service statistics"""
-        try:
+        """Get comprehensive service statistics"""        try:
             # Get index statistics
             index_info = await self.index_manager.get_index_info()
             
@@ -537,8 +515,7 @@ class VectorDatabaseService:
             return {'error': str(e)}
     
     async def _auto_save_loop(self):
-        """Background task for automatic index saving"""
-        try:
+        """Background task for automatic index saving"""        try:
             interval = self.config.get('auto_save_interval', 3600)
             
             while True:
@@ -554,8 +531,7 @@ class VectorDatabaseService:
             self.logger.error(f"Auto-save task failed: {e}")
     
     async def _auto_optimize_loop(self):
-        """Background task for automatic index optimization"""
-        try:
+        """Background task for automatic index optimization"""        try:
             interval = self.config.get('auto_optimize_interval', 86400)  # 24 hours
             
             while True:
@@ -571,8 +547,7 @@ class VectorDatabaseService:
             self.logger.error(f"Auto-optimization task failed: {e}")
     
     async def shutdown(self):
-        """Graceful shutdown of the service"""
-        try:
+        """Graceful shutdown of the service"""        try:
             self.logger.info("Shutting down VectorDatabaseService...")
             
             # Cancel background tasks
@@ -594,8 +569,7 @@ class VectorDatabaseService:
             self.logger.error(f"Shutdown error: {e}")
     
     def __del__(self):
-        """Cleanup on object destruction"""
-        if self._initialized and self._background_tasks:
+        """Cleanup on object destruction"""        if self._initialized and self._background_tasks:
             for task in self._background_tasks:
                 if not task.done():
                     task.cancel()
@@ -629,8 +603,7 @@ __all__ = [
         logger.info("Vector Database Service initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the vector database service."""
-        try:
+        """Initialize the vector database service."""        try:
             # Create storage directory
             self.storage_path.mkdir(parents=True, exist_ok=True)
             
@@ -651,8 +624,7 @@ __all__ = [
             return False
 
     async def _initialize_faiss(self) -> None:
-        """Initialize FAISS index."""
-        if not FAISS_AVAILABLE:
+        """Initialize FAISS index."""        if not FAISS_AVAILABLE:
             raise RuntimeError("FAISS not available")
         
         # Check for existing index
@@ -679,8 +651,7 @@ __all__ = [
             logger.info(f"Created new FAISS {self.index_type} index")
 
     async def _initialize_elasticsearch(self) -> None:
-        """Initialize Elasticsearch client."""
-        if not ELASTICSEARCH_AVAILABLE:
+        """Initialize Elasticsearch client."""        if not ELASTICSEARCH_AVAILABLE:
             raise RuntimeError("Elasticsearch not available")
         
         es_config = self.config.get('elasticsearch', {})
@@ -704,8 +675,7 @@ __all__ = [
         await self._create_elasticsearch_index()
 
     async def _create_elasticsearch_index(self) -> None:
-        """Create Elasticsearch index for metadata storage."""
-        index_mapping = {
+        """Create Elasticsearch index for metadata storage."""        index_mapping = {
             "mappings": {
                 "properties": {
                     "id": {"type": "keyword"},
@@ -744,8 +714,7 @@ __all__ = [
         embedding: List[float],
         metadata: Dict[str, Any]
     ) -> bool:
-        """
-        Store embedding with metadata.
+        """        Store embedding with metadata.
         
         Args:
             id: Unique identifier for the embedding
@@ -754,8 +723,7 @@ __all__ = [
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         try:
@@ -787,8 +755,7 @@ __all__ = [
         embedding: np.ndarray,
         metadata: Dict[str, Any]
     ) -> None:
-        """Store embedding in FAISS index."""
-        # Add to index
+        """Store embedding in FAISS index."""        # Add to index
         if hasattr(self.faiss_index, 'is_trained') and not self.faiss_index.is_trained:
             # Train index if needed (for IVF indexes)
             if self.faiss_index.ntotal == 0:
@@ -818,8 +785,7 @@ __all__ = [
         embedding: np.ndarray,
         metadata: Dict[str, Any]
     ) -> None:
-        """Store embedding in Elasticsearch."""
-        document = {
+        """Store embedding in Elasticsearch."""        document = {
             'id': id,
             'embedding': embedding.tolist(),
             'metadata': metadata
@@ -837,8 +803,7 @@ __all__ = [
         limit: int = 10,
         metadata_filter: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Search for similar embeddings.
+        """        Search for similar embeddings.
         
         Args:
             query_embedding: Query vector
@@ -847,8 +812,7 @@ __all__ = [
             
         Returns:
             List of similarity results
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         try:
@@ -876,8 +840,7 @@ __all__ = [
         limit: int,
         metadata_filter: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Search using FAISS index."""
-        if self.faiss_index.ntotal == 0:
+        """Search using FAISS index."""        if self.faiss_index.ntotal == 0:
             return []
         
         # Perform similarity search
@@ -922,8 +885,7 @@ __all__ = [
         limit: int,
         metadata_filter: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Search using Elasticsearch."""
-        query = {
+        """Search using Elasticsearch."""        query = {
             "size": limit,
             "query": {
                 "script_score": {
@@ -970,15 +932,13 @@ __all__ = [
         metadata: Dict[str, Any],
         filter_dict: Dict[str, Any]
     ) -> bool:
-        """Check if metadata matches filter criteria."""
-        for key, value in filter_dict.items():
+        """Check if metadata matches filter criteria."""        for key, value in filter_dict.items():
             if key not in metadata or metadata[key] != value:
                 return False
         return True
 
     async def _save_faiss_index(self) -> None:
-        """Save FAISS index to disk."""
-        try:
+        """Save FAISS index to disk."""        try:
             if self.faiss_index is not None:
                 index_path = self.storage_path / 'faiss_index.bin'
                 metadata_path = self.storage_path / 'faiss_metadata.json'
@@ -993,8 +953,7 @@ __all__ = [
             logger.error(f"Failed to save FAISS index: {e}")
 
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get database statistics."""
-        stats = {
+        """Get database statistics."""        stats = {
             'total_vectors': 0,
             'backends': [],
             'embedding_dimension': self.embedding_dim
@@ -1016,8 +975,7 @@ __all__ = [
         return stats
 
     async def shutdown(self) -> None:
-        """Shutdown the vector database service."""
-        logger.info("Shutting down Vector Database Service...")
+        """Shutdown the vector database service."""        logger.info("Shutting down Vector Database Service...")
         
         # Save FAISS index
         if self.use_faiss:

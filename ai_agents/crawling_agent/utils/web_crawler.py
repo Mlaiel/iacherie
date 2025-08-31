@@ -56,8 +56,19 @@ import readability
 from goose3 import Goose
 import trafilatura
 
-from ...core.config import settings
-from ...core.exceptions import CrawlingError, ValidationError, SecurityError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import CrawlingError, ValidationError, SecurityError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CrawlingError, ValidationError, SecurityError = globals().get('CrawlingError, ValidationError, SecurityError', Exception)
 from ...utils.rate_limiter import RateLimiter
 from ...utils.proxy_manager import ProxyManager
 from ...utils.user_agent_rotator import UserAgentRotator

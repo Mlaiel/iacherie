@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Data Management Pipeline Module
+"""IA Influencer Agent - Data Management Pipeline Module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -29,7 +28,6 @@ This module provides:
 - Brand collaboration matching
 - Revenue tracking and optimization
 """
-
 from .coordinators import (
     ContentPipelineCoordinator,
     ProcessingOrchestrator,

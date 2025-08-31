@@ -1,5 +1,4 @@
-"""
-Business services package for IA Influencer Agent platform.
+"""Business services package for IA Influencer Agent platform.
 
 This package contains all business logic services for multi-format content 
 creation, protection, and monetization.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .user_service import UserService
 from .content_service import ContentService
 from .ai_processing_service import AIProcessingService
@@ -92,20 +90,16 @@ __license__ = "Proprietary - All Rights Reserved"
 
 # Service initialization helper
 async def initialize_business_services():
-    """Initialize all business services."""
-    await service_registry.initialize_services()
+    """Initialize all business services."""    await service_registry.initialize_services()
 
 # Service shutdown helper  
 async def shutdown_business_services():
-    """Shutdown all business services gracefully."""
-    await service_registry.shutdown_services()
+    """Shutdown all business services gracefully."""    await service_registry.shutdown_services()
 
 # Health check helper
 def get_business_services_health():
-    """Get health status of all business services."""
-    return service_registry.get_service_health()
+    """Get health status of all business services."""    return service_registry.get_service_health()
 
 # Metrics helper
 def get_business_services_metrics():
-    """Get performance metrics for all business services."""
-    return service_registry.get_service_metrics()
+    """Get performance metrics for all business services."""    return service_registry.get_service_metrics()

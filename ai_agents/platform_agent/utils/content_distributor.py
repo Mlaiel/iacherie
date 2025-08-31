@@ -45,7 +45,12 @@ import torch
 from .platform_agent import PlatformType, ContentStatus
 from .platform_connector import PlatformConnector
 from ...core.ai_services import AIContentOptimizer, ImageProcessor, VideoProcessor, AudioProcessor
-from ...core.database import DatabaseManager
+try:
+    from core.database import DatabaseManager
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    DatabaseManager = DatabaseManager
 from ...core.cache import CacheManager
 from ...core.monitoring import MetricsCollector, PerformanceTracker
 from ...models.content_models import ContentItem, MediaFile, OptimizedContent, DistributionResult

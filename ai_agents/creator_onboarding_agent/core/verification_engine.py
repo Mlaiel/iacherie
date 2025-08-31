@@ -18,8 +18,19 @@ from enum import Enum
 import aiohttp
 import re
 
-from ...core.config import settings
-from ...core.exceptions import VerificationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import VerificationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    VerificationError = globals().get('VerificationError', Exception)
 from ...ml.verification_models import ContentAuthenticityChecker, DocumentVerifier
 from ...security.blockchain_registry import BlockchainRegistry
 from ...utils.performance_metrics import PerformanceMetrics

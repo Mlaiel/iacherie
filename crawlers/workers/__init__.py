@@ -1,5 +1,4 @@
-"""
-Workers Management System - IA-Influencer-Agent
+"""Workers Management System - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/workers/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ ARCHITECTURE WORKERS:
 Crawler Worker → Worker Pool → Queue Processor → Resource Manager → 
 Task Orchestrator → Event Processor → Notification Engine → Background Processor
 """
-
 from typing import Dict, Any, List, Optional, Type
 import logging
 from enum import Enum
@@ -215,8 +213,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkerComponentType(Enum):
-    """Worker component types"""
-    CRAWLER_WORKER = "crawler_worker"
+    """Worker component types"""    CRAWLER_WORKER = "crawler_worker"
     WORKER_POOL = "worker_pool"
     QUEUE_PROCESSOR = "queue_processor"
     RESOURCE_MANAGER = "resource_manager"
@@ -227,8 +224,7 @@ class WorkerComponentType(Enum):
 
 
 class WorkerSystemStatus(Enum):
-    """Worker system status"""
-    INITIALIZING = "initializing"
+    """Worker system status"""    INITIALIZING = "initializing"
     RUNNING = "running"
     SCALING = "scaling"
     MAINTENANCE = "maintenance"
@@ -238,8 +234,7 @@ class WorkerSystemStatus(Enum):
 
 # Unified initialization functions
 async def initialize_workers(system_config: Dict[str, Any] = None) -> bool:
-    """Initialize the complete worker system"""
-    try:
+    """Initialize the complete worker system"""    try:
         logger.info("🚀 Initializing IA-Influencer-Agent Worker System...")
         
         config = system_config or {}
@@ -312,8 +307,7 @@ async def initialize_workers(system_config: Dict[str, Any] = None) -> bool:
 
 
 async def shutdown_workers() -> bool:
-    """Gracefully shutdown the worker system"""
-    try:
+    """Gracefully shutdown the worker system"""    try:
         logger.info("🛑 Shutting down IA-Influencer-Agent Worker System...")
         
         # Shutdown components in reverse order
@@ -340,8 +334,7 @@ async def shutdown_workers() -> bool:
 
 
 async def get_workers_status() -> Dict[str, Any]:
-    """Get comprehensive status of all worker components"""
-    try:
+    """Get comprehensive status of all worker components"""    try:
         status = {
             "system_version": __version__,
             "components": {},

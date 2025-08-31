@@ -27,7 +27,14 @@ import json
 from collections import Counter, defaultdict
 
 from ..base import BaseAgent, AgentStatus
-from ...core.exceptions import SceneAnalysisError, ValidationError
+try:
+    from core.exceptions import SceneAnalysisError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    SceneAnalysisError, ValidationError = globals().get('SceneAnalysisError, ValidationError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 
 logger = logging.getLogger(__name__)

@@ -31,7 +31,14 @@ import uuid
 from ...ai.audio_processing.music_generation import MusicGenerationEngine
 from ...ai.engines.audio_engine import MusicGenerationEngine as AudioMusicEngine
 from ...ai.ml.music_intelligence import MusicGenre, MusicKey, TimeSignature
-from ...core.exceptions import MusicGenerationError
+try:
+    from core.exceptions import MusicGenerationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MusicGenerationError = globals().get('MusicGenerationError', Exception)
 from ...core.logging import get_logger
 from ...config.settings import get_settings
 

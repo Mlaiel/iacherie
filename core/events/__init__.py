@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Events Management System
+"""IA-Influencer-Agent - Events Management System
 Module: backend/core/events/__init__.py
 Architecture: Core Events System for Content Creation and Protection
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +15,6 @@ Description:
     Gère les événements métier, notifications temps réel, et orchestration des workflows.
     Support événements : upload contenu, protection, monétisation, collaboration.
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

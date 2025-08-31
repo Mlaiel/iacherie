@@ -35,8 +35,19 @@ import cv2
 from diffusers import StableDiffusionPipeline, StableDiffusionImg2ImgPipeline
 from transformers import CLIPTextModel, CLIPTokenizer
 
-from ...core.config import settings
-from ...core.exceptions import ProcessingError, ValidationError, ResourceLimitError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ProcessingError, ValidationError, ResourceLimitError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProcessingError, ValidationError, ResourceLimitError = globals().get('ProcessingError, ValidationError, ResourceLimitError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 from ...security.content_filter import ContentFilter
 

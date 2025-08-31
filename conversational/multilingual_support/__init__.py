@@ -1,5 +1,4 @@
-"""
-Multilingual Support Module - Comprehensive Global Language System
+"""Multilingual Support Module - Comprehensive Global Language System
 
 Enterprise-grade multilingual conversation system supporting 300+ languages and dialects
 for global content creators and influencers. Provides advanced language detection,
@@ -28,7 +27,6 @@ Global Language Coverage:
 - Sign language support
 - Historical language preservation
 """
-
 # Core language management
 from .language_manager import (
     LanguageManager,
@@ -249,8 +247,7 @@ __all__ = [
 
 # Module initialization message
 def get_module_info() -> dict:
-    """Get comprehensive module information"""
-    return {
+    """Get comprehensive module information"""    return {
         "name": "Multilingual Support Module",
         "version": __version__,
         "author": __author__,
@@ -262,8 +259,7 @@ def get_module_info() -> dict:
     }
 
 # Quick usage example
-QUICK_USAGE_EXAMPLE = """
-# Quick usage example:
+QUICK_USAGE_EXAMPLE = """# Quick usage example:
 
 import asyncio
 from multilingual_support import create_multilingual_system, quick_translate, SupportedLanguage
@@ -286,7 +282,6 @@ async def main():
 
 asyncio.run(main())
 """
-
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

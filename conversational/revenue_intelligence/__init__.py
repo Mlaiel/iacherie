@@ -1,5 +1,4 @@
-"""
-Revenue Intelligence Module - Advanced Monetization AI Engine
+"""Revenue Intelligence Module - Advanced Monetization AI Engine
 
 Enterprise-grade revenue optimization and intelligence ecosystem implementing AI-powered
 analytics, predictive modeling, and automated monetization strategies for multi-format
@@ -36,7 +35,6 @@ This revolutionary revenue intelligence platform is the EXCLUSIVE intellectual p
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
-
 from .revenue_optimizer import (
     RevenueIntelligenceOptimizer,
     RevenueDataPoint,

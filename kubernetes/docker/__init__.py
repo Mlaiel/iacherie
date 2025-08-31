@@ -1,5 +1,4 @@
-"""
-🐳 Docker Infrastructure Module - IA-Influencer-Agent Production Platform
+"""🐳 Docker Infrastructure Module - IA-Influencer-Agent Production Platform
 ===========================================================================
 Expert: Lead Dev IA + Backend Senior + DevOps Engineer + Docker Specialist  
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -21,7 +20,6 @@ Enterprise Docker orchestration supporting:
 - Production-grade security and compliance
 - Microservices architecture deployment
 """
-
 from .api_gateway import APIGatewayDockerConfig
 from .backend_services import BackendServicesDockerConfig  
 from .ai_engines import AIEnginesDockerConfig

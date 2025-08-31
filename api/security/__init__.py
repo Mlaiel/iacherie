@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Security Module
+"""IA Influencer Agent - Security Module
 Complete security framework for content protection and platform security
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,7 +28,6 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
-
 from .auth import *
 from .authorization import *
 from .encryption import *

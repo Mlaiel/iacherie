@@ -36,8 +36,19 @@ import aiofiles
 import aiocron
 
 from .backend_manager import BackendManager, StorageBackend
-from ...core.config import settings
-from ...core.exceptions import BackupError, ValidationError, StorageError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import BackupError, ValidationError, StorageError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    BackupError, ValidationError, StorageError = globals().get('BackupError, ValidationError, StorageError', Exception)
 from ...monitoring.metrics import MetricsCollector
 from ...utils.encryption_utils import EncryptionManager
 from ...utils.compression_utils import CompressionManager

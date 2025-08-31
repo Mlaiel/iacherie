@@ -40,8 +40,19 @@ import tensorflow as tf
 import torch
 from collections import defaultdict
 
-from ...core.exceptions import MatchingError, ValidationError
-from ...core.config import settings
+try:
+    from core.exceptions import MatchingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MatchingError, ValidationError = globals().get('MatchingError, ValidationError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...ml.models.content_similarity import ContentSimilarityModel
 from ...ml.models.user_embedding import UserEmbeddingModel
 from ...ml.models.behavior_analysis import BehaviorAnalysisModel

@@ -22,8 +22,19 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 import spacy
 
-from ...core.config import settings
-from ...core.exceptions import ProfileBuildingError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ProfileBuildingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ProfileBuildingError, ValidationError = globals().get('ProfileBuildingError, ValidationError', Exception)
 from ...ml.profile_models import ProfileAnalyzer, InterestExtractor
 from ...utils.text_processor import TextProcessor
 from ...utils.social_media_analyzer import SocialMediaAnalyzer

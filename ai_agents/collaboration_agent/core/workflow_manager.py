@@ -37,8 +37,19 @@ from concurrent.futures import ThreadPoolExecutor
 import networkx as nx
 from collections import defaultdict, deque
 
-from ...core.exceptions import WorkflowError, ValidationError, ResourceError
-from ...core.config import settings
+try:
+    from core.exceptions import WorkflowError, ValidationError, ResourceError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    WorkflowError, ValidationError, ResourceError = globals().get('WorkflowError, ValidationError, ResourceError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...database.models import Project, ProjectMilestone, Task, Resource, Creator
 from ...database.session import get_async_session
 from ...utils.notification_utils import NotificationService

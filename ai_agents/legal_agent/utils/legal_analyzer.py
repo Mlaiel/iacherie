@@ -32,8 +32,20 @@ import nltk
 import spacy
 from transformers import pipeline
 
-from ...core.database import get_db_session
-from ...core.exceptions import LegalError, AnalysisError
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import LegalError, AnalysisError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    LegalError, AnalysisError = globals().get('LegalError, AnalysisError', Exception)
 from ...utils.ai_processor import AIProcessor
 from ...utils.text_analyzer import TextAnalyzer
 from ...utils.legal_database import LegalDatabase

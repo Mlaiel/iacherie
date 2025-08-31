@@ -1,5 +1,4 @@
-"""
-Enterprise Browser/API Drivers Module
+"""Enterprise Browser/API Drivers Module
 ====================================
 
 Professional driver systems for industrial-grade browser automation and API interactions.
@@ -31,7 +30,6 @@ Professional Development Team Specialties:
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
 """
-
 # Browser Management
 from .browser_manager import (
     BrowserManager,

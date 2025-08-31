@@ -1,5 +1,4 @@
-"""
-Copyright Enforcement Module - IA Influencer Agent Platform
+"""Copyright Enforcement Module - IA Influencer Agent Platform
 
 Ultra-advanced copyright enforcement system with automated takedown procedures,
 legal action automation, revenue recovery mechanisms, AI-powered analysis,
@@ -39,7 +38,6 @@ Team Expertise:
 - Audio Processing Expert: Digital signal processing, audio fingerprinting
 - Legal Automation Specialist: DMCA systems, legal workflow automation
 """
-
 # Core DMCA Components
 from .dmca_generator import (
     DMCAGenerator, 

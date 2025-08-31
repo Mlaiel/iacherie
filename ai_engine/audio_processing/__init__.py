@@ -21,8 +21,7 @@
 # STRICTLY PROHIBITED and will result in immediate legal action.
 # All rights reserved. Patent pending.
 
-"""
-🎵 AI Audio Processing Module
+"""🎵 AI Audio Processing Module
 
 Advanced audio intelligence engine for the IA Influencer Agent platform.
 Provides professional-grade audio analysis, enhancement, and AI-powered processing
@@ -41,7 +40,6 @@ This module integrates with the content protection system to ensure
 audio rights management and supports the platform's monetization
 through enhanced audio quality and professional processing capabilities.
 """
-
 from .core import AudioProcessor, AudioAnalyzer, AudioEnhancer, AudioMetadata, AudioFeatures
 from .embeddings import AudioEmbeddingModel, AudioEmbeddingGenerator, SimilarityMatcher, SimilarityResult
 from .effects import EffectsProcessor, AudioRestoration, EffectType

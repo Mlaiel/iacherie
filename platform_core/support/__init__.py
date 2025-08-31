@@ -1,5 +1,4 @@
-"""
-🚀 Platform Core Support System - IA Influencer Agent Platform Enterprise
+"""🚀 Platform Core Support System - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/platform_core/support/
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Support intelligent avec IA et automatisation avancée
 - Knowledge base avec recherche sémantique
 - Analytics et KPIs de satisfaction client
 """
-
 from .support_manager import (
     SupportManager,
     KnowledgeBaseManager,

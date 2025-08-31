@@ -1,5 +1,4 @@
-"""
-Ultra-Industrial Conversational Compliance Module
+"""Ultra-Industrial Conversational Compliance Module
 Enterprise-Grade Legal & Regulatory Compliance Suite for IA Influencer Agent
 
 Comprehensive compliance ecosystem providing enterprise-grade legal validation,
@@ -35,7 +34,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     trade secrets, and intellectual property protected by international law.
     Unauthorized use will be prosecuted to the full extent of the law.
 """
-
 from .compliance_manager import (
     UltraIndustrialComplianceManager,
     ComplianceLevel,

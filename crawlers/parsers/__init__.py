@@ -1,5 +1,4 @@
-"""
-Parsers Module Initialization - Complete Ultra-Advanced Implementation
+"""Parsers Module Initialization - Complete Ultra-Advanced Implementation
 ======================================================================
 
 Enterprise-grade parsers module with comprehensive content analysis capabilities.
@@ -21,7 +20,6 @@ Features:
 - Multi-platform content parsing (YouTube, Instagram, TikTok, etc.)
 - Industrial-grade performance optimization
 """
-
 # Core parser infrastructure
 from .parser_factory import ParserFactory
 from .parser_manager import ParserManager
@@ -358,8 +356,7 @@ __all__ = [
 
 # Module information
 def get_module_info():
-    """Get comprehensive module information"""
-    return {
+    """Get comprehensive module information"""    return {
         "name": "IA-Influencer-Agent Parsers Module",
         "version": __version__,
         "author": __author__,
@@ -395,12 +392,10 @@ def get_module_info():
 
 # Quick access functions
 def get_available_parsers():
-    """Get list of all available parsers"""
-    return [name for name in __all__ if name.endswith("Parser") or name.endswith("Engine")]
+    """Get list of all available parsers"""    return [name for name in __all__ if name.endswith("Parser") or name.endswith("Engine")]
 
 def get_ai_features():
-    """Get list of AI-powered features"""
-    return [
+    """Get list of AI-powered features"""    return [
         "SemanticContentParser",
         "EconomicIntelligenceEngine",
         "ContentProtectionSurveillanceEngine", 

@@ -21,8 +21,7 @@
 # STRICTLY PROHIBITED and will result in immediate legal action.
 # All rights reserved. Patent pending.
 
-"""
-👁️ AI Computer Vision Module
+"""👁️ AI Computer Vision Module
 
 Advanced computer vision intelligence engine for the IA Influencer Agent platform.
 Provides enterprise-grade visual content analysis, processing, and AI-powered insights
@@ -46,7 +45,6 @@ This module integrates with the content protection system to ensure
 visual rights management and supports the platform's monetization
 through enhanced visual quality and professional processing capabilities.
 """
-
 # Robust imports with fallback handling
 try:
     from .core import (

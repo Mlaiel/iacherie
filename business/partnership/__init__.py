@@ -1,5 +1,4 @@
-"""
-Partnership Business Module for IA Influencer Agent
+"""Partnership Business Module for IA Influencer Agent
 Strategic partnership management and business relationship system
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de
 This module manages strategic partnerships, business relationships,
 contract management, and partnership monetization for creators.
 """
-
 from .partnership_manager import PartnershipManager
 from .contract_engine import ContractEngine
 from .negotiation_engine import NegotiationEngine

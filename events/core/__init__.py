@@ -1,5 +1,4 @@
-"""
-Core Event System Module
+"""Core Event System Module
 
 Foundational classes and utilities for the enterprise event processing system.
 Provides base classes, common enums, and core functionality for event handling.
@@ -14,7 +13,6 @@ is strictly prohibited and may result in legal action.
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 from typing import Dict, Any, Optional, List
 

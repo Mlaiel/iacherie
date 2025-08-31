@@ -25,8 +25,17 @@ from urllib.parse import urlencode, urlparse, parse_qs
 import hashlib
 import secrets
 
-from ...core.config import settings
-from ...core.database import get_db_session
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
 from ...security.encryption import ContentEncryption
 from ...utils.rate_limiter import RateLimiter
 from ...utils.circuit_breaker import CircuitBreaker

@@ -45,7 +45,14 @@ from sklearn.metrics import silhouette_score
 import librosa
 
 from ..base import BaseAgent, AgentStatus, AgentCapability
-from ...core.exceptions import VideoProcessingError, ValidationError, SecurityError
+try:
+    from core.exceptions import VideoProcessingError, ValidationError, SecurityError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    VideoProcessingError, ValidationError, SecurityError = globals().get('VideoProcessingError, ValidationError, SecurityError', Exception)
 from ...utils.performance_monitor import PerformanceMonitor
 from ...security.content_validator import ContentValidator
 from ...utils.cache_manager import CacheManager

@@ -1,5 +1,4 @@
-"""
-Data Management Archiving Module - Enterprise Content Archival System
+"""Data Management Archiving Module - Enterprise Content Archival System
 
 Provides comprehensive archival management for multi-format content including
 audio, video, image, text, and composite content with intelligent lifecycle
@@ -17,7 +16,6 @@ Any unauthorized use is strictly prohibited.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 from .archival_manager import (
     ArchivalManager,
     ArchivalPolicy,

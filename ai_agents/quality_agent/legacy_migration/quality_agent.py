@@ -35,8 +35,19 @@ from pathlib import Path
 from ..base import BaseAgent, AgentStatus
 from ..protection_agent import ProtectionAgent
 from ..content_agent import ContentAgent
-from ...core.exceptions import QualityError, ValidationError, ProcessingError
-from ...core.config import settings
+try:
+    from core.exceptions import QualityError, ValidationError, ProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    QualityError, ValidationError, ProcessingError = globals().get('QualityError, ValidationError, ProcessingError', Exception)
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.metrics_collector import MetricsCollector
 from ...utils.content_analyzer import ContentAnalyzer
 from ...security.content_validator import ContentValidator

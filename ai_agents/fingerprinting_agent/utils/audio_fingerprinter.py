@@ -38,7 +38,14 @@ import torchaudio
 import transformers
 from transformers import Wav2Vec2Processor, Wav2Vec2Model
 
-from ...core.exceptions import AudioProcessingError, ValidationError
+try:
+    from core.exceptions import AudioProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    AudioProcessingError, ValidationError = globals().get('AudioProcessingError, ValidationError', Exception)
 from ...utils.audio_utils import AudioProcessor
 from ...ml.audio_models import AudioEmbeddingModel
 

@@ -1,5 +1,4 @@
-"""
-Content Generation Module - IA Influencer Agent Platform
+"""Content Generation Module - IA Influencer Agent Platform
 
 Professional Multi-Format Content Generation Engine for Creators
 
@@ -27,7 +26,6 @@ PROJECT TEAM SPECIALTIES:
 
 PROJECT OWNER: Fahed Mlaiel - mlaiel@live.de
 """
-
 # Core generation components
 from .base_generator import (
     BaseContentGenerator,
@@ -207,8 +205,7 @@ logger.info(f"Supported platforms: {', '.join(SUPPORTED_PLATFORMS)}")
 logger.info(f"Created by: {__author__} - {__email__}")
 
 def get_module_info() -> dict:
-    """Get comprehensive module information"""
-    return {
+    """Get comprehensive module information"""    return {
         "name": "content_generation",
         "version": __version__,
         "author": __author__, 
@@ -234,8 +231,7 @@ def get_module_info() -> dict:
     }
 
 def verify_installation() -> bool:
-    """Verify that all components are properly installed and configured"""
-    try:
+    """Verify that all components are properly installed and configured"""    try:
         # Test imports
         from .content_service import ContentService
         from .generation_manager import GenerationManager
@@ -297,18 +293,15 @@ __all__ = [
 
 
 def get_version():
-    """Get the current version of the content generation module."""
-    return __version__
+    """Get the current version of the content generation module."""    return __version__
 
 
 def get_copyright():
-    """Get the copyright information."""
-    return __copyright__
+    """Get the copyright information."""    return __copyright__
 
 
 def get_supported_formats():
-    """Get list of supported content formats."""
-    return [
+    """Get list of supported content formats."""    return [
         "text",
         "audio", 
         "video",
@@ -322,8 +315,7 @@ def get_supported_formats():
 
 
 def get_generation_engines():
-    """Get available content generation engines."""
-    return {
+    """Get available content generation engines."""    return {
         "text": TextContentGenerator,
         "audio": AudioContentGenerator,
         "video": VideoContentGenerator, 
@@ -332,8 +324,7 @@ def get_generation_engines():
 
 
 def create_content_generator(content_type: str, **kwargs):
-    """
-    Factory function to create appropriate content generator.
+    """    Factory function to create appropriate content generator.
     
     Args:
         content_type: Type of content to generate
@@ -341,8 +332,7 @@ def create_content_generator(content_type: str, **kwargs):
         
     Returns:
         Appropriate content generator instance
-    """
-    engines = get_generation_engines()
+    """    engines = get_generation_engines()
     
     if content_type not in engines:
         raise ValueError(f"Unsupported content type: {content_type}")

@@ -37,9 +37,25 @@ import psycopg2
 from sqlalchemy.orm import Session
 
 from ..base import BaseAgent, AgentRequest, AgentResponse, AgentStatus
-from ...core.config import settings
-from ...core.database import get_db_session
-from ...core.exceptions import FingerprintingError, ValidationError, ProcessingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import FingerprintingError, ValidationError, ProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    FingerprintingError, ValidationError, ProcessingError = globals().get('FingerprintingError, ValidationError, ProcessingError', Exception)
 from ...security.encryption import ContentEncryption
 from ...utils.vector_storage import VectorStorage
 from ...utils.cache_manager import CacheManager

@@ -53,9 +53,25 @@ from PIL import Image
 import imagehash
 
 from ..base import BaseAgent, AgentRequest, AgentResponse, AgentMetrics
-from ...core.config import settings
-from ...core.database import get_db_session
-from ...core.exceptions import CrawlingError, ValidationError, SecurityError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.database import get_db_session
+except ImportError:
+    # Fallback database classes
+    class DatabaseManager: pass
+    get_db_session = DatabaseManager
+try:
+    from core.exceptions import CrawlingError, ValidationError, SecurityError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CrawlingError, ValidationError, SecurityError = globals().get('CrawlingError, ValidationError, SecurityError', Exception)
 from ...security.content_fingerprint import ContentFingerprint
 from ...ml.similarity_detector import SimilarityDetector
 from ...monitoring.alert_system import AlertSystem

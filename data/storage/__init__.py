@@ -1,5 +1,4 @@
-"""
-Professional Data Storage Management - IA Influencer Agent Platform
+"""Professional Data Storage Management - IA Influencer Agent Platform
 ===================================================================
 Module: backend/data/storage/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -30,7 +29,6 @@ MODULES PROFESSIONNELS:
 - VersionManager: Git-like version control for content
 - BackupManager: Multi-tier backup & disaster recovery
 """
-
 from .storage_manager import StorageManager
 from .file_manager import (
     FileManager, 

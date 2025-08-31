@@ -43,7 +43,11 @@ from skimage import restoration, filters, measure, segmentation
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
-from ...core.config import settings
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.performance_monitor import PerformanceMonitor
 from ...utils.file_handler import SecureFileHandler
 from ...models.video_models import EnhancementJob, QualityMetrics

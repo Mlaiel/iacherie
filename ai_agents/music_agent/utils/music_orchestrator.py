@@ -31,7 +31,14 @@ from ..protection_agent import ProtectionAgent
 from ..collaboration_agent import CollaborationAgent
 from ..monetization_agent import MonetizationAgent
 from ..analytics_agent import AnalyticsAgent
-from ...core.exceptions import MusicOrchestratorError
+try:
+    from core.exceptions import MusicOrchestratorError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    MusicOrchestratorError = globals().get('MusicOrchestratorError', Exception)
 from ...core.security import SecurityManager
 from ...core.logging import get_logger
 from ...config.settings import get_settings

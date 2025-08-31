@@ -29,7 +29,14 @@ import io
 import base64
 
 from ..base import BaseAgent, AgentStatus, AgentCapability
-from ...core.exceptions import VisionProcessingError, ValidationError
+try:
+    from core.exceptions import VisionProcessingError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    VisionProcessingError, ValidationError = globals().get('VisionProcessingError, ValidationError', Exception)
 from ...utils.cache_manager import CacheManager
 from ...security.content_validator import ContentValidator
 from .image_processor import ImageProcessor

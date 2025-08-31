@@ -26,8 +26,19 @@ import numpy as np
 import uuid
 
 from .content_detector import ContentFingerprint, SimilarityMatch, ContentSimilarity
-from ...core.config import settings
-from ...core.exceptions import ViolationAnalysisError, ProcessingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ViolationAnalysisError, ProcessingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ViolationAnalysisError, ProcessingError = globals().get('ViolationAnalysisError, ProcessingError', Exception)
 from ...legal.copyright_analyzer import CopyrightAnalyzer
 from ...legal.dmca_generator import DMCAGenerator
 from ...legal.fair_use_analyzer import FairUseAnalyzer

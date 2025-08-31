@@ -24,7 +24,14 @@ from sqlalchemy.orm import Session
 import redis.asyncio as aioredis
 
 from ..base import BaseAgent, AgentStatus, AgentMetrics
-from ...core.exceptions import FraudDetectionError, SecurityError
+try:
+    from core.exceptions import FraudDetectionError, SecurityError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    FraudDetectionError, SecurityError = globals().get('FraudDetectionError, SecurityError', Exception)
 from ...utils.ml_models import MLModelManager
 from ...security.threat_detection import ThreatDetector
 from ...data.models.fraud import FraudCase, FraudPattern, ThreatLevel

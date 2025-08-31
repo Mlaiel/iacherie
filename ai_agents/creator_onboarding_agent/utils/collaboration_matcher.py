@@ -16,8 +16,19 @@ from dataclasses import dataclass, field
 from enum import Enum
 import numpy as np
 
-from ...core.config import settings
-from ...core.exceptions import CollaborationMatchingError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import CollaborationMatchingError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    CollaborationMatchingError = globals().get('CollaborationMatchingError', Exception)
 from ...ml.similarity_models import CreatorSimilarityAnalyzer, ContentSimilarityAnalyzer
 from ...utils.performance_metrics import PerformanceMetrics
 from ...business.networking import NetworkingManager

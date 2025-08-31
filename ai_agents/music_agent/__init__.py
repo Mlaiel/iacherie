@@ -1,5 +1,4 @@
-"""
-Music Agent - Ultra-Advanced Music Intelligence System for Content Creators
+"""Music Agent - Ultra-Advanced Music Intelligence System for Content Creators
 ===========================================================================
 
 Professional-grade music AI system designed for musicians, artists, producers,
@@ -17,7 +16,6 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
-
 from .music_orchestrator import MusicOrchestrator
 from .spotify_integration import SpotifyIntegration
 from .composition_analyzer import (
@@ -102,25 +100,20 @@ __all__ = [
 ]
 
 def create_music_agent():
-    """Factory function to create configured music orchestrator"""
-    return MusicOrchestrator()
+    """Factory function to create configured music orchestrator"""    return MusicOrchestrator()
 
 def create_composition_analyzer():
-    """Factory function to create composition analyzer"""
-    return CompositionAnalyzer()
+    """Factory function to create composition analyzer"""    return CompositionAnalyzer()
 
 def create_music_generator():
-    """Factory function to create music generator"""
-    return MusicGenerator()
+    """Factory function to create music generator"""    return MusicGenerator()
 
 def create_artist_insights():
-    """Factory function to create artist insights engine"""
-    return ArtistInsights()
+    """Factory function to create artist insights engine"""    return ArtistInsights()
 
 # Module information
 def get_module_info():
-    """Get module information and capabilities"""
-    return {
+    """Get module information and capabilities"""    return {
         "name": "Music Agent",
         "version": __version__,
         "author": __author__,

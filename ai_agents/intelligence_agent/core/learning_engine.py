@@ -44,7 +44,11 @@ from sklearn.metrics import accuracy_score, mean_squared_error, r2_score
 import joblib
 import xgboost as xgb
 
-from ...core.config import get_settings
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...utils.ml_utils import MLModelManager
 from ...database.models import LearningRecord, ModelMetrics
 

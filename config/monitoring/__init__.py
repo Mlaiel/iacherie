@@ -1,5 +1,4 @@
-"""
-Monitoring Configuration Module for IA-Influencer Agent Platform
+"""Monitoring Configuration Module for IA-Influencer Agent Platform
 ================================================================
 
 Professional monitoring and observability configuration management for
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from .prometheus_config import PrometheusConfig, MetricType, PrometheusMetric, PrometheusJobConfig
 from .grafana_config import (
     GrafanaConfig, DashboardType, VisualizationType, 
@@ -174,16 +172,13 @@ __all__ = [
 
 
 class MonitoringConfiguration:
-    """
-    Unified monitoring configuration orchestrator for IA-Influencer Agent Platform
+    """    Unified monitoring configuration orchestrator for IA-Influencer Agent Platform
     
     Coordinates all monitoring aspects including metrics, alerts, dashboards,
     observability, real-time analytics, infrastructure monitoring, and business intelligence.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize unified monitoring configuration"""
-        self.prometheus = PrometheusConfig()
+        """Initialize unified monitoring configuration"""        self.prometheus = PrometheusConfig()
         self.grafana = GrafanaConfig()
         self.alerting = AlertingConfig()
         self.metrics = MetricsConfig()
@@ -197,8 +192,7 @@ class MonitoringConfiguration:
         self.business_intelligence = business_intelligence_config
     
     def get_unified_config(self) -> Dict[str, Any]:
-        """Get unified monitoring configuration for all components"""
-        return {
+        """Get unified monitoring configuration for all components"""        return {
             "prometheus": self.prometheus.export_configuration(),
             "grafana": self.grafana.export_configuration(),
             "alerting": self.alerting.export_configuration(),
@@ -214,8 +208,7 @@ class MonitoringConfiguration:
         }
     
     def validate_configuration(self) -> Dict[str, bool]:
-        """Validate all monitoring configuration components"""
-        validation_results = {}
+        """Validate all monitoring configuration components"""        validation_results = {}
         
         try:
             # Validate each configuration component
@@ -239,8 +232,7 @@ class MonitoringConfiguration:
         return validation_results
     
     async def initialize_monitoring_stack(self):
-        """Initialize complete monitoring stack"""
-        logging.info("Initializing IA-Influencer Agent monitoring stack...")
+        """Initialize complete monitoring stack"""        logging.info("Initializing IA-Influencer Agent monitoring stack...")
         
         # Initialize core monitoring components
         await self.prometheus.initialize()
@@ -259,14 +251,12 @@ class MonitoringConfiguration:
         logging.info("Monitoring stack initialized successfully")
     
     async def _start_monitoring_processes(self):
-        """Start background monitoring processes"""
-        # This would start various monitoring processes
+        """Start background monitoring processes"""        # This would start various monitoring processes
         # Implementation depends on specific monitoring tools
         pass
     
     def get_monitoring_health(self) -> Dict[str, Any]:
-        """Get health status of all monitoring components"""
-        return {
+        """Get health status of all monitoring components"""        return {
             "timestamp": datetime.utcnow().isoformat(),
             "overall_status": "healthy",
             "components": {
@@ -294,13 +284,11 @@ __description__ = "Professional monitoring configuration for IA-Influencer Agent
 
 # Configuration factory function
 def create_monitoring_stack():
-    """
-    Create complete monitoring stack configuration
+    """    Create complete monitoring stack configuration
     
     Returns:
         Dict containing all monitoring configurations
-    """
-    return {
+    """    return {
         'prometheus': PrometheusConfig(),
         'grafana': GrafanaConfig(),
         'alerting': AlertingConfig(),
@@ -317,13 +305,11 @@ def create_monitoring_stack():
 
 # Validation function
 def validate_monitoring_config() -> bool:
-    """
-    Validate monitoring configuration completeness
+    """    Validate monitoring configuration completeness
     
     Returns:
         bool: True if all required configurations are valid
-    """
-    try:
+    """    try:
         monitoring_stack = create_monitoring_stack()
         
         # Validate each component

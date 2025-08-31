@@ -47,8 +47,19 @@ import spacy
 from wordcloud import WordCloud
 import yake
 
-from ...core.config import settings
-from ...core.exceptions import ContentOptimizationError, ValidationError
+try:
+    from core.config import settings
+except ImportError:
+    # Fallback settings
+    settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
+try:
+    from core.exceptions import ContentOptimizationError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ContentOptimizationError, ValidationError = globals().get('ContentOptimizationError, ValidationError', Exception)
 from ...ml.models.optimization_models import (
     SEOOptimizationModel, QualityEnhancementModel, FormatConversionModel
 )

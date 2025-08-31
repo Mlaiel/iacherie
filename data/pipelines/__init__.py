@@ -1,5 +1,4 @@
-"""
-Data Pipelines Module for IA Influencer Agent Platform
+"""Data Pipelines Module for IA Influencer Agent Platform
 ======================================================
 
 Professional data pipeline orchestration for multi-format content processing,
@@ -25,7 +24,6 @@ Any unauthorized use, theft, copying, or reproduction without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will
 result in immediate legal action under German and international copyright laws.
 """
-
 from .content_ingestion import ContentIngestionPipeline, MultiFormatProcessor
 from .protection_pipeline import ProtectionPipeline, FingerprintingEngine
 from .monetization_pipeline import MonetizationPipeline, RevenueCalculatorEngine

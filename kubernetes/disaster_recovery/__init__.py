@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Disaster Recovery Deployment Module
+"""IA Influencer Agent - Disaster Recovery Deployment Module
 Enterprise-grade disaster recovery and business continuity for multi-format creator platform
 
 This module provides comprehensive disaster recovery capabilities for:
@@ -38,7 +37,6 @@ Project Team Specialties:
 - DevOps Engineer: Kubernetes, CI/CD, cloud infrastructure
 - Audio Specialist: Music processing, fingerprinting, codec optimization
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

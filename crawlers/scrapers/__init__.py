@@ -1,5 +1,4 @@
-"""
-Web Scrapers Module
+"""Web Scrapers Module
 ==================
 
 Professional web scraping tools for efficient data collection.

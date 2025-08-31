@@ -1,5 +1,4 @@
-"""
-🕷️ Ultra-Industrial Multi-Platform Content Crawler Ecosystem
+"""🕷️ Ultra-Industrial Multi-Platform Content Crawler Ecosystem
 ============================================================
 
 Enterprise-grade content discovery and monitoring infrastructure for comprehensive
@@ -51,7 +50,6 @@ UNAUTHORIZED USE CONSTITUTES CRIMINAL IP THEFT:
 Contact mlaiel@live.de for MANDATORY licensing before any usage.
 All crawler activities are logged and legally monitored.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -125,21 +123,18 @@ from .request_orchestrator import (
 logger = logging.getLogger(__name__)
 
 class CrawlerType(str, Enum):
-    """Types of crawlers."""
-    API_BASED = "api_based"
+    """Types of crawlers."""    API_BASED = "api_based"
     WEB_SCRAPING = "web_scraping"
     RSS_FEED = "rss_feed"
     WEBHOOK = "webhook"
 
 class PlatformStatus(str, Enum):
-    """Platform crawling status."""
-    ACTIVE = "active"
+    """Platform crawling status."""    ACTIVE = "active"
     RATE_LIMITED = "rate_limited"
     ERROR = "error"
     MAINTENANCE = "maintenance"
 class EnterpriseCrawlerOrchestrator:
-    """
-    🚀 Enterprise Multi-Platform Content Crawler Orchestrator
+    """    🚀 Enterprise Multi-Platform Content Crawler Orchestrator
     ========================================================
     
     Advanced enterprise-grade orchestration system for comprehensive 
@@ -167,11 +162,9 @@ class EnterpriseCrawlerOrchestrator:
     - Twitter/X (API v2 comprehensive)
     - Generic Web (Scrapy universal crawler)
     - Extensible platform plugin architecture
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize enterprise crawler orchestrator."""
-        self.config = config
+        """Initialize enterprise crawler orchestrator."""        self.config = config
         self._initialized = False
         
         # Core enterprise components
@@ -206,8 +199,7 @@ class EnterpriseCrawlerOrchestrator:
         logger.info("Enterprise Crawler Orchestrator initialized")
     
     async def initialize(self):
-        """Initialize all enterprise components."""
-        if self._initialized:
+        """Initialize all enterprise components."""        if self._initialized:
             return
         
         try:
@@ -246,8 +238,7 @@ class EnterpriseCrawlerOrchestrator:
             raise
     
     async def _configure_rate_limits(self):
-        """Configure rate limits for all platforms."""
-        rate_limit_configs = {
+        """Configure rate limits for all platforms."""        rate_limit_configs = {
             'youtube': RateLimitConfig(
                 platform='youtube',
                 limit_type=RateLimitType.REQUESTS_PER_DAY,
@@ -285,8 +276,7 @@ class EnterpriseCrawlerOrchestrator:
             self.circuit_breakers[platform] = CircuitBreaker()
     
     async def _initialize_crawlers(self):
-        """Initialize platform-specific crawlers."""
-        # YouTube crawler
+        """Initialize platform-specific crawlers."""        # YouTube crawler
         if self.config.get('youtube', {}).get('enabled', True):
             youtube_config = self.config.get('youtube', {})
             self.crawlers['youtube'] = YouTubeCrawler('youtube', youtube_config)
@@ -314,8 +304,7 @@ class EnterpriseCrawlerOrchestrator:
         logger.info(f"Initialized {len(self.crawlers)} platform crawlers")
     
     async def _setup_monitoring(self):
-        """Setup real-time monitoring and alerting."""
-        # Register alert callbacks
+        """Setup real-time monitoring and alerting."""        # Register alert callbacks
         self.rate_limiter.register_alert_callback(self._handle_rate_limit_alert)
         self.performance_monitor.register_alert_callback(self._handle_performance_alert)
         
@@ -328,16 +317,14 @@ class EnterpriseCrawlerOrchestrator:
                 )
     
     async def authenticate_platforms(self, credentials: Dict[str, Dict[str, Any]]) -> Dict[str, bool]:
-        """
-        Authenticate with multiple platforms.
+        """        Authenticate with multiple platforms.
         
         Args:
             credentials: Platform credentials mapping
             
         Returns:
             Authentication status for each platform
-        """
-        results = {}
+        """        results = {}
         
         async with self.auth_manager:
             for platform, creds in credentials.items():
@@ -365,8 +352,7 @@ class EnterpriseCrawlerOrchestrator:
         content_types: Optional[List[ContentType]] = None,
         monitoring_interval: int = 300  # 5 minutes
     ) -> str:
-        """
-        Start comprehensive content monitoring across platforms.
+        """        Start comprehensive content monitoring across platforms.
         
         Args:
             search_queries: List of search terms to monitor
@@ -376,8 +362,7 @@ class EnterpriseCrawlerOrchestrator:
             
         Returns:
             Monitoring session ID
-        """
-        monitoring_id = f"monitor_{int(time.time())}"
+        """        monitoring_id = f"monitor_{int(time.time())}"
         
         if not platforms:
             platforms = list(self.crawlers.keys())
@@ -411,8 +396,7 @@ class EnterpriseCrawlerOrchestrator:
         content_types: List[ContentType],
         interval: int
     ):
-        """Continuous monitoring for specific platform."""
-        crawler = self.crawlers[platform]
+        """Continuous monitoring for specific platform."""        crawler = self.crawlers[platform]
         
         logger.info(f"Starting continuous monitoring for {platform}")
         
@@ -466,8 +450,7 @@ class EnterpriseCrawlerOrchestrator:
         results: List[CrawlResult], 
         monitoring_id: str
     ):
-        """Process newly discovered content."""
-        new_content = []
+        """Process newly discovered content."""        new_content = []
         
         for result in results:
             # Check for duplicates using fingerprinting
@@ -489,13 +472,11 @@ class EnterpriseCrawlerOrchestrator:
             })
     
     def _generate_content_hash(self, result: CrawlResult) -> str:
-        """Generate hash for content deduplication."""
-        hash_data = f"{result.platform}:{result.url}:{result.title}"
+        """Generate hash for content deduplication."""        hash_data = f"{result.platform}:{result.url}:{result.title}"
         return hashlib.md5(hash_data.encode()).hexdigest()
     
     def _serialize_crawl_result(self, result: CrawlResult) -> Dict[str, Any]:
-        """Serialize crawl result for JSON transmission."""
-        return {
+        """Serialize crawl result for JSON transmission."""        return {
             'platform': result.platform,
             'url': result.url,
             'title': result.title,
@@ -514,8 +495,7 @@ class EnterpriseCrawlerOrchestrator:
         max_results_per_platform: int = 50,
         priority: Priority = Priority.MEDIUM
     ) -> Dict[str, List[CrawlResult]]:
-        """
-        Search content across multiple platforms simultaneously.
+        """        Search content across multiple platforms simultaneously.
         
         Args:
             query: Search query
@@ -526,8 +506,7 @@ class EnterpriseCrawlerOrchestrator:
             
         Returns:
             Results organized by platform
-        """
-        if not platforms:
+        """        if not platforms:
             platforms = list(self.crawlers.keys())
         
         # Create search requests for orchestrator
@@ -571,8 +550,7 @@ class EnterpriseCrawlerOrchestrator:
         return results
     
     async def stop_monitoring(self, monitoring_id: str) -> bool:
-        """Stop specific monitoring session."""
-        if monitoring_id not in self.monitoring_tasks:
+        """Stop specific monitoring session."""        if monitoring_id not in self.monitoring_tasks:
             return False
         
         try:
@@ -588,12 +566,10 @@ class EnterpriseCrawlerOrchestrator:
         return True
     
     def register_webhook_callback(self, callback: Callable):
-        """Register webhook callback for real-time notifications."""
-        self.webhook_callbacks.append(callback)
+        """Register webhook callback for real-time notifications."""        self.webhook_callbacks.append(callback)
     
     async def _trigger_webhooks(self, event_type: str, data: Dict[str, Any]):
-        """Trigger registered webhook callbacks."""
-        webhook_data = {
+        """Trigger registered webhook callbacks."""        webhook_data = {
             'event_type': event_type,
             'timestamp': datetime.utcnow().isoformat(),
             'data': data
@@ -609,20 +585,17 @@ class EnterpriseCrawlerOrchestrator:
                 logger.error(f"Webhook callback error: {e}")
     
     async def _handle_rate_limit_alert(self, alert_data: Dict[str, Any]):
-        """Handle rate limiting alerts."""
-        logger.warning(f"Rate limit alert: {alert_data}")
+        """Handle rate limiting alerts."""        logger.warning(f"Rate limit alert: {alert_data}")
         
         await self._trigger_webhooks('rate_limit_alert', alert_data)
     
     async def _handle_performance_alert(self, alert_data: Dict[str, Any]):
-        """Handle performance alerts."""
-        logger.warning(f"Performance alert: {alert_data}")
+        """Handle performance alerts."""        logger.warning(f"Performance alert: {alert_data}")
         
         await self._trigger_webhooks('performance_alert', alert_data)
     
     async def _send_webhook_notification(self, url: str, event_type: str, data: Dict[str, Any]):
-        """Send webhook notification to external endpoint."""
-        try:
+        """Send webhook notification to external endpoint."""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(url, json=data) as response:
                     if response.status == 200:
@@ -633,8 +606,7 @@ class EnterpriseCrawlerOrchestrator:
             logger.error(f"Webhook notification error: {e}")
     
     def get_comprehensive_status(self) -> Dict[str, Any]:
-        """Get comprehensive orchestrator status."""
-        return {
+        """Get comprehensive orchestrator status."""        return {
             'initialized': self._initialized,
             'active_crawlers': len(self.crawlers),
             'active_monitoring_sessions': len(self.monitoring_tasks),
@@ -651,8 +623,7 @@ class EnterpriseCrawlerOrchestrator:
         }
     
     async def shutdown(self):
-        """Shutdown orchestrator and cleanup resources."""
-        logger.info("Shutting down Enterprise Crawler Orchestrator...")
+        """Shutdown orchestrator and cleanup resources."""        logger.info("Shutting down Enterprise Crawler Orchestrator...")
         
         # Stop all monitoring tasks
         for monitoring_id in list(self.monitoring_tasks.keys()):
@@ -691,8 +662,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         logger.info("Multi-Platform Crawler Service initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the crawler service."""
-        try:
+        """Initialize the crawler service."""        try:
             # Initialize API manager
             if 'platform_apis' in self.config:
                 self.api_manager = PlatformAPIManager(self.config['platform_apis'])
@@ -710,8 +680,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
             return False
 
     async def _initialize_crawlers(self) -> None:
-        """Initialize platform-specific crawlers."""
-        platform_configs = self.config.get('platforms', {})
+        """Initialize platform-specific crawlers."""        platform_configs = self.config.get('platforms', {})
         
         # YouTube crawler
         if 'youtube' in platform_configs:
@@ -763,8 +732,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         max_results_per_platform: int = 50,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search for content across multiple platforms."""
-        if not self._initialized:
+        """Search for content across multiple platforms."""        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         platforms = platforms or list(self.crawlers.keys())
@@ -827,8 +795,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         return deduplicated_results
 
     async def _deduplicate_results(self, results: List[CrawlResult]) -> List[CrawlResult]:
-        """Remove duplicate results based on URL and title."""
-        seen_urls = set()
+        """Remove duplicate results based on URL and title."""        seen_urls = set()
         seen_titles = set()
         unique_results = []
         
@@ -864,8 +831,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         callback_func: callable = None,
         interval_minutes: int = 30
     ) -> bool:
-        """Start continuous monitoring for specific content across platforms."""
-        try:
+        """Start continuous monitoring for specific content across platforms."""        try:
             if monitor_id in self.crawler_tasks:
                 logger.warning(f"Monitoring already active for {monitor_id}")
                 return False
@@ -891,8 +857,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         callback_func: callable,
         interval_minutes: int
     ) -> None:
-        """Continuous monitoring loop."""
-        logger.info(f"Starting continuous monitoring: {monitor_id}")
+        """Continuous monitoring loop."""        logger.info(f"Starting continuous monitoring: {monitor_id}")
         
         last_results = set()
         
@@ -946,8 +911,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         monitor_id: str,
         results: List[CrawlResult]
     ) -> None:
-        """Process monitoring results for similarity matching."""
-        logger.debug(f"Processing {len(results)} monitoring results for {monitor_id}")
+        """Process monitoring results for similarity matching."""        logger.debug(f"Processing {len(results)} monitoring results for {monitor_id}")
         
         # This would integrate with the fingerprinting service
         # to check if discovered content is similar to protected content
@@ -960,8 +924,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
                 logger.error(f"Error processing monitoring result {result.url}: {e}")
 
     async def stop_monitoring(self, monitor_id: str) -> bool:
-        """Stop continuous monitoring for specific content."""
-        try:
+        """Stop continuous monitoring for specific content."""        try:
             if monitor_id in self.crawler_tasks:
                 self.crawler_tasks[monitor_id].cancel()
                 del self.crawler_tasks[monitor_id]
@@ -976,8 +939,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
             return False
 
     async def get_platform_status(self, platform: Optional[str] = None) -> Dict[str, Any]:
-        """Get status of platform crawlers."""
-        if platform:
+        """Get status of platform crawlers."""        if platform:
             if platform not in self.crawlers:
                 return {"error": f"Platform {platform} not found"}
             
@@ -1011,15 +973,13 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         return status_info
 
     async def get_api_status(self) -> Dict[str, Any]:
-        """Get status of platform APIs."""
-        if not self.api_manager:
+        """Get status of platform APIs."""        if not self.api_manager:
             return {"error": "API manager not initialized"}
         
         return await self.api_manager.get_api_status()
 
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check."""
-        health_status = {
+        """Perform comprehensive health check."""        health_status = {
             "service_status": "healthy",
             "initialized": self._initialized,
             "total_crawlers": len(self.crawlers),
@@ -1055,8 +1015,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         return health_status
 
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive service statistics."""
-        stats = {
+        """Get comprehensive service statistics."""        stats = {
             "service": {
                 "total_crawls": self.total_crawls,
                 "successful_crawls": self.successful_crawls,
@@ -1084,8 +1043,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         return stats
 
     async def shutdown(self) -> None:
-        """Shutdown the crawler service."""
-        logger.info("Shutting down Multi-Platform Crawler Service...")
+        """Shutdown the crawler service."""        logger.info("Shutting down Multi-Platform Crawler Service...")
         
         # Cancel all monitoring tasks
         for task in self.crawler_tasks.values():
@@ -1112,8 +1070,7 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
 
 # Legacy compatibility - keeping the original class with enhanced functionality
 class CrawlerService(MultiPlatformCrawlerService):
-    """Legacy compatibility class - redirects to MultiPlatformCrawlerService."""
-    pass
+    """Legacy compatibility class - redirects to MultiPlatformCrawlerService."""    pass
 
 
 # Export all important classes and functions

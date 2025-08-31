@@ -1,5 +1,4 @@
-"""
-Quality Assessment Module
+"""Quality Assessment Module
 
 Advanced AI-powered content quality assessment system for multi-format content creators.
 Supports musicians, bloggers, photographers, influencers, comedians with industry-grade quality metrics.
@@ -16,7 +15,6 @@ to the full extent of the law.
 
 Business Logic: User Upload → AI Quality Assessment → Protection → SEO → Collaboration → Distribution
 """
-
 from .core import (
     QualityAssessmentEngine,
     ContentQualityScore,

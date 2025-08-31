@@ -1,5 +1,4 @@
-"""
-Personalization Module Tests
+"""Personalization Module Tests
 
 Comprehensive test suite for the AI personalization module.
 Includes unit tests, integration tests, performance tests, and security tests.
@@ -24,7 +23,6 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
-
 import asyncio
 import pytest
 from typing import Dict, List, Any
@@ -71,8 +69,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class UserPreferenceTests(unittest.TestCase):
-    """Ultra-Advanced User Preference Test Suite"""
-    
+    """Ultra-Advanced User Preference Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up User Preference Tests")
     
@@ -81,8 +78,7 @@ class UserPreferenceTests(unittest.TestCase):
         self.assertTrue(True, "User preference test passed")
 
 class ContentCustomizationTests(unittest.TestCase):
-    """Ultra-Advanced Content Customization Test Suite"""
-    
+    """Ultra-Advanced Content Customization Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Content Customization Tests")
     
@@ -91,8 +87,7 @@ class ContentCustomizationTests(unittest.TestCase):
         self.assertTrue(True, "Content customization test passed")
 
 class AdaptiveInterfaceTests(unittest.TestCase):
-    """Ultra-Advanced Adaptive Interface Test Suite"""
-    
+    """Ultra-Advanced Adaptive Interface Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Adaptive Interface Tests")
     
@@ -101,8 +96,7 @@ class AdaptiveInterfaceTests(unittest.TestCase):
         self.assertTrue(True, "Adaptive interface test passed")
 
 class BehavioralAnalysisTests(unittest.TestCase):
-    """Ultra-Advanced Behavioral Analysis Test Suite"""
-    
+    """Ultra-Advanced Behavioral Analysis Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Behavioral Analysis Tests")
     
@@ -111,8 +105,7 @@ class BehavioralAnalysisTests(unittest.TestCase):
         self.assertTrue(True, "Behavioral analysis test passed")
 
 class RecommendationPersonalizationTests(unittest.TestCase):
-    """Ultra-Advanced Recommendation Personalization Test Suite"""
-    
+    """Ultra-Advanced Recommendation Personalization Test Suite"""    
     def setUp(self):
         logger.info("🔧 Setting up Recommendation Personalization Tests")
     

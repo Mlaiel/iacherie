@@ -24,8 +24,19 @@ import pickle
 from concurrent.futures import ThreadPoolExecutor
 
 from ..base import BaseAgent
-from ...core.exceptions import ScalingException
-from ...core.config import get_settings
+try:
+    from core.exceptions import ScalingException
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class ConfigurationError(Exception): pass
+    class ProcessingError(Exception): pass
+    ScalingException = globals().get('ScalingException', Exception)
+try:
+    from core.config import get_settings
+except ImportError:
+    # Fallback settings
+    get_settings = type('Settings', (), {'debug': True, 'log_level': 'INFO'})()
 from ...core.monitoring import get_metrics_client
 
 

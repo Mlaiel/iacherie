@@ -1,5 +1,4 @@
-"""
-Business Configuration Module for IA-Influencer Agent Platform
+"""Business Configuration Module for IA-Influencer Agent Platform
 ==============================================================
 
 Professional business logic and workflow configuration management.
@@ -20,7 +19,6 @@ For licensing, collaboration, or business inquiries:
 📧 Contact: mlaiel@live.de
 🌐 Official Project: IA-Influencer Agent Platform
 """
-
 # Import all business configuration modules
 from .workflow_config import (
     WorkflowConfig,

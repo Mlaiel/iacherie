@@ -1,5 +1,4 @@
-"""
-Content Processing Test Suite - Initialization Module
+"""Content Processing Test Suite - Initialization Module
 
 This module initializes the comprehensive test suite for content processing
 components in the IA-Influencer-Agent system.
@@ -13,7 +12,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import asyncio
 import logging
@@ -26,59 +24,44 @@ from unittest.mock import Mock, AsyncMock, patch
 
 # Content Processing Test Classes
 class MultiFormatProcessorTests(unittest.TestCase):
-    """Tests for Multi Format Processor"""
-    
+    """Tests for Multi Format Processor"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.processor = None  # Will be implemented
+        """Set up test fixtures"""        self.processor = None  # Will be implemented
     
     def test_format_processing(self):
-        """Test format processing functionality"""
-        pass
+        """Test format processing functionality"""        pass
 
 class AudioProcessingTests(unittest.TestCase):
-    """Tests for Audio Processing"""
-    
+    """Tests for Audio Processing"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.processor = None  # Will be implemented
+        """Set up test fixtures"""        self.processor = None  # Will be implemented
     
     def test_audio_processing(self):
-        """Test audio processing functionality"""
-        pass
+        """Test audio processing functionality"""        pass
 
 class ImageProcessingTests(unittest.TestCase):
-    """Tests for Image Processing"""
-    
+    """Tests for Image Processing"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.processor = None  # Will be implemented
+        """Set up test fixtures"""        self.processor = None  # Will be implemented
     
     def test_image_processing(self):
-        """Test image processing functionality"""
-        pass
+        """Test image processing functionality"""        pass
 
 class VideoProcessingTests(unittest.TestCase):
-    """Tests for Video Processing"""
-    
+    """Tests for Video Processing"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.processor = None  # Will be implemented
+        """Set up test fixtures"""        self.processor = None  # Will be implemented
     
     def test_video_processing(self):
-        """Test video processing functionality"""
-        pass
+        """Test video processing functionality"""        pass
 
 class TextProcessingTests(unittest.TestCase):
-    """Tests for Text Processing"""
-    
+    """Tests for Text Processing"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.processor = None  # Will be implemented
+        """Set up test fixtures"""        self.processor = None  # Will be implemented
     
     def test_text_processing(self):
-        """Test text processing functionality"""
-        pass
+        """Test text processing functionality"""        pass
 
 # Export main testing classes
 __all__ = [

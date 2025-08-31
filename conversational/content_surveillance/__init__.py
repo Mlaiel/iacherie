@@ -1,5 +1,4 @@
-"""
-Content Surveillance Module - Advanced Web Intelligence & Protection
+"""Content Surveillance Module - Advanced Web Intelligence & Protection
 
 Enterprise-grade content surveillance and protection ecosystem implementing AI-powered
 monitoring, real-time violation detection, and automated enforcement for multi-format
@@ -34,7 +33,6 @@ This revolutionary content surveillance platform is the EXCLUSIVE intellectual p
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
-
 from .web_crawler_intelligence import (
     WebCrawlerIntelligence,
     CrawlRequest,

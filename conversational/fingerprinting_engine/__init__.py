@@ -1,5 +1,4 @@
-"""
-Fingerprinting Engine Module - Ultra-Advanced AI Content Recognition
+"""Fingerprinting Engine Module - Ultra-Advanced AI Content Recognition
 
 Revolutionary enterprise-grade multi-platform fingerprinting ecosystem implementing
 cutting-edge AI algorithms for ultra-precise content identification, protection,
@@ -36,7 +35,6 @@ This revolutionary fingerprinting platform is the EXCLUSIVE intellectual propert
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
 """
-
 from .multiplatform_fingerprinting import (
     MultiplePlatformFingerprintingEngine,
     ContentFingerprint,

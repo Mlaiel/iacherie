@@ -1,5 +1,4 @@
-"""
-Observability Module - Complete Enterprise Observability Suite
+"""Observability Module - Complete Enterprise Observability Suite
 
 Comprehensive monitoring, analytics, reporting, and predictive capabilities
 for the IA Influencer Agent platform with advanced AI-powered insights.
@@ -13,7 +12,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 # Essential Analytics Components
 from .analytics import (
     RealTimeAnalytics,

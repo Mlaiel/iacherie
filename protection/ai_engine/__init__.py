@@ -1,5 +1,4 @@
-"""
-🧠 AI Engine Module - Ultra-Advanced Enterprise Content Protection Intelligence
+"""🧠 AI Engine Module - Ultra-Advanced Enterprise Content Protection Intelligence
 ============================================================================
 
 State-of-the-art artificial intelligence orchestration engine providing:
@@ -27,7 +26,6 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 import asyncio
 import time
@@ -78,8 +76,7 @@ ENGINE_LATENCY = Histogram('ai_engine_latency_seconds', 'AI engine operation lat
 ENGINE_ACTIVE_SESSIONS = Gauge('ai_engine_active_sessions', 'Active AI engine sessions')
 
 class EngineStatus(Enum):
-    """AI Engine operational status"""
-    INITIALIZING = "initializing"
+    """AI Engine operational status"""    INITIALIZING = "initializing"
     READY = "ready"  
     PROCESSING = "processing"
     DEGRADED = "degraded"
@@ -88,8 +85,7 @@ class EngineStatus(Enum):
 
 @dataclass
 class AIEngineConfig:
-    """Advanced configuration for AI Engine"""
-    # Core settings
+    """Advanced configuration for AI Engine"""    # Core settings
     max_concurrent_requests: int = 1000
     request_timeout: int = 300
     enable_gpu_acceleration: bool = True
@@ -120,8 +116,7 @@ class AIEngineConfig:
     health_check_interval: int = 30
 
 class EnterpriseAIProtectionEngine:
-    """
-    Ultra-Advanced Master AI Engine orchestrating comprehensive content protection ecosystem
+    """    Ultra-Advanced Master AI Engine orchestrating comprehensive content protection ecosystem
     
     Features:
     - Multi-modal content analysis (audio/video/image/text)
@@ -130,8 +125,7 @@ class EnterpriseAIProtectionEngine:
     - Collaborative intelligence and market analysis
     - Automated decision making and enforcement
     - Enterprise-grade monitoring and observability
-    """
-    
+    """    
     def __init__(self, config: AIEngineConfig):
         self.config = config
         self.status = EngineStatus.INITIALIZING
@@ -161,8 +155,7 @@ class EnterpriseAIProtectionEngine:
         logger.info(f"Enterprise AI Protection Engine initialized - Session: {self.session_id}")
         
     def _initialize_ai_engines(self):
-        """Initialize all AI engine components with advanced configuration"""
-        try:
+        """Initialize all AI engine components with advanced configuration"""        try:
             # Core AI Intelligence Components
             self.content_classifier = ContentClassifierEngine(self.config.__dict__)
             self.threat_detector = ThreatDetectionEngine(self.config.__dict__)
@@ -189,8 +182,7 @@ class EnterpriseAIProtectionEngine:
             raise
     
     def _start_health_monitoring(self):
-        """Start background health monitoring thread"""
-        def health_monitor():
+        """Start background health monitoring thread"""        def health_monitor():
             while True:
                 try:
                     self._check_engine_health()
@@ -202,8 +194,7 @@ class EnterpriseAIProtectionEngine:
         health_thread.start()
     
     def _check_engine_health(self):
-        """Comprehensive health check of all engine components"""
-        try:
+        """Comprehensive health check of all engine components"""        try:
             # Check Redis connectivity
             self.redis_client.ping()
             
@@ -222,8 +213,7 @@ class EnterpriseAIProtectionEngine:
     
     @asynccontextmanager
     async def request_context(self, operation: str):
-        """Context manager for tracking and monitoring requests"""
-        self.active_requests += 1
+        """Context manager for tracking and monitoring requests"""        self.active_requests += 1
         start_time = time.time()
         
         try:
@@ -242,16 +232,14 @@ class EnterpriseAIProtectionEngine:
             ENGINE_LATENCY.observe(duration)
     
     async def analyze_content_comprehensive(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Ultra-comprehensive AI analysis orchestrating all engine capabilities
+        """        Ultra-comprehensive AI analysis orchestrating all engine capabilities
         
         Args:
             content_data: Multi-modal content data with metadata
             
         Returns:
             Complete analysis results with all AI insights
-        """
-        async with self.request_context('content_analysis'):
+        """        async with self.request_context('content_analysis'):
             try:
                 analysis_id = f"analysis_{int(time.time())}_{hash(str(content_data))}"
                 
@@ -348,8 +336,7 @@ class EnterpriseAIProtectionEngine:
                 raise
     
     async def _cache_analysis_results(self, analysis_id: str, results: Dict[str, Any]):
-        """Cache analysis results in Redis for performance optimization"""
-        try:
+        """Cache analysis results in Redis for performance optimization"""        try:
             cache_key = f"analysis_results:{analysis_id}"
             cache_data = json.dumps(results, default=str)
             
@@ -363,8 +350,7 @@ class EnterpriseAIProtectionEngine:
             logger.warning(f"Failed to cache analysis results: {str(e)}")
     
     async def get_cached_analysis(self, analysis_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve cached analysis results"""
-        try:
+        """Retrieve cached analysis results"""        try:
             cache_key = f"analysis_results:{analysis_id}"
             cached_data = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
@@ -380,16 +366,14 @@ class EnterpriseAIProtectionEngine:
             return None
     
     async def batch_analyze_content(self, content_batch: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """
-        High-performance batch processing for multiple content items
+        """        High-performance batch processing for multiple content items
         
         Args:
             content_batch: List of content data to analyze
             
         Returns:
             List of analysis results
-        """
-        async with self.request_context('batch_analysis'):
+        """        async with self.request_context('batch_analysis'):
             try:
                 # Process in batches to manage resource usage
                 batch_size = self.config.batch_processing_size
@@ -426,8 +410,7 @@ class EnterpriseAIProtectionEngine:
                 raise
     
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive engine status and metrics"""
-        return {
+        """Get comprehensive engine status and metrics"""        return {
             'status': self.status.value,
             'session_id': self.session_id,
             'version': __version__,
@@ -455,8 +438,7 @@ class EnterpriseAIProtectionEngine:
         }
     
     async def shutdown(self):
-        """Graceful shutdown of all engine components"""
-        try:
+        """Graceful shutdown of all engine components"""        try:
             logger.info("Initiating AI Engine shutdown sequence")
             self.status = EngineStatus.MAINTENANCE
             
@@ -481,10 +463,8 @@ class EnterpriseAIProtectionEngine:
             logger.error(f"Error during engine shutdown: {str(e)}")
     
     async def continuous_learning(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Continuous learning from protection outcomes
-        """
-        try:
+        """        Continuous learning from protection outcomes
+        """        try:
             learning_results = {}
             
             # Update content classifier
@@ -519,16 +499,14 @@ class EnterpriseAIProtectionEngine:
 
 # Factory function for creating engine instances
 def create_ai_engine(config_dict: Dict[str, Any] = None) -> EnterpriseAIProtectionEngine:
-    """
-    Factory function to create optimally configured AI Engine instance
+    """    Factory function to create optimally configured AI Engine instance
     
     Args:
         config_dict: Optional configuration override
         
     Returns:
         Configured EnterpriseAIProtectionEngine instance
-    """
-    if config_dict is None:
+    """    if config_dict is None:
         config_dict = {}
     
     # Merge with default configuration
@@ -540,8 +518,7 @@ def create_ai_engine(config_dict: Dict[str, Any] = None) -> EnterpriseAIProtecti
 _engine_instance: Optional[EnterpriseAIProtectionEngine] = None
 
 def get_engine() -> EnterpriseAIProtectionEngine:
-    """Get singleton engine instance"""
-    global _engine_instance
+    """Get singleton engine instance"""    global _engine_instance
     if _engine_instance is None:
         _engine_instance = create_ai_engine()
     return _engine_instance
