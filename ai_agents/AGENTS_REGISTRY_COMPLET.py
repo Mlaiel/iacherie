@@ -53,7 +53,7 @@ EXISTING_AGENTS_REGISTRY = {
         'path': '/backend/ai_agents/collaboration_agent/',
         'status': 'active',
         'priority': 'high',
-        'category': 'core_business', 
+        'category': 'collaboration', 
         'description': 'Matching intelligent entre créateurs',
         'features': ['creator_matching', 'compatibility_analysis', 'project_coordination'],
         'dependencies': ['analytics_agent', 'ml_agent', 'vector_agent']
@@ -397,10 +397,114 @@ EXISTING_AGENTS_REGISTRY = {
         'path': '/backend/ai_agents/marketplace_agent/',
         'status': 'active',
         'priority': 'medium',
-        'category': 'business_revenue',
+        'category': 'collaboration',
         'description': 'Gestion marketplace et transactions',
         'features': ['marketplace_management', 'transaction_processing', 'vendor_management'],
         'dependencies': ['payment_processing_agent', 'revenue_agent']
+    },
+    
+    # ═══════════════════════════════════════════════════════════════
+    # AGENTS COLLABORATION (12 agents total)
+    # ═══════════════════════════════════════════════════════════════
+    
+    'project_management_agent': {
+        'path': '/backend/ai_agents/project_management_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Gestion projets IA avec planification optimale',
+        'features': ['project_creation', 'task_management', 'milestone_tracking', 'resource_allocation'],
+        'dependencies': ['timeline_management_agent', 'collaboration_agent']
+    },
+    
+    'communication_agent': {
+        'path': '/backend/ai_agents/communication_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Chat/video intégré pour collaboration temps réel',
+        'features': ['messaging', 'video_calls', 'notifications', 'session_management'],
+        'dependencies': ['notification_agent']
+    },
+    
+    'file_sharing_agent': {
+        'path': '/backend/ai_agents/file_sharing_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Partage sécurisé avec contrôle d\'accès granulaire',
+        'features': ['secure_upload', 'access_control', 'version_tracking', 'folder_management'],
+        'dependencies': ['storage_agent', 'version_control_agent']
+    },
+    
+    'version_control_agent': {
+        'path': '/backend/ai_agents/version_control_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Git-like pour créatifs avec branches et historique',
+        'features': ['version_tracking', 'branch_management', 'merge_conflicts', 'history_tracking'],
+        'dependencies': ['file_sharing_agent', 'storage_agent']
+    },
+    
+    'quality_assurance_agent': {
+        'path': '/backend/ai_agents/quality_assurance_agent/',
+        'status': 'active',
+        'priority': 'medium',
+        'category': 'collaboration',
+        'description': 'QA automatisée avec validation contenu',
+        'features': ['content_validation', 'quality_metrics', 'automated_testing', 'approval_workflow'],
+        'dependencies': ['content_agent', 'moderation_agent']
+    },
+    
+    'contract_generation_agent': {
+        'path': '/backend/ai_agents/contract_generation_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Contrats intelligents avec conformité légale',
+        'features': ['contract_templates', 'legal_validation', 'digital_signature', 'licensing_terms'],
+        'dependencies': ['legal_agent', 'licensing_agent']
+    },
+    
+    'dispute_resolution_agent': {
+        'path': '/backend/ai_agents/dispute_resolution_agent/',
+        'status': 'active',
+        'priority': 'medium',
+        'category': 'collaboration',
+        'description': 'Résolution IA avec médiation automatique',
+        'features': ['conflict_detection', 'mediation_support', 'arbitration_process', 'resolution_tracking'],
+        'dependencies': ['legal_agent', 'communication_agent']
+    },
+    
+    'skill_matching_agent': {
+        'path': '/backend/ai_agents/skill_matching_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Compétences matching pour équipes optimales',
+        'features': ['skill_analysis', 'team_formation', 'compatibility_scoring', 'performance_tracking'],
+        'dependencies': ['collaboration_agent', 'ml_agent', 'analytics_agent']
+    },
+    
+    'timeline_management_agent': {
+        'path': '/backend/ai_agents/timeline_management_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Planning optimal avec jalons et rappels',
+        'features': ['timeline_creation', 'milestone_tracking', 'schedule_optimization', 'deadline_reminders'],
+        'dependencies': ['project_management_agent', 'scheduling_agent']
+    },
+    
+    'revenue_sharing_agent': {
+        'path': '/backend/ai_agents/revenue_sharing_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'collaboration',
+        'description': 'Partage équitable avec calculs automatiques',
+        'features': ['revenue_calculation', 'payment_distribution', 'agreement_management', 'earnings_tracking'],
+        'dependencies': ['payment_processing_agent', 'contract_generation_agent', 'revenue_agent']
     },
     
     # ═══════════════════════════════════════════════════════════════
