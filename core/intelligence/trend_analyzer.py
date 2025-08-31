@@ -305,7 +305,9 @@ class TrendAnalyzer:
         platforms: List[str] = None,
         categories: List[str] = None,
         geographic_scope: TrendScope = TrendScope.GLOBAL,
-        time_window_hours: int = 24
+        time_window_hours: int = 24,
+        cultural_context: str = None,
+        region: str = None
     ) -> List[TrendData]:
         """
         Analyze current trending topics and content across platforms
@@ -315,6 +317,8 @@ class TrendAnalyzer:
             categories: Content categories to focus on
             geographic_scope: Geographic scope of analysis
             time_window_hours: Analysis time window
+            cultural_context: Cultural context for localized trends
+            region: Specific region for local trend analysis
             
         Returns:
             List of current trends with analysis
@@ -1324,6 +1328,360 @@ class ViralPredictionEngine:
                 return self.layers(x)
         
         return ViralNN()
+
+    async def analyze_local_trends(
+        self,
+        region: str,
+        cultural_context: str = None,
+        platforms: List[str] = None,
+        time_window_hours: int = 24
+    ) -> List[TrendData]:
+        """
+        Analyze local and regional trends with cultural context
+        
+        Args:
+            region: Target region (e.g., "MENA", "NA", "GCC")
+            cultural_context: Cultural context (e.g., "AR", "AMAZIGH", "HE")
+            platforms: Specific platforms to analyze
+            time_window_hours: Analysis time window
+            
+        Returns:
+            List of localized trends
+        """
+        try:
+            self.logger.info(f"Analyzing local trends for region: {region}")
+            
+            # Get standard trends first
+            global_trends = await self.analyze_current_trends(
+                platforms=platforms,
+                geographic_scope=TrendScope.REGIONAL,
+                time_window_hours=time_window_hours,
+                cultural_context=cultural_context,
+                region=region
+            )
+            
+            # Apply local filtering and enhancement
+            local_trends = []
+            
+            for trend in global_trends:
+                # Apply cultural and regional filtering
+                local_trend = await self._localize_trend(trend, region, cultural_context)
+                if local_trend:
+                    local_trends.append(local_trend)
+            
+            # Add region-specific trends
+            regional_trends = await self._get_regional_specific_trends(region, cultural_context)
+            local_trends.extend(regional_trends)
+            
+            # Sort by relevance to local context
+            local_trends = await self._sort_by_local_relevance(local_trends, region, cultural_context)
+            
+            return local_trends[:50]  # Return top 50 local trends
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing local trends: {e}")
+            return []
+
+    async def _localize_trend(
+        self, trend: TrendData, region: str, cultural_context: str = None
+    ) -> Optional[TrendData]:
+        """Localize a global trend for specific region and culture"""
+        
+        # Cultural sensitivity check
+        if cultural_context and not await self._is_culturally_appropriate(trend, cultural_context):
+            return None
+        
+        # Regional relevance score
+        relevance_score = await self._calculate_regional_relevance(trend, region)
+        if relevance_score < 0.3:  # Threshold for local relevance
+            return None
+        
+        # Create localized version
+        localized_trend = TrendData(
+            trend_id=trend.trend_id + f"_{region.lower()}",
+            trend_type=trend.trend_type,
+            trend_stage=trend.trend_stage,
+            trend_scope=TrendScope.REGIONAL,
+            title=await self._localize_title(trend.title, region, cultural_context),
+            description=await self._localize_description(trend.description, region, cultural_context),
+            keywords=await self._localize_keywords(trend.keywords, region, cultural_context),
+            hashtags=await self._localize_hashtags(trend.hashtags, region, cultural_context),
+            momentum_score=trend.momentum_score * relevance_score,
+            viral_probability=trend.viral_probability * relevance_score,
+            growth_rate=trend.growth_rate,
+            peak_prediction=trend.peak_prediction,
+            decay_prediction=trend.decay_prediction,
+            platforms=trend.platforms,
+            demographics=await self._localize_demographics(trend.demographics, region),
+            engagement_metrics=trend.engagement_metrics,
+            content_examples=trend.content_examples,
+            creator_count=trend.creator_count,
+            total_engagement=trend.total_engagement,
+            geographic_distribution={region: 1.0},  # 100% local
+            related_trends=trend.related_trends,
+            monetization_potential=trend.monetization_potential,
+            risk_factors=await self._add_regional_risks(trend.risk_factors, region, cultural_context),
+            opportunities=await self._add_regional_opportunities(trend.opportunities, region, cultural_context),
+            metadata={
+                **trend.metadata,
+                "region": region,
+                "cultural_context": cultural_context,
+                "localization_score": relevance_score
+            }
+        )
+        
+        return localized_trend
+
+    async def _is_culturally_appropriate(self, trend: TrendData, cultural_context: str) -> bool:
+        """Check if trend is culturally appropriate for target context"""
+        
+        # Define sensitive content for different cultures
+        sensitive_content = {
+            "AR": ["alcohol", "pork", "gambling", "dating", "nudity"],
+            "AMAZIGH": ["colonial", "primitive", "backward"],
+            "HE": ["nazi", "antisemitic", "holocaust denial"]
+        }
+        
+        sensitive_terms = sensitive_content.get(cultural_context.upper(), [])
+        
+        # Check trend content for sensitive terms
+        content_to_check = [
+            trend.title.lower(),
+            trend.description.lower(),
+            " ".join(trend.keywords).lower(),
+            " ".join(trend.hashtags).lower()
+        ]
+        
+        for content in content_to_check:
+            for term in sensitive_terms:
+                if term in content:
+                    return False
+        
+        return True
+
+    async def _calculate_regional_relevance(self, trend: TrendData, region: str) -> float:
+        """Calculate how relevant a trend is to a specific region"""
+        
+        relevance_score = 0.5  # Base score
+        
+        # Regional keyword boosters
+        regional_keywords = {
+            "MENA": ["ramadan", "eid", "hajj", "arabic", "middle east", "gulf"],
+            "NA": ["maghreb", "amazigh", "berber", "atlas", "sahara", "tamazgha"],
+            "GCC": ["dubai", "saudi", "qatar", "kuwait", "luxury", "oil"]
+        }
+        
+        region_terms = regional_keywords.get(region, [])
+        trend_content = " ".join([
+            trend.title, trend.description, 
+            " ".join(trend.keywords), 
+            " ".join(trend.hashtags)
+        ]).lower()
+        
+        # Boost score for regional keywords
+        for term in region_terms:
+            if term in trend_content:
+                relevance_score += 0.1
+        
+        # Platform relevance by region
+        regional_platform_weights = {
+            "MENA": {"instagram": 1.2, "tiktok": 1.1, "twitter": 1.0, "youtube": 0.9},
+            "NA": {"instagram": 1.3, "tiktok": 1.2, "facebook": 1.1, "youtube": 1.0},
+            "GCC": {"instagram": 1.4, "twitter": 1.2, "tiktok": 1.0, "youtube": 0.8}
+        }
+        
+        platform_weights = regional_platform_weights.get(region, {})
+        for platform in trend.platforms:
+            weight = platform_weights.get(platform, 1.0)
+            relevance_score *= weight
+        
+        return min(relevance_score, 1.0)
+
+    async def _get_regional_specific_trends(self, region: str, cultural_context: str = None) -> List[TrendData]:
+        """Get trends specific to a region/culture"""
+        
+        regional_trends = []
+        
+        # Define region-specific trending topics
+        regional_topics = {
+            "MENA": {
+                "topics": ["ramadan preparation", "eid celebrations", "arabic music", "gulf culture"],
+                "hashtags": ["#رمضان", "#عيد_مبارك", "#الخليج", "#العرب"],
+                "keywords": ["islamic", "arabic", "middle eastern", "traditional"]
+            },
+            "NA": {
+                "topics": ["amazigh culture", "atlas mountains", "maghreb food", "berber traditions"],
+                "hashtags": ["#amazigh", "#maghreb", "#tamazgha", "#atlas"],
+                "keywords": ["berber", "north african", "sahara", "traditional"]
+            },
+            "GCC": {
+                "topics": ["luxury lifestyle", "desert adventures", "modern architecture", "business hub"],
+                "hashtags": ["#dubai", "#saudi", "#gulf", "#luxury"],
+                "keywords": ["luxury", "modern", "business", "innovation"]
+            }
+        }
+        
+        region_data = regional_topics.get(region, {})
+        
+        for i, topic in enumerate(region_data.get("topics", [])):
+            trend = TrendData(
+                trend_id=f"regional_{region.lower()}_{i}",
+                trend_type=TrendType.TOPIC_TREND,
+                trend_stage=TrendStage.GROWING,
+                trend_scope=TrendScope.REGIONAL,
+                title=f"{topic.title()} - {region}",
+                description=f"Regional trend popular in {region}",
+                keywords=region_data.get("keywords", [])[:5],
+                hashtags=region_data.get("hashtags", [])[:5],
+                momentum_score=0.7,
+                viral_probability=0.6,
+                growth_rate=0.15,
+                peak_prediction=datetime.now() + timedelta(days=7),
+                decay_prediction=datetime.now() + timedelta(days=30),
+                platforms=["instagram", "tiktok", "twitter"],
+                demographics={"age": "18-35", "region": region},
+                engagement_metrics={"avg_engagement": 5000},
+                content_examples=[],
+                creator_count=500,
+                total_engagement=250000,
+                geographic_distribution={region: 1.0},
+                related_trends=[],
+                monetization_potential=0.7,
+                risk_factors=["Cultural sensitivity required"],
+                opportunities=["Local partnerships", "Cultural authenticity"],
+                metadata={"region": region, "cultural_context": cultural_context}
+            )
+            regional_trends.append(trend)
+        
+        return regional_trends
+
+    async def _localize_title(self, title: str, region: str, cultural_context: str = None) -> str:
+        """Localize trend title for region and culture"""
+        
+        # Add regional suffix for clarity
+        region_suffixes = {
+            "MENA": "الشرق الأوسط",
+            "NA": "شمال أفريقيا", 
+            "GCC": "دول الخليج"
+        }
+        
+        suffix = region_suffixes.get(region, region)
+        return f"{title} - {suffix}"
+
+    async def _localize_description(self, description: str, region: str, cultural_context: str = None) -> str:
+        """Localize trend description for region and culture"""
+        
+        return f"{description} Popular in {region} region."
+
+    async def _localize_keywords(self, keywords: List[str], region: str, cultural_context: str = None) -> List[str]:
+        """Localize keywords for region and culture"""
+        
+        localized = keywords.copy()
+        
+        # Add regional keywords
+        regional_additions = {
+            "MENA": ["arabic", "middle_east", "gulf"],
+            "NA": ["maghreb", "amazigh", "north_africa"],
+            "GCC": ["gulf", "luxury", "modern"]
+        }
+        
+        additions = regional_additions.get(region, [])
+        localized.extend(additions)
+        
+        return list(set(localized))[:10]  # Remove duplicates, limit to 10
+
+    async def _localize_hashtags(self, hashtags: List[str], region: str, cultural_context: str = None) -> List[str]:
+        """Localize hashtags for region and culture"""
+        
+        localized = hashtags.copy()
+        
+        # Add regional hashtags
+        regional_hashtags = {
+            "MENA": ["#الشرق_الأوسط", "#العرب", "#الخليج"],
+            "NA": ["#المغرب_العربي", "#أمازيغ", "#شمال_أفريقيا"],
+            "GCC": ["#دول_الخليج", "#الإمارات", "#السعودية"]
+        }
+        
+        additions = regional_hashtags.get(region, [])
+        localized.extend(additions)
+        
+        return list(set(localized))[:15]  # Remove duplicates, limit to 15
+
+    async def _localize_demographics(self, demographics: Dict[str, Any], region: str) -> Dict[str, Any]:
+        """Localize demographics for region"""
+        
+        localized = demographics.copy()
+        localized["region"] = region
+        
+        return localized
+
+    async def _add_regional_risks(self, risks: List[str], region: str, cultural_context: str = None) -> List[str]:
+        """Add region-specific risk factors"""
+        
+        regional_risks = risks.copy()
+        
+        # Add cultural/regional risks
+        if cultural_context in ["AR", "AMAZIGH"]:
+            regional_risks.extend([
+                "Cultural sensitivity required",
+                "Religious considerations",
+                "Traditional values alignment"
+            ])
+        
+        if region == "MENA":
+            regional_risks.append("Political sensitivity")
+        
+        return list(set(regional_risks))
+
+    async def _add_regional_opportunities(self, opportunities: List[str], region: str, cultural_context: str = None) -> List[str]:
+        """Add region-specific opportunities"""
+        
+        regional_opportunities = opportunities.copy()
+        
+        # Add cultural/regional opportunities
+        if region == "MENA":
+            regional_opportunities.extend([
+                "Large Arabic-speaking audience",
+                "Cultural authenticity advantage",
+                "Regional partnership opportunities"
+            ])
+        elif region == "NA":
+            regional_opportunities.extend([
+                "Amazigh cultural content niche",
+                "Multilingual content opportunity",
+                "North African diaspora reach"
+            ])
+        elif region == "GCC":
+            regional_opportunities.extend([
+                "High purchasing power audience",
+                "Luxury brand partnerships",
+                "Business networking content"
+            ])
+        
+        return list(set(regional_opportunities))
+
+    async def _sort_by_local_relevance(self, trends: List[TrendData], region: str, cultural_context: str = None) -> List[TrendData]:
+        """Sort trends by local relevance score"""
+        
+        def relevance_key(trend):
+            # Calculate composite relevance score
+            base_score = trend.momentum_score
+            
+            # Boost for regional metadata
+            if trend.metadata.get("region") == region:
+                base_score += 0.2
+            
+            # Boost for cultural context match
+            if trend.metadata.get("cultural_context") == cultural_context:
+                base_score += 0.1
+            
+            # Boost for localization score
+            localization_score = trend.metadata.get("localization_score", 0)
+            base_score += localization_score * 0.3
+            
+            return base_score
+        
+        return sorted(trends, key=relevance_key, reverse=True)
 
 
 class MarketIntelligence:
