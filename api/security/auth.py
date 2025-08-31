@@ -62,6 +62,8 @@ class AuthenticationMethod(Enum):
     BIOMETRIC = "biometric"
     API_KEY = "api_key"
     CERTIFICATE = "certificate"
+    SAML = "saml"
+    FIDO2 = "fido2"
 
 
 @dataclass
@@ -233,6 +235,27 @@ class OAuth2Manager:
                 'token_url': 'https://oauth2.googleapis.com/token',
                 'scope': 'openid email profile'
             },
+            'facebook': {
+                'client_id': os.getenv('FACEBOOK_CLIENT_ID'),
+                'client_secret': os.getenv('FACEBOOK_CLIENT_SECRET'),
+                'auth_url': 'https://www.facebook.com/v18.0/dialog/oauth',
+                'token_url': 'https://graph.facebook.com/v18.0/oauth/access_token',
+                'scope': 'email,public_profile'
+            },
+            'apple': {
+                'client_id': os.getenv('APPLE_CLIENT_ID'),
+                'client_secret': os.getenv('APPLE_CLIENT_SECRET'),
+                'auth_url': 'https://appleid.apple.com/auth/authorize',
+                'token_url': 'https://appleid.apple.com/auth/token',
+                'scope': 'email name'
+            },
+            'twitter': {
+                'client_id': os.getenv('TWITTER_CLIENT_ID'),
+                'client_secret': os.getenv('TWITTER_CLIENT_SECRET'),
+                'auth_url': 'https://twitter.com/i/oauth2/authorize',
+                'token_url': 'https://api.twitter.com/2/oauth2/token',
+                'scope': 'tweet.read users.read'
+            },
             'spotify': {
                 'client_id': os.getenv('SPOTIFY_CLIENT_ID'),
                 'client_secret': os.getenv('SPOTIFY_CLIENT_SECRET'),
@@ -306,6 +329,9 @@ class OAuth2Manager:
         # Provider-specific user info endpoints
         endpoints = {
             'google': 'https://www.googleapis.com/oauth2/v2/userinfo',
+            'facebook': 'https://graph.facebook.com/me?fields=id,email,name,picture',
+            'apple': 'https://appleid.apple.com/auth/userinfo',
+            'twitter': 'https://api.twitter.com/2/users/me',
             'spotify': 'https://api.spotify.com/v1/me',
             'github': 'https://api.github.com/user'
         }
@@ -315,13 +341,329 @@ class OAuth2Manager:
         
         # Mock user data - real implementation would make HTTP request
         mock_user_data = {
-            'id': 'mock_user_id',
-            'email': 'user@example.com',
-            'name': 'Mock User',
-            'picture': 'https://example.com/avatar.jpg'
+            'id': f'mock_{provider}_user_id',
+            'email': f'user@{provider}.com',
+            'name': f'Mock {provider.title()} User',
+            'picture': f'https://{provider}.com/avatar.jpg'
         }
         
         return mock_user_data
+
+
+class SAMLManager:
+    """SAML SSO authentication management for enterprise clients"""
+    
+    def __init__(self):
+        self.saml_settings = {
+            'sp': {
+                'entityId': os.getenv('SAML_SP_ENTITY_ID', 'https://ainflue.ai/saml/metadata'),
+                'assertionConsumerService': {
+                    'url': os.getenv('SAML_ACS_URL', 'https://ainflue.ai/saml/acs'),
+                    'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+                },
+                'singleLogoutService': {
+                    'url': os.getenv('SAML_SLS_URL', 'https://ainflue.ai/saml/sls'),
+                    'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+                },
+                'NameIDFormat': 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+                'x509cert': '',
+                'privateKey': ''
+            },
+            'idp': {}  # Will be configured per enterprise client
+        }
+        self.enterprise_configs = {}
+    
+    def configure_enterprise_idp(self, enterprise_id: str, idp_config: Dict[str, Any]):
+        """Configure SAML IdP settings for an enterprise client"""
+        required_fields = ['entityId', 'singleSignOnService', 'x509cert']
+        
+        for field in required_fields:
+            if field not in idp_config:
+                raise ValueError(f"Missing required SAML IdP field: {field}")
+        
+        self.enterprise_configs[enterprise_id] = {
+            'entityId': idp_config['entityId'],
+            'singleSignOnService': {
+                'url': idp_config['singleSignOnService'],
+                'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+            },
+            'singleLogoutService': {
+                'url': idp_config.get('singleLogoutService', ''),
+                'binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+            },
+            'x509cert': idp_config['x509cert'],
+            'attributeMapping': idp_config.get('attributeMapping', {
+                'email': 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',
+                'name': 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name',
+                'groups': 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/groups'
+            })
+        }
+        
+        logger.info(f"Configured SAML IdP for enterprise: {enterprise_id}")
+    
+    def generate_auth_request(self, enterprise_id: str, relay_state: str = None) -> str:
+        """Generate SAML authentication request"""
+        if enterprise_id not in self.enterprise_configs:
+            raise ValueError(f"No SAML configuration found for enterprise: {enterprise_id}")
+        
+        idp_config = self.enterprise_configs[enterprise_id]
+        
+        # Generate SAML AuthnRequest (simplified version)
+        auth_request_id = f"_{secrets.token_hex(20)}"
+        issue_instant = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        
+        auth_request = f"""<?xml version="1.0" encoding="UTF-8"?>
+<samlp:AuthnRequest 
+    xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+    ID="{auth_request_id}"
+    Version="2.0"
+    IssueInstant="{issue_instant}"
+    Destination="{idp_config['singleSignOnService']['url']}"
+    AssertionConsumerServiceURL="{self.saml_settings['sp']['assertionConsumerService']['url']}"
+    ProtocolBinding="{self.saml_settings['sp']['assertionConsumerService']['binding']}">
+    <saml:Issuer>{self.saml_settings['sp']['entityId']}</saml:Issuer>
+</samlp:AuthnRequest>"""
+        
+        # In production: properly encode and sign the request
+        encoded_request = base64.b64encode(auth_request.encode()).decode()
+        
+        # Build redirect URL
+        params = {
+            'SAMLRequest': encoded_request
+        }
+        if relay_state:
+            params['RelayState'] = relay_state
+        
+        param_string = '&'.join([f'{k}={v}' for k, v in params.items()])
+        return f"{idp_config['singleSignOnService']['url']}?{param_string}"
+    
+    async def process_saml_response(self, enterprise_id: str, saml_response: str, 
+                                  relay_state: str = None) -> Dict[str, Any]:
+        """Process SAML response and extract user information"""
+        if enterprise_id not in self.enterprise_configs:
+            raise ValueError(f"No SAML configuration found for enterprise: {enterprise_id}")
+        
+        try:
+            # Decode SAML response
+            decoded_response = base64.b64decode(saml_response).decode()
+            
+            # In production: validate signature, parse XML, extract assertions
+            # For now, return mock user data
+            user_data = {
+                'enterprise_id': enterprise_id,
+                'user_id': f'saml_user_{secrets.token_hex(8)}',
+                'email': 'saml.user@enterprise.com',
+                'name': 'SAML Enterprise User',
+                'groups': ['employees', 'users'],
+                'attributes': {
+                    'department': 'IT',
+                    'title': 'Software Engineer'
+                }
+            }
+            
+            return user_data
+            
+        except Exception as e:
+            logger.error(f"SAML response processing error: {e}")
+            raise AuthenticationError(f"Invalid SAML response: {str(e)}")
+    
+    def generate_metadata(self) -> str:
+        """Generate SAML SP metadata"""
+        metadata = f"""<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor
+    xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+    entityID="{self.saml_settings['sp']['entityId']}">
+    <md:SPSSODescriptor
+        protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:AssertionConsumerService
+            Binding="{self.saml_settings['sp']['assertionConsumerService']['binding']}"
+            Location="{self.saml_settings['sp']['assertionConsumerService']['url']}"
+            index="0" isDefault="true"/>
+        <md:SingleLogoutService
+            Binding="{self.saml_settings['sp']['singleLogoutService']['binding']}"
+            Location="{self.saml_settings['sp']['singleLogoutService']['url']}"/>
+    </md:SPSSODescriptor>
+</md:EntityDescriptor>"""
+        
+        return metadata
+
+
+class FIDO2Manager:
+    """FIDO2/WebAuthn hardware key authentication management"""
+    
+    def __init__(self):
+        self.rp_id = os.getenv('WEBAUTHN_RP_ID', 'ainflue.ai')
+        self.rp_name = os.getenv('WEBAUTHN_RP_NAME', 'Ainflue AI Platform')
+        self.origin = os.getenv('WEBAUTHN_ORIGIN', 'https://ainflue.ai')
+        self.registered_credentials = {}  # In production: use secure database
+        self.pending_challenges = {}
+    
+    def generate_registration_options(self, user_id: str, username: str, 
+                                    display_name: str = None) -> Dict[str, Any]:
+        """Generate WebAuthn registration options for new credential"""
+        challenge = secrets.token_bytes(32)
+        challenge_b64 = base64.urlsafe_b64encode(challenge).decode().rstrip('=')
+        
+        # Store challenge for verification
+        self.pending_challenges[challenge_b64] = {
+            'user_id': user_id,
+            'username': username,
+            'created_at': datetime.now(timezone.utc),
+            'type': 'registration'
+        }
+        
+        registration_options = {
+            'challenge': challenge_b64,
+            'rp': {
+                'name': self.rp_name,
+                'id': self.rp_id
+            },
+            'user': {
+                'id': base64.urlsafe_b64encode(user_id.encode()).decode().rstrip('='),
+                'name': username,
+                'displayName': display_name or username
+            },
+            'pubKeyCredParams': [
+                {'type': 'public-key', 'alg': -7},   # ES256
+                {'type': 'public-key', 'alg': -257}  # RS256
+            ],
+            'timeout': 60000,
+            'attestation': 'direct',
+            'authenticatorSelection': {
+                'authenticatorAttachment': 'cross-platform',
+                'userVerification': 'preferred',
+                'requireResidentKey': False
+            }
+        }
+        
+        return registration_options
+    
+    def verify_registration(self, user_id: str, credential_data: Dict[str, Any]) -> bool:
+        """Verify and store new FIDO2 credential"""
+        try:
+            challenge = credential_data.get('challenge')
+            if not challenge or challenge not in self.pending_challenges:
+                return False
+            
+            challenge_info = self.pending_challenges.pop(challenge)
+            if challenge_info['user_id'] != user_id:
+                return False
+            
+            # In production: verify attestation, signature, etc.
+            credential_id = credential_data.get('id')
+            public_key = credential_data.get('publicKey')
+            
+            if not credential_id or not public_key:
+                return False
+            
+            # Store credential
+            if user_id not in self.registered_credentials:
+                self.registered_credentials[user_id] = []
+            
+            self.registered_credentials[user_id].append({
+                'id': credential_id,
+                'public_key': public_key,
+                'counter': credential_data.get('counter', 0),
+                'created_at': datetime.now(timezone.utc).isoformat(),
+                'last_used': None
+            })
+            
+            logger.info(f"FIDO2 credential registered for user: {user_id}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"FIDO2 registration error: {e}")
+            return False
+    
+    def generate_authentication_options(self, user_id: str = None) -> Dict[str, Any]:
+        """Generate WebAuthn authentication options"""
+        challenge = secrets.token_bytes(32)
+        challenge_b64 = base64.urlsafe_b64encode(challenge).decode().rstrip('=')
+        
+        # Store challenge for verification
+        self.pending_challenges[challenge_b64] = {
+            'user_id': user_id,
+            'created_at': datetime.now(timezone.utc),
+            'type': 'authentication'
+        }
+        
+        auth_options = {
+            'challenge': challenge_b64,
+            'timeout': 60000,
+            'userVerification': 'preferred',
+            'rpId': self.rp_id
+        }
+        
+        # Add allowed credentials if user specified
+        if user_id and user_id in self.registered_credentials:
+            auth_options['allowCredentials'] = [
+                {
+                    'type': 'public-key',
+                    'id': cred['id'],
+                    'transports': ['usb', 'nfc', 'ble', 'internal']
+                }
+                for cred in self.registered_credentials[user_id]
+            ]
+        
+        return auth_options
+    
+    def verify_authentication(self, credential_data: Dict[str, Any]) -> Optional[str]:
+        """Verify FIDO2 authentication and return user ID if successful"""
+        try:
+            challenge = credential_data.get('challenge')
+            credential_id = credential_data.get('id')
+            
+            if not challenge or challenge not in self.pending_challenges:
+                return None
+            
+            challenge_info = self.pending_challenges.pop(challenge)
+            
+            # Find credential owner
+            user_id = None
+            credential = None
+            
+            for uid, creds in self.registered_credentials.items():
+                for cred in creds:
+                    if cred['id'] == credential_id:
+                        user_id = uid
+                        credential = cred
+                        break
+                if user_id:
+                    break
+            
+            if not user_id or not credential:
+                return None
+            
+            # In production: verify signature, counter, etc.
+            
+            # Update last used
+            credential['last_used'] = datetime.now(timezone.utc).isoformat()
+            
+            logger.info(f"FIDO2 authentication successful for user: {user_id}")
+            return user_id
+            
+        except Exception as e:
+            logger.error(f"FIDO2 authentication error: {e}")
+            return None
+    
+    def get_user_credentials(self, user_id: str) -> List[Dict[str, Any]]:
+        """Get list of registered credentials for user"""
+        return self.registered_credentials.get(user_id, [])
+    
+    def revoke_credential(self, user_id: str, credential_id: str) -> bool:
+        """Revoke a specific credential"""
+        if user_id not in self.registered_credentials:
+            return False
+        
+        credentials = self.registered_credentials[user_id]
+        for i, cred in enumerate(credentials):
+            if cred['id'] == credential_id:
+                credentials.pop(i)
+                logger.info(f"FIDO2 credential revoked: {credential_id} for user: {user_id}")
+                return True
+        
+        return False
 
 
 class SessionManager:
@@ -664,6 +1006,8 @@ class AuthenticationManager:
             secret_key=self.config.get('jwt_secret', secrets.token_urlsafe(32))
         )
         self.oauth2_manager = OAuth2Manager()
+        self.saml_manager = SAMLManager()
+        self.fido2_manager = FIDO2Manager()
         self.session_manager = SessionManager(
             redis_url=self.config.get('redis_url', 'redis://localhost:6379')
         )
@@ -714,6 +1058,22 @@ class AuthenticationManager:
                     return AuthenticationResult(
                         status=AuthenticationStatus.FAILED,
                         error_message="Two-factor authentication failed"
+                    )
+            
+            # SAML authentication if required
+            if AuthenticationMethod.SAML in authentication_methods:
+                if not await self._authenticate_saml(credentials):
+                    return AuthenticationResult(
+                        status=AuthenticationStatus.FAILED,
+                        error_message="SAML authentication failed"
+                    )
+            
+            # FIDO2 authentication if required
+            if AuthenticationMethod.FIDO2 in authentication_methods:
+                if not await self._authenticate_fido2(credentials):
+                    return AuthenticationResult(
+                        status=AuthenticationStatus.FAILED,
+                        error_message="FIDO2 authentication failed"
                     )
             
             # Biometric authentication if required
@@ -852,6 +1212,16 @@ class AuthenticationManager:
         # Implementation would check TOTP token or backup codes
         return True  # Placeholder
     
+    async def _authenticate_saml(self, credentials: UserCredentials) -> bool:
+        """Authenticate using SAML response"""
+        # Implementation would verify SAML assertion
+        return True  # Placeholder
+    
+    async def _authenticate_fido2(self, credentials: UserCredentials) -> bool:
+        """Authenticate using FIDO2/WebAuthn"""
+        # Implementation would verify FIDO2 assertion
+        return True  # Placeholder
+    
     async def _authenticate_biometric(self, credentials: UserCredentials) -> bool:
         """Authenticate using biometric data"""
         # Implementation would verify biometric hash
@@ -895,6 +1265,8 @@ __all__ = [
     'AuthenticationManager',
     'JWTManager',
     'OAuth2Manager',
+    'SAMLManager',
+    'FIDO2Manager',
     'SessionManager',
     'TwoFactorAuthManager',
     'BiometricAuthManager',
