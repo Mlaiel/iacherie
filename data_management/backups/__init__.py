@@ -52,7 +52,8 @@ from .index import BackupIndex
 
 # Backup Types Enumeration
 class BackupType(str, Enum):
-    """Types de sauvegarde supportés"""    FULL = "full"                    # Sauvegarde complète
+    """Types de sauvegarde supportés"""
+    FULL = "full"                    # Sauvegarde complète
     INCREMENTAL = "incremental"      # Sauvegarde incrémentale
     DIFFERENTIAL = "differential"    # Sauvegarde différentielle
     REALTIME = "realtime"           # Sauvegarde temps réel
