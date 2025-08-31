@@ -44,6 +44,7 @@ class AchievementCategory(str, Enum):
     CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     MONETIZATION = "monetization"
+    PROTECTION = "protection"
     ENGAGEMENT = "engagement"
     QUALITY = "quality"
     INNOVATION = "innovation"
@@ -299,34 +300,52 @@ class AchievementTracker:
         self.logger.info("AchievementTracker initialized successfully")
     
     def _initialize_core_achievements(self) -> None:
-        """Initialize core platform achievements."""
+        """Initialize core platform achievements - Complete 50+ achievement system."""
         
-        # Content Creation Achievements
+        # Content Creation Achievements (15+ achievements - From "First Upload" to "Legend Creator")
         self._create_first_upload_achievement()
         self._create_viral_hit_achievement()
         self._create_consistency_achievements()
         self._create_quality_achievements()
         self._create_multi_format_achievements()
+        self._create_content_volume_achievements()
+        self._create_content_creativity_achievements()
+        self._create_content_mastery_achievements()
         
-        # Collaboration Achievements
+        # Collaboration Achievements (15+ achievements - From "Team Player" to "Global Connector")
         self._create_collaboration_achievements()
         self._create_mentorship_achievements()
         self._create_networking_achievements()
+        self._create_partnership_achievements()
+        self._create_cross_genre_achievements()
+        self._create_global_collaboration_achievements()
         
-        # Monetization Achievements
+        # Monetization Achievements (15+ achievements - From "First Dollar" to "Revenue Master")
         self._create_revenue_achievements()
         self._create_optimization_achievements()
+        self._create_passive_income_achievements()
+        self._create_diversification_achievements()
+        self._create_business_achievements()
         
-        # Engagement Achievements
+        # Protection Achievements (10+ achievements - From "Guardian" to "IP Defender")
+        self._create_protection_achievements()
+        self._create_security_achievements()
+        self._create_rights_management_achievements()
+        
+        # Engagement & Community Achievements
         self._create_engagement_achievements()
         self._create_community_achievements()
+        self._create_social_impact_achievements()
         
-        # Platform Mastery Achievements
+        # Platform Mastery & Innovation Achievements
         self._create_platform_achievements()
         self._create_innovation_achievements()
+        self._create_technical_achievements()
         
-        # Milestone Achievements
+        # Milestone & Special Achievements
         self._create_milestone_achievements()
+        self._create_seasonal_achievements()
+        self._create_legendary_achievements()
     
     def _create_first_upload_achievement(self) -> None:
         """Create first upload achievement."""
@@ -851,6 +870,596 @@ class AchievementTracker:
                 ]
             )
             self._achievements[milestone.achievement_id] = milestone
+    
+    # ==================== CONTENT CREATION ACHIEVEMENTS ====================
+    # From "First Upload" to "Legend Creator" - Complete progression system
+    
+    def _create_content_volume_achievements(self) -> None:
+        """Create content volume-based achievements."""
+        volume_milestones = [
+            (5, "Content Rookie", "easy", 250, 100),
+            (10, "Content Regular", "easy", 400, 200),
+            (25, "Content Creator", "medium", 800, 400),
+            (50, "Content Producer", "medium", 1200, 600),
+            (100, "Content Master", "hard", 2000, 1000),
+            (250, "Content Virtuoso", "hard", 3500, 1750),
+            (500, "Content Legend", "very_hard", 6000, 3000),
+            (1000, "Legend Creator", "legendary", 10000, 5000)
+        ]
+        
+        for count, name, difficulty, xp, currency in volume_milestones:
+            achievement = Achievement(
+                name=name,
+                description=f"Upload {count} pieces of content",
+                detailed_description=f"Showcase your dedication by uploading {count} pieces of content to the platform.",
+                category=AchievementCategory.CONTENT_CREATION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                real_currency=count * 0.1 if count >= 100 else 0.0,
+                badge_icon=f"content_{count}",
+                special_benefits=["content_analytics", "enhanced_visibility"] if count >= 100 else [],
+                tags=["content", "volume", "dedication"],
+                criteria=[
+                    AchievementCriteria(
+                        name=f"Content Volume {count}",
+                        description=f"Upload {count} contents",
+                        metric_key="total_content_count",
+                        target_value=count,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_content_creativity_achievements(self) -> None:
+        """Create creativity and innovation achievements."""
+        creativity_achievements = [
+            ("Creative Spark", "Upload content in 3 different formats within 24 hours", "medium", 
+             600, 300, "creative_spark", "format_diversity", 3),
+            ("Format Pioneer", "Be first to use a new content format", "hard", 
+             1000, 500, "format_pioneer", "format_innovation", 1),
+            ("Style Shifter", "Create content in 8+ different styles", "hard", 
+             1500, 750, "style_shifter", "style_diversity", 8),
+            ("Remix Master", "Create 20+ successful remixes", "medium", 
+             800, 400, "remix_master", "remix_count", 20),
+            ("Trendsetter", "Start a trend with 1000+ followers", "very_hard", 
+             3000, 1500, "trendsetter", "trends_started", 1)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in creativity_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Express your creativity: {desc}",
+                category=AchievementCategory.CONTENT_CREATION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["creative_tools", "featured_placement"],
+                tags=["creativity", "innovation", "unique"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_content_mastery_achievements(self) -> None:
+        """Create content mastery achievements."""
+        # Advanced content achievements
+        content_excellence = Achievement(
+            name="Content Excellence",
+            description="Maintain 90%+ average quality score for 30 days",
+            detailed_description="Demonstrate consistent excellence by maintaining a 90% or higher quality score for 30 consecutive days.",
+            category=AchievementCategory.CONTENT_CREATION,
+            difficulty=AchievementDifficulty.HARD,
+            achievement_type=AchievementType.STREAK,
+            experience_points=2000,
+            virtual_currency=1000,
+            badge_icon="content_excellence",
+            special_benefits=["excellence_badge", "quality_insights"],
+            tags=["excellence", "quality", "consistency"],
+            criteria=[
+                AchievementCriteria(
+                    name="Quality Streak",
+                    description="90%+ quality for 30 days",
+                    metric_key="quality_streak_days",
+                    target_value=30,
+                    comparison_operator=">="
+                )
+            ]
+        )
+        self._achievements[content_excellence.achievement_id] = content_excellence
+    
+    # ==================== COLLABORATION ACHIEVEMENTS ====================
+    # From "Team Player" to "Global Connector" - Complete collaboration system
+    
+    def _create_partnership_achievements(self) -> None:
+        """Create partnership-based achievements."""
+        partnership_levels = [
+            (3, "Collaborator", "easy", 300, 150),
+            (5, "Partner", "medium", 600, 300),
+            (15, "Collaborator Pro", "medium", 1000, 500),
+            (25, "Partnership Master", "hard", 1800, 900),
+            (50, "Super Collaborator", "very_hard", 3000, 1500),
+            (100, "Global Connector", "legendary", 5000, 2500)
+        ]
+        
+        for count, name, difficulty, xp, currency in partnership_levels:
+            achievement = Achievement(
+                name=name,
+                description=f"Complete {count} successful collaborations",
+                detailed_description=f"Build your network by completing {count} successful collaborations with other creators.",
+                category=AchievementCategory.COLLABORATION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                real_currency=count * 0.5 if count >= 25 else 0.0,
+                badge_icon=f"partner_{count}",
+                special_benefits=["collaboration_tools", "partner_matching"] if count >= 10 else [],
+                tags=["collaboration", "partnership", "networking"],
+                criteria=[
+                    AchievementCriteria(
+                        name=f"Partnership {count}",
+                        description=f"Complete {count} collaborations",
+                        metric_key="successful_collaborations",
+                        target_value=count,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_cross_genre_achievements(self) -> None:
+        """Create cross-genre collaboration achievements."""
+        cross_genre = Achievement(
+            name="Cross-Genre Master",
+            description="Collaborate across 5+ different content genres",
+            detailed_description="Expand your creative horizons by collaborating with creators from 5 or more different content genres.",
+            category=AchievementCategory.COLLABORATION,
+            difficulty=AchievementDifficulty.HARD,
+            achievement_type=AchievementType.COUNTER,
+            experience_points=2200,
+            virtual_currency=1100,
+            badge_icon="cross_genre",
+            special_benefits=["genre_insights", "cross_promotion"],
+            tags=["cross-genre", "diversity", "versatility"],
+            criteria=[
+                AchievementCriteria(
+                    name="Genre Diversity",
+                    description="Collaborate across 5+ genres",
+                    metric_key="collaboration_genres",
+                    target_value=5,
+                    comparison_operator=">="
+                )
+            ]
+        )
+        self._achievements[cross_genre.achievement_id] = cross_genre
+    
+    def _create_global_collaboration_achievements(self) -> None:
+        """Create global collaboration achievements."""
+        global_achievements = [
+            ("International Collaborator", "Collaborate with creators from 3+ countries", 
+             "medium", 1000, 500, "international_collab", "collaboration_countries", 3),
+            ("Continental Creator", "Collaborate across 3+ continents", 
+             "hard", 2000, 1000, "continental_creator", "collaboration_continents", 3),
+            ("World Connector", "Collaborate with creators from 10+ countries", 
+             "very_hard", 3500, 1750, "world_connector", "collaboration_countries", 10),
+            ("Global Ambassador", "Facilitate 25+ international collaborations", 
+             "legendary", 5000, 2500, "global_ambassador", "international_collaborations_facilitated", 25)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in global_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Build global connections: {desc}",
+                category=AchievementCategory.COLLABORATION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["global_promotion", "cultural_exchange"],
+                tags=["global", "international", "diversity"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    # ==================== MONETIZATION ACHIEVEMENTS ====================
+    # From "First Dollar" to "Revenue Master" - Complete monetization system
+    
+    def _create_passive_income_achievements(self) -> None:
+        """Create passive income achievements."""
+        passive_income = Achievement(
+            name="Passive Income Pro",
+            description="Generate passive income for 30 consecutive days",
+            detailed_description="Build sustainable revenue by generating passive income from your content for 30 consecutive days.",
+            category=AchievementCategory.MONETIZATION,
+            difficulty=AchievementDifficulty.HARD,
+            achievement_type=AchievementType.STREAK,
+            experience_points=2500,
+            virtual_currency=1250,
+            real_currency=25.0,
+            badge_icon="passive_income",
+            special_benefits=["passive_analytics", "revenue_optimization"],
+            tags=["passive", "income", "automation"],
+            criteria=[
+                AchievementCriteria(
+                    name="Passive Income Streak",
+                    description="30 days passive income",
+                    metric_key="passive_income_streak",
+                    target_value=30,
+                    comparison_operator=">="
+                )
+            ]
+        )
+        self._achievements[passive_income.achievement_id] = passive_income
+    
+    def _create_diversification_achievements(self) -> None:
+        """Create revenue diversification achievements."""
+        diversification_levels = [
+            (2, "Revenue Diversifier", "easy", 400, 200),
+            (3, "Multi-Stream Creator", "medium", 800, 400),
+            (5, "Diversified Pro", "hard", 1500, 750),
+            (7, "Revenue Master", "very_hard", 3000, 1500),
+            (10, "Income Architect", "legendary", 5000, 2500)
+        ]
+        
+        for count, name, difficulty, xp, currency in diversification_levels:
+            achievement = Achievement(
+                name=name,
+                description=f"Establish {count} active revenue streams",
+                detailed_description=f"Diversify your income by establishing {count} different active revenue streams.",
+                category=AchievementCategory.MONETIZATION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                real_currency=count * 2.0 if count >= 5 else 0.0,
+                badge_icon=f"diversified_{count}",
+                special_benefits=["revenue_analytics", "optimization_tools"] if count >= 3 else [],
+                tags=["diversification", "revenue", "streams"],
+                criteria=[
+                    AchievementCriteria(
+                        name=f"Revenue Streams {count}",
+                        description=f"Establish {count} revenue streams",
+                        metric_key="active_revenue_streams",
+                        target_value=count,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_business_achievements(self) -> None:
+        """Create business and optimization achievements."""
+        business_achievements = [
+            ("Business Minded", "Complete business training course", "medium", 
+             800, 400, "business_minded", "business_training_completed", 1),
+            ("Analytics Expert", "Use advanced analytics for 60 days", "hard", 
+             1200, 600, "analytics_expert", "analytics_usage_days", 60),
+            ("ROI Optimizer", "Achieve 200%+ ROI for 3 months", "very_hard", 
+             2500, 1250, "roi_optimizer", "high_roi_months", 3),
+            ("Revenue Strategist", "Develop 5+ monetization strategies", "hard", 
+             1800, 900, "revenue_strategist", "monetization_strategies", 5)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in business_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Master business skills: {desc}",
+                category=AchievementCategory.MONETIZATION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["business_tools", "strategy_guides"],
+                tags=["business", "strategy", "optimization"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    # ==================== PROTECTION ACHIEVEMENTS ====================
+    # From "Guardian" to "IP Defender" - Complete protection system
+    
+    def _create_protection_achievements(self) -> None:
+        """Create content protection achievements."""
+        protection_levels = [
+            ("Guardian", "Protect your first piece of content", "easy", 
+             400, 200, "guardian", "content_protected", 1),
+            ("Content Shield", "Protect 10 pieces of content", "medium", 
+             800, 400, "content_shield", "content_protected", 10),
+            ("Digital Protector", "Protect 50 pieces of content", "medium", 
+             1200, 600, "digital_protector", "content_protected", 50),
+            ("IP Guardian", "Successfully defend against 5 copyright violations", "hard", 
+             2000, 1000, "ip_guardian", "copyright_defenses", 5),
+            ("Rights Defender", "Protect content across 10+ platforms", "hard", 
+             2500, 1250, "rights_defender", "platforms_protected", 10),
+            ("IP Defender", "Master all protection features and defend 100+ violations", "legendary", 
+             5000, 2500, "ip_defender", "total_violations_defended", 100)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in protection_levels:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Secure your intellectual property: {desc}",
+                category=AchievementCategory.PROTECTION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                real_currency=target * 0.1 if target >= 10 else 0.0,
+                badge_icon=icon,
+                special_benefits=["protection_tools", "legal_support"] if target >= 5 else [],
+                tags=["protection", "ip", "security"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_security_achievements(self) -> None:
+        """Create security and privacy achievements."""
+        security_achievements = [
+            ("Security Conscious", "Enable all security features", "easy", 
+             300, 150, "security_conscious", "security_features_enabled", 100),
+            ("Privacy Master", "Configure advanced privacy settings", "medium", 
+             600, 300, "privacy_master", "privacy_settings_configured", 1),
+            ("Watermark Pro", "Apply watermarks to 100+ contents", "medium", 
+             800, 400, "watermark_pro", "watermarked_content", 100),
+            ("Blockchain Protector", "Use blockchain protection for 50+ contents", "hard", 
+             1500, 750, "blockchain_protector", "blockchain_protected_content", 50)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in security_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Enhance your security: {desc}",
+                category=AchievementCategory.PROTECTION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["security_tools", "advanced_protection"],
+                tags=["security", "privacy", "blockchain"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_rights_management_achievements(self) -> None:
+        """Create rights management achievements."""
+        rights_achievements = [
+            ("Rights Manager", "Set up licensing for 25+ contents", "medium", 
+             1000, 500, "rights_manager", "licensed_content", 25),
+            ("License Master", "Generate $1000+ from licensing", "hard", 
+             2000, 1000, "license_master", "licensing_revenue", 1000),
+            ("Copyright Expert", "Successfully resolve 10+ disputes", "very_hard", 
+             3000, 1500, "copyright_expert", "disputes_resolved", 10)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in rights_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Master rights management: {desc}",
+                category=AchievementCategory.PROTECTION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["rights_tools", "legal_resources"],
+                tags=["rights", "licensing", "legal"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    # ==================== ADDITIONAL CATEGORIES ====================
+    
+    def _create_social_impact_achievements(self) -> None:
+        """Create social impact achievements."""
+        social_achievements = [
+            ("Community Helper", "Help 50+ community members", "medium", 
+             800, 400, "community_helper", "community_helps", 50),
+            ("Social Influencer", "Reach 100K+ total social reach", "hard", 
+             2000, 1000, "social_influencer", "total_social_reach", 100000),
+            ("Change Maker", "Lead 3+ positive community initiatives", "very_hard", 
+             3000, 1500, "change_maker", "community_initiatives_led", 3)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in social_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Make a positive impact: {desc}",
+                category=AchievementCategory.COMMUNITY,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["social_tools", "community_features"],
+                tags=["social", "impact", "community"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_technical_achievements(self) -> None:
+        """Create technical mastery achievements."""
+        technical_achievements = [
+            ("API Master", "Successfully use API integrations", "hard", 
+             1500, 750, "api_master", "api_integrations_used", 5),
+            ("Automation Expert", "Set up 10+ automated workflows", "hard", 
+             1800, 900, "automation_expert", "automated_workflows", 10),
+            ("Data Analyst", "Generate 50+ analytical reports", "medium", 
+             1200, 600, "data_analyst", "analytical_reports_generated", 50),
+            ("Tech Pioneer", "Beta test 15+ new features", "medium", 
+             1000, 500, "tech_pioneer", "beta_features_tested", 15)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in technical_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Master technical skills: {desc}",
+                category=AchievementCategory.INNOVATION,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.COUNTER,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["technical_tools", "advanced_features"],
+                tags=["technical", "innovation", "mastery"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_seasonal_achievements(self) -> None:
+        """Create seasonal and time-limited achievements."""
+        seasonal_achievements = [
+            ("New Year Creator", "Upload content on New Year's Day", "easy", 
+             500, 250, "new_year_creator", "new_year_upload", 1),
+            ("Summer Sensation", "Go viral during summer season", "hard", 
+             2000, 1000, "summer_sensation", "summer_viral_content", 1),
+            ("Holiday Spirit", "Create holiday-themed content", "medium", 
+             800, 400, "holiday_spirit", "holiday_content_created", 5),
+            ("Anniversary Legend", "Active for platform anniversary", "medium", 
+             1000, 500, "anniversary_legend", "anniversary_participation", 1)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in seasonal_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Celebrate the seasons: {desc}",
+                category=AchievementCategory.SEASONAL,
+                difficulty=AchievementDifficulty.__dict__[difficulty.upper()],
+                achievement_type=AchievementType.MILESTONE,
+                experience_points=xp,
+                virtual_currency=currency,
+                badge_icon=icon,
+                special_benefits=["seasonal_rewards", "exclusive_features"],
+                tags=["seasonal", "celebration", "limited"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
+    
+    def _create_legendary_achievements(self) -> None:
+        """Create legendary and ultimate achievements."""
+        legendary_achievements = [
+            ("Platform Legend", "Achieve top 1% in all major categories", "legendary", 
+             10000, 5000, "platform_legend", "top_percentile_categories", 4),
+            ("Ultimate Creator", "Reach 1M followers across all platforms", "legendary", 
+             15000, 7500, "ultimate_creator", "total_followers", 1000000),
+            ("Ecosystem Master", "Master every aspect of the platform", "legendary", 
+             20000, 10000, "ecosystem_master", "platform_mastery_score", 100),
+            ("Hall of Fame", "Be inducted into creator hall of fame", "legendary", 
+             25000, 12500, "hall_of_fame", "hall_of_fame_induction", 1)
+        ]
+        
+        for name, desc, difficulty, xp, currency, icon, metric, target in legendary_achievements:
+            achievement = Achievement(
+                name=name,
+                description=desc,
+                detailed_description=f"Achieve legendary status: {desc}",
+                category=AchievementCategory.MILESTONE,
+                difficulty=AchievementDifficulty.LEGENDARY,
+                achievement_type=AchievementType.THRESHOLD,
+                experience_points=xp,
+                virtual_currency=currency,
+                real_currency=100.0,
+                badge_icon=icon,
+                special_benefits=["legendary_status", "exclusive_perks", "hall_of_fame"],
+                tags=["legendary", "ultimate", "elite"],
+                criteria=[
+                    AchievementCriteria(
+                        name=name,
+                        description=desc,
+                        metric_key=metric,
+                        target_value=target,
+                        comparison_operator=">="
+                    )
+                ]
+            )
+            self._achievements[achievement.achievement_id] = achievement
     
     async def track_user_metric(
         self,
