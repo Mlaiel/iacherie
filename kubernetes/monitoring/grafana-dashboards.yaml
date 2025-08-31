@@ -1,0 +1,727 @@
+# Grafana Dashboards Configuration for Ainflue Platform
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Production-ready monitoring dashboards
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-system-overview
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: dashboard
+    grafana_dashboard: "1"
+data:
+  system-overview.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Ainflue System Overview",
+        "tags": ["ainflue", "system", "overview"],
+        "timezone": "UTC",
+        "refresh": "30s",
+        "time": {
+          "from": "now-1h",
+          "to": "now"
+        },
+        "panels": [
+          {
+            "id": 1,
+            "title": "System Status",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+            "targets": [
+              {
+                "expr": "up{job=\"ainflue-api\"}",
+                "legendFormat": "API Status",
+                "refId": "A"
+              }
+            ],
+            "options": {
+              "colorMode": "value",
+              "graphMode": "none",
+              "justifyMode": "center"
+            }
+          },
+          {
+            "id": 2,
+            "title": "Request Rate",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+            "targets": [
+              {
+                "expr": "rate(http_requests_total{job=\"ainflue-api\"}[5m])",
+                "legendFormat": "{{method}} {{endpoint}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Requests/sec",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Response Time (95th percentile)",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+                "legendFormat": "95th percentile",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Seconds",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "title": "Error Rate",
+            "type": "singlestat",
+            "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+            "targets": [
+              {
+                "expr": "rate(http_requests_total{job=\"ainflue-api\",status=~\"5..\"}[5m]) / rate(http_requests_total{job=\"ainflue-api\"}[5m]) * 100",
+                "legendFormat": "Error Rate %",
+                "refId": "A"
+              }
+            ],
+            "valueMaps": [
+              {
+                "value": "null",
+                "text": "0%"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "title": "Active Users",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+            "targets": [
+              {
+                "expr": "active_users_total",
+                "legendFormat": "Active Users",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "title": "CPU Usage",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 0, "y": 12},
+            "targets": [
+              {
+                "expr": "rate(cpu_usage_seconds_total{job=\"ainflue-api\"}[5m]) * 100",
+                "legendFormat": "{{instance}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Percentage",
+                "max": 100,
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "title": "Memory Usage",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 8, "y": 12},
+            "targets": [
+              {
+                "expr": "memory_usage_bytes{job=\"ainflue-api\"} / memory_limit_bytes{job=\"ainflue-api\"} * 100",
+                "legendFormat": "{{instance}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Percentage",
+                "max": 100,
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "title": "Network I/O",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 16, "y": 12},
+            "targets": [
+              {
+                "expr": "rate(network_receive_bytes_total{job=\"ainflue-api\"}[5m])",
+                "legendFormat": "Receive {{instance}}",
+                "refId": "A"
+              },
+              {
+                "expr": "rate(network_transmit_bytes_total{job=\"ainflue-api\"}[5m])",
+                "legendFormat": "Transmit {{instance}}",
+                "refId": "B"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Bytes/sec",
+                "min": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-ai-models
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: dashboard
+    grafana_dashboard: "1"
+data:
+  ai-models.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "AI Models Performance",
+        "tags": ["ainflue", "ai", "models", "ml"],
+        "timezone": "UTC",
+        "refresh": "30s",
+        "time": {
+          "from": "now-1h",
+          "to": "now"
+        },
+        "panels": [
+          {
+            "id": 1,
+            "title": "Model Inference Time",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, rate(ai_inference_duration_seconds_bucket[5m]))",
+                "legendFormat": "{{model_name}} - 95th percentile",
+                "refId": "A"
+              },
+              {
+                "expr": "histogram_quantile(0.50, rate(ai_inference_duration_seconds_bucket[5m]))",
+                "legendFormat": "{{model_name}} - 50th percentile",
+                "refId": "B"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Seconds",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Model Accuracy",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+            "targets": [
+              {
+                "expr": "ai_model_accuracy",
+                "legendFormat": "{{model_name}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Accuracy Score",
+                "max": 1,
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "GPU Utilization",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 0, "y": 8},
+            "targets": [
+              {
+                "expr": "gpu_usage_percentage",
+                "legendFormat": "GPU {{gpu_id}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Percentage",
+                "max": 100,
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "title": "Model Memory Usage",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 8, "y": 8},
+            "targets": [
+              {
+                "expr": "ai_model_memory_bytes / 1024 / 1024 / 1024",
+                "legendFormat": "{{model_name}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "GB",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "title": "Inference Requests Rate",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 16, "y": 8},
+            "targets": [
+              {
+                "expr": "rate(ai_inference_requests_total[5m])",
+                "legendFormat": "{{model_name}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Requests/sec",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "title": "Content Processing Queue",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 0, "y": 14},
+            "targets": [
+              {
+                "expr": "content_processing_queue_size",
+                "legendFormat": "Queue Size",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "title": "Fingerprint Generation Success Rate",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 6, "y": 14},
+            "targets": [
+              {
+                "expr": "rate(fingerprint_generation_success_total[5m]) / rate(fingerprint_generation_total[5m]) * 100",
+                "legendFormat": "Success Rate %",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "title": "Content Similarity Matches",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 12, "y": 14},
+            "targets": [
+              {
+                "expr": "similarity_matches_found_total",
+                "legendFormat": "Matches Found",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "title": "Revenue Detection Rate",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 18, "y": 14},
+            "targets": [
+              {
+                "expr": "revenue_detected_total",
+                "legendFormat": "Revenue Detected",
+                "refId": "A"
+              }
+            ]
+          }
+        ]
+      }
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-database-performance
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: dashboard
+    grafana_dashboard: "1"
+data:
+  database-performance.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Database Performance",
+        "tags": ["ainflue", "database", "postgresql", "redis", "mongodb"],
+        "timezone": "UTC",
+        "refresh": "30s",
+        "time": {
+          "from": "now-1h",
+          "to": "now"
+        },
+        "panels": [
+          {
+            "id": 1,
+            "title": "Database Query Duration",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, rate(db_query_duration_seconds_bucket[5m]))",
+                "legendFormat": "{{database}} - 95th percentile",
+                "refId": "A"
+              },
+              {
+                "expr": "histogram_quantile(0.50, rate(db_query_duration_seconds_bucket[5m]))",
+                "legendFormat": "{{database}} - 50th percentile",
+                "refId": "B"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Seconds",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Database Connections",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+            "targets": [
+              {
+                "expr": "db_connections_active",
+                "legendFormat": "{{database}} - Active",
+                "refId": "A"
+              },
+              {
+                "expr": "db_connections_idle",
+                "legendFormat": "{{database}} - Idle",
+                "refId": "B"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Connections",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Query Rate",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 0, "y": 8},
+            "targets": [
+              {
+                "expr": "rate(db_queries_total[5m])",
+                "legendFormat": "{{database}} - {{operation}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Queries/sec",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "title": "Cache Hit Rate",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 8, "y": 8},
+            "targets": [
+              {
+                "expr": "rate(cache_hits_total[5m]) / (rate(cache_hits_total[5m]) + rate(cache_misses_total[5m])) * 100",
+                "legendFormat": "{{cache_type}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Percentage",
+                "max": 100,
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "title": "Database Size",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 16, "y": 8},
+            "targets": [
+              {
+                "expr": "db_size_bytes / 1024 / 1024 / 1024",
+                "legendFormat": "{{database}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "GB",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "title": "Lock Wait Time",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 0, "y": 14},
+            "targets": [
+              {
+                "expr": "avg(db_lock_wait_time_seconds)",
+                "legendFormat": "Avg Lock Wait",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "title": "Deadlocks",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 6, "y": 14},
+            "targets": [
+              {
+                "expr": "rate(db_deadlocks_total[5m])",
+                "legendFormat": "Deadlocks/sec",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "title": "Slow Queries",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 12, "y": 14},
+            "targets": [
+              {
+                "expr": "rate(db_slow_queries_total[5m])",
+                "legendFormat": "Slow Queries/sec",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "title": "Replication Lag",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 18, "y": 14},
+            "targets": [
+              {
+                "expr": "db_replication_lag_seconds",
+                "legendFormat": "Lag (seconds)",
+                "refId": "A"
+              }
+            ]
+          }
+        ]
+      }
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-business-metrics
+  namespace: ainflue-monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: dashboard
+    grafana_dashboard: "1"
+data:
+  business-metrics.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Business Metrics & Revenue",
+        "tags": ["ainflue", "business", "revenue", "users"],
+        "timezone": "UTC",
+        "refresh": "5m",
+        "time": {
+          "from": "now-24h",
+          "to": "now"
+        },
+        "panels": [
+          {
+            "id": 1,
+            "title": "Total Revenue (24h)",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+            "targets": [
+              {
+                "expr": "sum(increase(revenue_generated_total[24h]))",
+                "legendFormat": "Total Revenue",
+                "refId": "A"
+              }
+            ],
+            "options": {
+              "colorMode": "value",
+              "unit": "currencyUSD"
+            }
+          },
+          {
+            "id": 2,
+            "title": "New User Registrations",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+            "targets": [
+              {
+                "expr": "sum(increase(user_registrations_total[24h]))",
+                "legendFormat": "New Users",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Content Uploads",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+            "targets": [
+              {
+                "expr": "sum(increase(content_uploads_total[24h]))",
+                "legendFormat": "Content Uploads",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "title": "Violations Detected",
+            "type": "stat",
+            "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+            "targets": [
+              {
+                "expr": "sum(increase(violations_detected_total[24h]))",
+                "legendFormat": "Violations",
+                "refId": "A"
+              }
+            ],
+            "options": {
+              "colorMode": "value"
+            }
+          },
+          {
+            "id": 5,
+            "title": "Revenue Trend",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+            "targets": [
+              {
+                "expr": "sum(rate(revenue_generated_total[1h]))",
+                "legendFormat": "Revenue per Hour",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "USD/hour",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "title": "User Activity",
+            "type": "graph",
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+            "targets": [
+              {
+                "expr": "sum(rate(user_actions_total[5m]))",
+                "legendFormat": "Actions per Minute",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Actions/min",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "title": "Content Processing",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 0, "y": 12},
+            "targets": [
+              {
+                "expr": "sum(rate(content_processed_total[5m]))",
+                "legendFormat": "Processing Rate",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Content/min",
+                "min": 0
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "title": "Platform Distribution",
+            "type": "piechart",
+            "gridPos": {"h": 6, "w": 8, "x": 8, "y": 12},
+            "targets": [
+              {
+                "expr": "sum by (platform) (content_uploads_total)",
+                "legendFormat": "{{platform}}",
+                "refId": "A"
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "title": "Payment Processing",
+            "type": "graph",
+            "gridPos": {"h": 6, "w": 8, "x": 16, "y": 12},
+            "targets": [
+              {
+                "expr": "sum(rate(payments_processed_total[5m])) by (status)",
+                "legendFormat": "{{status}}",
+                "refId": "A"
+              }
+            ],
+            "yAxes": [
+              {
+                "label": "Payments/min",
+                "min": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
