@@ -349,6 +349,46 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['compliance_agent']
     },
     
+    'content_protection_agent': {
+        'path': '/backend/ai_agents/content_protection_agent/',
+        'status': 'active',
+        'priority': 'critical',
+        'category': 'security_compliance',
+        'description': 'Protection contenu multi-plateforme (35+ plateformes)',
+        'features': ['multi_platform_monitoring', 'fingerprint_matching', 'real_time_alerts', 'dmca_automation'],
+        'dependencies': ['fingerprinting_agent', 'dmca_agent', 'blockchain_agent']
+    },
+    
+    'piracy_detection_agent': {
+        'path': '/backend/ai_agents/piracy_detection_agent/',
+        'status': 'active',
+        'priority': 'critical',
+        'category': 'security_compliance',
+        'description': 'Détection piratage deep web et monitoring torrent',
+        'features': ['deep_web_scanning', 'torrent_monitoring', 'streaming_detection', 'forensic_collection'],
+        'dependencies': ['protection_agent', 'fraud_detection_agent', 'legal_agent']
+    },
+    
+    'rights_management_agent': {
+        'path': '/backend/ai_agents/rights_management_agent/',
+        'status': 'active',
+        'priority': 'critical',
+        'category': 'security_compliance',
+        'description': 'Gestion droits globale et calcul royalties',
+        'features': ['ownership_registry', 'license_management', 'royalty_calculation', 'revenue_optimization'],
+        'dependencies': ['legal_agent', 'monetization_agent', 'blockchain_agent']
+    },
+    
+    'violation_scoring_agent': {
+        'path': '/backend/ai_agents/violation_scoring_agent/',
+        'status': 'active',
+        'priority': 'high',
+        'category': 'security_compliance',
+        'description': 'Scoring IA violations et recommandations automatiques',
+        'features': ['ai_violation_scoring', 'pattern_analysis', 'risk_assessment', 'action_recommendations'],
+        'dependencies': ['ml_agent', 'protection_agent', 'analytics_agent']
+    },
+    
     # ═══════════════════════════════════════════════════════════════
     # AGENTS BUSINESS & REVENUE  
     # ═══════════════════════════════════════════════════════════════
@@ -686,11 +726,11 @@ EXISTING_AGENTS_REGISTRY = {
     'blockchain_agent': {
         'path': '/backend/ai_agents/blockchain_agent/',
         'status': 'active',
-        'priority': 'low',
+        'priority': 'high',
         'category': 'blockchain_crypto',
-        'description': 'Intégrations blockchain et crypto',
-        'features': ['blockchain_integration', 'smart_contracts', 'crypto_payments'],
-        'dependencies': ['payment_processing_agent']
+        'description': 'Vérification blockchain NFT et smart contracts',
+        'features': ['blockchain_verification', 'nft_validation', 'smart_contracts', 'ownership_proof'],
+        'dependencies': ['payment_processing_agent', 'rights_management_agent']
     }
 }
 
