@@ -25,7 +25,9 @@ ARCHITECTURE COMPLETE:
 ✅ MonetizationRepository - Revenue tracking et paiements
 ✅ CollaborationRepository - Matching et partnerships
 ✅ FingerprintRepository - AI identification et duplicates
-"""__version__ = "3.1.0"
+"""
+
+__version__ = "3.1.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __team__ = "Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer"
 

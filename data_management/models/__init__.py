@@ -15,7 +15,9 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC MODELS PIPELINE:
 Creator Registration → Content Upload → AI Validation → Metadata Extraction → 
 Vector Indexing → Protection Activation → Analytics Processing → Revenue Optimization
-"""__version__ = "3.0.0"
+"""
+
+__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 # Core Content Models
