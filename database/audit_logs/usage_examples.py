@@ -21,8 +21,7 @@ This revolutionary audit usage examples collection is the EXCLUSIVE property of 
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timezone, timedelta
 from typing import Dict, Any, List
 

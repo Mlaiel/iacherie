@@ -6,8 +6,7 @@ disaster recovery for failed deployments.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -88,8 +87,7 @@ class RollbackManager(BaseComponent):
     Provides comprehensive rollback capabilities including automatic snapshot
     creation, intelligent rollback point selection, and multi-component
     rollback orchestration with dependency management.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

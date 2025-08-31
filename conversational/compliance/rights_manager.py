@@ -6,8 +6,7 @@ including intellectual property protection, copyright compliance, and usage righ
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import hashlib
 import logging
 from datetime import datetime, timedelta

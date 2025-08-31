@@ -14,8 +14,7 @@ written permission is strictly forbidden and will result in legal prosecution
 under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -191,8 +190,7 @@ class MusicGenerator:
     
     Provides comprehensive music generation capabilities including composition,
     arrangement, and production with AI-powered creative assistance.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize music generator with AI models"""        self.generation_engine = MusicGenerationEngine()
         self.audio_engine = AudioMusicEngine()
         

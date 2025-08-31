@@ -5,8 +5,7 @@ Classifies user intents with high accuracy using ML models and pattern matching
 optimized for different creator types and their specific needs.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass

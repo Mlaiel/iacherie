@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER MONETIZATION:
 Content Usage Detection → Revenue Calculation → Platform API Integration → 
 Payment Processing → Analytics Generation → Tax Compliance → Distribution Automation
-"""
-import json
+"""import json
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple

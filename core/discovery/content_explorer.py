@@ -30,8 +30,7 @@ Features:
 - Rights verification and protection status
 - SEO optimization analysis
 - Monetization potential assessment
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Set

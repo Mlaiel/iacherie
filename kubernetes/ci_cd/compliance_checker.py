@@ -7,8 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise compliance verification system for CI/CD pipelines.
 Ensures adherence to GDPR, SOC2, ISO27001, and industry standards for content platforms.
 ================================================================
-"""
-from typing import Dict, List, Optional, Any, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Tuple, Set
 import asyncio
 import logging
 import json

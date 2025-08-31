@@ -4,8 +4,7 @@ Comprehensive configuration system with all components
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-# Core Configuration Classes
+"""# Core Configuration Classes
 from .app_config import AppConfig
 from .database_config import (
     DatabaseConfig,

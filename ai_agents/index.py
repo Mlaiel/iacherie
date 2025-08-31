@@ -22,8 +22,7 @@ Project Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-from __future__ import annotations
+"""from __future__ import annotations
 
 import logging
 from typing import Any, Dict, Optional, List

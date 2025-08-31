@@ -8,8 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum

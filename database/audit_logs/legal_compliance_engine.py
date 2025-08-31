@@ -12,8 +12,7 @@ This revolutionary legal compliance engine is the EXCLUSIVE property of Fahed Ml
 Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from dataclasses import dataclass, asdict

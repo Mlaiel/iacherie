@@ -21,8 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-import logging
+"""import logging
 from typing import Dict, Any, Optional, List, Union
 from pathlib import Path
 import asyncio

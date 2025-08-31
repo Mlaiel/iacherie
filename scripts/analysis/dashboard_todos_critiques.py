@@ -4,8 +4,7 @@ Script de surveillance des TODOs par impact métier pour priorisation
 
 Usage: python dashboard_todos_critiques.py
 Output: Rapport priorité business + fichiers critiques
-"""
-import json
+"""import json
 import os
 from pathlib import Path
 

@@ -15,8 +15,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Quality request → Component factory → Workflow orchestration → 
 Quality assessment → Results aggregation → Reporting & recommendations
-"""
-import logging
+"""import logging
 import asyncio
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Union, Type

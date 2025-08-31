@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ATTENTION: Ce code fait partie de la propriété intellectuelle de Fahed Mlaiel.
 Toute reproduction, distribution, ou utilisation non autorisée est strictement interdite.
 Contact: mlaiel@live.de
-"""
-from typing import Any, Dict, List, Optional
+"""from typing import Any, Dict, List, Optional
 
 
 class CachingAgentError(Exception):

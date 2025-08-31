@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task analysis → Worker evaluation → Performance prediction → 
 Optimal selection → Load distribution → Real-time monitoring → Adaptive optimization
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -97,8 +96,7 @@ class WorkerLoadBalancer:
     - Adaptive weight adjustment
     - Sticky sessions support
     - Geographic optimization
-    """
-    def __init__(self, strategy: LoadBalancingStrategy = LoadBalancingStrategy.INTELLIGENT):
+    """    def __init__(self, strategy: LoadBalancingStrategy = LoadBalancingStrategy.INTELLIGENT):
         self.strategy = strategy
         
         # Worker tracking

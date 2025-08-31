@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 UI content → Language detection → Multi-provider translation → Quality assessment → 
 Context preservation → Batch optimization → Cache management → Real-time delivery
-"""
-import logging
+"""import logging
 import asyncio
 import hashlib
 from typing import Dict, List, Any, Optional, Tuple, Union

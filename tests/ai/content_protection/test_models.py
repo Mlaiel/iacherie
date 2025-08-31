@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -29,8 +28,7 @@ Toute utilisation, copie, distribution ou exploitation sans autorisation écrite
 ✅ IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -63,8 +61,7 @@ from ai.content_protection.models import (
 
 
 class TestContentProtectionModelsUltraIndustrial:
-    """Suite de tests ultra-industriels pour tous les modèles de données"""
-    def test_content_type_enum_comprehensive(self):
+    """Suite de tests ultra-industriels pour tous les modèles de données"""    def test_content_type_enum_comprehensive(self):
         """Test complet de l'énumération ContentType"""        # Verify all content types
         assert ContentType.AUDIO.value == "audio"
         assert ContentType.VIDEO.value == "video"

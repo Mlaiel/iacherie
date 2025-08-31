@@ -4,8 +4,7 @@ Enterprise-grade monetization engine with AI-powered revenue prediction,
 multi-platform income optimization, and automated payment processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple

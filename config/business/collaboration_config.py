@@ -12,8 +12,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Tuple
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -107,8 +106,7 @@ class CreatorProfile:
 
 
 class CollaborationConfig:
-    """Enterprise collaboration management configuration."""
-    # Collaboration type configurations
+    """Enterprise collaboration management configuration."""    # Collaboration type configurations
     COLLABORATION_TYPES = {
         CollaborationType.MUSIC_COLLAB: {
             "description": "Musical collaboration for original content creation",

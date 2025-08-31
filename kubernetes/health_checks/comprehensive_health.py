@@ -17,8 +17,7 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""
-import asyncio
+"""import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -55,8 +54,7 @@ class ComprehensiveHealthChecker:
     
     Coordinates health checking across all platform subsystems and provides
     unified health reporting, alerting, and diagnostic capabilities.
-    """
-    def __init__(self, config: Dict[str, Any], app=None):
+    """    def __init__(self, config: Dict[str, Any], app=None):
         """        Initialize comprehensive health checker
         
         Args:

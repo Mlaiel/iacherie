@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field

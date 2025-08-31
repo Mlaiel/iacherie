@@ -10,8 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime
 from dataclasses import dataclass, field

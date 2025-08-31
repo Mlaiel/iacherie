@@ -9,8 +9,7 @@ Contact: mlaiel@live.de
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This configuration system contains proprietary settings and algorithms.
 Unauthorized use is strictly prohibited.
-"""
-import os
+"""import os
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field

@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import logging
 import statistics
 import time
@@ -67,8 +66,7 @@ class PerformanceOptimizer(BaseModel):
 class MessagingPerformanceMonitor:
     """    Enterprise performance monitoring system for messaging infrastructure
     Monitors system metrics, queue performance, and provides optimization
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.redis_client: Optional[aioredis.Redis] = None
         self.metrics_history: List[PerformanceMetrics] = []
         self.alert_rules: List[AlertRule] = []

@@ -20,8 +20,7 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import json
+"""import json
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -113,8 +112,7 @@ class WorkflowTemplateManager(BaseAgent):
     
     This manager provides comprehensive template management including
     creation, customization, versioning, and optimization capabilities.
-    """
-    def __init__(self, template_directory: Optional[str] = None):
+    """    def __init__(self, template_directory: Optional[str] = None):
         """Initialize the template manager."""        super().__init__()
         self.logger = logging.getLogger(__name__)
         

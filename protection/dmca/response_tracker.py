@@ -13,8 +13,7 @@ This module provides:
 - Automated response parsing
 - Performance analytics
 - Legal compliance reporting
-"""
-import asyncio
+"""import asyncio
 import logging
 import re
 import secrets

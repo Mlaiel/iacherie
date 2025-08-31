@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This engagement prediction AI and machine learning models are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import math

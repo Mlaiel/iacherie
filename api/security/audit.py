@@ -3,8 +3,7 @@ Enterprise-grade audit logging and security monitoring
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Monitoring Specialist + DevOps Engineer
-"""
-import json
+"""import json
 import asyncio
 import aioredis
 from datetime import datetime, timezone, timedelta

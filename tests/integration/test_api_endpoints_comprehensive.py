@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -17,8 +16,7 @@ Tests all API endpoints for functionality, error handling, and response formats.
 
 Author: AI Assistant
 Purpose: Complete integration test coverage for API endpoints
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

@@ -13,8 +13,7 @@ Features:
 - Continuous optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
 from dataclasses import dataclass

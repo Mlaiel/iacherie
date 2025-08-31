@@ -6,8 +6,7 @@ and verification capabilities for enterprise backup operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -71,8 +70,7 @@ class BackupValidator:
     
     Performs multi-level validation including checksums, structure integrity,
     data consistency, and metadata verification.
-    """
-    def __init__(self, storage: Optional[BackupStorage] = None):
+    """    def __init__(self, storage: Optional[BackupStorage] = None):
         """        Initialize backup validator.
         
         Args:

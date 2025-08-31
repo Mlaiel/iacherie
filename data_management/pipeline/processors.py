@@ -8,8 +8,7 @@ specialized functionality for creator monetization and protection.
 Supports the complete creator workflow:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format → 
 IA protection rights → SEO professional → Matching collaboration → Distribution multi-platforms
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime

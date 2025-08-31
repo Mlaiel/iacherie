@@ -10,8 +10,7 @@ STRICT COPYRIGHT WARNING: This code and concept are EXCLUSIVE intellectual prope
 ANY unauthorized use, copying, or theft without explicit written authorization is STRICTLY PROHIBITED
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from datetime import datetime, timedelta, timezone
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -1202,8 +1201,7 @@ class CopyrightViolation(BaseModel):
 class CopyrightManager:
     """    Gestionnaire pour les opérations de droits d'auteur.
     Fournit une interface complète pour la protection du contenu.
-    """
-    def __init__(self, db_session: Session):
+    """    def __init__(self, db_session: Session):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
 

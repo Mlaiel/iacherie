@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Staging environment configuration for pre-production testing and validation.
 Handles realistic load testing for multi-format content processing and AI systems.
 =================================================
-"""
-import os
+"""import os
 import logging
 from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field

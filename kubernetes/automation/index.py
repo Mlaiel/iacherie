@@ -17,8 +17,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 ⚠️ LEGAL NOTICE: This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international copyright laws.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
@@ -55,8 +54,7 @@ class AutomationOrchestrator:
     This class provides high-level interfaces for deploying and managing
     the complete creator ecosystem including AI processing, content protection,
     and monetization services.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
         

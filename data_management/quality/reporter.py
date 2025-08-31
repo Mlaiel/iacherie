@@ -14,8 +14,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Quality data aggregation → Analytics processing → Report generation → 
 Trend analysis → Performance insights → Business intelligence → Strategic recommendations
-"""
-import logging
+"""import logging
 import json
 import pandas as pd
 import numpy as np

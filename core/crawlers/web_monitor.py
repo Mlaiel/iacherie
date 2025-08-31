@@ -7,8 +7,7 @@ de contenu protégé sur l'ensemble du web.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 from typing import Dict, List, Optional, Any, Set

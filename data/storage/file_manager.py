@@ -22,8 +22,7 @@ LOGIQUE MÉTIER:
 Content Upload → File Validation → Format Detection → 
 Security Scan → Storage Optimization → Fingerprint Generation → 
 Metadata Extraction → Multi-provider Storage → Access Control
-"""
-import asyncio
+"""import asyncio
 import logging
 import mimetypes
 import hashlib

@@ -5,8 +5,7 @@ performance based on access patterns, content characteristics, and business logi
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 import math
 import time

@@ -10,8 +10,7 @@ Features:
 - Release management with rollback capabilities
 - Repository management and chart distribution
 - Values templating and environment configuration
-"""
-import asyncio
+"""import asyncio
 import logging
 import os
 import tempfile
@@ -96,8 +95,7 @@ class HelmManager(BaseDeploymentManager):
     
     Manages Helm charts, releases, and repositories for the
     IA Influencer Agent platform with enterprise features.
-    """
-    def __init__(
+    """    def __init__(
         self,
         helm_binary: str = "helm",
         kubeconfig: Optional[str] = None,

@@ -27,8 +27,7 @@ Violators will face:
 - Immediate cease and desist enforcement
 
 Contact: mlaiel@live.de for any authorization requests.
-"""
-import json
+"""import json
 import secrets
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Set

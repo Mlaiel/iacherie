@@ -4,8 +4,7 @@ Concrete implementation of content surveillance methods for platform monitoring,
 content detection, and evidence collection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import aiohttp

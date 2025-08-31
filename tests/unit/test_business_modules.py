@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -24,8 +23,7 @@ Comprehensive unit tests for all business logic modules including:
 
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure business logic reliability and quality
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

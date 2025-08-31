@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests for comprehensive error handling, classification, and recovery mechanisms.
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,8 +43,7 @@ from crawlers.handlers.error_handler import (
 
 
 class TestCrawlerError:
-    """Test suite for CrawlerError class."""
-    def test_error_creation(self):
+    """Test suite for CrawlerError class."""    def test_error_creation(self):
         """Test error object creation."""        error = CrawlerError(
             error_id="test-001",
             message="Test error message",
@@ -104,8 +101,7 @@ class TestCrawlerError:
 
 
 class TestErrorClassifier:
-    """Test suite for ErrorClassifier class."""
-    def test_classifier_initialization(self):
+    """Test suite for ErrorClassifier class."""    def test_classifier_initialization(self):
         """Test classifier setup."""        classifier = ErrorClassifier()
         assert classifier.patterns is not None
         assert len(classifier.patterns) > 0
@@ -207,8 +203,7 @@ class TestErrorClassifier:
 
 
 class TestErrorRecoveryManager:
-    """Test suite for ErrorRecoveryManager class."""
-    def test_recovery_manager_initialization(self):
+    """Test suite for ErrorRecoveryManager class."""    def test_recovery_manager_initialization(self):
         """Test recovery manager setup."""        manager = ErrorRecoveryManager()
         assert manager.strategies is not None
         assert len(manager.strategies) > 0
@@ -347,8 +342,7 @@ class TestErrorRecoveryManager:
 
 
 class TestErrorAggregator:
-    """Test suite for ErrorAggregator class."""
-    def test_aggregator_initialization(self):
+    """Test suite for ErrorAggregator class."""    def test_aggregator_initialization(self):
         """Test aggregator setup."""        aggregator = ErrorAggregator()
         assert aggregator.error_buffer == []
         assert aggregator.stats is not None
@@ -473,8 +467,7 @@ class TestErrorAggregator:
 
 
 class TestIntegration:
-    """Integration tests for error handling system."""
-    @pytest.mark.asyncio
+    """Integration tests for error handling system."""    @pytest.mark.asyncio
     async def test_complete_error_handling_flow(self):
         """Test complete error handling pipeline."""        classifier = ErrorClassifier()
         recovery_manager = ErrorRecoveryManager()

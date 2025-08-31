@@ -3,8 +3,7 @@ Image fingerprinting with CLIP embeddings, perceptual hashing, and SIFT features
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 import hashlib
 from typing import Dict, Any, List, Optional, Tuple

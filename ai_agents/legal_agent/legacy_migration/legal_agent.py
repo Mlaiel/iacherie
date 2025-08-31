@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from datetime import datetime, timezone, timedelta
@@ -1081,8 +1080,7 @@ class LegalAgent(BaseAgent):
         - Legal compliance status  
         - Improvement recommendations
         - Potential issues or concerns
-        """
-    def _categorize_risk_level(self, risk_score: float) -> str:
+        """    def _categorize_risk_level(self, risk_score: float) -> str:
         """Categorize risk level based on score"""        if risk_score >= 0.8:
             return "CRITICAL"
         elif risk_score >= 0.6:

@@ -5,8 +5,7 @@ Provides type-safe interfaces and validation for all conversion operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Tuple
 from pathlib import Path
 from datetime import datetime, timedelta

@@ -1,8 +1,7 @@
 """Core Configuration for AI Agents Business Logic
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 

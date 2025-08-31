@@ -23,8 +23,7 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Notification & Alert System
 Copyright: Fahed Mlaiel - All rights reserved
-"""
-import os
+"""import os
 import sys
 import time
 import json

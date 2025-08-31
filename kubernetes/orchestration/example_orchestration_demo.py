@@ -11,8 +11,7 @@ This example demonstrates:
 - Multi-environment configuration
 - Monitoring and observability setup
 - Disaster recovery capabilities
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 import json
@@ -54,8 +53,7 @@ logger = logging.getLogger(__name__)
 
 class OrchestrationDemo:
     """    Demonstration class for IA Influencer Agent orchestration capabilities.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize demonstration environment."""        self.platform = OrchestrationPlatform()
         self.coordinator = OrchestrationCoordinator()
         

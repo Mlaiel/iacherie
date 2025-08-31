@@ -4,8 +4,7 @@ Main entry point for all data models and schemas
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-# Domain models
+"""# Domain models
 from .domain import (
     User,
     Creator,

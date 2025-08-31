@@ -1,5 +1,4 @@
-"""Utility functions for file validation and mime guessing."""
-import mimetypes
+"""Utility functions for file validation and mime guessing."""import mimetypes
 from typing import Tuple
 
 ALLOWED_MIME = {

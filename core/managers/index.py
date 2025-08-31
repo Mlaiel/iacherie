@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Application startup → Manager initialization → Service registration → 
 Health monitoring → Lifecycle management → Graceful shutdown
-"""
-from typing import Any, Dict, List, Optional, Union, Type, TypeVar
+"""from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 import logging
 import asyncio
 from datetime import datetime

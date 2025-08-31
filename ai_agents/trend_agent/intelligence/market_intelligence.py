@@ -24,8 +24,7 @@ Team Specialties:
 - Database Administrator & Security Expert: High-performance market data storage and protection
 - Microservices Architect & DevOps Engineer: Scalable market intelligence systems
 - AI Prompt Engineer & Content Protection: Intelligent market analysis and competitive insights
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time

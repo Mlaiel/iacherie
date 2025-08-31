@@ -13,8 +13,7 @@ This configuration system is the EXCLUSIVE property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum

@@ -1,5 +1,4 @@
-"""Rights anchoring on blockchain for permanent proof of ownership."""
-import hashlib
+"""Rights anchoring on blockchain for permanent proof of ownership."""import hashlib
 import json
 from typing import Dict, List
 from datetime import datetime

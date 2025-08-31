@@ -13,8 +13,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -81,7 +80,6 @@ This Language Manager now includes comprehensive support for:
 This enhancement transforms the system into the world's most comprehensive
 multilingual platform for content creators targeting African markets.
 """
-
 class SupportedLanguage(Enum):
     """Comprehensive supported languages and dialects for global content creators"""    
     # Major World Languages

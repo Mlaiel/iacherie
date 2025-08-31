@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Development environment configuration with debugging and local development optimizations.
 Handles multi-format content processing, AI fingerprinting, and monetization in dev mode.
 =====================================================
-"""
-import os
+"""import os
 import logging
 from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field

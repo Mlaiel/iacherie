@@ -3,8 +3,7 @@ Advanced image processing and optimization for web delivery
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import io
+"""import io
 import hashlib
 from typing import Dict, Any, Optional, List, Tuple, Union
 from PIL import Image, ImageOps, ImageFilter

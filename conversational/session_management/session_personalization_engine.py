@@ -12,8 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copy, modification, or distribution without 
 explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import numpy as np
@@ -115,8 +114,7 @@ class SessionPersonalizationContext:
     learning_insights: Dict[str, Any]
 
 class UserSessionPreferencesManager:
-    """Manages user session preferences with ML-powered learning"""
-    def __init__(self):
+    """Manages user session preferences with ML-powered learning"""    def __init__(self):
         self.cache_manager = CacheManager()
         self.encryption_manager = EncryptionManager()
         self.metrics = MetricsCollector("session_preferences")
@@ -451,8 +449,7 @@ class UserSessionPreferencesManager:
         )
 
 class AdaptiveSessionBehavior:
-    """Manages adaptive session behavior based on user preferences"""
-    def __init__(self):
+    """Manages adaptive session behavior based on user preferences"""    def __init__(self):
         self.metrics = MetricsCollector("adaptive_behavior")
         self.adaptation_strategies = {}
         self.behavior_models = {}
@@ -687,8 +684,7 @@ class AdaptiveSessionBehavior:
             return {'max_suggestions': 3, 'collaboration_score_threshold': 0.5}
 
 class PersonalizedConversationManager:
-    """Manages personalized conversation experiences"""
-    def __init__(self):
+    """Manages personalized conversation experiences"""    def __init__(self):
         self.preferences_manager = UserSessionPreferencesManager()
         self.adaptive_behavior = AdaptiveSessionBehavior()
         self.metrics = MetricsCollector("personalized_conversations")
@@ -914,8 +910,7 @@ class PersonalizedConversationManager:
             return 0.5
 
 class SessionPersonalizationEngine:
-    """Main engine for session personalization management"""
-    def __init__(self):
+    """Main engine for session personalization management"""    def __init__(self):
         self.preferences_manager = UserSessionPreferencesManager()
         self.conversation_manager = PersonalizedConversationManager()
         self.adaptive_behavior = AdaptiveSessionBehavior()

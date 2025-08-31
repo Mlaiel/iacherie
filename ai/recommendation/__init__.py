@@ -6,8 +6,7 @@ This module provides basic content and creator recommendation functionality.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Any, Dict, List, Optional
+"""from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 from enum import Enum
 

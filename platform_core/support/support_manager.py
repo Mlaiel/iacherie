@@ -14,8 +14,7 @@ Support intelligent avec IA et automatisation avancée
 - Live chat avec agents IA et humains
 - Knowledge base avec recherche sémantique
 - Analytics et KPIs de satisfaction client
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid

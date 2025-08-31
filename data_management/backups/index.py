@@ -11,8 +11,7 @@ Responsibility: Point d'entrée unifié pour le système de sauvegarde
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-from typing import Optional, Dict, Any, List, Union
+"""from typing import Optional, Dict, Any, List, Union
 import asyncio
 import logging
 from datetime import datetime

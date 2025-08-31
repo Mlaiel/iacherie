@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Content analysis → Regional detection → Legal framework mapping → Compliance validation → 
 Regulatory adherence → Data protection → Content filtering → Audit trail generation
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union, Set
 from datetime import datetime, timedelta

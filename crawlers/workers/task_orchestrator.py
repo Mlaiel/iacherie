@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Workflow definition → Dependency analysis → Intelligent scheduling → 
 Resource allocation → Parallel execution → Progress monitoring → Auto-recovery
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
 import logging
 import asyncio
 import networkx as nx
@@ -167,8 +166,7 @@ class TaskOrchestrator:
     - Adaptive resource allocation
     - Real-time monitoring and recovery
     - Performance optimization and learning
-    """
-    def __init__(self, orchestrator_id: str = None):
+    """    def __init__(self, orchestrator_id: str = None):
         self.orchestrator_id = orchestrator_id or str(uuid.uuid4())
         
         # Core components

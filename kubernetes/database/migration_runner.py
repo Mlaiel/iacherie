@@ -27,8 +27,7 @@ concept ou idée sans autorisation écrite explicite de Fahed Mlaiel
 sera poursuivie selon la loi allemande et internationale.
 
 Contact autorisé: mlaiel@live.de
-"""
-import os
+"""import os
 import re
 import hashlib
 import importlib.util
@@ -605,8 +604,7 @@ class MigrationRunner:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Created: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-"""
-# Migration metadata
+"""# Migration metadata
 DESCRIPTION = "{description or name.replace('_', ' ').title()}"
 DEPENDENCIES = {dependencies or []}
 IS_DATA_MIGRATION = {is_data_migration}

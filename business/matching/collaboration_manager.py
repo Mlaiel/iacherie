@@ -33,8 +33,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 - Permanent legal documentation and public disclosure of violation
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
 from dataclasses import dataclass, field

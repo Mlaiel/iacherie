@@ -9,8 +9,7 @@ WARNING: This code and concept are the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta, timezone

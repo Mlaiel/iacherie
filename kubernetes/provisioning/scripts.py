@@ -25,8 +25,7 @@ Architecture Components:
 - Backup and restore procedures
 - Monitoring and alerting setup
 - Security hardening and compliance
-"""
-import os
+"""import os
 import sys
 import json
 import yaml

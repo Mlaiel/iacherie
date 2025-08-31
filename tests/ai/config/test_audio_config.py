@@ -35,8 +35,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 
 Comprehensive test suite for AudioConfig module ensuring 100% audio quality,
 processing reliability, and professional mastering for musicians and content creators.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

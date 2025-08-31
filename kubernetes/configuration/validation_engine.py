@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade configuration validation with comprehensive rules.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 import re
 import ipaddress

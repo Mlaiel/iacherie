@@ -28,8 +28,7 @@ Project Team Specialties:
 - Audio Engineer: Audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: AI conversation optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta

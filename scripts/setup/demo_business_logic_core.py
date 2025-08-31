@@ -3,8 +3,7 @@ Shows the 53 AI agents working together in the finalized business workflow
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from business_logic_core import (
     BusinessLogicCore,
     ContentUpload, 

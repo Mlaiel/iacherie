@@ -17,8 +17,7 @@ All rights reserved © 2025 Fahed Mlaiel
 
 Team Expertise:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone

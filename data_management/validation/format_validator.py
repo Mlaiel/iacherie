@@ -14,8 +14,7 @@ Validation avancée des formats pour tous types de créateurs
 - Détection de corruption et intégrité
 - Validation headers et métadonnées
 - Support formats professionnels
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
 from pathlib import Path

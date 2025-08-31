@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import numpy as np
@@ -176,8 +175,7 @@ class BrandAgent(BaseAgent):
     - Brand consistency analysis
     - Reputation monitoring
     - Automated takedown requests
-    """
-    def __init__(self, agent_id: str = "brand_agent"):
+    """    def __init__(self, agent_id: str = "brand_agent"):
         super().__init__(agent_id)
         self.name = "Brand Protection Agent"
         self.description = "Advanced brand management and identity protection system"
@@ -892,8 +890,7 @@ class BrandAgentManager:
     
     Provides centralized management for brand protection operations,
     scheduled monitoring, and violation response automation.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.agents: Dict[str, BrandAgent] = {}
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
         self.violation_handlers: Dict[str, Callable] = {}

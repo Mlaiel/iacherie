@@ -22,8 +22,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Engineer: Professional audio processing and analysis
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union

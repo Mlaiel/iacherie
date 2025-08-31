@@ -4,8 +4,7 @@ Configuration settings and constants for the fingerprinting system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 from dataclasses import dataclass

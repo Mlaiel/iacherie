@@ -5,8 +5,7 @@ circuit breakers, and intelligent resource management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import time
 import statistics
 from datetime import datetime, timedelta

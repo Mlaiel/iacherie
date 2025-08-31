@@ -25,8 +25,7 @@ Business Logic: Creator Upload → Format Analysis → Quality Assessment → AI
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import tempfile
 import os

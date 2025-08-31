@@ -4,8 +4,7 @@ Comprehensive examples and usage patterns for the fingerprinting system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import os
 from pathlib import Path
 from typing import List, Dict, Any

@@ -29,8 +29,7 @@ This module provides:
 - Smart contract-based licensing and royalty distribution
 - Cross-chain verification for maximum security
 - Integration with IPFS for decentralized storage
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta

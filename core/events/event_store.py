@@ -10,8 +10,7 @@ Description:
     Système de stockage d'événements avec persistance, streams, snapshots
     et requêtes avancées pour la plateforme IA-Influencer-Agent.
     Support PostgreSQL et Redis pour performance optimale.
-"""
-from typing import Any, Dict, List, Optional, Union, AsyncGenerator
+"""from typing import Any, Dict, List, Optional, Union, AsyncGenerator
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

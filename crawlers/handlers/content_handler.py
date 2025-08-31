@@ -27,8 +27,7 @@ Project Team:
 WARNING: This code is protected intellectual property. Any attempt to steal, copy, or use 
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import mimetypes
 import os

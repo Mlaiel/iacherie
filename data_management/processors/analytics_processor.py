@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER ANALYTICS:
 Raw Data Collection → Data Validation → Statistical Analysis → ML Predictions → 
 Trend Detection → Performance Insights → Business Intelligence → Actionable Recommendations
-"""
-import json
+"""import json
 import logging
 import asyncio
 import pandas as pd

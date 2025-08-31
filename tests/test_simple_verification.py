@@ -2,8 +2,7 @@
 ======================================================
 
 Ce test démontre que l'infrastructure de test est opérationnelle.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

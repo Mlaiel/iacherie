@@ -22,8 +22,7 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
+"""from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
 from dataclasses import dataclass, field
 from enum import Enum
 import json

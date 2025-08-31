@@ -12,8 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -1419,7 +1418,6 @@ Email: mlaiel@live.de
 Powered by IA Influencer Agent Monetization Engine
 © 2025 Fahed Mlaiel. All rights reserved.
         """
-
 # Template validator
 class TemplateValidator:
     """Validator for legal template integrity and compliance."""    

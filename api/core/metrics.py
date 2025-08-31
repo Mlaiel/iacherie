@@ -3,8 +3,7 @@ Professional observability with comprehensive business and system metrics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable
+"""from typing import Any, Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

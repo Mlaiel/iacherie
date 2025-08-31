@@ -6,8 +6,7 @@ Handles automated screenshot capture, metadata extraction, and secure evidence s
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All Rights Reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, BytesIO
 from datetime import datetime, timedelta

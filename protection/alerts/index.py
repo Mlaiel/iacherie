@@ -7,8 +7,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Main API endpoint aggregator for the alert system.
 Provides centralized access to all alert-related services and operations.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta, timezone

@@ -4,8 +4,7 @@ Outil d'audit professionnel pour classifier et prioriser le code par impact mét
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 import re
 import json
 from pathlib import Path

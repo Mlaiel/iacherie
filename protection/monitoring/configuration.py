@@ -19,8 +19,7 @@ License: Proprietary - Unauthorized use strictly prohibited
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-import json
+"""import json
 from typing import Dict, Any, List
 from datetime import datetime
 

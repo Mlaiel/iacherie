@@ -10,8 +10,7 @@ Unauthorized use, copying or distribution prohibited.
 Professional evidence collection system for content violation cases.
 Captures screenshots, metadata, timestamps, and legal documentation
 for copyright protection and legal proceedings.
-"""
-import os
+"""import os
 import logging
 import hashlib
 import json

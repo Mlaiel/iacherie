@@ -17,8 +17,7 @@ Features:
 - Advanced pattern recognition
 - Comprehensive style analysis
 - Professional music insights
-"""
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn

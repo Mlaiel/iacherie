@@ -5,8 +5,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Analyser intelligent pour scanner et prioriser les implémentations par impact métier.
 Catégorise le code critique vs optionnel, business vs utilitaires, APIs externes vs logique interne.
-"""
-import os
+"""import os
 import re
 import ast
 import json
@@ -484,8 +483,7 @@ class TodoBusinessImpactAnalyzer:
             report += "*Aucun fichier critique avec faible implémentation trouvé.*\n"
         
         # Recommandations d'actions
-        report += """
----
+        report += """---
 
 ## 💡 RECOMMANDATIONS D'ACTIONS
 

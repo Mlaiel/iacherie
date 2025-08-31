@@ -20,8 +20,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • Security Expert : Cybersécurité & protection contenu
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
 from dataclasses import dataclass, asdict
@@ -181,8 +180,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
     - Industry trend analysis
     - Lead generation capabilities
     - Privacy-compliant data collection
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  username: Optional[str] = None,
                  password: Optional[str] = None,
                  access_token: Optional[str] = None,

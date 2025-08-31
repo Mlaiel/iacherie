@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Tâche créateur → Analyse priorité IA → Queue optimale → 
 Distribution workers → Monitoring execution → Retry intelligent → Résultat garanti
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager

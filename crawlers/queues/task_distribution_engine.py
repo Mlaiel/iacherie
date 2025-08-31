@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task analysis → Resource prediction → Agent selection → Load balancing → 
 Performance monitoring → Optimization → Analytics → Predictive scaling
-"""
-from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta

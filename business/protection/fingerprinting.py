@@ -13,8 +13,7 @@ prosecuted to the full extent of the law.
 Advanced AI-powered content fingerprinting system supporting multiple
 formats: audio, video, image, and text. Provides high-precision 
 similarity matching using state-of-the-art ML algorithms.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Protocol
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Protocol
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum

@@ -11,8 +11,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 import ipaddress
 from typing import Dict, List, Optional, Set, Union, Any, Tuple

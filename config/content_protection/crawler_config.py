@@ -13,8 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""
-from typing import Dict, Any, List, Optional, Set
+"""from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field
 from enum import Enum
 import os

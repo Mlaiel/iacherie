@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Infrastructure as Code templates for multi-cloud deployment.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 import yaml
 import json
@@ -501,8 +500,7 @@ spec:
       - type: Pods
         value: 2
         periodSeconds: 60
-"""
-    def _get_docker_compose_template(self) -> str:
+"""    def _get_docker_compose_template(self) -> str:
         """Get Docker Compose template"""        return """version: '3.8'
 
 services:
@@ -620,8 +618,7 @@ volumes:
 networks:
   app-network:
     driver: bridge
-"""
-    def _get_terraform_aws_template(self) -> str:
+"""    def _get_terraform_aws_template(self) -> str:
         """Get Terraform AWS template"""        return """terraform {
   required_version = ">= 1.0"
   required_providers {
@@ -922,8 +919,7 @@ output "vpc_id" {
   description = "ID of the VPC"
   value       = aws_vpc.main.id
 }
-"""
-    def _get_helm_chart_template(self) -> str:
+"""    def _get_helm_chart_template(self) -> str:
         """Get Helm chart template"""        return """apiVersion: v2
 name: {{ application_name }}
 description: A Helm chart for {{ application_name }}
@@ -940,8 +936,7 @@ dependencies:
     version: 17.x.x
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
-"""
-    def _get_ansible_playbook_template(self) -> str:
+"""    def _get_ansible_playbook_template(self) -> str:
         """Get Ansible playbook template"""        return """---
 - name: Deploy {{ application_name }}
   hosts: all
@@ -1077,8 +1072,7 @@ dependencies:
       systemd:
         name: nginx
         state: restarted
-"""
-    async def _generate_default_templates(self) -> None:
+"""    async def _generate_default_templates(self) -> None:
         """Generate additional default templates"""        
         # CI/CD pipeline templates
         await self._generate_cicd_templates()

@@ -14,8 +14,7 @@ Gestion des connexions WebSocket pour communication temps réel
 - Broadcasting intelligent multi-client
 - Reconnexion automatique et heartbeat
 - Gestion d'état avancée par session
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time

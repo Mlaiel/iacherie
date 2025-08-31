@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Data collection → Metrics aggregation → Pattern analysis → Performance insights → 
 Prediction modeling → Optimization recommendations → Automated reporting
-"""
-from typing import Any, Dict, List, Optional, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Tuple, Set
 import logging
 import asyncio
 from datetime import datetime, timedelta

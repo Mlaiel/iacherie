@@ -18,8 +18,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""
-import json
+"""import json
 import hashlib
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple, Set, Union

@@ -3,8 +3,7 @@ Content analytics, performance metrics, and insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status

@@ -12,8 +12,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is protected by international copyright law and trade secret law.
 Unauthorized reproduction, distribution, or reverse engineering is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization requests.
-"""
-import logging
+"""import logging
 from typing import Dict, Any, Optional
 
 # Import main licensing system

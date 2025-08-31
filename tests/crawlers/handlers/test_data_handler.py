@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests for data processing, validation, transformation, and storage.
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -49,8 +47,7 @@ from crawlers.handlers.data_handler import (
 
 
 class TestContentData:
-    """Test suite for ContentData model."""
-    def test_content_data_creation(self):
+    """Test suite for ContentData model."""    def test_content_data_creation(self):
         """Test content data object creation."""        data = ContentData(
             content_id="test-123",
             platform="youtube",
@@ -116,8 +113,7 @@ class TestContentData:
 
 
 class TestUserData:
-    """Test suite for UserData model."""
-    def test_user_data_creation(self):
+    """Test suite for UserData model."""    def test_user_data_creation(self):
         """Test user data object creation."""        data = UserData(
             user_id="user-123",
             username="testuser",
@@ -151,8 +147,7 @@ class TestUserData:
 
 
 class TestPlatformData:
-    """Test suite for PlatformData model."""
-    def test_platform_data_creation(self):
+    """Test suite for PlatformData model."""    def test_platform_data_creation(self):
         """Test platform data object creation."""        data = PlatformData(
             platform="youtube",
             api_version="v3",
@@ -168,8 +163,7 @@ class TestPlatformData:
 
 
 class TestValidationSchema:
-    """Test suite for ValidationSchema class."""
-    def test_schema_creation(self):
+    """Test suite for ValidationSchema class."""    def test_schema_creation(self):
         """Test validation schema creation."""        schema = ValidationSchema(
             name="content_schema",
             required_fields=["content_id", "platform", "title"],
@@ -218,8 +212,7 @@ class TestValidationSchema:
 
 
 class TestDataValidator:
-    """Test suite for DataValidator class."""
-    def test_validator_initialization(self):
+    """Test suite for DataValidator class."""    def test_validator_initialization(self):
         """Test validator setup."""        validator = DataValidator()
         assert validator.schemas is not None
         assert len(validator.schemas) > 0
@@ -305,8 +298,7 @@ class TestDataValidator:
 
 
 class TestTransformationRule:
-    """Test suite for TransformationRule class."""
-    def test_rule_creation(self):
+    """Test suite for TransformationRule class."""    def test_rule_creation(self):
         """Test transformation rule creation."""        rule = TransformationRule(
             name="normalize_platform",
             source_field="platform_name",
@@ -355,8 +347,7 @@ class TestTransformationRule:
 
 
 class TestDataTransformer:
-    """Test suite for DataTransformer class."""
-    def test_transformer_initialization(self):
+    """Test suite for DataTransformer class."""    def test_transformer_initialization(self):
         """Test transformer setup."""        transformer = DataTransformer()
         assert transformer.rules is not None
         assert len(transformer.rules) >= 0
@@ -469,8 +460,7 @@ class TestDataTransformer:
 
 
 class TestDataStorage:
-    """Test suite for DataStorage class."""
-    def test_storage_initialization(self):
+    """Test suite for DataStorage class."""    def test_storage_initialization(self):
         """Test storage setup."""        storage = DataStorage()
         assert storage.compression_manager is not None
         assert storage.encryption_manager is not None
@@ -672,8 +662,7 @@ class TestDataStorage:
 
 
 class TestIntegration:
-    """Integration tests for data handling system."""
-    @pytest.mark.asyncio
+    """Integration tests for data handling system."""    @pytest.mark.asyncio
     async def test_complete_data_processing_pipeline(self):
         """Test complete data processing from raw to stored."""        validator = DataValidator()
         transformer = DataTransformer()

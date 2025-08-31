@@ -13,8 +13,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone
 from typing import List, Dict, Any

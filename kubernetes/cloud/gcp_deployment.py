@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive GCP deployment and management capabilities
 for the IA Influencer Agent platform, including Compute Engine, Cloud Run,
 Cloud Functions, Cloud SQL, Cloud Storage, and other GCP services.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field

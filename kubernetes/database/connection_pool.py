@@ -9,8 +9,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-import time
+"""import time
 import threading
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime, timedelta

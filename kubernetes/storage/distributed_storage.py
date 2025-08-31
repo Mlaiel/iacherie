@@ -24,8 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Multi-format content → Distributed storage allocation → Replication strategy → 
 Load balancing → Fault tolerance → Performance optimization → Data consistency
-"""
-import logging
+"""import logging
 import asyncio
 import json
 import hashlib

@@ -1,8 +1,7 @@
 """Content Seeds Manager - Multi-format Content Initialization
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-from typing import Dict, List, Any, Optional, Union, Set, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta

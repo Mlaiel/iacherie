@@ -11,8 +11,7 @@ Email: mlaiel@live.de
 
 This module provides intelligent artist collaboration matching, project management,
 and collaborative content creation capabilities for the IA Influencer Agent platform.
-"""
-import logging
+"""import logging
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union, Tuple, Set

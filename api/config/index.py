@@ -4,8 +4,7 @@ Main entry point for all configuration management
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-# Core configuration classes
+"""# Core configuration classes
 from .app_config import AppConfig
 from .database_config import DatabaseConfig
 from .blockchain_config import BlockchainConfig

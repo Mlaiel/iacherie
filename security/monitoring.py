@@ -4,8 +4,7 @@ Provides comprehensive security monitoring, incident response tracking, and comp
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timezone, timedelta

@@ -13,8 +13,7 @@ prosecuted to the full extent of the law.
 Advanced blockchain-based consensus system for content ownership
 verification and immutable proof of creation. Provides decentralized
 validation of intellectual property rights with industrial-grade security.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, asdict
 from enum import Enum, IntEnum

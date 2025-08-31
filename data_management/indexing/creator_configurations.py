@@ -12,8 +12,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Any
+"""from typing import Dict, List, Any
 from dataclasses import dataclass
 from enum import Enum
 

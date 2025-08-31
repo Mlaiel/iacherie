@@ -9,8 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système d'agrégation d'événements avec processing temps réel,
     analytics et métriques pour la plateforme IA-Influencer-Agent.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

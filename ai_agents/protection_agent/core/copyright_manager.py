@@ -4,8 +4,7 @@ Handles copyright detection, DMCA compliance, and intellectual property protecti
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum

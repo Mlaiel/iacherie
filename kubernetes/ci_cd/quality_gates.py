@@ -7,8 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise quality gates validation system with comprehensive code analysis.
 Integrates linting, testing, security, and performance validation.
 ================================================================
-"""
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 import asyncio
 import logging
 import subprocess

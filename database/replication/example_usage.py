@@ -15,8 +15,7 @@ is strictly prohibited and may be subject to legal action.
 
 Usage:
     python example_usage.py
-"""
-import asyncio
+"""import asyncio
 import logging
 import os
 import signal

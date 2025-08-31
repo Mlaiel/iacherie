@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -48,8 +47,7 @@ class IntelligenceScope(Enum):
 class BusinessIntelligenceEngine:
     """    Advanced business intelligence engine for strategic partnership insights.
     Provides market analysis, competitive intelligence, and strategic recommendations.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.logger = logger
         self.market_data_sources = self._initialize_data_sources()
         self.intelligence_models = self._load_intelligence_models()

@@ -17,8 +17,7 @@ Business Logic Flow:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format content
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta

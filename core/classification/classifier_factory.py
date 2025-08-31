@@ -16,8 +16,7 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of German and international copyright law.
-"""
-import mimetypes
+"""import mimetypes
 from typing import Dict, List, Optional, Union, Any, Type
 import logging
 from pathlib import Path

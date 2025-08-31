@@ -7,8 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE
 Cette architecture est la propriété exclusive de Fahed Mlaiel.
 Contact: mlaiel@live.de
-"""
-# Agent de Base - Core Framework
+"""# Agent de Base - Core Framework
 from .base_agent import (
     BaseAIAgent,
     AgentCapability, 

@@ -3,8 +3,7 @@ Provides comprehensive insights into revenue, performance, and optimization oppo
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal
 from datetime import datetime, timedelta, date

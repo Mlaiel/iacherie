@@ -6,8 +6,7 @@ Provides comprehensive integrity validation, corruption detection, and consisten
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from typing import Dict, Any, List, Optional, Union, Tuple
+"""from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
 from datetime import datetime
@@ -60,8 +59,7 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from typing import Dict, Any, List, Optional, Union, Tuple, Set, Callable
+"""from typing import Dict, Any, List, Optional, Union, Tuple, Set, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta

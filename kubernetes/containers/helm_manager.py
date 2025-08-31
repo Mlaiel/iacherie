@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Helm chart management and Kubernetes deployment automation.
 Includes chart templating, dependency management, and release lifecycle.
-"""
-import os
+"""import os
 import yaml
 import json
 import asyncio

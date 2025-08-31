@@ -14,8 +14,7 @@ Infrastructure de communication microservices avancée
 - Traffic management et circuit breakers
 - Security policies et mTLS automatique
 - Observability complète et tracing distribué
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time

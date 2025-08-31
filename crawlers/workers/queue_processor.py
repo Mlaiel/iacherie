@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Queue ingestion → Priority analysis → Dead letter handling → 
 Batch processing → Distribution optimization → Recovery mechanisms → Monitoring
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
 import redis.asyncio as redis
@@ -136,8 +135,7 @@ class QueueProcessor:
     - Redis and RabbitMQ backends
     - Compression and encryption
     - Circuit breaker patterns
-    """
-    def __init__(self, config: QueueConfig, redis_url: str = "redis://localhost:6379"):
+    """    def __init__(self, config: QueueConfig, redis_url: str = "redis://localhost:6379"):
         self.config = config
         self.queue_name = config.queue_name
         self.redis_url = redis_url
@@ -784,8 +782,7 @@ class QueueProcessorManager:
     - Global metrics aggregation
     - Cross-queue load balancing
     - Centralized monitoring
-    """
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    """    def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.processors: Dict[str, QueueProcessor] = {}
         self.global_metrics: Dict[str, Any] = {}

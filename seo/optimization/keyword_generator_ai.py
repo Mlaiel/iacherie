@@ -5,8 +5,7 @@ for SEO optimization across different platforms and languages.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from dataclasses import dataclass
@@ -68,8 +67,7 @@ class KeywordResearchResult:
 class KeywordGeneratorAI:
     """    AI-powered keyword generator that creates comprehensive keyword strategies
     for content optimization and SEO campaigns.
-    """
-    def __init__(self, language: str = "en", region: str = "US"):
+    """    def __init__(self, language: str = "en", region: str = "US"):
         """        Initialize the keyword generator.
         
         Args:

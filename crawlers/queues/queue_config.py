@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Environment detection → Resource analysis → Performance profiling → Configuration generation →
 Security assessment → Optimization tuning → Monitoring setup → Dynamic adaptation
-"""
-import os
+"""import os
 import psutil
 import json
 import yaml

@@ -6,8 +6,7 @@ Validates that the key TODO items identified in the problem statement
 have been properly implemented with real functionality.
 
 Author: Copilot Assistant
-"""
-import os
+"""import os
 import sys
 
 def validate_ai_agent_implementations():

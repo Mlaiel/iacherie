@@ -6,8 +6,7 @@ Ensures GDPR, CCPA, copyright, and platform policy compliance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from typing import Dict, Any, List, Optional, Union, Set
+"""from typing import Dict, Any, List, Optional, Union, Set
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -59,8 +58,7 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from typing import Dict, Any, List, Optional, Union, Set, Tuple, Callable
+"""from typing import Dict, Any, List, Optional, Union, Set, Tuple, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta

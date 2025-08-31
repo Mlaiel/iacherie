@@ -15,8 +15,7 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""
-import re
+"""import re
 import hashlib
 import numpy as np
 import torch

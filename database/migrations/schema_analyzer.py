@@ -22,8 +22,7 @@ Advanced schema analysis for:
 ANALYSIS STRATEGY:
 Schema Discovery → Structure Analysis → Relationship Mapping → 
 Performance Impact → Evolution Tracking → Optimization Recommendations
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import re

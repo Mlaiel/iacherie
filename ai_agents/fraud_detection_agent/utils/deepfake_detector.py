@@ -5,8 +5,7 @@ advanced machine learning models for audio, video, and image analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import cv2

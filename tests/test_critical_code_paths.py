@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -14,8 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """Critical Code Path Tests for >85% Test Coverage Requirement
 Tests core business logic, security, and performance critical paths
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

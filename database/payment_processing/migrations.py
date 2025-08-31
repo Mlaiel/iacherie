@@ -11,8 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, Any, List, Optional, Callable
+"""from typing import Dict, Any, List, Optional, Callable
 from sqlalchemy import (
     text, MetaData, Table, Column, Integer, String, DateTime,
     Boolean, create_engine, inspect

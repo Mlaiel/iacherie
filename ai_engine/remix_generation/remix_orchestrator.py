@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Orchestrateur central des workflows de remix IA ultra-avancé
 TECHNOLOGIES: Workflow Engine, Pipeline Management, Resource Coordination, Quality Control
 LOGIQUE MÉTIER: Request → Analysis → Workflow Planning → Parallel Processing → Quality Control → Delivery
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable

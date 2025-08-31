@@ -20,8 +20,7 @@ Revenue Analytics → Optimization Recommendations
 MONETIZATION REPOSITORY ARCHITECTURE:
 Revenue Tracking → Payment Integration → Subscription Lifecycle → 
 Commission Management → Payout Processing → Analytics → Optimization
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

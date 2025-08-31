@@ -40,8 +40,7 @@ copyright law.
 
 Contact: Fahed Mlaiel (mlaiel@live.de)
 =============================================================================
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 import numpy as np
 from enum import Enum

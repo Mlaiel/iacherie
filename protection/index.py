@@ -34,8 +34,7 @@ development and contains the most advanced content protection technologies:
 UNAUTHORIZED ACCESS IS MAXIMUM CRIMINAL OFFENSE:
 Contact mlaiel@live.de for MANDATORY authorization before any interaction.
 All access attempts are permanently logged and legally monitored.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime

@@ -10,8 +10,7 @@ with intelligent tiering, multi-cloud support, and advanced features.
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator
+"""from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator
 import logging
 import asyncio
 from pathlib import Path

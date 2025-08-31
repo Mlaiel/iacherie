@@ -1,6 +1,5 @@
 """Market Analyzer - AI-powered market intelligence
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 from datetime import datetime
 import logging
 

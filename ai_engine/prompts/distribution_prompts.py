@@ -8,8 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""
-from typing import Dict, List, Optional, Tuple, Any, Union
+"""from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
 from datetime import datetime, timedelta

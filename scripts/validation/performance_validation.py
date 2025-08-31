@@ -8,8 +8,7 @@ Standalone validation script demonstrating all implemented enhancements:
 4. Monitoring & alerting setup
 
 Author: Performance Optimization Team
-"""
-import json
+"""import json
 import time
 from datetime import datetime
 

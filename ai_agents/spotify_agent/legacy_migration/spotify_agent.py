@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timezone, timedelta
@@ -117,8 +116,7 @@ class SpotifyAgent(BaseAgent):
     
     Provides comprehensive Spotify API integration with advanced analytics,
     machine learning-powered recommendations, and automated music marketing capabilities.
-    """
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    """    def __init__(self, config: Optional[Dict[str, Any]] = None):
         """Initialize Spotify Agent with advanced configuration"""        super().__init__(
             agent_type="spotify_agent",
             version="2.1.0",

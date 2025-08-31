@@ -16,8 +16,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Data input → Algorithm selection → Compression optimization → 
 Space efficiency → Performance tracking → Adaptive learning
-"""
-import asyncio
+"""import asyncio
 import logging
 import gzip
 import lz4.frame

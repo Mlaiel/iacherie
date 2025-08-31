@@ -3,8 +3,7 @@ Multi-algorithm audio fingerprinting with Chromaprint, Essentia, and spectral an
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import hashlib
 from typing import Dict, Any, List, Optional, Tuple
 from dataclasses import dataclass

@@ -16,8 +16,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strict
 Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, Any, Optional, List, Set
+"""from typing import Dict, Any, Optional, List, Set
 from dataclasses import dataclass, field
 from enum import Enum
 from decimal import Decimal

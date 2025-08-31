@@ -10,8 +10,7 @@ Team: Lead AI Developer & Digital Forensics Specialist
 This code is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Contact: mlaiel@live.de for authorization.
-"""
-from typing import List, Dict, Any, Optional, Union, Tuple
+"""from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 import json

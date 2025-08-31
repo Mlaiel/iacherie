@@ -1,8 +1,7 @@
 """Rights Tracking Data Models - Enterprise Database Schema
 Modèles de données avancés pour la gestion des droits d'auteur
 Système professionnel avec validation, sécurité et performance optimisées
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from dataclasses import dataclass, field

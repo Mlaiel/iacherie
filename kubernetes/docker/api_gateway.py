@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional API Gateway Docker configuration for high-performance
 multi-format content processing and real-time AI protection services.
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -148,8 +147,7 @@ EXPOSE {self.ssl_port}
 # Run with dumb-init for proper signal handling
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "server.js"]
-"""
-    def generate_docker_compose_service(self) -> Dict[str, Any]:
+"""    def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate docker-compose service configuration"""        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,

@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,8 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 """Unit tests for business logic modules
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -175,8 +173,7 @@ class MockMonetizationEngine:
 
 
 class TestAnalyticsEngine:
-    """Test cases for MockAnalyticsEngine"""
-    def setup_method(self):
+    """Test cases for MockAnalyticsEngine"""    def setup_method(self):
         """Setup test fixtures"""        self.analytics = MockAnalyticsEngine()
 
     @pytest.mark.asyncio
@@ -221,8 +218,7 @@ class TestAnalyticsEngine:
 
 
 class TestBillingEngine:
-    """Test cases for MockBillingEngine"""
-    def setup_method(self):
+    """Test cases for MockBillingEngine"""    def setup_method(self):
         """Setup test fixtures"""        self.billing = MockBillingEngine()
 
     @pytest.mark.asyncio
@@ -289,8 +285,7 @@ class TestBillingEngine:
 
 
 class TestMonetizationEngine:
-    """Test cases for MockMonetizationEngine"""
-    def setup_method(self):
+    """Test cases for MockMonetizationEngine"""    def setup_method(self):
         """Setup test fixtures"""        self.monetization = MockMonetizationEngine()
 
     @pytest.mark.asyncio
@@ -374,8 +369,7 @@ class TestMonetizationEngine:
 
 
 class TestIntegratedBusinessLogic:
-    """Test cases for integrated business logic scenarios"""
-    def setup_method(self):
+    """Test cases for integrated business logic scenarios"""    def setup_method(self):
         """Setup integrated test fixtures"""        self.analytics = MockAnalyticsEngine()
         self.billing = MockBillingEngine()
         self.monetization = MockMonetizationEngine()

@@ -14,8 +14,7 @@ Architecture Pattern: Configuration Management with Business Rules
 Processing Level: Enterprise Configuration Management
 Business Logic Integration: Complete Configuration Control
 Configuration Design: Multi-Environment with Business Context
-"""
-import os
+"""import os
 import json
 import yaml
 from datetime import datetime, timezone

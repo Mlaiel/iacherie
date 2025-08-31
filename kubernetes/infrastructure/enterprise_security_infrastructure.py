@@ -19,8 +19,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -112,8 +111,7 @@ class ComplianceConfig:
 
 @dataclass
 class EnterpriseSecurityInfrastructureSpec:
-    """Enterprise security infrastructure specification"""
-class EnterpriseSecurityInfrastructureManager:
+    """Enterprise security infrastructure specification"""class EnterpriseSecurityInfrastructureManager:
     """Enterprise-grade security infrastructure manager for IA Influencer platform"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client

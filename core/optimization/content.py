@@ -3,8 +3,7 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Advanced content optimization for distribution, SEO, metadata,
 and format optimization across multiple platforms.
-"""
-import asyncio
+"""import asyncio
 import json
 import re
 from typing import Dict, List, Optional, Any, Tuple

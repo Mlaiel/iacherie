@@ -13,8 +13,7 @@ prosecuted to the full extent of the law.
 Advanced licensing enforcement system for digital content protection.
 Provides automated license verification, violation detection, enforcement
 actions, and comprehensive legal compliance management.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Protocol, Set, AsyncIterator
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Protocol, Set, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum

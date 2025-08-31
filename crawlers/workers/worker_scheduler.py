@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task analysis → Dependency resolution → Resource calculation → 
 Priority assignment → Worker selection → Execution scheduling → Monitoring
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -122,8 +121,7 @@ class WorkerScheduler:
     - Constraint satisfaction
     - Performance prediction
     - Load balancing optimization
-    """
-    def __init__(self, worker_pool):
+    """    def __init__(self, worker_pool):
         self.worker_pool = worker_pool
         self.strategy = SchedulingStrategy.INTELLIGENT
         

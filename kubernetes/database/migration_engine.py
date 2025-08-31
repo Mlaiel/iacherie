@@ -62,8 +62,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Historique complet des migrations
 - Rapports de conformité automatiques
 - Analytics d'utilisation des ressources
-"""
-import asyncio
+"""import asyncio
 import os
 import hashlib
 import json

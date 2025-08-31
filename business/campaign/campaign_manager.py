@@ -10,8 +10,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is protected by copyright law. Unauthorized use, reproduction,
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
-"""
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from enum import Enum
 from dataclasses import dataclass

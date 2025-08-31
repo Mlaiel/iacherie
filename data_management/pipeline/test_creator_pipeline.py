@@ -9,8 +9,7 @@ explicite de l'auteur est strictement interdite et constitue une violation du
 droit d'auteur. Contact: mlaiel@live.de
 
 Tests complets pour valider le fonctionnement de la pipeline créateur
-"""
-import pytest
+"""import pytest
 import asyncio
 from unittest.mock import Mock, AsyncMock, patch
 from typing import Dict, Any

@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Currency input → Regional detection → Format conversion → Cultural adaptation → 
 Compliance validation → Exchange rate processing → Localized display
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime, timedelta

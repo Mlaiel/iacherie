@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive compliance management for the IA Influencer
 Agent platform, including GDPR, SOC2, HIPAA, ISO27001, and industry-specific
 regulations with automated compliance monitoring and reporting.
-"""
-import logging
+"""import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Union, Tuple

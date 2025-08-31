@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from dataclasses import dataclass
@@ -112,8 +111,7 @@ class QueueStats(BaseModel):
 class QueueManager:
     """    Enterprise queue management system
     Handles distributed task queuing, processing, and monitoring
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.redis_client: Optional[aioredis.Redis] = None
         self.queues: Dict[str, QueueConfiguration] = {}
         self.queue_stats: Dict[str, QueueStats] = {}

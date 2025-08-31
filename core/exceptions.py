@@ -2,7 +2,6 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 class AgentError(Exception):
     """Base exception for agent operations"""    pass
 

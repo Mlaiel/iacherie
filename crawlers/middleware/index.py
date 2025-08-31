@@ -16,8 +16,7 @@ Usage:
     
     # Create configured pipeline
     pipeline = MiddlewareRegistry.create_enterprise_pipeline()
-"""
-from typing import Dict, Any, Optional
+"""from typing import Dict, Any, Optional
 import logging
 from datetime import datetime
 

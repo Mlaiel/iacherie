@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -202,8 +201,7 @@ class BrandMonitor:
     - Crisis detection and alerts
     - Competitive intelligence
     - Automated reporting
-    """
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.monitoring_active = False
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
@@ -1055,8 +1053,7 @@ class ReputationTracker:
     """    Brand Reputation Tracking & Historical Analysis
     
     Tracks reputation changes over time and provides insights into brand health trends.
-    """
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.reputation_history: List[ReputationMetrics] = []
         

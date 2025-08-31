@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -61,8 +60,7 @@ class MetricType(Enum):
 class PartnerAnalyticsService:
     """    Advanced analytics service for partnership intelligence and insights.
     Provides comprehensive analytics, reporting, and predictive insights.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.logger = logger
         self.analytics_cache = {}
         self.benchmark_data = self._load_benchmark_data()

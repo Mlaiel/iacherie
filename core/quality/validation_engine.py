@@ -9,8 +9,7 @@ Compliance verification → Security checks → Validation report
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import json

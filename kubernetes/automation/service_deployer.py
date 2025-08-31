@@ -6,8 +6,7 @@ and microservices with intelligent rollout strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -99,8 +98,7 @@ class ServiceDeployer(BaseComponent):
     Handles deployment of microservices across the IA Influencer Agent platform
     with support for multiple deployment strategies, health validation, and
     automated rollbacks.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

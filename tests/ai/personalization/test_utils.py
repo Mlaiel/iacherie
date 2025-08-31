@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests data processing, validation, transformation, and configuration utilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -54,8 +52,7 @@ from ai.personalization.utils import (
 
 
 class TestDataValidator(IsolatedAsyncioTestCase):
-    """Comprehensive tests for DataProcessor utility"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for DataProcessor utility"""    async def asyncSetUp(self):
         """Set up test environment"""        self.processor = DataProcessor()
         self.test_data = self._generate_test_data()
 
@@ -216,8 +213,7 @@ class TestDataValidator(IsolatedAsyncioTestCase):
 
 
 class TestConfigManager(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ConfigManager utility"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ConfigManager utility"""    async def asyncSetUp(self):
         """Set up test environment"""        self.config_manager = ConfigManager()
         self.test_config = {
             'model': {
@@ -335,8 +331,7 @@ class TestConfigManager(IsolatedAsyncioTestCase):
 
 
 class TestValidationUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ValidationUtils"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ValidationUtils"""    async def asyncSetUp(self):
         """Set up test environment"""        self.validator = ValidationUtils()
 
     async def test_data_type_validation(self):
@@ -411,8 +406,7 @@ class TestValidationUtils(IsolatedAsyncioTestCase):
 
 
 class TestTransformationUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for TransformationUtils"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for TransformationUtils"""    async def asyncSetUp(self):
         """Set up test environment"""        self.transformer = TransformationUtils()
 
     async def test_data_normalization(self):
@@ -481,8 +475,7 @@ class TestTransformationUtils(IsolatedAsyncioTestCase):
 
 
 class TestCachingUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for CachingUtils"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for CachingUtils"""    async def asyncSetUp(self):
         """Set up test environment"""        self.cache = CachingUtils(max_size=100, ttl=3600)
 
     async def test_basic_caching(self):
@@ -554,8 +547,7 @@ class TestCachingUtils(IsolatedAsyncioTestCase):
 
 
 class TestSimilarityCalculator(IsolatedAsyncioTestCase):
-    """Comprehensive tests for SimilarityCalculator"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for SimilarityCalculator"""    async def asyncSetUp(self):
         """Set up test environment"""        self.calculator = SimilarityCalculator()
 
     async def test_cosine_similarity(self):
@@ -618,8 +610,7 @@ class TestSimilarityCalculator(IsolatedAsyncioTestCase):
 
 
 class TestFeatureEngineering(IsolatedAsyncioTestCase):
-    """Comprehensive tests for FeatureEngineering"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for FeatureEngineering"""    async def asyncSetUp(self):
         """Set up test environment"""        self.feature_engineer = FeatureEngineering()
 
     async def test_polynomial_features(self):
@@ -713,8 +704,7 @@ class TestFeatureEngineering(IsolatedAsyncioTestCase):
 
 
 class TestPerformanceUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PerformanceUtils"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for PerformanceUtils"""    async def asyncSetUp(self):
         """Set up test environment"""        self.perf_utils = PerformanceUtils()
 
     async def test_timing_decorator(self):
@@ -795,8 +785,7 @@ class TestPerformanceUtils(IsolatedAsyncioTestCase):
 
 
 class TestSecurityUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for SecurityUtils"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for SecurityUtils"""    async def asyncSetUp(self):
         """Set up test environment"""        self.security = SecurityUtils()
 
     async def test_data_encryption(self):
@@ -876,8 +865,7 @@ class TestSecurityUtils(IsolatedAsyncioTestCase):
 
 
 class TestUtilsPerformanceAndIntegration(IsolatedAsyncioTestCase):
-    """Performance and integration tests for utilities"""
-    async def test_large_dataset_processing(self):
+    """Performance and integration tests for utilities"""    async def test_large_dataset_processing(self):
         """Test utility performance on large datasets"""        processor = DataProcessor()
         
         # Generate large dataset

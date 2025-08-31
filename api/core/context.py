@@ -3,8 +3,7 @@ Professional context tracking with correlation IDs and user sessions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, Optional, Union
+"""from typing import Any, Dict, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from contextvars import ContextVar

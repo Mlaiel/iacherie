@@ -1166,8 +1166,7 @@ class PipelineOptimizer:
     - Data ETL and transformation pipelines
     - Multi-stage content protection workflows
     - SEO and monetization processing chains
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.pipeline_monitor = PipelineMonitor()
         self.workflow_analyzer = WorkflowAnalyzer()
@@ -1876,8 +1875,7 @@ class PipelineOptimizer:
 class WorkflowOptimizer:
     """    Specialized optimizer for complex multi-step workflows.
     Focuses on end-to-end workflow efficiency and user experience.
-    """
-    def __init__(self, pipeline_optimizer: PipelineOptimizer):
+    """    def __init__(self, pipeline_optimizer: PipelineOptimizer):
         self.pipeline_optimizer = pipeline_optimizer
         self.workflow_patterns = {}
         
@@ -1932,8 +1930,7 @@ class WorkflowOptimizer:
 class DataPipelineOptimizer:
     """    Specialized optimizer for data processing and ETL pipelines.
     Handles large-scale data transformations and analytics workflows.
-    """
-    def __init__(self, pipeline_optimizer: PipelineOptimizer):
+    """    def __init__(self, pipeline_optimizer: PipelineOptimizer):
         self.pipeline_optimizer = pipeline_optimizer
         
     async def optimize_etl_pipeline(
@@ -1951,8 +1948,7 @@ class DataPipelineOptimizer:
 class MLPipelineOptimizer:
     """    Specialized optimizer for machine learning pipelines.
     Handles model training, inference, and deployment optimizations.
-    """
-    def __init__(self, pipeline_optimizer: PipelineOptimizer):
+    """    def __init__(self, pipeline_optimizer: PipelineOptimizer):
         self.pipeline_optimizer = pipeline_optimizer
         
     async def optimize_model_training_pipeline(
@@ -1979,8 +1975,7 @@ class MLPipelineOptimizer:
 class ProcessingOptimizer:
     """    General-purpose processing optimizer for various computational tasks.
     Focuses on CPU, memory, and I/O efficiency.
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
     async def optimize_batch_processing(

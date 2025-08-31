@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive content optimization capabilities for improving
 engagement, SEO, and performance across multiple platforms and content types.
-"""
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field

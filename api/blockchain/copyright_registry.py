@@ -4,8 +4,7 @@ Blockchain-based intellectual property protection and rights management
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import hashlib
+"""import hashlib
 import json
 import logging
 from datetime import datetime, timezone

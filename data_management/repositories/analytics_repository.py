@@ -20,8 +20,7 @@ Real-time Dashboards → Growth Strategy Planning
 ANALYTICS REPOSITORY ARCHITECTURE:
 Data Collection → Metrics Calculation → Trend Analysis → 
 Predictive Modeling → Insight Generation → Visualization → Recommendations
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

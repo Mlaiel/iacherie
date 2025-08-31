@@ -20,8 +20,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • Security Expert : Cybersécurité & protection contenu
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
 from dataclasses import dataclass, asdict
@@ -181,8 +180,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
     - Advanced analytics and insights
     - Rate limiting and quota management
     - Content classification and filtering
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  access_token: Optional[str] = None,
                  app_id: Optional[str] = None,
                  app_secret: Optional[str] = None,

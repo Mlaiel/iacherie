@@ -12,8 +12,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass

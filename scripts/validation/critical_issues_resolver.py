@@ -4,8 +4,7 @@ Automatically fixes critical business files with issues to address the 991 criti
 
 Author: GitHub Copilot Assistant
 Purpose: Address critical business issues affecting revenue generation
-"""
-import os
+"""import os
 import re
 import json
 import logging

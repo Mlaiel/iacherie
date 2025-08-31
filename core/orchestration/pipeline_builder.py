@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Callable, Union, Set, Type
@@ -85,8 +84,7 @@ class PipelineBuilder:
     - AI-powered optimization
     - Dependency resolution
     - Performance profiling
-    """
-    def __init__(self, logger: Optional[logging.Logger] = None):
+    """    def __init__(self, logger: Optional[logging.Logger] = None):
         """Initialize the pipeline builder."""        self.logger = logger or logging.getLogger(__name__)
         self.templates: Dict[str, PipelineTemplate] = {}
         self.stage_handlers: Dict[str, Type] = {}

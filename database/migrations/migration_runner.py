@@ -22,8 +22,7 @@ Advanced migration execution engine supporting:
 EXECUTION LOGIC PIPELINE:
 Pre-execution Validation → Resource Allocation → Parallel Execution → 
 Performance Monitoring → Data Integrity Verification → Post-execution Cleanup
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Union, Any, Callable, Set

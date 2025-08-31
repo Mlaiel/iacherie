@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER ANALYTICS:
 Événement → Collecte → Agrégation → Analyse → Insights → 
 Prédictions → Recommandations → Actions → ROI
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from dataclasses import dataclass, field

@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, List, Optional, Set, Any, Callable, Pattern
+"""from typing import Dict, List, Optional, Set, Any, Callable, Pattern
 from dataclasses import dataclass, field
 from enum import Enum
 import re

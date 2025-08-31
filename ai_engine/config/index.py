@@ -32,8 +32,7 @@ User (musician/blogger/photographer/influencer/comedian)
 
 This index module provides centralized access to all configuration components
 with ultra-advanced initialization, validation, and management capabilities.
-"""
-import os
+"""import os
 import asyncio
 import logging
 from pathlib import Path

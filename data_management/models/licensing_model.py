@@ -15,8 +15,7 @@ Email: mlaiel@live.de
 BUSINESS LOGIC:
 Content Creation → Rights Definition → License Generation → 
 Contract Management → Revenue Distribution → Compliance Monitoring
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum

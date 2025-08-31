@@ -25,8 +25,7 @@ This intelligence algorithms system index is the EXCLUSIVE property of Fahed Mla
 ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
 Contact: mlaiel@live.de for legal authorization inquiries only.
-"""
-import asyncio
+"""import asyncio
 import logging
 import sys
 import os

@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC CREATOR PIPELINE:
 Registration → Profile Setup → Verification → Content Creation → AI Analytics → 
 Protection Management → Collaboration → Monetization → Growth Analytics
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field

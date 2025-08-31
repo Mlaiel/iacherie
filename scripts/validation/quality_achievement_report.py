@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Quality Requirements Achievement Report
 Documents compliance with all production quality requirements
-"""
-import json
+"""import json
 import os
 from pathlib import Path
 from datetime import datetime

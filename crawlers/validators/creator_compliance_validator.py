@@ -20,8 +20,7 @@ Features:
 - Copyright and licensing compliance verification
 - Brand safety and advertiser-friendly content validation
 - Age restriction and content rating assessment
-"""
-import re
+"""import re
 import json
 from enum import Enum
 from typing import Dict, List, Any, Optional, Union, Tuple, Set

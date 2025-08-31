@@ -21,8 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-import time
+"""import time
 import psutil
 import threading
 from collections import defaultdict, deque

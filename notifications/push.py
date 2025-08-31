@@ -1,5 +1,4 @@
-"""Enterprise push notification service with multi-platform support and rich content."""
-import os
+"""Enterprise push notification service with multi-platform support and rich content."""import os
 import json
 import aiohttp
 import asyncio
@@ -87,8 +86,7 @@ class PushDeliveryResult:
 
 
 class PushNotifier:
-    """Enterprise push notification service with multi-platform support and analytics."""
-    def __init__(self):
+    """Enterprise push notification service with multi-platform support and analytics."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         

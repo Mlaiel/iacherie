@@ -12,8 +12,7 @@ This module provides:
 - Evidence collection and validation
 - Risk assessment and prioritization
 - Legal compliance analysis
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from dataclasses import dataclass

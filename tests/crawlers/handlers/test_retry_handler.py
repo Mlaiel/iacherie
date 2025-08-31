@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests for intelligent retry mechanisms, adaptive learning, and circuit breakers.
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -43,8 +41,7 @@ from crawlers.handlers.retry_handler import (
 
 
 class TestRetryConfig:
-    """Test suite for RetryConfig class."""
-    def test_config_creation(self):
+    """Test suite for RetryConfig class."""    def test_config_creation(self):
         """Test retry configuration creation."""        config = RetryConfig(
             max_attempts=5,
             base_delay=1.0,
@@ -95,8 +92,7 @@ class TestRetryConfig:
 
 
 class TestBackoffCalculator:
-    """Test suite for BackoffCalculator class."""
-    def test_calculator_initialization(self):
+    """Test suite for BackoffCalculator class."""    def test_calculator_initialization(self):
         """Test calculator setup."""        calc = BackoffCalculator()
         assert calc.base_delay == 1.0
         assert calc.max_delay == 300.0
@@ -187,8 +183,7 @@ class TestBackoffCalculator:
 
 
 class TestCircuitBreaker:
-    """Test suite for CircuitBreaker class."""
-    def test_circuit_breaker_initialization(self):
+    """Test suite for CircuitBreaker class."""    def test_circuit_breaker_initialization(self):
         """Test circuit breaker setup."""        cb = CircuitBreaker(
             failure_threshold=5,
             recovery_timeout=30.0,
@@ -294,8 +289,7 @@ class TestCircuitBreaker:
 
 
 class TestAdaptiveRetryManager:
-    """Test suite for AdaptiveRetryManager class."""
-    def test_manager_initialization(self):
+    """Test suite for AdaptiveRetryManager class."""    def test_manager_initialization(self):
         """Test retry manager setup."""        manager = AdaptiveRetryManager()
         assert manager.calculator is not None
         assert manager.circuit_breaker is not None
@@ -482,8 +476,7 @@ class TestAdaptiveRetryManager:
 
 
 class TestIntegration:
-    """Integration tests for retry handling system."""
-    @pytest.mark.asyncio
+    """Integration tests for retry handling system."""    @pytest.mark.asyncio
     async def test_complete_retry_flow(self):
         """Test complete retry flow with all components."""        manager = AdaptiveRetryManager()
         

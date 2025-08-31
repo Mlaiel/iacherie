@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER METADATA PROCESSOR:
 Content Input → Format Detection → Technical Metadata → Content Metadata → 
 AI-Enhanced Metadata → Privacy Analysis → Enrichment → Standardization
-"""
-import os
+"""import os
 import json
 import hashlib
 from typing import Dict, List, Optional, Any, Union, Tuple

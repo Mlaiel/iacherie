@@ -23,8 +23,7 @@ SUPPORTS TRANSFORMATIONS:
 🎬 Vidéo: MP4↔AVI↔MOV, Compression, Resolution, Frame Rate
 📸 Images: JPG↔PNG↔WEBP, Optimization, HDR, Super Resolution
 📝 Texte: Format Conversion, SEO Enhancement, Translation
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
+"""from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime

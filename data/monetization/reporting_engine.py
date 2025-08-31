@@ -9,8 +9,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -531,8 +530,7 @@ class ReportingEngine:
             </div>
         </body>
         </html>
-        """
-    def _get_detailed_template(self) -> str:
+        """    def _get_detailed_template(self) -> str:
         """Get detailed revenue HTML template"""        return """        <html>
         <head>
             <title>{{ report.title }}</title>
@@ -555,8 +553,7 @@ class ReportingEngine:
             {% endfor %}
         </body>
         </html>
-        """
-    def _get_html_template(self) -> str:
+        """    def _get_html_template(self) -> str:
         """Get general HTML template"""        return self._get_detailed_template()
 
     def _generate_report_title(self, config: ReportConfiguration) -> str:

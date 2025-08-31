@@ -19,8 +19,7 @@ AI Skill Analysis → Collaboration Matching → Portfolio Management → Revenu
 CREATOR REPOSITORY ARCHITECTURE:
 Profile Creation → Skill Analysis → Portfolio Tracking → Collaboration Matching → 
 Performance Analytics → Revenue Management → AI Recommendations
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import hashlib
 import asyncio

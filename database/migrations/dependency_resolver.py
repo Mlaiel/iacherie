@@ -22,8 +22,7 @@ Advanced dependency resolution for:
 DEPENDENCY RESOLUTION LOGIC:
 Migration Discovery → Dependency Analysis → Conflict Detection → 
 Resolution Planning → Execution Ordering → Parallel Optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from dataclasses import dataclass, field

@@ -14,8 +14,7 @@ legal action. Contact mlaiel@live.de for licensing.
 ⚠️ STRICT COPYRIGHT PROTECTION ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import traceback

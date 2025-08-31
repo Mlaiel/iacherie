@@ -10,8 +10,7 @@ Copyright: Tous droits réservés. Utilisation non autorisée strictement interd
 AVERTISSEMENT: Ce code est propriétaire et confidentiel. Toute utilisation,
 modification ou distribution non autorisée est strictement interdite.
 Contact: mlaiel@live.de pour les demandes de licence.
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 import logging
 from datetime import datetime
 

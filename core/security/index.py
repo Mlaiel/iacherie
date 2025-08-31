@@ -8,8 +8,7 @@ the application.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""
-from typing import Dict, Any, Optional, Type
+"""from typing import Dict, Any, Optional, Type
 import logging
 
 # Core Security Components

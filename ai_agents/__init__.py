@@ -20,8 +20,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass

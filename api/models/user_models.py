@@ -12,8 +12,7 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from datetime import datetime, timezone
+"""from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from sqlalchemy import (
     String, Text, Boolean, DateTime, Integer, Numeric,

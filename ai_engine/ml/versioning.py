@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive model versioning capabilities including
 version management, experiment tracking, and A/B testing infrastructure.
-"""
-import logging
+"""import logging
 import json
 import hashlib
 import os

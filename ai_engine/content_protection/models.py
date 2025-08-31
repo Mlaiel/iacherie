@@ -23,8 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - AI Prompt Engineer
 
 Contact: Fahed Mlaiel <mlaiel@live.de>
-"""
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum

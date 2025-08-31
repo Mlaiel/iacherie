@@ -20,8 +20,7 @@ Features:
 - Royalty distribution validation and tracking
 - Content performance optimization recommendations
 - Licensing and rights management validation
-"""
-import re
+"""import re
 import json
 import hashlib
 from enum import Enum

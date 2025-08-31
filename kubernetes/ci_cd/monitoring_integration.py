@@ -7,8 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise monitoring and observability integration for CI/CD pipeline.
 Comprehensive metrics collection, alerting, and dashboard management.
 ================================================================
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 import json

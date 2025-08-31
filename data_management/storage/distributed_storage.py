@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 - ML Engineer: Fahed Mlaiel
 - DBA: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import logging
 import asyncio
 import hashlib

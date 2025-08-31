@@ -27,8 +27,7 @@ This business conversation optimization system contains proprietary algorithms
 for revenue optimization and creator business intelligence. Unauthorized use,
 copying, or reverse engineering is strictly prohibited and legally prosecuted.
 Contact: mlaiel@live.de for legal authorization inquiries only.
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd

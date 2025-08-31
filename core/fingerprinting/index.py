@@ -4,8 +4,7 @@ Central index for fingerprinting system components and utilities
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-from typing import Dict, List, Type, Any
+"""from typing import Dict, List, Type, Any
 import logging
 
 # Import all fingerprinting components

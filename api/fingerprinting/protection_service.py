@@ -8,8 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Advanced content protection service orchestrating fingerprinting and monitoring
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone
 from pathlib import Path

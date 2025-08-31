@@ -14,8 +14,7 @@ Système de gestion sécurisée des moyens de paiement clients
 - Gestion multi-cartes et comptes bancaires
 - Validation en temps réel et scoring de risque
 - Backup automatique et retry intelligent
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid

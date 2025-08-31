@@ -10,8 +10,7 @@ This module ensures business continuity during disasters and disruptions:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
@@ -106,8 +105,7 @@ class BusinessContinuityManager:
     - Automated graceful degradation
     - Creator workflow preservation
     - Real-time business impact analysis
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)

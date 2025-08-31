@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Simple validation script for enhanced multilingual support
-"""
-import json
+"""import json
 import os
 
 def test_ui_translations_enhanced():

@@ -8,8 +8,7 @@ the platform's quality. It addresses the critical issue:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Provide centralized unit test execution and quality validation
-"""
-import subprocess
+"""import subprocess
 import sys
 import os
 from pathlib import Path

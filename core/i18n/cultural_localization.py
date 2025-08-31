@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Content analysis → Cultural context detection → Regional preferences → 
 Hofstede dimensions → Communication style adaptation → Cultural compliance
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime, timezone

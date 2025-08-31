@@ -12,8 +12,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""
-from typing import Dict, Any
+"""from typing import Dict, Any
 from dataclasses import dataclass
 from enum import Enum
 

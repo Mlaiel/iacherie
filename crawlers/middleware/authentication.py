@@ -6,8 +6,7 @@ Implements JWT validation, API key management, and multi-factor authentication.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import time
 from datetime import datetime, timedelta

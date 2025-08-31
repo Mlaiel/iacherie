@@ -13,8 +13,7 @@ Project Team Specialists: Lead AI Dev, Backend Senior, ML Engineer, DBA, Securit
 This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
-"""
-from typing import Dict, Any, List, Optional, Union, Tuple
+"""from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum

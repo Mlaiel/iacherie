@@ -8,8 +8,7 @@ Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Securit
 ⚠️ INTELLECTUAL PROPERTY WARNING:
 This watermarking system and all associated code are the exclusive intellectual property 
 of Fahed Mlaiel. Unauthorized use is strictly prohibited.
-"""
-from .service_manager import (
+"""from .service_manager import (
     WatermarkServiceManager,
     WatermarkRequest, 
     WatermarkResponse,

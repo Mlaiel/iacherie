@@ -23,8 +23,7 @@ Advanced Content Protection System for multi-format creators implementing:
 - Advanced threat detection and prevention
 - Legal compliance and evidence collection
 ================================================================
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
+"""from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto

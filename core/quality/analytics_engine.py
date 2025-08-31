@@ -9,8 +9,7 @@ Predictive modeling → Insights generation → Performance optimization
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import statistics
 import math
 from datetime import datetime, timezone, timedelta

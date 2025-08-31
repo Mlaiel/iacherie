@@ -5,8 +5,7 @@ pour la plateforme IA Influencer Agent.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer, Backend Senior, DevOps Engineer, Database Architect
-"""
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON
+"""from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship

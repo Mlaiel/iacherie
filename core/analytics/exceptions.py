@@ -22,8 +22,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-from typing import Dict, Any, Optional, List
+"""from typing import Dict, Any, Optional, List
 from datetime import datetime
 from enum import Enum
 

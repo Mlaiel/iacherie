@@ -5,8 +5,7 @@ using machine learning algorithms and semantic analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -80,8 +79,7 @@ class MatchingEngine:
     - Opportunity matching based on skills and preferences
     - Semantic similarity analysis for content discovery
     - Multi-factor matching with explainable AI
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize matching engine.
         
         Args:

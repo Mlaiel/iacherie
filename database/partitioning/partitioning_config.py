@@ -24,8 +24,7 @@ Any use, copying, distribution, or exploitation without explicit written authori
 and will be prosecuted to the full extent of the law. Legal action will be taken against violators.
 
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
-"""
-import json
+"""import json
 from typing import Dict, Any
 
 # Ultra-industrial partitioning configuration for IA Influencer Agent platform

@@ -18,8 +18,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This proprietary monetization technology and revenue algorithms belong exclusively
 to Fahed Mlaiel. Any unauthorized use, copying, or commercial exploitation without
 explicit written permission will result in immediate legal action and financial penalties.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP

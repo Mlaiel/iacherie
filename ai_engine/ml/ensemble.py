@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive ensemble learning capabilities including
 model blending, voting systems, stacking, and advanced ensemble techniques.
-"""
-import logging
+"""import logging
 import numpy as np
 import copy
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable

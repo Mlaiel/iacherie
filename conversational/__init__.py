@@ -75,8 +75,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This revolutionary AI platform and all intellectual property are EXCLUSIVELY owned by Fahed Mlaiel.
 ANY UNAUTHORIZED USE IS STRICTLY PROHIBITED and will result in immediate legal prosecution.
 Contact: mlaiel@live.de for legal authorization only.
-"""
-# Core conversational infrastructure - Production-ready enterprise modules
+"""# Core conversational infrastructure - Production-ready enterprise modules
 from .context_tracking import (
     ConversationContextManager,
     ContextTracker,

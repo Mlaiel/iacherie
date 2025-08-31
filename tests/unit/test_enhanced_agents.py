@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -20,8 +19,7 @@ Validation script to test the enhanced AI agent implementations with
 advanced business logic and comprehensive functionality.
 
 Author: Copilot Assistant
-"""
-import asyncio
+"""import asyncio
 import sys
 import os
 from datetime import datetime

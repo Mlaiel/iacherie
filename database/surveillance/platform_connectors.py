@@ -6,8 +6,7 @@ Provides specialized integration with major social media and content platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All Rights Reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime, timedelta

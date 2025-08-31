@@ -18,8 +18,7 @@ Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
 Project: IA Influencer Agent - Ultra-Advanced Industrial Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Legal Automation
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json

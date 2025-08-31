@@ -37,8 +37,7 @@ Business Logic Flow:
 Creator Profile Analysis → AI Compatibility Matching → Collaboration Proposal → 
 Project Setup → Resource Sharing → Content Co-Creation → Quality Assurance → 
 Revenue Distribution → Performance Analytics → Relationship Management
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import numpy as np

@@ -15,8 +15,7 @@ and will result in legal action. This includes but is not limited to:
 - Commercial use without explicit written permission
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-import logging
+"""import logging
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union, Set, Tuple

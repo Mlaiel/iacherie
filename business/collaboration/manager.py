@@ -3,8 +3,7 @@ Professional collaboration management and orchestration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 import asyncio
 import logging

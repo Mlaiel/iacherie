@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -65,8 +64,7 @@ class MatchingAlgorithm(Enum):
 class OpportunityFinderService:
     """    Advanced AI-powered opportunity discovery service for partnerships.
     Uses machine learning to identify, score, and prioritize partnership opportunities.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.logger = logger
         self.matching_algorithms = self._initialize_matching_algorithms()
         self.opportunity_database = self._initialize_opportunity_database()

@@ -18,8 +18,7 @@ Professional Development Team Specialties:
 🥇 Database Administrator & Security Expert - Data protection and performance
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
-"""
-import os
+"""import os
 import json
 import yaml
 from typing import Dict, Any, Optional, Union, List

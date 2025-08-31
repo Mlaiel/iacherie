@@ -25,8 +25,7 @@ strictly prohibited and may result in severe legal action under German
 and international copyright laws.
 
 Specialization: Financial Technology Integration & Payment Systems Architecture
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import os
@@ -136,8 +135,7 @@ class PaymentGatewayDeploymentManager:
     - Multi-currency support
     - Compliance and regulatory adherence
     - Advanced security measures
-    """
-    def __init__(self, config_path: Optional[str] = None):
+    """    def __init__(self, config_path: Optional[str] = None):
         """Initialize the payment gateway deployment manager."""        self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()

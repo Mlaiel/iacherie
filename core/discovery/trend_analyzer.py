@@ -30,8 +30,7 @@ Features:
 - Emerging trend early detection
 - Trend impact assessment on creator success
 - Geographic trend distribution analysis
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union

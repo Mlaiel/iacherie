@@ -4,8 +4,7 @@ Handles copyright protection, content fingerprinting, watermarking, and rights m
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-from typing import Dict, List, Any, Optional, Union
+"""from typing import Dict, List, Any, Optional, Union
 from datetime import datetime, timedelta
 import asyncio
 import uuid

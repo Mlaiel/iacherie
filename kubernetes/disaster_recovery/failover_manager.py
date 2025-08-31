@@ -10,8 +10,7 @@ This module provides intelligent failover capabilities for content protection pl
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Callable
@@ -99,8 +98,7 @@ class FailoverManager:
     - Multi-region disaster recovery coordination
     - Automated rollback on failover failure
     - Service dependency chain management
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)

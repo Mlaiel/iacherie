@@ -24,8 +24,7 @@ Team Specialties:
 - Microservices Architect & Database Expert
 - DevOps Engineer & Security Specialist
 - Audio Processing & Multimedia Expert
-"""
-from .gamification_agent import GamificationAgent, GamificationConfig
+"""from .gamification_agent import GamificationAgent, GamificationConfig
 from .challenge_ai import ChallengeGenerator, ChallengeConfig
 from .reward_optimization_ai import RewardOptimizer, RewardConfig
 from .user_engagement_predictor import EngagementPredictor, EngagementConfig

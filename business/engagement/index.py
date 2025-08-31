@@ -26,8 +26,7 @@ For licensing inquiries ONLY: mlaiel@live.de
 Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching + Gamification → Multi-platform Distribution → Revenue Optimization → Analytics
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta

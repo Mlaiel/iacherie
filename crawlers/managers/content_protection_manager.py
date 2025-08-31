@@ -19,8 +19,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib

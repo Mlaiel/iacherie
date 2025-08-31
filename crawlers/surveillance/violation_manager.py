@@ -21,8 +21,7 @@ legal action. Contact mlaiel@live.de for authorization.
 Professional violation management system implementing comprehensive violation detection,
 classification, response automation, and legal documentation for all creator types
 across multiple digital platforms.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
 from dataclasses import dataclass, field

@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Engine de fusion de genres musicaux ultra-avancé avec IA
 TECHNOLOGIES: Deep Learning, Neural Genre Classification, Spectral Analysis, Genre Morphing
 LOGIQUE MÉTIER: Genre analysis → Fusion algorithms → Style interpolation → Quality validation
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

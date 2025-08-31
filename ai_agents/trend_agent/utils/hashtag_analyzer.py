@@ -24,8 +24,7 @@ Team Specialties:
 - Database Administrator & Security Expert: High-performance hashtag storage and indexing
 - Microservices Architect & DevOps Engineer: Scalable hashtag processing systems
 - AI Prompt Engineer & Content Protection: Intelligent hashtag optimization and content safety
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd

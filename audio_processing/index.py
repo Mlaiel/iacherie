@@ -25,8 +25,7 @@ of this code WITHOUT explicit written permission is STRICTLY PROHIBITED
 and will result in legal action under German and International copyright law.
 
 For licensing inquiries: mlaiel@live.de
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Callable
 from pathlib import Path

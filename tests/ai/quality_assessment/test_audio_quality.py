@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -30,8 +29,7 @@ Ce code est protégé par le droit d'auteur.
 Toute reproduction, distribution ou utilisation commerciale
 sans autorisation expresse est strictement interdite.
 Contact: mlaiel@live.de
-"""
-import unittest
+"""import unittest
 import tempfile
 import os
 import numpy as np

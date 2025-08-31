@@ -18,8 +18,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de
 Any unauthorized use, copying, or distribution without explicit written personal authorization is strictly prohibited.
 My Name: Fahed Mlaiel | My Email: mlaiel@live.de
 Violators will face legal prosecution under German and International copyright law.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator, Callable
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from datetime import datetime, timedelta

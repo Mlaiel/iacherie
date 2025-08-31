@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, List, Optional, Any, Union, Callable
+"""from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 import asyncio

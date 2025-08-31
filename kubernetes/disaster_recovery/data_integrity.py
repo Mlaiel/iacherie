@@ -10,8 +10,7 @@ This module provides advanced data integrity validation:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -112,8 +111,7 @@ class DataIntegrityValidator:
     - Blockchain-based tamper detection
     - Cross-system consistency validation
     - Performance-optimized batch processing
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)

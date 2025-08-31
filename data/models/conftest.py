@@ -12,8 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import pytest
+"""import pytest
 import uuid
 from datetime import datetime, date, timedelta
 from decimal import Decimal

@@ -9,8 +9,7 @@ Search readiness → SEO recommendations → Performance tracking
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from datetime import datetime, timezone
 from enum import Enum

@@ -12,8 +12,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Sophisticated Facebook scanning system for comprehensive content monitoring.
 Provides advanced analysis of Facebook posts, pages, groups, and user activities.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta

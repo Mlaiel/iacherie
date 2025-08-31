@@ -7,8 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
 import torch

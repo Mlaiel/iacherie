@@ -7,8 +7,7 @@ Creates personalized, contextual, and engaging responses for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid

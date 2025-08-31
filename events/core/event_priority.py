@@ -5,8 +5,7 @@ and resource allocation in the enterprise event system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-from enum import Enum, IntEnum
+"""from enum import Enum, IntEnum
 
 class EventPriority(IntEnum):
     """    Event priority levels for processing order and resource allocation

@@ -8,8 +8,7 @@ WARNING: This code, concept, and intellectual property are exclusively owned by
 Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution, 
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
-"""
-# Core monetization system imports
+"""# Core monetization system imports
 from . import (
     # Main engines
     RevenueEngine,

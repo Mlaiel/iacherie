@@ -6,8 +6,7 @@ user data, and system configurations with enterprise-grade features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -61,8 +60,7 @@ class BackupManager:
     
     Manages content protection backups, user data backups, system configs,
     with scheduling, monitoring, encryption, and recovery capabilities.
-    """
-    def __init__(
+    """    def __init__(
         self,
         storage_config: Dict[str, Any],
         encryption_key: Optional[str] = None,

@@ -9,8 +9,7 @@ Provides setup utilities for the AI core module including:
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 import sys
 import json
 import logging

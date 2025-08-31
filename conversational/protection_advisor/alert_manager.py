@@ -5,8 +5,7 @@ delivery for content protection events and system monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass
@@ -123,8 +122,7 @@ class AlertManager:
     - Alert correlation and deduplication
     - Performance monitoring and analytics
     - Integration with external systems
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.active_alerts = {}
         self.notification_rules = {}
         self.escalation_policies = {}

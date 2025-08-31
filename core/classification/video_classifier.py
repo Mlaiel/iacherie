@@ -5,8 +5,7 @@ Provides scene detection, object recognition, quality assessment, and similarity
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import cv2
+"""import cv2
 import numpy as np
 import torch
 import torchvision.transforms as transforms

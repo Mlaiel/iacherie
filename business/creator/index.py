@@ -18,8 +18,7 @@ This code, concept, and intellectual property are exclusively owned by Fahed Mla
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable

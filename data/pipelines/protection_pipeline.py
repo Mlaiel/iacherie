@@ -18,8 +18,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This proprietary AI protection technology belongs exclusively to Fahed Mlaiel.
 Unauthorized use, reverse engineering, or intellectual property theft will
 result in immediate prosecution under international copyright and patent laws.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -1256,8 +1255,7 @@ class ProtectionPipeline:
         contains substantial similarity ({violation.similarity_score:.2%}) to the original copyrighted 
         work owned by the rights holder. The unauthorized use constitutes {violation.violation_type} 
         and infringes upon the exclusive rights of the copyright owner.
-        """
-    def _generate_dmca_notice(
+        """    def _generate_dmca_notice(
         self, 
         violation: ViolationAlert, 
         user: 'User', 
@@ -1288,8 +1286,7 @@ class ProtectionPipeline:
         Date: {datetime.utcnow().strftime('%Y-%m-%d')}
         
         Requested Action: Complete removal of infringing content
-        """
-    async def _submit_takedown_to_platform(
+        """    async def _submit_takedown_to_platform(
         self,
         platform: str,
         takedown_data: Dict[str, Any]

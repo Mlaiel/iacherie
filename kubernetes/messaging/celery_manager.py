@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import logging
 import subprocess
 import time
@@ -59,8 +58,7 @@ class CeleryClusterConfig(BaseModel):
 class CeleryManager:
     """    Enterprise Celery deployment and management system
     Handles distributed task processing for IA content protection
-    """
-    def __init__(self, config: Optional[CeleryClusterConfig] = None):
+    """    def __init__(self, config: Optional[CeleryClusterConfig] = None):
         self.config = config or self._get_default_config()
         self.docker_client = docker.from_env()
         self.health_checker = HealthChecker()

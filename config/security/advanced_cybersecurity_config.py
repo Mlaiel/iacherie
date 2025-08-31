@@ -9,8 +9,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ⚠️ PROPRIÉTÉ EXCLUSIVE DE FAHED MLAIEL
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 from decimal import Decimal

@@ -26,8 +26,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - Audio Engineer: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, BinaryIO
+"""from typing import Dict, List, Optional, Any, Union, Tuple, BinaryIO
 import logging
 import asyncio
 import os

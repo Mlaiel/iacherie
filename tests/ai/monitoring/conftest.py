@@ -4,8 +4,7 @@ Provides shared test configuration, fixtures, and utilities for comprehensive mo
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import pytest
 import pytest_asyncio
 import logging

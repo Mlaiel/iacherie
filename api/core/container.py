@@ -3,8 +3,7 @@ Implements professional IoC patterns with lifecycle management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, Type, TypeVar, Callable, Optional, Generic
+"""from typing import Any, Dict, Type, TypeVar, Callable, Optional, Generic
 from abc import ABC, abstractmethod
 from enum import Enum
 import threading

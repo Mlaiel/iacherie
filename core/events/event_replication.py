@@ -13,8 +13,7 @@ Contact autorisations : mlaiel@live.de
 Description:
     Système avancé de réplication d'événements pour multi-tenant, disaster recovery,
     synchronisation cross-region et intégrations externes pour IA-Influencer-Agent.
-"""
-from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

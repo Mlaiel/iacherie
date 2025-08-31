@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional AI engines Docker configuration for advanced content
 analysis, processing, and intelligent decision-making systems.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -207,8 +206,7 @@ CMD ["gunicorn", \\
      "--log-level", "{self.log_level.lower()}", \\
      "--preload", \\
      "main:app"]
-"""
-    def _generate_system_dependencies(self) -> str:
+"""    def _generate_system_dependencies(self) -> str:
         """Generate system dependencies based on configuration"""        if self.gpu_enabled:
             return """RUN apt-get update && apt-get install -y \\
     build-essential \\
@@ -256,8 +254,7 @@ CMD ["gunicorn", \\
     git \\
     && rm -rf /var/lib/apt/lists/* \\
     && apt-get clean
-"""
-    def _generate_cuda_env(self) -> str:
+"""    def _generate_cuda_env(self) -> str:
         """Generate CUDA environment variables"""        return f"""# CUDA environment
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
@@ -265,8 +262,7 @@ ENV CUDA_CACHE_DISABLE=1
 ENV CUDA_LAUNCH_BLOCKING=0
 ENV TF_FORCE_GPU_ALLOW_GROWTH=true
 ENV PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
-"""
-    def _generate_model_env_vars(self) -> str:
+"""    def _generate_model_env_vars(self) -> str:
         """Generate model-specific environment variables"""        env_vars = []
         for model, enabled in self.enabled_models.items():
             env_vars.append(f"ENV MODEL_{model.upper()}_ENABLED={str(enabled).lower()}")
@@ -572,8 +568,7 @@ if __name__ == "__main__":
     
     download_models(args.cache_dir)
     logger.info("✅ Model download completed")
-"""
-    def save_config_files(self, output_dir: str) -> List[str]:
+"""    def save_config_files(self, output_dir: str) -> List[str]:
         """Save all configuration files to output directory"""        import os
         from pathlib import Path
         

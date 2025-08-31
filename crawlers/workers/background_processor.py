@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Background job → Intelligent routing → ML-optimized batch processing → 
 Resource-aware execution → Result aggregation → Real-time monitoring → Auto-notification
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -211,8 +210,7 @@ class BackgroundProcessor:
     - Resource usage control
     - Intelligent retry mechanisms
     - Real-time status reporting
-    """
-    def __init__(self, config: ProcessorConfig):
+    """    def __init__(self, config: ProcessorConfig):
         self.config = config
         self.processor_type = config.processor_type
         self.processor_id = f"{config.processor_type.value}-{uuid.uuid4().hex[:8]}"

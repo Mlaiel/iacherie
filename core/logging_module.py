@@ -3,8 +3,7 @@ Structured logging with multiple outputs, correlation IDs, and performance track
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import json
 import sys
 from datetime import datetime

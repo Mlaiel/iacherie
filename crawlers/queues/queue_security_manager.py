@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Security assessment → Threat detection → Access validation → Encryption management →
 Audit logging → Compliance monitoring → Incident response → Security optimization
-"""
-from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta

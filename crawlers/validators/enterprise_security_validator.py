@@ -17,8 +17,7 @@ Features:
 - Creator data protection and privacy validation
 - Real-time security monitoring and alerting
 - Automated security incident response
-"""
-import re
+"""import re
 import hashlib
 import base64
 import json

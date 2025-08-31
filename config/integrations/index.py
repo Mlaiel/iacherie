@@ -13,8 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written per
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Import all configuration classes
+"""# Import all configuration classes
 from .oauth_config import (
     OAuthConfig, 
     OAuthProvider, 

@@ -21,8 +21,7 @@ Features:
 - Sentiment analysis and emotion detection
 - SEO optimization and keyword extraction
 - Batch processing for large text collections
-"""
-import asyncio
+"""import asyncio
 import logging
 import re
 import hashlib

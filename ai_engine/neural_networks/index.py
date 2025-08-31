@@ -9,8 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING / AVERTISSEMENT LÉGAL ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-from typing import Dict, List, Type
+"""from typing import Dict, List, Type
 from .base_networks import BaseNeuralNetwork, NetworkType
 
 # Neural Network Registry

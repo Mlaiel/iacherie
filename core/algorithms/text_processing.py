@@ -15,8 +15,7 @@ Professional text processing engine for content creators providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-import re
+"""import re
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging

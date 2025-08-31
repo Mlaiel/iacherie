@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -33,8 +32,7 @@ Team Expertise:
 - Advanced Analytics: Real-time metrics, predictive modeling, threat intelligence
 - Business Intelligence: Enterprise reporting, compliance analytics, ROI tracking
 - Performance Engineering: System optimization, SLA monitoring, bottleneck analysis
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -87,8 +85,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestUltraIndustrialProtectionAnalytics:
-    """Ultra-industrial analytics testing with real business logic and advanced ML capabilities"""
-    @pytest_asyncio.fixture
+    """Ultra-industrial analytics testing with real business logic and advanced ML capabilities"""    @pytest_asyncio.fixture
     async def protection_analytics(self):
         """Create protection analytics instance for testing"""        config = {
             'analytics': {
@@ -1835,11 +1832,9 @@ class TestUltraIndustrialProtectionAnalytics:
 
 
 class TestAnalyticsIntegration:
-    """Integration tests for analytics system"""
-    @pytest.mark.asyncio
+    """Integration tests for analytics system"""    @pytest.mark.asyncio
     async def test_end_to_end_analytics_workflow(self, sample_test_config):
-        """Test complete analytics workflow from data ingestion to insights"""
-        # Initialize components
+        """Test complete analytics workflow from data ingestion to insights"""        # Initialize components
         protection_analytics = ProtectionAnalytics(sample_test_config.get('analytics', {}))
         infringement_tracker = InfringementTracker()
         report_generator = ReportGenerator()

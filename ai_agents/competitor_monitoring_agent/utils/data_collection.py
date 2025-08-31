@@ -4,8 +4,7 @@ Manages comprehensive data collection from multiple sources for competitor monit
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta

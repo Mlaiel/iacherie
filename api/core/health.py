@@ -3,8 +3,7 @@ Professional health monitoring with comprehensive dependency checks.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, List, Optional, Callable, Union
+"""from typing import Any, Dict, List, Optional, Callable, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

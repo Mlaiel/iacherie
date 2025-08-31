@@ -5,8 +5,7 @@ and intelligent query rewriting for maximum database performance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import re
+"""import re
 import hashlib
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Set, Tuple, Union

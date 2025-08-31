@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade scaling and auto-scaling configuration
 → horizontal scaling → vertical scaling → load-based scaling → predictive scaling.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Callable
 from dataclasses import dataclass, field

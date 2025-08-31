@@ -5,8 +5,7 @@ bottleneck detection, and performance trend analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import time
 import statistics
 from datetime import datetime, timedelta

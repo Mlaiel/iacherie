@@ -11,8 +11,7 @@ l'autorisation écrite explicite de Fahed Mlaiel est strictement
 interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Kubernetes configuration and management for IA-Influencer-Agent platform.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 import json

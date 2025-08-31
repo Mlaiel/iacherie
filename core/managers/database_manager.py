@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Requête application → Routing intelligent → DB optimale → 
 Connection pooling → Transaction management → Monitoring performance → Auto-scaling
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
 from contextlib import asynccontextmanager

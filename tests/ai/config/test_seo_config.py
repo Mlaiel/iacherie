@@ -35,8 +35,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 
 Comprehensive test suite for SEOConfig module ensuring 100% search optimization,
 multi-platform SEO, and content discoverability for all creator types.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

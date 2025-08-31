@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -127,8 +126,7 @@ class AuditTrailAgent(BaseAgent):
     - Forensic investigation capabilities
     - Data integrity verification
     - Automated alerting and reporting
-    """
-    def __init__(self, config: Optional[AuditConfiguration] = None):
+    """    def __init__(self, config: Optional[AuditConfiguration] = None):
         super().__init__(
             name="audit_trail_agent",
             version="1.0.0",

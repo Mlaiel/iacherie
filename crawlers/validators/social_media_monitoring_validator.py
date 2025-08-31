@@ -21,8 +21,7 @@ Features:
 - Influencer collaboration opportunity detection
 - Brand mention monitoring and reputation management
 - Content performance prediction and optimization
-"""
-import re
+"""import re
 import json
 import hashlib
 from enum import Enum

@@ -26,8 +26,7 @@ LEGAL CONSEQUENCES: Violation will result in immediate legal action including:
 - Full recovery of legal costs and fees
 
 Contact mlaiel@live.de for licensing inquiries.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional, Union, Type
 
 # Core Distribution Models & Managers

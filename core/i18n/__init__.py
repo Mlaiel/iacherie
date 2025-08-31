@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Multi-format content → Language detection → Cultural adaptation → 
 Translation quality → RTL/Voice support → Regional compliance → Global distribution
-"""
-from .language_manager import (
+"""from .language_manager import (
     InternationalizationManager,
     LanguageInfo,
     LanguageRegion,

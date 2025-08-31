@@ -5,8 +5,7 @@ readability analysis, keyword density optimization, and content structure enhanc
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -42,8 +41,7 @@ class SEOOptimizationResult:
 class ContentSEOOptimizer:
     """    AI-powered content SEO optimizer that analyzes and improves content
     for better search engine optimization.
-    """
-    def __init__(self, optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED):
+    """    def __init__(self, optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED):
         """        Initialize the content SEO optimizer.
         
         Args:

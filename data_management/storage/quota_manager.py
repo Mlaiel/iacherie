@@ -16,8 +16,7 @@ Contact: mlaiel@live.de
 - Backend Senior: Fahed Mlaiel  
 - FinOps: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import logging
 import asyncio
 import json

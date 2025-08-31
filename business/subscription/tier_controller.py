@@ -7,8 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""
-from datetime import datetime
+"""from datetime import datetime
 from typing import Optional, Dict, Any, List, Set
 import logging
 from sqlalchemy.orm import Session

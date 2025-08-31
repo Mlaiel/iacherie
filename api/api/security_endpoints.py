@@ -16,8 +16,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 import logging
 from enum import Enum

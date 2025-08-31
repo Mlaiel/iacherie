@@ -12,8 +12,7 @@ Features:
 - Performance optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid

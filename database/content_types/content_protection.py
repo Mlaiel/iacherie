@@ -19,8 +19,7 @@ Contact: mlaiel@live.de
 - Surveillance web temps réel
 - DMCA automatisé
 - Monétisation des violations détectées
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

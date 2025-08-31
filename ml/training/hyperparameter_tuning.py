@@ -14,8 +14,7 @@ Optimisation automatique des hyperparamètres
 - Multi-objective optimization
 - Early stopping et pruning intelligent
 - Parallel trials et distributed tuning
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid

@@ -37,8 +37,7 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 User Registration → Profile Enhancement → Platform Integration → Collaboration Setup → 
 Monetization Configuration → Content Authorization → Analytics Tracking → Privacy Compliance
-"""
-import asyncio
+"""import asyncio
 import logging
 import traceback
 import bcrypt

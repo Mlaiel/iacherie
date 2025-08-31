@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER DOCUMENT PROCESSOR:
 Document Upload → Format Detection → Text Extraction → NLP Analysis → 
 Content Classification → Sentiment Analysis → SEO Analysis → Protection Fingerprinting
-"""
-import os
+"""import os
 import re
 import hashlib
 from typing import Dict, List, Optional, Any, Union, Tuple

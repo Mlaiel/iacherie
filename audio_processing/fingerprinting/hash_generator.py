@@ -8,8 +8,7 @@ License: Proprietary - All rights reserved
 WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
-"""
-import hashlib
+"""import hashlib
 import numpy as np
 import librosa
 from typing import Dict, List, Optional, Tuple, Union, Any

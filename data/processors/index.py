@@ -15,8 +15,7 @@ content processors in the IA Influencer Agent platform. It provides:
 - Performance monitoring
 - Resource allocation
 - Error handling and recovery
-"""
-import logging
+"""import logging
 from typing import Dict, Any, List, Optional, Type
 from dataclasses import dataclass, field
 import asyncio

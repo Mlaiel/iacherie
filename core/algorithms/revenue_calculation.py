@@ -15,8 +15,7 @@ Professional revenue calculation engine for content creators providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-import numpy as np
+"""import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
 from dataclasses import dataclass

@@ -19,8 +19,7 @@ Team Specialization:
 - Audio Processing Expert: Advanced signal processing
 - DevOps Engineer: Production deployment and monitoring
 - AI Prompt Engineer: Intelligent content analysis
-"""
-from .core import AudioFingerprintCore, FingerprintResult, MatchResult
+"""from .core import AudioFingerprintCore, FingerprintResult, MatchResult
 from .hash_generator import (
     PerceptualHashGenerator, 
     HashComparator, 

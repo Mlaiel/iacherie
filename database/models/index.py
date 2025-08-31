@@ -26,8 +26,7 @@ Expert Project Team - Fahed Mlaiel:
 
 Business Logic Implementation:
 Multi-Format Creator → AI Processing → Protection → SEO → Collaboration → Distribution → Monetization
-"""
-from typing import Dict, Type, Any, List, Optional, Union
+"""from typing import Dict, Type, Any, List, Optional, Union
 from enum import Enum
 import logging
 from datetime import datetime, timezone

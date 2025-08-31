@@ -7,8 +7,7 @@ Addresses the requirement: "Base de données - schémas et migrations"
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 import sys
 import subprocess
 import importlib.util
@@ -367,8 +366,7 @@ echo "🎉 Database migration test completed!"
         
         basic_schema = '''"""Basic Database Schema for Ainflue Platform
 Generated automatically for testing purposes
-"""
-from sqlalchemy import text
+"""from sqlalchemy import text
 import asyncio
 import logging
 

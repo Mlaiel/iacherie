@@ -18,8 +18,7 @@ Available Processors:
 - DisputeResolutionProcessor: Payment dispute and chargeback resolution
 - PayoutSchedulerProcessor: Automated payout scheduling and batch processing
 - FinancialReportingProcessor: Comprehensive financial reporting and analytics
-"""
-from .stripe import (
+"""from .stripe import (
     StripeConnectProcessor,
     StripeConnectAccount,
     StripePaymentIntent,

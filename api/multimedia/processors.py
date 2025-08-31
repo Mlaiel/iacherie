@@ -10,8 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 distribution, or modification without written permission from Fahed Mlaiel 
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 import io
 import tempfile

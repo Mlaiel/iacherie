@@ -11,13 +11,11 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""
-⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+"""⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List
 from datetime import datetime

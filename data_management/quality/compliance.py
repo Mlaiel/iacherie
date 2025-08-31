@@ -14,8 +14,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Content validation → Regulatory compliance → Platform policy verification → 
 Business rule validation → Copyright checking → Privacy compliance → Legal clearance
-"""
-import logging
+"""import logging
 import re
 import json
 from datetime import datetime, timedelta

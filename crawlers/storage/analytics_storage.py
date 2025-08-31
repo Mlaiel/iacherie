@@ -22,8 +22,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
 from datetime import datetime, timedelta
@@ -124,8 +123,7 @@ class AnalyticsStorageProvider(BaseStorageProvider):
     - Advanced aggregation support
     - Performance monitoring
     - Business intelligence queries
-    """
-    def __init__(self, provider_id: str, config: Dict[str, Any]):
+    """    def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
         self.connection_pool = None
         self.cache = {}

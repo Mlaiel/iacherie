@@ -19,8 +19,7 @@ Ce logiciel est propriétaire et confidentiel. Contact: mlaiel@live.de
 - Spécialiste Traitement Audio : Fahed Mlaiel
 - Ingénieur DevOps : Fahed Mlaiel
 - Ingénieur Prompts IA : Fahed Mlaiel
-"""
-import os
+"""import os
 import logging
 from typing import Dict, List, Any, Tuple, Optional
 from datetime import datetime
@@ -655,7 +654,6 @@ PRÊT POUR PRODUCTION: {'OUI' if validation_report.get('certification', {}).get(
 Validé par: {validation_report.get('certification', {}).get('certified_by', 'Inconnu')}
 Date: {validation_report.get('validation_metadata', {}).get('timestamp', 'Inconnue')}
     """
-
 if __name__ == "__main__":
     # Exécution de la validation complète
     print("🔍 Démarrage de la validation complète du module NLP...")

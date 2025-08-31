@@ -21,8 +21,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - Audio Processing Specialist: Professional audio analysis and enhancement
 - DevOps Engineer: Infrastructure automation and deployment pipelines
 - AI Prompt Engineer: Advanced AI interaction and optimization systems
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import json

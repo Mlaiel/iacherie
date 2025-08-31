@@ -17,8 +17,7 @@ Surveillance Web → Détection Violations → Protection Automatisée
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""
-import hashlib
+"""import hashlib
 import numpy as np
 import cv2
 from typing import Dict, List, Any, Optional, Union, Tuple

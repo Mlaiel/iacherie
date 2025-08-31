@@ -3,8 +3,7 @@ Professional copyright enforcement and violation response system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import smtplib
 from email.mime.text import MIMEText

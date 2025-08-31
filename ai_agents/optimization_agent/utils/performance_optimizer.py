@@ -26,8 +26,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading
@@ -556,8 +555,7 @@ class PerformanceOptimizer(BaseAgent):
     - Advanced caching strategies with intelligent cache warming
     - Database query optimization and connection pool management
     - Comprehensive performance analytics and reporting
-    """
-    def __init__(self, config: Optional[PerformanceConfig] = None):
+    """    def __init__(self, config: Optional[PerformanceConfig] = None):
         super().__init__()
         self.config = config or PerformanceConfig()
         

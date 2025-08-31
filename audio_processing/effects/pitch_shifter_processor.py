@@ -6,8 +6,7 @@ Supports both musical and voice processing applications.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import numpy as np
+"""import numpy as np
 import logging
 from typing import Optional, Tuple, Dict, Any, List
 from enum import Enum

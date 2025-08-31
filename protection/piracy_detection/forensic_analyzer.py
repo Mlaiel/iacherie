@@ -31,8 +31,7 @@ This module provides:
 - Network traffic analysis and IP tracking
 - Browser automation for evidence collection
 - Court-admissible evidence formatting
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta

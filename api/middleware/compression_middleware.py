@@ -3,8 +3,7 @@ Middleware for compressing and optimizing web assets (CSS, JS, images)
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import gzip
+"""import gzip
 import zlib
 import io
 from typing import Callable, List, Dict, Any, Optional

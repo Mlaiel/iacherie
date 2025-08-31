@@ -15,8 +15,7 @@ serving as the main entry point for API management and integration services.
 
 Business Logic: User (musician/blogger/photographer/influencer/comedian) → Multi-format upload → 
 AI rights protection → Pro SEO → Collaboration matching → Multi-platform distribution
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Type
 from dataclasses import dataclass

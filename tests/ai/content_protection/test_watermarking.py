@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -33,8 +32,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact Officiel : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -171,8 +169,7 @@ class TestUltraIndustrialContentWatermarking:
     - Performance temps-réel pour streaming en direct
     - Blockchain integration pour certificats de propriété
     - Détection forensique avancée avec apprentissage profond
-    """
-    @pytest.fixture
+    """    @pytest.fixture
     def enterprise_watermarking_config(self):
         """Configuration ultra-avancée pour le watermarking"""        return {
             'algorithms': {

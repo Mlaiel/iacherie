@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Upload créateur → Analyse multi-format → Génération empreintes IA → 
 Stockage vectoriel → Recherche similarité → Détection duplicata → Protection droits
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
 from contextlib import asynccontextmanager

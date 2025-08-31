@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -145,8 +144,7 @@ class BrandIntelligenceEngine:
     - Brand positioning optimization
     - Threat and opportunity identification
     - Strategic recommendation generation
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.name = "Brand Intelligence Engine"
         self.version = "1.0.0"
         

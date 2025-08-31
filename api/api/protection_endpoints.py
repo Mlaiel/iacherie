@@ -6,8 +6,7 @@ DMCA takedown automation, and rights management across multiple platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import asyncio
 import logging

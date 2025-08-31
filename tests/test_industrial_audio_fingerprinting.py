@@ -12,8 +12,7 @@ INDUSTRIAL REQUIREMENTS VALIDATION:
 ✅ Base vectorielle FAISS 100M+ empreintes
 ✅ Matching temps réel <50ms
 ✅ Précision >99.5% sur datasets industriels
-"""
-import pytest
+"""import pytest
 import asyncio
 import numpy as np
 import tempfile

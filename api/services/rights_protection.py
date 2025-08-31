@@ -8,8 +8,7 @@ Team: Lead Dev IA + Backend Senior + Security Expert + Legal Tech + ML Engineer
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 from datetime import datetime, timedelta

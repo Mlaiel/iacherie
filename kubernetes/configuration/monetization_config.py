@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade monetization configuration for content creators
 → revenue tracking → payment processing → automated licensing → financial analytics.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple
 from dataclasses import dataclass, field

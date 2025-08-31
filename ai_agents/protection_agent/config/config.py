@@ -28,8 +28,7 @@ All code, concepts, and intellectual property in this module are the exclusive
 property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying,
 modification, distribution, or reverse engineering of this code or its concepts
 is strictly prohibited and will result in legal action.
-"""
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 import os

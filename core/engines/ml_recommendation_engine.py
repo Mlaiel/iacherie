@@ -6,7 +6,6 @@ Consolidation intelligente de modules:
 - app/ml/recommendation/
 - app/business/creators/recommendation/
 """
-
 # =============== IMPORTS ===============
 
 # =============== CLASSES ===============

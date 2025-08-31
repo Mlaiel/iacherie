@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade legal and licensing configuration management system.
 ===============================================================
-"""
-from typing import Dict, Any, Optional, List, Union, Tuple
+"""from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta

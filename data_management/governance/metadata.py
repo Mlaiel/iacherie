@@ -11,8 +11,7 @@ WARNING: This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-import logging
+"""import logging
 import hashlib
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime

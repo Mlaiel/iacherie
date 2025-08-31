@@ -19,8 +19,7 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 REPOSITORIES INDEX ARCHITECTURE:
 Repository Registration → Factory Pattern → Dependency Injection → 
 Configuration Management → Health Monitoring → Performance Tracking
-"""
-from typing import Dict, List, Optional, Any, Type, Union
+"""from typing import Dict, List, Optional, Any, Type, Union
 import logging
 import asyncio
 from datetime import datetime, timezone

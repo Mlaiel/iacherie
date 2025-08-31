@@ -4,8 +4,7 @@ Comprehensive validation system for all configuration components
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import re
+"""import re
 import ipaddress
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass

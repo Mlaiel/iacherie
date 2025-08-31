@@ -38,8 +38,7 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 Migration Request → Dependency Analysis → Resource Planning → Execution Scheduling → 
 Parallel Coordination → Progress Monitoring → Adaptive Optimization → Completion Verification
-"""
-import asyncio
+"""import asyncio
 import logging
 import threading
 import time

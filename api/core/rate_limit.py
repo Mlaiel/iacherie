@@ -3,8 +3,7 @@ Professional rate limiting with multiple algorithms and storage backends.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, Optional, Union, Tuple, List
+"""from typing import Any, Dict, Optional, Union, Tuple, List
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

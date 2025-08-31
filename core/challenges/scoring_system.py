@@ -19,8 +19,7 @@ Real-time Leaderboards → Tier Classification → Reward Distribution
 SCORING ARCHITECTURE:
 Metric Collection → Score Algorithms → Ranking Engine → 
 Leaderboard Manager → Performance Analytics → Fraud Detection
-"""
-from typing import Dict, List, Optional, Any, Union, Callable, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from datetime import datetime, timedelta, timezone

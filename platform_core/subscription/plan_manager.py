@@ -14,8 +14,7 @@ Système de gestion intelligent des plans tarifaires
 - Features et limites configurables
 - A/B testing automatique des prix
 - Optimisation revenue basée sur ML
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid

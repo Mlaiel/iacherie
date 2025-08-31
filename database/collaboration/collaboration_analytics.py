@@ -8,8 +8,7 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""
-from typing import List, Dict, Any, Optional, Union, Tuple
+"""from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import json

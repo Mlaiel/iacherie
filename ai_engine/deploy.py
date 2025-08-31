@@ -10,8 +10,7 @@ Contact: mlaiel@live.de
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This deployment system contains proprietary deployment algorithms.
 Unauthorized use is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import sys
 import os

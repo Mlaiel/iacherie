@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Main entry point for deployment configuration module.
 ================================================================
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime

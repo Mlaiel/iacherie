@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -22,8 +21,7 @@ Tests PostgreSQL database connectivity, health checks, and connection pooling:
 - Error handling and resilience
 
 Author: Integration Test Suite
-"""
-import asyncio
+"""import asyncio
 import pytest
 import sys
 import os

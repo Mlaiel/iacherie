@@ -22,8 +22,7 @@ TEAM SPECIALTIES:
 - Audio Processing Specialist: Audio fingerprinting & analysis
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
-"""
-import os
+"""import os
 import yaml
 import json
 import logging

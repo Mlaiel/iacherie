@@ -3,8 +3,7 @@
 Author: Fahed Mlaiel (mlaiel@live.de)
 
 Validates production configuration and secrets for security compliance.
-"""
-import os
+"""import os
 import re
 import sys
 import json

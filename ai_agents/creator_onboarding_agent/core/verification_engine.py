@@ -4,8 +4,7 @@ Advanced verification system for creator credentials, content authenticity,
 rights verification, and compliance checking with multi-stage validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib

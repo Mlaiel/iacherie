@@ -14,8 +14,7 @@ Système de communication événementielle enterprise
 - Event sourcing et replay automatique
 - Dead letter handling et retry intelligent
 - Monitoring temps réel et analytics avancées
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time

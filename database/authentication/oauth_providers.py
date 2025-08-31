@@ -11,8 +11,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: OAuth Provider Registration → Authorization Flow → Token Exchange → 
 Account Linking → Profile Sync → Platform Integration
-"""
-import asyncio
+"""import asyncio
 import secrets
 import json
 from datetime import datetime, timedelta, timezone

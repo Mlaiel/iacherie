@@ -3,8 +3,7 @@
 
 This script validates that the Grafana setup is complete and properly configured
 for the Ainflue platform dashboards and visualization requirements.
-"""
-import json
+"""import json
 import os
 import sys
 import yaml

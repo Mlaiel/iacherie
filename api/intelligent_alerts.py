@@ -6,8 +6,7 @@ with the existing Ainflue API infrastructure.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+"""from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
 from typing import Dict, List, Any, Optional
 from datetime import datetime

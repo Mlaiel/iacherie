@@ -13,8 +13,7 @@ prosecuted to the full extent of the law.
 Advanced revenue protection and recovery system for content creators.
 Provides automated revenue claim management, loss calculation, and
 multi-platform monetization protection.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum

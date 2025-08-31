@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Docker environment configuration for containerized deployment.
 Handles multi-stage builds, security hardening, and orchestration.
 ================================================
-"""
-import os
+"""import os
 import logging
 import yaml
 from typing import Dict, Any, List, Optional, Set, Union

@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Event trigger → Notification prioritization → Channel selection → 
 Template processing → Delivery optimization → Status tracking → Retry handling
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 import aiohttp
@@ -167,8 +166,7 @@ class DeliveryResult:
 
 
 class NotificationChannel_ABC(ABC):
-    """Abstract base class for notification channels"""
-    def __init__(self, channel_config: Dict[str, Any]):
+    """Abstract base class for notification channels"""    def __init__(self, channel_config: Dict[str, Any]):
         self.config = channel_config
         self.rate_limiter = RateLimiter()
 
@@ -186,8 +184,7 @@ class NotificationChannel_ABC(ABC):
 
 
 class EmailChannel(NotificationChannel_ABC):
-    """Email notification channel"""
-    def __init__(self, channel_config: Dict[str, Any]):
+    """Email notification channel"""    def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.smtp_server = channel_config.get("smtp_server", "localhost")
         self.smtp_port = channel_config.get("smtp_port", 587)
@@ -281,8 +278,7 @@ class EmailChannel(NotificationChannel_ABC):
 
 
 class WebhookChannel(NotificationChannel_ABC):
-    """Webhook notification channel"""
-    def __init__(self, channel_config: Dict[str, Any]):
+    """Webhook notification channel"""    def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.timeout = channel_config.get("timeout", 30)
         self.verify_ssl = channel_config.get("verify_ssl", True)
@@ -349,8 +345,7 @@ class WebhookChannel(NotificationChannel_ABC):
 
 
 class WebSocketChannel(NotificationChannel_ABC):
-    """WebSocket notification channel"""
-    def __init__(self, channel_config: Dict[str, Any]):
+    """WebSocket notification channel"""    def __init__(self, channel_config: Dict[str, Any]):
         super().__init__(channel_config)
         self.active_connections: Dict[str, websockets.WebSocketServerProtocol] = {}
 
@@ -423,8 +418,7 @@ class NotificationEngine:
     - Retry mechanisms with backoff
     - Real-time delivery status tracking
     - Performance analytics
-    """
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    """    def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.redis: Optional[redis.Redis] = None
         

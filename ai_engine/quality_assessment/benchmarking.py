@@ -12,8 +12,7 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import statistics
 from datetime import datetime, timedelta

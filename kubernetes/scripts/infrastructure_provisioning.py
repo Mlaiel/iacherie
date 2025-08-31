@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Infrastructure Provisioning Manager
 Handles automated infrastructure provisioning using Infrastructure as Code
-"""
-import os
+"""import os
 import sys
 import time
 import json

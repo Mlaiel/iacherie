@@ -1,7 +1,6 @@
 """Configuration and Settings for Copyright Enforcement Module
 Professional configuration management with environment support
-"""
-import os
+"""import os
 import logging
 from typing import Dict, List, Any, Optional, Set
 from dataclasses import dataclass, field

@@ -3,8 +3,7 @@ Content processing, upload, and collaboration services optimized for mobile
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging

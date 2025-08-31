@@ -11,8 +11,7 @@ Copyright: 2025 - All Rights Reserved
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional, Union
 from datetime import datetime
 from enum import Enum

@@ -19,8 +19,7 @@ Spécialités de l'Équipe:
 - Administrateur Base Données & Expert Sécurité: Fahed Mlaiel
 - Architecte Microservices & Ingénieur DevOps: Fahed Mlaiel
 - Ingénieur Prompt IA & Spécialiste Protection Contenu: Fahed Mlaiel
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path

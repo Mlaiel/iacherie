@@ -12,8 +12,7 @@ Team Expertise:
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from pathlib import Path
@@ -502,8 +501,7 @@ networks:
 volumes:
   ssl-certs:
     driver: local
-"""
-def generate_systemd_service() -> str:
+"""def generate_systemd_service() -> str:
     """Generate systemd service configuration"""    return """[Unit]
 Description=IA Influencer Agent SSL Certificate Monitor
 After=network.target
@@ -536,8 +534,7 @@ CPUQuota=50%
 
 [Install]
 WantedBy=multi-user.target
-"""
-def generate_logrotate_config() -> str:
+"""def generate_logrotate_config() -> str:
     """Generate logrotate configuration"""    return """/var/log/ssl-monitor.log {
     daily
     missingok
@@ -560,8 +557,7 @@ def generate_logrotate_config() -> str:
     notifempty
     create 0644 ssl-monitor ssl-monitor
 }
-"""
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     # Export example configurations
     output_dir = Path("examples/configs")
     output_dir.mkdir(parents=True, exist_ok=True)

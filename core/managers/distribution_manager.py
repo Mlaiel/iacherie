@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Contenu optimisé → Analyse plateformes → Distribution intelligente → 
 Optimisation formats → Publication coordonnée → Monitoring performance → Analytics cross-platform
-"""
-from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
+"""from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
 from contextlib import asynccontextmanager

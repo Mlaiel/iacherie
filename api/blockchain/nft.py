@@ -1,5 +1,4 @@
-"""NFT management: minting, metadata, marketplace integration."""
-from typing import Dict, Optional
+"""NFT management: minting, metadata, marketplace integration."""from typing import Dict, Optional
 import json
 import hashlib
 from web3 import Web3

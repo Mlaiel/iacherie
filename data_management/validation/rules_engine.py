@@ -14,8 +14,7 @@ Système de règles flexibles pour validation personnalisée
 - Moteur d'évaluation dynamique
 - Support conditions complexes
 - Gestion des exceptions et cas spéciaux
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 from pathlib import Path

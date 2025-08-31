@@ -32,8 +32,7 @@ system, API structure, or business logic without explicit written authorization 
 Fahed Mlaiel will face immediate legal consequences.
 
 For licensing inquiries: mlaiel@live.de
-"""
-# Core Dialogue Management Components
+"""# Core Dialogue Management Components
 from .dialogue_flow_manager import (
     DialogueFlowManager,
     DialogueFlow,

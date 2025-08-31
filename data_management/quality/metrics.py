@@ -14,8 +14,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Quality data aggregation → Multi-dimensional scoring → 
 Trend analysis → Performance optimization → Business intelligence insights
-"""
-import logging
+"""import logging
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Tuple, Union

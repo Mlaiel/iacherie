@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -121,8 +120,7 @@ class EventCorrelator:
     - Graph-based event relationship mapping
     - Predictive correlation modeling
     - Adaptive learning and pattern evolution
-    """
-    def __init__(self, config: Optional[CorrelationConfiguration] = None):
+    """    def __init__(self, config: Optional[CorrelationConfiguration] = None):
         self.config = config or CorrelationConfiguration()
         self.metrics = CorrelationMetrics()
         

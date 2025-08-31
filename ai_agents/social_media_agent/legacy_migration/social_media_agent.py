@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -164,8 +163,7 @@ class SocialMediaAgent(BaseAgent):
     
     Handles multi-platform content distribution, engagement optimization,
     analytics tracking, and automated social media operations.
-    """
-    def __init__(
+    """    def __init__(
         self,
         platforms: List[str] = None,
         credentials: Dict[str, Dict[str, str]] = None,

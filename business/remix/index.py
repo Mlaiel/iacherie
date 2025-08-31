@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Index central du système business remix IA-Influencer-Agent
 LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → SEO pro → 
 Matching collaboration + gamifications → Distribution multi-plateformes → Remix IA professionnel → Monétisation
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

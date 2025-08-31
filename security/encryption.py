@@ -1,8 +1,7 @@
 """Security and Encryption Module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-class ContentEncryption:
+"""class ContentEncryption:
     """Content encryption utilities"""    
     @staticmethod
     def encrypt_content(content: bytes, key: str) -> bytes:

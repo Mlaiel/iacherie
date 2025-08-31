@@ -21,8 +21,7 @@ This revolutionary audit configuration system is the EXCLUSIVE property of Fahed
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, Any, List, Optional
 from enum import Enum

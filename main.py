@@ -3,8 +3,7 @@ Run the complete AI-powered content protection and monetization platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import sys
 import importlib.util
 from pathlib import Path

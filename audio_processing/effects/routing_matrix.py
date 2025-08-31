@@ -5,8 +5,7 @@ bus management, and professional console routing capabilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import numpy as np
+"""import numpy as np
 import logging
 from typing import Dict, List, Optional, Set, Any, Tuple
 from enum import Enum

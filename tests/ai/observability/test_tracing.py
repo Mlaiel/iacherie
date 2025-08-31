@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -35,8 +34,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import json
 import pytest
 import sys
@@ -67,8 +65,7 @@ from ai.observability.tracing import (
 
 
 class TestDistributedTracingComprehensive:
-    """Ultra-comprehensive test suite for Distributed Tracing"""
-    @pytest.fixture
+    """Ultra-comprehensive test suite for Distributed Tracing"""    @pytest.fixture
     def tracing_config(self):
         """Sample tracing configuration"""        return {
             'service_name': 'ia_influencer_platform',

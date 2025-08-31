@@ -5,8 +5,7 @@ with AI-powered optimization and intelligent categorization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -74,8 +73,7 @@ class ListingManager:
     - AI-powered categorization and tagging
     - Market analysis and pricing optimization
     - Performance tracking and analytics
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize listing manager.
         
         Args:

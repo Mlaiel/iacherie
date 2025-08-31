@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Agent IA principal pour orchestration intelligente de remixes professionnels
 TECHNOLOGIES: Multi-Agent Coordination, Decision Making, Workflow Orchestration
 LOGIQUE MÉTIER: Request → Analysis → Decision → Coordination → Execution → Validation → Response
-"""
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from typing import Dict, List, Any, Optional, Union, Callable

@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Production-ready Elasticsearch cluster for search, analytics,
 and content indexing with optimal performance configuration.
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import logging
 

@@ -11,8 +11,7 @@ Responsibility: Modèles de données centralisés pour système de sauvegarde
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum

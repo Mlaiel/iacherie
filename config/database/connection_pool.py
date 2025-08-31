@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import threading
 import time
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -84,8 +83,7 @@ class DatabaseConnectionPool:
     
     Orchestrates connections across multiple database systems with intelligent
     load balancing, health monitoring, and automatic failover capabilities.
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: str = "development",
                  config: Optional[ConnectionPoolConfig] = None):
         self.environment = environment

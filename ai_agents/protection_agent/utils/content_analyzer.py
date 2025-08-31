@@ -4,8 +4,7 @@ Handles multi-format content analysis, fingerprinting, and copyright protection
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-import hashlib
+"""import hashlib
 import numpy as np
 import cv2
 import librosa

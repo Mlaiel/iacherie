@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER SEO:
 Content Analysis → Keyword Research → Competition Analysis → SEO Optimization → 
 Hashtag Strategy → Platform-Specific SEO → Performance Tracking → Recommendation Engine
-"""
-import json
+"""import json
 import logging
 import asyncio
 import re

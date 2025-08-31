@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Simple syntax validation for implemented TODO/NotImplemented items
-"""
-import ast
+"""import ast
 import sys
 from pathlib import Path
 

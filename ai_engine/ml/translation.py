@@ -16,8 +16,7 @@ Features:
 - High-quality neural translation
 - Cultural context awareness
 - Real-time translation capabilities
-"""
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn

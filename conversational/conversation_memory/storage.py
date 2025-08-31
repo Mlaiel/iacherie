@@ -8,8 +8,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 import pickle
 import json

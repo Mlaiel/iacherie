@@ -23,8 +23,7 @@ Team Specialists:
 - Financial Analyst: Revenue Optimization Strategies
 - DevOps: Financial Data Scalability & Performance
 - IA Prompt Engineer: Revenue Intelligence & Insights
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple

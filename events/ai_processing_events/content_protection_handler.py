@@ -9,8 +9,7 @@ SEO Optimization → Collaboration → Distribution
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 import hashlib
 from typing import Dict, Any, Optional, List, Union, Tuple

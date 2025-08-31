@@ -10,8 +10,7 @@ This module provides comprehensive multi-cloud synchronization:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -310,8 +309,7 @@ class MultiCloudSyncManager:
     - Advanced conflict detection and resolution strategies
     - Cross-cloud resource orchestration and optimization
     - Comprehensive monitoring and alerting system
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)

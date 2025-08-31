@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade external integrations configuration for unified platform management.
 ==================================================================
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union, Tuple
 from dataclasses import dataclass, field

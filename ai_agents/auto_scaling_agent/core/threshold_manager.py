@@ -6,8 +6,7 @@ and dynamic threshold optimization for the auto-scaling system.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 © 2025 All Rights Reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading

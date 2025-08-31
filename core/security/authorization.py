@@ -14,8 +14,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""
-from typing import Dict, List, Optional, Set, Union, Any, Callable
+"""from typing import Dict, List, Optional, Set, Union, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from abc import ABC, abstractmethod

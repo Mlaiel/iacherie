@@ -8,8 +8,7 @@ and collaboration success metrics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field

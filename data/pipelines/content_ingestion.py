@@ -17,8 +17,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ STRICT WARNING ⚠️
 Unauthorized use, copying, or theft of this code is strictly prohibited.
 Legal action will be taken against violators.
-"""
-import asyncio
+"""import asyncio
 import logging
 import mimetypes
 from datetime import datetime

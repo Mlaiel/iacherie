@@ -12,8 +12,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This conversational AI platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""
-# =============================================================================
+"""# =============================================================================
 # ULTRA-ADVANCED AI MODULES (NEW - CAHIER DES CHARGES COMPLIANT)
 # =============================================================================
 

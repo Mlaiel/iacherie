@@ -37,8 +37,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This scoring system contains proprietary algorithms and business intelligence
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
-"""
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field

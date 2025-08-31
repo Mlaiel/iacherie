@@ -19,8 +19,7 @@ Competition Management → Reward Distribution → Community Engagement
 CHALLENGE REPOSITORY ARCHITECTURE:
 Challenge Lifecycle → Participation Management → Progress Analytics → 
 Competition Engine → Reward Calculation → Performance Optimization
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

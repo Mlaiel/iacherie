@@ -10,8 +10,7 @@ Features:
 - Image lifecycle management and cleanup
 - Registry mirroring and replication
 - Access control and authentication
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -140,8 +139,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
     
     Manages container images across multiple registries with security
     scanning, lifecycle management, and automated compliance checks.
-    """
-    def __init__(
+    """    def __init__(
         self,
         vulnerability_scanner: Optional[VulnerabilityScanner] = None,
         metrics_collector: Optional[MetricsCollector] = None

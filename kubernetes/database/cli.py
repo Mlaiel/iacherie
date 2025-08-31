@@ -27,8 +27,7 @@ concept ou idée sans autorisation écrite explicite de Fahed Mlaiel
 sera poursuivie selon la loi allemande et internationale.
 
 Contact autorisé: mlaiel@live.de
-"""
-import click
+"""import click
 import json
 import sys
 import time

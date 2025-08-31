@@ -7,8 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise rollback automation system for IA Influencer platform.
 Automated detection of deployment issues and intelligent rollback strategies.
 ================================================================
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 import json

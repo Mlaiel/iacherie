@@ -3,8 +3,7 @@ Enterprise-grade validation against common web vulnerabilities
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Web Security Specialist + Backend Senior
-"""
-import re
+"""import re
 import html
 import json
 import time

@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 import json
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -106,8 +105,7 @@ class RedisConfig:
     
     Handles caching, session management, pub/sub messaging, task queues,
     and real-time analytics across multi-tenant content protection platform.
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: RedisEnvironment = RedisEnvironment.DEVELOPMENT,
                  workload_type: RedisWorkloadType = RedisWorkloadType.CACHE,
                  deployment_type: RedisDeploymentType = RedisDeploymentType.STANDALONE):

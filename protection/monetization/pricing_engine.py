@@ -3,8 +3,7 @@ Handles intelligent pricing strategies, A/B testing, and revenue optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, timedelta

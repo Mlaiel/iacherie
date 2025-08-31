@@ -70,8 +70,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Compressed audit storage
 - Index optimization
 - Query performance monitoring
-"""
-import asyncio
+"""import asyncio
 import json
 import hashlib
 import hmac

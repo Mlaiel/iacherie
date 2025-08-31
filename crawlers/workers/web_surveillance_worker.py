@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Target monitoring → Intelligent crawling → Content detection → 
 Similarity analysis → Piracy confirmation → Automated takedown → Revenue protection
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -143,8 +142,7 @@ class WebSurveillanceWorker:
     - Multi-modal content analysis (audio, video, image, text)
     - Automated DMCA takedown initiation
     - Revenue protection and loss calculation
-    """
-    def __init__(self, worker_id: str = None):
+    """    def __init__(self, worker_id: str = None):
         self.worker_id = worker_id or f"web_surveillance_{uuid.uuid4().hex[:8]}"
         
         # Core components

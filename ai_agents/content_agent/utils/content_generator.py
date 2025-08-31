@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
@@ -541,8 +540,7 @@ class ContentGenerator:
         
         Focus on visual elements, composition, mood, and storytelling aspects.
         Make it suitable for social media and marketing use.
-        """
-    def _build_generic_prompt(self, request: GenerationRequest) -> str:
+        """    def _build_generic_prompt(self, request: GenerationRequest) -> str:
         """Build generic prompt for other content types"""        return f"""        Create high-quality {request.content_type.value} content about:
         {request.prompt}
         
@@ -550,8 +548,7 @@ class ContentGenerator:
         Target audience: {request.target_audience or 'General audience'}
         
         Ensure the content is engaging, original, and professionally written.
-        """
-    async def _generate_with_openai(self, prompt: str, request: GenerationRequest) -> str:
+        """    async def _generate_with_openai(self, prompt: str, request: GenerationRequest) -> str:
         """Generate content using OpenAI GPT models"""        try:
             messages = [
                 {"role": "system", "content": self._get_system_prompt(request)},

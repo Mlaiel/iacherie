@@ -37,8 +37,7 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 Creator Upload → Content Analysis → Format Detection → Schema Migration → 
 Protection Setup → Fingerprint Generation → Metadata Extraction → Storage Optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import traceback
 from abc import ABC, abstractmethod

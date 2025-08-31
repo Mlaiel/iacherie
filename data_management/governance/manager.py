@@ -4,8 +4,7 @@ This manager coordinates all governance activities including compliance checking
 policy enforcement, lifecycle management, and quality assurance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from enum import Enum

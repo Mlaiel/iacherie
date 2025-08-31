@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,8 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 """Unit tests for utils.performance_monitor module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -27,8 +25,7 @@ from utils.performance_monitor import PerformanceMonitor, RateLimiter, CircuitBr
 
 
 class TestPerformanceMonitor:
-    """Test cases for PerformanceMonitor class"""
-    def test_init(self):
+    """Test cases for PerformanceMonitor class"""    def test_init(self):
         """Test PerformanceMonitor initialization"""        monitor = PerformanceMonitor()
         assert monitor.memory_limit is None
 
@@ -46,8 +43,7 @@ class TestPerformanceMonitor:
 
 
 class TestRateLimiter:
-    """Test cases for RateLimiter class"""
-    def test_init_default_params(self):
+    """Test cases for RateLimiter class"""    def test_init_default_params(self):
         """Test RateLimiter initialization with default parameters"""        limiter = RateLimiter()
         assert limiter.max_requests == 100
         assert limiter.window_seconds == 60
@@ -131,8 +127,7 @@ class TestRateLimiter:
 
 
 class TestCircuitBreaker:
-    """Test cases for CircuitBreaker class"""
-    def test_init_default_params(self):
+    """Test cases for CircuitBreaker class"""    def test_init_default_params(self):
         """Test CircuitBreaker initialization with default parameters"""        breaker = CircuitBreaker()
         assert breaker.failure_threshold == 5
         assert breaker.recovery_timeout == 60

@@ -1,8 +1,7 @@
 """Licensing Engine - Advanced License Generation and Management
 Moteur de licences avancé pour la génération et gestion automatisée
 Système professionnel de contrats intelligents et monétisation
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from dataclasses import dataclass, field

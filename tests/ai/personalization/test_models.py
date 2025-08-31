@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests collaborative filtering, content-based, hybrid, and deep learning models.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -59,8 +57,7 @@ from ai.personalization.exceptions import (
 
 
 class TestPersonalizationMLModel(IsolatedAsyncioTestCase):
-    """Base tests for PersonalizationMLModel abstract class"""
-    async def asyncSetUp(self):
+    """Base tests for PersonalizationMLModel abstract class"""    async def asyncSetUp(self):
         """Set up test environment"""        # Test with concrete implementation (CollaborativeFilteringModel)
         self.model = CollaborativeFilteringModel(
             n_factors=20,
@@ -146,8 +143,7 @@ class TestPersonalizationMLModel(IsolatedAsyncioTestCase):
 
 
 class TestCollaborativeFilteringModel(IsolatedAsyncioTestCase):
-    """Comprehensive tests for CollaborativeFilteringModel"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for CollaborativeFilteringModel"""    async def asyncSetUp(self):
         """Set up test environment"""        self.model = CollaborativeFilteringModel(
             n_factors=50,
             learning_rate=0.005,
@@ -277,8 +273,7 @@ class TestCollaborativeFilteringModel(IsolatedAsyncioTestCase):
 
 
 class TestContentBasedModel(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentBasedModel"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentBasedModel"""    async def asyncSetUp(self):
         """Set up test environment"""        self.model = ContentBasedModel(
             feature_weights={'genre': 0.3, 'energy': 0.2, 'valence': 0.2, 'duration': 0.1},
             similarity_threshold=0.1
@@ -401,8 +396,7 @@ class TestContentBasedModel(IsolatedAsyncioTestCase):
 
 
 class TestHybridRecommenderModel(IsolatedAsyncioTestCase):
-    """Comprehensive tests for HybridRecommenderModel"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for HybridRecommenderModel"""    async def asyncSetUp(self):
         """Set up test environment"""        self.model = HybridRecommenderModel(
             collaborative_weight=0.6,
             content_weight=0.4,
@@ -506,8 +500,7 @@ class TestHybridRecommenderModel(IsolatedAsyncioTestCase):
 
 
 class TestDeepPersonalizationModel(IsolatedAsyncioTestCase):
-    """Comprehensive tests for DeepPersonalizationModel"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for DeepPersonalizationModel"""    async def asyncSetUp(self):
         """Set up test environment"""        self.model = DeepPersonalizationModel(
             embedding_dim=64,
             hidden_layers=[128, 64, 32],
@@ -624,8 +617,7 @@ class TestDeepPersonalizationModel(IsolatedAsyncioTestCase):
 
 
 class TestUserEmbeddingModel(IsolatedAsyncioTestCase):
-    """Comprehensive tests for UserEmbeddingModel"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for UserEmbeddingModel"""    async def asyncSetUp(self):
         """Set up test environment"""        self.model = UserEmbeddingModel(
             embedding_dim=100,
             context_dim=20,
@@ -705,8 +697,7 @@ class TestUserEmbeddingModel(IsolatedAsyncioTestCase):
 
 
 class TestModelPerformanceAndScalability(IsolatedAsyncioTestCase):
-    """Performance and scalability tests for all models"""
-    async def test_training_performance(self):
+    """Performance and scalability tests for all models"""    async def test_training_performance(self):
         """Test training performance across different model types"""        models_to_test = [
             CollaborativeFilteringModel(n_factors=20),
             ContentBasedModel(),
@@ -805,8 +796,7 @@ class TestModelPerformanceAndScalability(IsolatedAsyncioTestCase):
 
 
 class TestModelRobustness(IsolatedAsyncioTestCase):
-    """Robustness and edge case tests"""
-    async def test_empty_data_handling(self):
+    """Robustness and edge case tests"""    async def test_empty_data_handling(self):
         """Test handling of empty training data"""        model = CollaborativeFilteringModel()
         
         empty_data = {'interactions': []}

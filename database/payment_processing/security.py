@@ -21,8 +21,7 @@ ENTERPRISE SECURITY FEATURES:
 - Biometric authentication support
 - Blockchain-based transaction verification
 - Advanced threat detection and prevention
-"""
-import hashlib
+"""import hashlib
 import hmac
 import secrets
 import base64

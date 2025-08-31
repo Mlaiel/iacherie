@@ -24,8 +24,7 @@ ENTERPRISE UTILITY FEATURES:
 - AI-powered fraud detection helpers
 - International payment format validation
 - Performance optimization tools
-"""
-import re
+"""import re
 import hashlib
 import hmac
 import secrets

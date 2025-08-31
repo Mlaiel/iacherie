@@ -18,8 +18,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This proprietary analytics technology and algorithms belong exclusively to
 Fahed Mlaiel. Any unauthorized use, data extraction, or competitive analysis
 without explicit written permission will result in immediate legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union, Any, Tuple

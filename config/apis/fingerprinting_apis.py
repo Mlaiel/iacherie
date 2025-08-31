@@ -19,8 +19,7 @@ This module provides ultra-advanced AI fingerprinting configuration for multi-fo
 
 Business Logic: Content Upload → AI Fingerprint Generation → Vector Storage → 
 Similarity Matching → Copyright Protection → Automated DMCA → Revenue Tracking
-"""
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional, Tuple
 from enum import Enum

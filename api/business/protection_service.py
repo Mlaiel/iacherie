@@ -6,8 +6,7 @@ watermarking, fingerprinting, and anti-theft mechanisms for multi-format content
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import hashlib
+"""import hashlib
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Tuple

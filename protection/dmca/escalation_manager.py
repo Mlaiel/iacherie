@@ -38,8 +38,7 @@ This module provides:
 - Revenue impact assessment
 - Legal action preparation and filing
 - Settlement negotiation automation
-"""
-import asyncio
+"""import asyncio
 import logging
 import secrets
 import uuid

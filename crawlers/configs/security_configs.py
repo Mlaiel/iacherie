@@ -14,8 +14,7 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""
-import os
+"""import os
 from typing import Dict, List, Optional, Union, Any, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum

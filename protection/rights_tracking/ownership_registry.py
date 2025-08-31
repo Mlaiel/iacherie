@@ -1,8 +1,7 @@
 """Rights Ownership Registry - Advanced Rights Management System
 Module de registre de propriété des droits avec gestion avancée
 Système professionnel pour la gestion de la propriété intellectuelle
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from dataclasses import dataclass, field

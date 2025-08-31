@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Index central du système core IA-Influencer-Agent
 LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → SEO pro → 
 Matching collaboration → Distribution multi-plateformes → Monétisation avancée
-"""
-__version__ = "3.0.0"
+"""__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

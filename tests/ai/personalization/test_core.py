@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests all core engines, managers, and configuration systems.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from unittest import IsolatedAsyncioTestCase
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
@@ -53,8 +51,7 @@ from ai.personalization.exceptions import (
 
 
 class TestPersonalizationEngine(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PersonalizationEngine"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for PersonalizationEngine"""    async def asyncSetUp(self):
         """Set up test environment"""        # Create test configuration
         self.config = PersonalizationConfig()
         self.engine = PersonalizationEngine(self.config)
@@ -268,8 +265,7 @@ class TestPersonalizationEngine(IsolatedAsyncioTestCase):
 
 
 class TestUserProfileManager(IsolatedAsyncioTestCase):
-    """Comprehensive tests for UserProfileManager"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for UserProfileManager"""    async def asyncSetUp(self):
         """Set up test environment"""        self.config = PersonalizationConfig()
         self.manager = UserProfileManager(self.config)
         self.test_user_id = "profile_test_user"
@@ -366,8 +362,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
 
 
 class TestContentPersonalizer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentPersonalizer"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentPersonalizer"""    async def asyncSetUp(self):
         """Set up test environment"""        self.personalizer = ContentPersonalizer()
         self.test_user_profile = UserProfile(
             user_id="content_test_user",
@@ -447,8 +442,7 @@ class TestContentPersonalizer(IsolatedAsyncioTestCase):
 
 
 class TestRecommendationEngine(IsolatedAsyncioTestCase):
-    """Comprehensive tests for RecommendationEngine"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for RecommendationEngine"""    async def asyncSetUp(self):
         """Set up test environment"""        self.engine = RecommendationEngine()
         self.test_user_profile = UserProfile(
             user_id="recommendation_test_user",
@@ -546,8 +540,7 @@ class TestRecommendationEngine(IsolatedAsyncioTestCase):
 
 
 class TestAdaptiveLearning(IsolatedAsyncioTestCase):
-    """Comprehensive tests for AdaptiveLearning"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for AdaptiveLearning"""    async def asyncSetUp(self):
         """Set up test environment"""        self.adaptive_learning = AdaptiveLearning()
         self.test_user_id = "adaptive_test_user"
 
@@ -611,8 +604,7 @@ class TestAdaptiveLearning(IsolatedAsyncioTestCase):
 
 
 class TestPersonalizationConfig(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PersonalizationConfig"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for PersonalizationConfig"""    async def asyncSetUp(self):
         """Set up test environment"""        self.config = PersonalizationConfig()
 
     async def test_default_configuration(self):
@@ -672,8 +664,7 @@ class TestPersonalizationConfig(IsolatedAsyncioTestCase):
 
 
 class TestPerformanceAndStress(IsolatedAsyncioTestCase):
-    """Performance and stress tests for personalization components"""
-    async def asyncSetUp(self):
+    """Performance and stress tests for personalization components"""    async def asyncSetUp(self):
         """Set up test environment"""        self.engine = PersonalizationEngine()
 
     async def test_high_volume_recommendations(self):

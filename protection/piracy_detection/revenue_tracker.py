@@ -29,8 +29,7 @@ This module provides:
 - Market analysis and trend prediction
 - ROI optimization for protection measures
 - Legal damages estimation
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta

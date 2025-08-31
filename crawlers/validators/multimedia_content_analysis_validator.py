@@ -21,8 +21,7 @@ Features:
 - Content fingerprinting and duplicate detection
 - Performance prediction based on content characteristics
 - Accessibility compliance validation
-"""
-import re
+"""import re
 import json
 import hashlib
 import base64

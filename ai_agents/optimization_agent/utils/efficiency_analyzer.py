@@ -1200,8 +1200,7 @@ class EfficiencyAnalyzer:
     - Optimization recommendation engine
     - Real-time efficiency monitoring
     - Predictive efficiency modeling
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.metrics_collector = MetricsCollector()
         self.statistical_analyzer = StatisticalAnalyzer()

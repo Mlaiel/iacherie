@@ -4,8 +4,7 @@ Comprehensive system for managing integrations with multiple social media
 and content platforms including YouTube, SoundCloud, Instagram, TikTok, etc.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import aiohttp
 import json

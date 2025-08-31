@@ -29,8 +29,7 @@ Unauthorized reproduction, distribution, or reverse engineering is strictly
 prohibited and may result in severe legal penalties under international
 copyright law.
 =============================================================================
-"""
-from .equalizer_processor import EqualizerProcessor, EQType, FilterType
+"""from .equalizer_processor import EqualizerProcessor, EQType, FilterType
 from .compressor_processor import (
     CompressorProcessor, CompressorType, DetectionMode, KneeType,
     CompressorPreset, MultibandCrossover, SideChainProcessor

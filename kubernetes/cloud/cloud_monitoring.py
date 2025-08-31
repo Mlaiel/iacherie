@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive monitoring capabilities for the IA Influencer
 Agent platform across multiple cloud providers, including real-time metrics,
 alerting, anomaly detection, and performance analytics.
-"""
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Callable

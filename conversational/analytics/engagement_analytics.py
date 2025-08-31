@@ -20,8 +20,7 @@ Development Team Specialties:
 - Audio Processing: Voice engagement analytics
 - DevOps Engineer: Engagement pipeline automation
 - IA Prompt Engineer: Conversational engagement optimization
-"""
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple

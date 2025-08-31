@@ -5,8 +5,7 @@ and industry standards across different jurisdictions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -110,8 +109,7 @@ class ComplianceChecker:
     - Industry standards adherence
     - Regional and international requirements
     - Automated monitoring and alerts
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.compliance_rules = self._load_compliance_rules()
         self.jurisdiction_map = self._load_jurisdiction_map()
         self.cache_ttl = 3600  # 1 hour cache

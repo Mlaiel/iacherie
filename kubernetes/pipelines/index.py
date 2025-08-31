@@ -28,8 +28,7 @@ Usage:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""
-import sys
+"""import sys
 import os
 import asyncio
 from pathlib import Path

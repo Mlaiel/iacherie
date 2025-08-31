@@ -23,8 +23,7 @@ Text Content Types Supported:
 - Social Media: Posts, captions, tweets, descriptions
 - Marketing Content: Ads, newsletters, press releases
 - Technical Documentation: Manuals, API docs, specifications
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from datetime import datetime, timedelta

@@ -7,8 +7,7 @@ and can be imported correctly, proving the implementation is complete.
 
 Author: Assistant IA
 Date: 21 January 2025
-"""
-import os
+"""import os
 import sys
 import json
 from pathlib import Path

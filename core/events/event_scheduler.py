@@ -9,8 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de planification d'événements avec support des événements différés,
     récurrents et conditionnels pour la plateforme IA-Influencer-Agent.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

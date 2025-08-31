@@ -1,5 +1,4 @@
-"""Piracy Models Package - Common data structures for piracy detection"""
-from .piracy_models import (
+"""Piracy Models Package - Common data structures for piracy detection"""from .piracy_models import (
     PiracySource,
     ThreatLevel,
     NetworkType,

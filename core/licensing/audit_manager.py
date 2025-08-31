@@ -13,8 +13,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation écrite
 Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
-"""
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 import logging
 import json
 from datetime import datetime, timedelta

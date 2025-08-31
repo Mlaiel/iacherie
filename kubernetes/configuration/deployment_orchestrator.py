@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade deployment orchestration for multi-format content creators
 → AI processing → protection → monetization → collaboration platform.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 import yaml
 import json

@@ -10,8 +10,7 @@ Features:
 - Service mesh integration coordination
 - Health monitoring and status aggregation
 - Resource optimization and scaling decisions
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -77,8 +76,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
     
     Coordinates deployment of the complete IA Influencer Agent platform
     across multiple clusters with service mesh, monitoring, and security.
-    """
-    def __init__(
+    """    def __init__(
         self,
         default_region: str = "us-west-2",
         enable_multi_cluster: bool = True,

@@ -6,8 +6,7 @@ settings, feature flags, and deployment configurations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import os
+"""import os
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
 from decimal import Decimal

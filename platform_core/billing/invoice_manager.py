@@ -14,8 +14,7 @@ Génération et gestion complète des factures enterprise
 - Templates PDF personnalisables et multi-langue
 - Comptabilité analytique et réconciliation
 - Export comptable (SAP, QuickBooks, etc.)
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid

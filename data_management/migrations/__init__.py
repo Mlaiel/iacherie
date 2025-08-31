@@ -37,8 +37,7 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 Content Upload → Schema Validation → Migration Execution → Data Integrity Check → 
 Protection Registration → Fingerprint Storage → Monetization Setup → Collaboration Sync
-"""
-from .base_migration import BaseMigration, MigrationStatus, MigrationPriority, MigrationCategory
+"""from .base_migration import BaseMigration, MigrationStatus, MigrationPriority, MigrationCategory
 from .schema_manager import SchemaManager, SchemaVersion, SchemaValidationResult
 from .data_transformer import DataTransformer, TransformationStrategy, DataFormat, TransformationType
 from .integrity_validator import IntegrityValidator, ValidationResult, IntegrityLevel

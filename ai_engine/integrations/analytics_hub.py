@@ -12,8 +12,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 This module provides comprehensive analytics integration across multiple platforms
 with real-time data processing, advanced metrics computation, and AI-powered insights.
-"""
-import logging
+"""import logging
 import asyncio
 import hashlib
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable

@@ -3,8 +3,7 @@ Advanced multi-database management for PostgreSQL, Redis, and MongoDB.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from typing import Optional, Dict, Any, List
 from contextlib import asynccontextmanager
 import asyncpg

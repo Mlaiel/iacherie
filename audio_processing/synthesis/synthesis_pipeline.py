@@ -7,8 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
-"""
-import torch
+"""import torch
 import torch.nn as nn
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Union, Any, Callable, Iterator

@@ -19,8 +19,7 @@ Fraud Detection → Quality Assessment → Progress Verification → Approval/Re
 VALIDATION ARCHITECTURE:
 Input Sanitization → Business Rules → Compliance Engine → 
 Fraud Detection → Quality Gates → Performance Validation → Security Audit
-"""
-from typing import Dict, List, Optional, Any, Union, Callable, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from datetime import datetime, timedelta, timezone

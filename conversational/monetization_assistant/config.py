@@ -16,8 +16,7 @@ WARNING: Proprietary technology - Unauthorized copying, modification or distribu
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from decimal import Decimal
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum

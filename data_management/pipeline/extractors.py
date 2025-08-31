@@ -3,8 +3,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 Advanced content extraction systems for multi-format media processing
 with AI-powered metadata analysis and intelligent feature detection.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime

@@ -5,8 +5,7 @@ and serves as the main entry point for the notification infrastructure.
 
 Built by Fahed Mlaiel and the IA Influencer Agent Team.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-# Import all major components for easy access
+"""# Import all major components for easy access
 from .orchestrator import (
     NotificationOrchestrator,
     UniversalNotification,

@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task submission → Load analysis → Worker selection → 
 Task distribution → Execution monitoring → Result aggregation → Auto-scaling
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -117,8 +116,7 @@ class WorkerPool:
     - Resource optimization
     - Task routing and queuing
     - Performance analytics
-    """
-    def __init__(self, config: PoolConfig):
+    """    def __init__(self, config: PoolConfig):
         self.config = config
         self.pool_id = config.pool_id
         self.status = PoolStatus.INITIALIZING

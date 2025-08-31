@@ -4,8 +4,7 @@ Environment-specific configuration classes for different deployment stages
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import os
+"""import os
 from typing import List, Dict, Any
 from datetime import timedelta
 from .app_config import AppConfig

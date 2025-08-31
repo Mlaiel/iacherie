@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement cloud multi-provider (AWS, GCP, Azure).
 ==================================================================
-"""
-import os
+"""import os
 from typing import Dict, Any, List, Optional, Union
 from enum import Enum
 from .base import (

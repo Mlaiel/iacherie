@@ -10,8 +10,7 @@ Features:
 - Resource allocation and optimization
 - Cross-cluster networking and service mesh
 - Disaster recovery and backup strategies
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -112,8 +111,7 @@ class ClusterManager(BaseDeploymentManager):
     Manages multiple Kubernetes clusters for the IA Influencer Agent
     platform with enterprise features including disaster recovery,
     cross-cluster networking, and resource optimization.
-    """
-    def __init__(
+    """    def __init__(
         self,
         default_region: str = "us-west-2",
         metrics_collector: Optional[MetricsCollector] = None

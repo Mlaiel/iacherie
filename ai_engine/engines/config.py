@@ -30,8 +30,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
-"""
-import os
+"""import os
 import json
 import yaml
 from typing import Dict, Any, Optional, List, Union

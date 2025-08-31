@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Core configuration management foundation for enterprise deployment.
 ==================================================================
-"""
-import os
+"""import os
 import yaml
 import json
 import logging

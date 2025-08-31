@@ -3,8 +3,7 @@ Automated compliance reporting for multiple regulatory frameworks
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta

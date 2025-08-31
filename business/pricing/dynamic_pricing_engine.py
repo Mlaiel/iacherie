@@ -37,8 +37,7 @@ Business Logic Flow:
 Market Analysis → Competitor Pricing Intelligence → Creator Performance Metrics → 
 Demand Forecasting → Dynamic Price Calculation → A/B Testing → Revenue Optimization → 
 Price Elasticity Analysis → Real-time Adjustments → Performance Monitoring
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import numpy as np

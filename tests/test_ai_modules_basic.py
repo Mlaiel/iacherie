@@ -6,8 +6,7 @@ This provides a foundation to build upon.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import asyncio
 from ai.nlp.core import AdvancedNLPEngine, NLPTask, NLPResult, NLPTaskType
 from ai.recommendation.core import RecommendationEngine, RecommendationConfig, RecommendationRequest

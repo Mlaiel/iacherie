@@ -27,8 +27,7 @@ TEXT FINGERPRINTING TECHNOLOGIES:
 ├── 🌐 Language Detection (Multi-language Support)
 ├── 🔍 Semantic Similarity (Cosine + Euclidean)
 └── 🛡️ Plagiarism Protection (Real-time Monitoring)
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 import numpy as np

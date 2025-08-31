@@ -46,8 +46,7 @@ Usage Example:
     protection = await create_content_protection()
     monetization = await create_revenue_monetization()
 ================================================================
-"""
-# Module Information
+"""# Module Information
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

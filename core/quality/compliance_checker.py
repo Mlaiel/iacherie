@@ -18,8 +18,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import logging
+"""import logging
 import re
 from datetime import datetime, timezone
 from enum import Enum

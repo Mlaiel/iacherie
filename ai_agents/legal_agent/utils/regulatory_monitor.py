@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -1313,8 +1312,7 @@ class RegulatoryMonitor:
         - Impact assessments
         - Preparation recommendations
         - Confidence levels for predictions
-        """
-    def _extract_compliance_deadline(self, content: str) -> Optional[datetime]:
+        """    def _extract_compliance_deadline(self, content: str) -> Optional[datetime]:
         """Extract compliance deadline from regulatory content"""        import re
         
         # Common deadline patterns

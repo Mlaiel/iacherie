@@ -17,8 +17,7 @@ Tous droits réservés. Usage non autorisé strictement interdit.
 - Développeur Audio
 - DevOps Engineer
 - IA Prompt Engineer
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

@@ -14,8 +14,7 @@ Extraction complète de métadonnées multi-format avec IA
 - Tags audio ID3/FLAC/MP4 complets
 - Métadonnées vidéo FFprobe/MediaInfo
 - Analyse sémantique contenu avec IA
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from pathlib import Path

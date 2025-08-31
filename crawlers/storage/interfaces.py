@@ -21,8 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple, Callable
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field

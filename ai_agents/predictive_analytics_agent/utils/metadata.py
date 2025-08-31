@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This metadata documentation and architectural specifications are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from datetime import datetime
+"""from datetime import datetime
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
 

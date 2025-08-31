@@ -16,8 +16,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""
-import logging
+"""import logging
 import json
 import asyncio
 from datetime import datetime

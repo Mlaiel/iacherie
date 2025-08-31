@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement Docker avec orchestration microservices.
 ==================================================================
-"""
-import os
+"""import os
 from typing import Dict, Any, List, Optional
 from .base import (
     BaseEnvironmentConfigManager, 

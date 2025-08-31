@@ -13,8 +13,7 @@ This module provides:
 - Automated evidence compilation
 - Legal validation framework
 - Template customization system
-"""
-import logging
+"""import logging
 import secrets
 from typing import Dict, List, Optional, Any, Union, Protocol, TypedDict
 from datetime import datetime, timedelta
@@ -2504,7 +2503,6 @@ Failure to comply will result in immediate legal action seeking maximum damages 
 
 **URGENT LEGAL MATTER - IMMEDIATE COMPLIANCE REQUIRED**
         """
-
 class LegalComplianceValidator:
     """Legal compliance validation for DMCA notices"""    
     def __init__(self):

@@ -27,8 +27,7 @@ Features:
 - Dependency checking
 - Integration testing
 - Performance benchmarking
-"""
-import sys
+"""import sys
 import traceback
 import asyncio
 import logging

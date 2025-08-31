@@ -21,8 +21,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  MAXIMUM SECURITY IP WARNING: Unauthorized use, reproduction, or distribution of this code 
     is strictly prohibited. This system is proprietary and protected by international 
     copyright laws. Violations will be prosecuted to the full extent of the law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json

@@ -19,8 +19,7 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 LICENSING REPOSITORY ARCHITECTURE:
 License Creation → Rights Verification → Revenue Tracking → Distribution Management → 
 Territory Restrictions → Usage Analytics → Compliance Monitoring → Payment Processing
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import json

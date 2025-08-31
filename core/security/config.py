@@ -4,8 +4,7 @@ Advanced security configuration for IA Influencer Agent
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
 import os

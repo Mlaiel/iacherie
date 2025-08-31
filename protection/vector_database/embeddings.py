@@ -6,8 +6,7 @@ Transforms content fingerprints into high-dimensional vectors for similarity sea
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import numpy as np
+"""import numpy as np
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple

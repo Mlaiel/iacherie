@@ -4,8 +4,7 @@ Main entry point for platform-level services
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-# Platform services
+"""# Platform services
 from .analytics import AnalyticsService, MetricsCollector, ReportingEngine
 from .collaboration_matching import CollaborationMatchingService, PartnerFinder, CompatibilityEngine
 from .content_ingestion import ContentIngestionService, MediaProcessor, ContentValidator

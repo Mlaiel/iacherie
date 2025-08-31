@@ -14,8 +14,7 @@ Usage:
         AudioFingerprintingEventHandler,
         # ... other imports
     )
-"""
-# Import all event classes for easy access
+"""# Import all event classes for easy access
 from .upload_events import (
     AudioUploadStartedEvent,
     AudioUploadProgressEvent,

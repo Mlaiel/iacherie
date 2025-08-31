@@ -11,8 +11,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
-"""
-from typing import Dict, List, Any, Optional, Tuple, Union
+"""from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime, date
 from uuid import UUID
 import logging

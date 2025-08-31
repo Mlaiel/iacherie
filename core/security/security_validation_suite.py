@@ -11,8 +11,7 @@ This module provides a complete validation of our enterprise security implementa
 - Session security
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import json
 import os
 import tempfile

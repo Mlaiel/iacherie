@@ -7,8 +7,7 @@ automatisée et actions légales automatisées.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -164,8 +163,7 @@ SIGNATURE:
 {digital_signature}
 {owner_name}
 {contact_information}
-"""
-    def _load_cease_desist_template(self) -> str:
+"""    def _load_cease_desist_template(self) -> str:
         """Charge le template de cessation"""        return """CEASE AND DESIST NOTICE
 
 To: {infringer_name}
@@ -197,8 +195,7 @@ Sincerely,
 {legal_representative}
 {law_firm}
 {contact_information}
-"""
-    def _load_settlement_template(self) -> str:
+"""    def _load_settlement_template(self) -> str:
         """Charge le template de règlement"""        return """SETTLEMENT OFFER
 
 To: {infringer_name}
@@ -227,8 +224,7 @@ Please contact us to accept this settlement offer.
 
 Regards,
 {legal_counsel}
-"""
-    def _load_court_filing_template(self) -> str:
+"""    def _load_court_filing_template(self) -> str:
         """Charge le template de dépôt judiciaire"""        return """COMPLAINT FOR COPYRIGHT INFRINGEMENT
 
 {court_header}
@@ -251,8 +247,7 @@ PRAYER FOR RELIEF:
 {relief_requested}
 
 {attorney_signature}
-"""
-    async def register_copyright(
+"""    async def register_copyright(
         self,
         content_id: str,
         owner_id: str,
@@ -950,8 +945,7 @@ WHEREFORE, Plaintiff requests immediate injunctive relief.
 
 Respectfully submitted,
 Copyright Guardian Legal System
-"""
-    def _generate_damages_request(self, legal_case: Dict[str, Any]) -> str:
+"""    def _generate_damages_request(self, legal_case: Dict[str, Any]) -> str:
         """Génère la demande de dommages"""        damages = legal_case['damages_claimed']
         
         return f"""REQUEST FOR DAMAGES
@@ -965,8 +959,7 @@ Plaintiff seeks the following relief:
 5. Costs of suit
 
 Total damages sought: ${damages * 3:.2f} (including enhanced damages)
-"""
-    async def _file_court_documents(
+"""    async def _file_court_documents(
         self,
         documents: Dict[str, str],
         action_type: str

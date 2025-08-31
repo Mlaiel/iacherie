@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task analysis → Business impact scoring → ML priority prediction → 
 Dynamic adjustment → Queue positioning → Resource allocation → Execution optimization
-"""
-from typing import Any, Dict, List, Optional, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Tuple, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta

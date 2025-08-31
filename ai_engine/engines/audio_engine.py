@@ -13,8 +13,7 @@ without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly 
 Violators will face legal action under international copyright law.
 
 Business Logic: Audio Upload → AI Analysis → Protection → SEO → Collaboration → Distribution
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 import logging
 import json

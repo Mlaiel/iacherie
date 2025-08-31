@@ -12,8 +12,7 @@ Ce code, concept et propriété intellectuelle appartiennent exclusivement à Fa
 Toute tentative de vol, copie, redistribution ou utilisation sans autorisation écrite 
 explicite de Fahed Mlaiel (mlaiel@live.de) entraînera des actions légales immédiates 
 selon le droit allemand et international de la propriété intellectuelle.
-"""
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from enum import Enum
 from dataclasses import dataclass

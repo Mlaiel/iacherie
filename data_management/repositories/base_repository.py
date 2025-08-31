@@ -19,8 +19,7 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 BASE REPOSITORY ARCHITECTURE:
 CRUD Operations → Cache Layer → Query Optimization → 
 Batch Operations → Transaction Management → Audit Trail → Performance Monitoring
-"""
-from typing import Dict, List, Optional, Any, Union, TypeVar, Generic, Callable
+"""from typing import Dict, List, Optional, Any, Union, TypeVar, Generic, Callable
 from abc import ABC, abstractmethod
 import asyncio
 import logging

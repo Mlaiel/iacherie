@@ -5,8 +5,7 @@ including content gap analysis, keyword monitoring, and competitive positioning 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass
@@ -95,8 +94,7 @@ class CompetitiveIntelligenceResult:
 class CompetitorIntelligence:
     """    AI-powered competitive intelligence system that analyzes competitors,
     identifies opportunities, and provides strategic insights for SEO and content marketing.
-    """
-    def __init__(self, industry: str = "general", region: str = "US"):
+    """    def __init__(self, industry: str = "general", region: str = "US"):
         """        Initialize the competitor intelligence system.
         
         Args:

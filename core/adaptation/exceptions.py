@@ -7,8 +7,7 @@ for all creator types and enterprise scenarios.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 from datetime import datetime
 import uuid
 

@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -31,8 +30,7 @@ Business Logic Coverage:
 AI Agent Orchestration → Intelligent Coordination → ML Model Management
 → Neural Network Ensemble → Performance Optimization → Resource Allocation
 → Real-time Decision Making → Autonomous System Management
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

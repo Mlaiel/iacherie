@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER PROTECTION:
 Content Detection → Similarity Analysis → Violation Assessment → Evidence Collection → 
 Legal Notice Generation → Platform Notification → DMCA Processing → Revenue Recovery
-"""
-import json
+"""import json
 import logging
 import hashlib
 import asyncio

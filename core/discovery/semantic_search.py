@@ -33,8 +33,7 @@ Features:
 - Personalized search ranking based on user behavior
 - Advanced query analytics and performance optimization
 - Rights-aware search with content protection integration
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Set

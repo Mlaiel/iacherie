@@ -19,8 +19,7 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 REVENUE REPOSITORY ARCHITECTURE:
 Revenue Tracking → Platform Integration → Payment Processing → 
 Tax Calculations → Currency Exchange → Performance Analytics → Automated Payouts
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

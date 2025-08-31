@@ -6,8 +6,7 @@ Handles OAuth 2.0 flows for all supported platforms with secure token storage.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging

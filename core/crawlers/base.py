@@ -10,8 +10,7 @@ Unauthorized use, copying or distribution prohibited.
 Abstract base class defining the common interface for all platform-specific
 crawlers. Provides standardized methods for content extraction, rate limiting,
 error handling, and result normalization across different platforms.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from abc import ABC, abstractmethod

@@ -20,8 +20,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual property law.
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
-"""
-import os
+"""import os
 import yaml
 from typing import Dict, List, Optional, Any, Type, Union
 from pathlib import Path

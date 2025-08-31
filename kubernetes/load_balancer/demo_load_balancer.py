@@ -8,8 +8,7 @@ Email: mlaiel@live.de
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import time

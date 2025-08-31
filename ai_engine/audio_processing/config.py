@@ -5,8 +5,7 @@ Supports multiple environments, validation, and dynamic updates.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import os
 import json
 import yaml

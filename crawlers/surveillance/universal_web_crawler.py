@@ -12,8 +12,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Universal web crawler for comprehensive website monitoring and content extraction.
 Provides advanced crawling capabilities for any website with intelligent content detection.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta

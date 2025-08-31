@@ -6,8 +6,7 @@ channels including subscriptions, NFTs, brand partnerships, and premium content 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta

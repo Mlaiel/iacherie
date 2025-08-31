@@ -25,8 +25,7 @@ strictly prohibited and may result in severe legal action under German
 and international copyright laws.
 
 Specialization: Web Scraping Architecture & Content Surveillance Systems
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import os
@@ -152,8 +151,7 @@ class ContentCrawlerDeploymentManager:
     - Scalable deployment on Kubernetes
     - Compliance with platform ToS
     - Advanced content extraction and analysis
-    """
-    def __init__(self, config_path: Optional[str] = None):
+    """    def __init__(self, config_path: Optional[str] = None):
         """Initialize the content crawler deployment manager."""        self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()

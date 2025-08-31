@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade network and service discovery configuration.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field

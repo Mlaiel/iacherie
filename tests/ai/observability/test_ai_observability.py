@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -36,8 +35,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import json
 import numpy as np
 import pandas as pd
@@ -67,8 +65,7 @@ from ai.observability.ai_observability import (
 
 
 class TestAIObservabilityComprehensive:
-    """Ultra-comprehensive test suite for AI Observability"""
-    @pytest.fixture
+    """Ultra-comprehensive test suite for AI Observability"""    @pytest.fixture
     def sample_model_config(self):
         """Sample model configuration for testing"""        return {
             'model_id': 'test_content_protection_model',

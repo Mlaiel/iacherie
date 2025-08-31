@@ -3,8 +3,7 @@ Advanced encryption/decryption operations with HSM support
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import os
+"""import os
 import logging
 import hashlib
 import secrets

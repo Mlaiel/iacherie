@@ -37,8 +37,7 @@ Business Logic Flow:
 Creator Profile Analysis → AI Categorization → Skill Assessment → Portfolio Evaluation → 
 Market Positioning → Smart Matching → Opportunity Discovery → Collaboration Suggestions → 
 Performance Tracking → Revenue Optimization → Ecosystem Growth
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import numpy as np

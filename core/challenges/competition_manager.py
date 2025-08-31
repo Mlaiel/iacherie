@@ -19,8 +19,7 @@ Live Scoring → Real-time Leaderboards → Prize Distribution → Community Eng
 COMPETITION ARCHITECTURE:
 Tournament Engine → Bracket Manager → Matchmaking System → 
 Live Score Tracker → Prize Pool Manager → Broadcasting System
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from datetime import datetime, timedelta, timezone

@@ -9,8 +9,7 @@ prohibited and will result in severe legal consequences.
 
 This module provides comprehensive revenue analytics and monetization insights
 for content creators on the IA Influencer Agent platform.
-"""
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field

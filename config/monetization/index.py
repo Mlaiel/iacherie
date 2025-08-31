@@ -22,8 +22,7 @@ LEGAL WARNING: Violation of this copyright will result in:
 - Permanent ban from all related projects and services
 
 Contact: mlaiel@live.de for licensing inquiries and authorization.
-"""
-from typing import Dict, Any, List, Optional, Type, Union
+"""from typing import Dict, Any, List, Optional, Type, Union
 from dataclasses import dataclass
 from enum import Enum
 

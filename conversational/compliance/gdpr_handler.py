@@ -6,8 +6,7 @@ including data privacy protection, consent management, and right to be forgotten
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 import hashlib
 from datetime import datetime, timedelta

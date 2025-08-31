@@ -12,8 +12,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED ⚠️
 Copyright (C) 2024 Fahed Mlaiel. All rights reserved.
 For licensing inquiries: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import pickle

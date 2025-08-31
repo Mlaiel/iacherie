@@ -15,8 +15,7 @@ Enterprise compliance and regulatory environment management.
 Handles GDPR, CCPA, copyright law, data protection, audit trails,
 and regulatory compliance for multi-format content protection.
 ====================================================
-"""
-import os
+"""import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
 from dataclasses import dataclass, field

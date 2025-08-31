@@ -3,8 +3,7 @@ Advanced AI-Powered Content Generation and Personalization System
 
 This module provides comprehensive content generation capabilities including
 text generation, media creation, personalization, and multi-modal content synthesis.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging
@@ -711,8 +710,7 @@ When working with {request.content_topic}, consider these proven strategies:
 ## Conclusion
 
 {request.content_topic} represents a significant opportunity for {request.target_audience.value} to achieve their objectives more effectively. By following the strategies outlined in this guide, you can maximize the benefits while minimizing risks.
-"""
-    def _generate_email_sample(self, request: GenerationRequest) -> str:
+"""    def _generate_email_sample(self, request: GenerationRequest) -> str:
         """Generate sample email content"""        return f"""Subject: Important Update on {request.content_topic}
 
 Dear {request.target_audience.value.title()},
@@ -729,8 +727,7 @@ I'd be happy to discuss this further. Please don't hesitate to reach out if you 
 
 Best regards,
 [Your Name]
-"""
-    def _generate_blog_sample(self, request: GenerationRequest) -> str:
+"""    def _generate_blog_sample(self, request: GenerationRequest) -> str:
         """Generate sample blog post content"""        return f"""# The Future of {request.content_topic}: What {request.target_audience.value.title()} Need to Know
 
 *Published on {datetime.now().strftime('%B %d, %Y')}*
@@ -758,8 +755,7 @@ The future of {request.content_topic} holds immense promise. By staying informed
 ---
 
 *What are your thoughts on {request.content_topic}? Share your insights in the comments below.*
-"""
-    async def _post_process_content(self, content: str, request: GenerationRequest) -> str:
+"""    async def _post_process_content(self, content: str, request: GenerationRequest) -> str:
         """Post-process generated content"""        processed_content = content.strip()
         
         # Apply format-specific processing

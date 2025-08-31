@@ -49,8 +49,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""
-import logging
+"""import logging
 import warnings
 import json
 import yaml
@@ -967,7 +966,6 @@ class ReportTemplate(ABC):
             {% endif %}
         </div>
         """
-
 class ExecutiveTemplate(ReportTemplate):
     """    Executive template for high-level summary reports.
     
@@ -1287,7 +1285,6 @@ class ExecutiveTemplate(ReportTemplate):
             {% endif %}
         </div>
         """
-
 class TechnicalTemplate(ReportTemplate):
     """    Technical template for detailed technical analysis reports.
     
@@ -1783,7 +1780,6 @@ class TechnicalTemplate(ReportTemplate):
             {% endif %}
         </div>
         """
-
 class ComplianceTemplate(ReportTemplate):
     """    Compliance template for regulatory and audit reports.
     
@@ -2309,7 +2305,6 @@ class ComplianceTemplate(ReportTemplate):
             {% endif %}
         </div>
         """
-
 class TemplateManager:
     """    Template management system for report templates.
     

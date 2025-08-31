@@ -14,8 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Usage:
     python content_protection_example.py
-"""
-import asyncio
+"""import asyncio
 import logging
 import os
 import uuid

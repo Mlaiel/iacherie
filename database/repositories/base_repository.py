@@ -22,8 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 from sqlalchemy.orm import Session, Query
 from sqlalchemy.ext.declarative import DeclarativeMeta

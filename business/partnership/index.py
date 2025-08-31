@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 import logging
 
 # Import all main components
@@ -45,8 +44,7 @@ logger = logging.getLogger(__name__)
 class PartnershipBusinessModule:
     """    Main entry point for the Partnership Business Module.
     Provides unified access to all partnership management capabilities.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize the Partnership Business Module with all services"""        self.logger = logger
         self._initialize_services()
         self.logger.info("Partnership Business Module initialized successfully")

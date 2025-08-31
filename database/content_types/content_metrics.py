@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 
 🎯 LOGIQUE MÉTIER PERFORMANCE :
 Upload → IA Processing → Protection → Distribution → Performance Tracking → Revenue Optimization
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal

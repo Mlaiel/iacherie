@@ -12,7 +12,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 class ArchivalError(Exception):
     """Base exception for archival system errors"""    
     def __init__(self, message: str, error_code: str = None, details: dict = None):

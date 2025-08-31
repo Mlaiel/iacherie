@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade secrets management for secure credential storage
 → encrypted storage → key rotation → access control → audit logging.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 import hashlib
 import secrets

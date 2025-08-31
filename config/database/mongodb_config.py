@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -121,8 +120,7 @@ class MongoDBConfig:
     
     Handles document storage for content fingerprinting, media metadata,
     real-time analytics, and monetization tracking across multi-tenant platform.
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: MongoDBEnvironment = MongoDBEnvironment.DEVELOPMENT,
                  workload_type: MongoDBWorkloadType = MongoDBWorkloadType.MEDIA_STORAGE):
         self.environment = environment

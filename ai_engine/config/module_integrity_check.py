@@ -13,8 +13,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited
 and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-import os
+"""import os
 import sys
 import importlib
 import logging

@@ -10,8 +10,7 @@ Features:
 - Rollback automation and disaster recovery
 - Multi-environment deployment coordination
 - Integration with version control and artifact repositories
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -142,8 +141,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
     Manages complete CI/CD pipelines with multiple deployment strategies,
     automated testing, and rollback capabilities for the IA Influencer
     Agent platform.
-    """
-    def __init__(
+    """    def __init__(
         self,
         kubernetes_manager: Optional[KubernetesManager] = None,
         container_registry: Optional[ContainerRegistryManager] = None,

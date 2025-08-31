@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Séparation avancée de sources audio et isolation d'instruments avec IA
 TECHNOLOGIES: Deep Learning, Spectral Analysis, Neural Networks, Audio Processing
 LOGIQUE MÉTIER: Mixed audio → Source analysis → Neural separation → Quality enhancement → Isolated tracks
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

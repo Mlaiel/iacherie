@@ -18,8 +18,7 @@ Team Specializations:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 - Audio Processing & Digital Rights Management Expert
-"""
-from .web_scraper import WebScraper
+"""from .web_scraper import WebScraper
 from .content_scraper import ContentScraper
 from .platform_scraper import PlatformScraper
 from .stealth_scraper import StealthScraper

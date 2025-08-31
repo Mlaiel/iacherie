@@ -10,8 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime

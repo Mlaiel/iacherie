@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement production avec sécurité maximale.
 ==================================================================
-"""
-import os
+"""import os
 import secrets
 from typing import Dict, Any, List, Optional
 from .base import (

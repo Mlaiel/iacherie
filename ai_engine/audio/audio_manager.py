@@ -12,8 +12,7 @@ Email: mlaiel@live.de
 This module provides centralized audio management and orchestration for the
 IA Influencer Agent platform, handling the complete audio processing pipeline
 from upload to protection to monetization.
-"""
-import logging
+"""import logging
 import asyncio
 import uuid
 from datetime import datetime, timedelta

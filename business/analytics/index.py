@@ -6,8 +6,7 @@ This file serves as the main entry point for external modules to access analytic
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 import redis

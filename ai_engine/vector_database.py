@@ -3,8 +3,7 @@ High-performance similarity search using FAISS with intelligent indexing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import os
 import pickle
 import numpy as np

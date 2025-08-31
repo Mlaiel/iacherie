@@ -28,8 +28,7 @@ Expertise combinée:
 - Audio/Vidéo: Analyse multimédia pour détection de violations
 - DevOps: Monitoring en temps réel et alertes automatisées
 - IA Prompt Engineer: Optimisation de la détection par IA
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union, Set
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -691,8 +690,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field

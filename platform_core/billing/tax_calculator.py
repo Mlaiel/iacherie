@@ -14,8 +14,7 @@ Système de calcul automatique des taxes selon les juridictions
 - Règles par pays/état/province configurables
 - Intégration APIs officielles (Avalara, TaxJar)
 - Exemptions et cas spéciaux automatiques
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from typing import Dict, List, Optional, Any, Tuple

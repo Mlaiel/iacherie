@@ -9,8 +9,7 @@ Unauthorized use, reproduction, modification, or distribution without explicit
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal

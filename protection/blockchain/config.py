@@ -18,8 +18,7 @@ without explicit written authorization from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
-"""
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from enum import Enum
 import os
 from dataclasses import dataclass

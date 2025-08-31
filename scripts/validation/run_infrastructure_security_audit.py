@@ -9,8 +9,7 @@ This script performs a comprehensive security audit of the entire
 infrastructure including configuration, dependencies, and runtime security.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import os
+"""import os
 import sys
 import json
 import hashlib

@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Générateur de patterns rythmiques IA ultra-avancé avec deep learning
 TECHNOLOGIES: Neural Networks, Rhythmic Analysis, Pattern Recognition, Temporal Modeling
 LOGIQUE MÉTIER: Musical context → Rhythm analysis → Pattern generation → Groove optimization → Quality validation
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional container storage management with persistent volumes,
 storage classes, and advanced data lifecycle management.
-"""
-import os
+"""import os
 import asyncio
 import logging
 import json

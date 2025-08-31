@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Usage:
     python ml_demo.py --demo [all|sentiment|trends|content|recommendations]
-"""
-import asyncio
+"""import asyncio
 import argparse
 import logging
 import pandas as pd

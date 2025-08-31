@@ -3,8 +3,7 @@ High-performance caching with Redis, intelligent invalidation, and distributed l
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import json
+"""import json
 import pickle
 import hashlib
 from datetime import datetime, timedelta

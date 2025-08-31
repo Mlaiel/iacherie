@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Queue discovery → Resource mapping → Coordination planning → Synchronized execution →
 Load balancing → Conflict resolution → Performance optimization → Global analytics
-"""
-from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta

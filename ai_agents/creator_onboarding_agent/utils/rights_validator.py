@@ -4,8 +4,7 @@ Enterprise-grade rights validation, copyright analysis, and protection setup
 for creator content with AI-powered similarity detection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json

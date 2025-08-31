@@ -23,8 +23,7 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Licensing & Rights Management
 Copyright: Fahed Mlaiel - All rights reserved
-"""
-import os
+"""import os
 import sys
 import time
 import json

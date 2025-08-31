@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Revenue task → Platform analysis → ML routing decision → 
 Optimal worker selection → Performance tracking → Revenue optimization
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -120,8 +119,7 @@ class MonetizationTaskRouter:
     - Intelligent load balancing
     - Multi-currency support
     - Tax and compliance optimization
-    """
-    def __init__(self, router_id: str = None):
+    """    def __init__(self, router_id: str = None):
         self.router_id = router_id or f"monetization_router_{uuid.uuid4().hex[:8]}"
         
         # Core components

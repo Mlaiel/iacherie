@@ -13,8 +13,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-from typing import Dict, List, Type, Any, Optional
+"""from typing import Dict, List, Type, Any, Optional
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -45,8 +44,7 @@ class ConfigurationModule:
 class BusinessConfigIndex:
     """    Central registry and index for all business configuration modules.
     Provides unified access, discovery, and management of configuration components.
-    """
-    # Registry of all configuration modules
+    """    # Registry of all configuration modules
     CONFIGURATION_MODULES: Dict[str, ConfigurationModule] = {
         "workflow": ConfigurationModule(
             name="WorkflowConfig",

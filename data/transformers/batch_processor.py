@@ -6,8 +6,7 @@ Advanced batch processing system for high-throughput content transformation work
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Iterator
 from pathlib import Path

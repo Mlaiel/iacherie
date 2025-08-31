@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -24,8 +23,7 @@ Comprehensive testing for audio fingerprinting and content identification includ
 
 Created by Expert Team: Security Specialist + ML Engineer + Audio Developer
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

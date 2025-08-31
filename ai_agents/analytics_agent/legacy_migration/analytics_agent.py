@@ -24,8 +24,7 @@ Enterprise Features:
 - Comprehensive business intelligence with KPI dashboards
 - Performance monitoring with auto-scaling recommendations
 - Collaboration insights and monetization opportunity discovery
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import redis

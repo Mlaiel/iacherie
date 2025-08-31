@@ -9,8 +9,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This configuration system contains sensitive business logic and security parameters.
-"""
-import os
+"""import os
 import json
 from typing import Dict, Any, Optional, List, Union, Callable
 from dataclasses import dataclass, field

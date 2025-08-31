@@ -3,8 +3,7 @@ Automated secret rotation with zero-downtime deployment
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import os
+"""import os
 import logging
 import asyncio
 import hashlib

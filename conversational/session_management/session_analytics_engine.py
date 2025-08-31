@@ -9,8 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use prohibited. Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta

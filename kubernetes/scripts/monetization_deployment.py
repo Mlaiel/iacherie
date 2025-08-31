@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Monetization Platform Deployment Manager
 Handles deployment of revenue tracking, payment processing, and licensing automation
-"""
-import os
+"""import os
 import sys
 import time
 import json

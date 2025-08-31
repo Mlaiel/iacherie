@@ -8,8 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Advanced performance monitoring and metrics collection for fingerprinting system
-"""
-import time
+"""import time
 import asyncio
 import logging
 from datetime import datetime, timezone

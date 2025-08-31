@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -40,8 +39,7 @@ Violators will face legal action under international copyright law.
 THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION 
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

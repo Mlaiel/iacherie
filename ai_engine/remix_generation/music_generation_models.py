@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Implémentation des modèles IA de génération musicale ultra-avancés
 TECHNOLOGIES: WaveNet, MuseNet, AIVA, Magenta, Jukebox, Neural Processing
 LOGIQUE MÉTIER: Audio input → AI analysis → Model selection → Generation → Quality control
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

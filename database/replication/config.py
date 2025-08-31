@@ -6,8 +6,7 @@ and topology configurations for the content creator platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 import yaml
 import logging
 from typing import Dict, Any, Optional, List

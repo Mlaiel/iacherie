@@ -20,8 +20,7 @@ and may result in severe civil and criminal penalties. Users must comply with al
 applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta, date

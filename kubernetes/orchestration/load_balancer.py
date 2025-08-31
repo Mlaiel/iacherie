@@ -10,8 +10,7 @@ Features:
 - SSL termination and certificate management
 - Traffic routing and canary deployments
 - Rate limiting and DDoS protection
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union, Set
@@ -151,8 +150,7 @@ class LoadBalancerManager(BaseDeploymentManager):
     Manages application and network load balancers with advanced
     routing, health checking, and traffic distribution capabilities
     for the IA Influencer Agent platform.
-    """
-    def __init__(
+    """    def __init__(
         self,
         certificate_manager: Optional[CertificateManager] = None,
         metrics_collector: Optional[MetricsCollector] = None

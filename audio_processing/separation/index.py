@@ -10,8 +10,7 @@ Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Module Metadata
+"""# Module Metadata
 MODULE_INFO = {
     "name": "audio.separation",
     "version": "2.0.0",
@@ -124,8 +123,7 @@ Contact mlaiel@live.de for licensing inquiries.
 
 VIOLATIONS: Will be prosecuted under applicable copyright, 
 trade secret, and intellectual property laws.
-"""
-def get_module_overview():
+"""def get_module_overview():
     """Get comprehensive module overview."""    return {
         "info": MODULE_INFO,
         "documentation": DOCUMENTATION,

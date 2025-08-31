@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER AUDIO PROCESSOR:
 Audio Upload → Format Detection → Quality Analysis → Feature Extraction → 
 Fingerprinting → Content Analysis → Noise Reduction → Protection Preparation
-"""
-import librosa
+"""import librosa
 import numpy as np
 import soundfile as sf
 from mutagen import File as MutagenFile

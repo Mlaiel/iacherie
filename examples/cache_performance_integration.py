@@ -3,8 +3,7 @@ Demonstrates how to integrate all the new cache and performance features
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-from fastapi import FastAPI, Request, Response
+"""from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import our new middleware

@@ -12,8 +12,7 @@ distribution, or commercialization without explicit written permission is
 strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import time

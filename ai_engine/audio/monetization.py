@@ -11,8 +11,7 @@ Email: mlaiel@live.de
 
 This module provides comprehensive monetization capabilities including
 revenue tracking, payment processing, and automated revenue optimization.
-"""
-import logging
+"""import logging
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union, Tuple

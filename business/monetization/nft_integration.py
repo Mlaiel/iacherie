@@ -7,8 +7,7 @@ Date: 2025-07-31 06:23:40
 Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum

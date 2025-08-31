@@ -9,8 +9,7 @@ and validates that all modules have comprehensive testing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Final validation of unit test coverage requirement
-"""
-import subprocess
+"""import subprocess
 import sys
 import os
 from pathlib import Path

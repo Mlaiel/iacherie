@@ -5,8 +5,7 @@ and payment anomalies in the IA-Influencer ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta

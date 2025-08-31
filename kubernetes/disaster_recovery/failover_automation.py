@@ -10,8 +10,7 @@ This module provides intelligent failover automation:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -340,8 +339,7 @@ class IntelligentFailoverAutomation:
     - Predictive maintenance and proactive failover
     - Self-learning from historical incidents and outcomes
     - Context-aware automation rules and policies
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)

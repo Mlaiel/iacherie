@@ -5,8 +5,7 @@ is properly configured and operational.
 
 Built by Fahed Mlaiel and the IA Influencer Agent Team.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Any, Optional
 from datetime import datetime
@@ -17,8 +16,7 @@ from .index import create_notification_system
 
 
 class NotificationSystemValidator:
-    """Comprehensive validation and health checks for the notification system."""
-    def __init__(self):
+    """Comprehensive validation and health checks for the notification system."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.notification_system = create_notification_system()
 

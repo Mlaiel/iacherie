@@ -16,8 +16,7 @@ Configuration Areas:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""
-import os
+"""import os
 import yaml
 import json
 from typing import Dict, List, Optional, Any, Union

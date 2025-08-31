@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Translation input → AI analysis → Quality scoring → Error detection → 
 Improvement suggestions → Cultural accuracy → Fluency assessment → Final rating
-"""
-import logging
+"""import logging
 import asyncio
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union

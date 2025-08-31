@@ -3,8 +3,7 @@ Creates complete Swagger/OpenAPI documentation for all API endpoints.
 
 Author: AI Assistant
 Purpose: Generate complete Swagger API documentation
-"""
-import json
+"""import json
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, asdict
 from enum import Enum

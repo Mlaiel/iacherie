@@ -23,8 +23,7 @@ Automated Monetization → Rights Management → Performance Analytics
 Author: Fahed Mlaiel
 Project Lead & Chief Architect
 Email: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta

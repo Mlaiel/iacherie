@@ -12,8 +12,7 @@ Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field

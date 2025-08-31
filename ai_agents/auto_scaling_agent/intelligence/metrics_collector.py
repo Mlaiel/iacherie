@@ -6,8 +6,7 @@ capabilities for monitoring and scaling decisions in the IA Influencer Agent pla
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 © 2025 All Rights Reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading

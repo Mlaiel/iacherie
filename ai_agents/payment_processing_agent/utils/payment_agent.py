@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
@@ -60,8 +59,7 @@ class PaymentProcessingAgent(BaseAgent):
     
     Handles multi-currency payments, automated payouts, fraud detection,
     tax compliance, and revenue analytics for content creators.
-    """
-    def __init__(
+    """    def __init__(
         self,
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None,

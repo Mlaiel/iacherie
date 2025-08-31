@@ -5,8 +5,7 @@ title tags, meta descriptions, Open Graph tags, Twitter cards, and schema markup
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -67,8 +66,7 @@ class MetaOptimizationResult:
 class MetaOptimizer:
     """    Comprehensive meta-data optimizer for SEO that generates and optimizes
     all necessary meta tags for better search engine visibility.
-    """
-    def __init__(self, language: str = "en", region: str = "US"):
+    """    def __init__(self, language: str = "en", region: str = "US"):
         """        Initialize the meta optimizer.
         
         Args:

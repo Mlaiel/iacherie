@@ -5,8 +5,7 @@ Type: Engine Core - IA-Influencer-Agent
 Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union, Tuple
 import logging
 import asyncio

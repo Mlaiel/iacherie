@@ -80,8 +80,7 @@ Usage Examples:
     protection_plan = await response_system.protection_advisor.generate_protection_strategy(
         protection_request
     )
-"""
-# Import all core modules for unified access
+"""# Import all core modules for unified access
 from . import (
     response_engine,
     template_management,

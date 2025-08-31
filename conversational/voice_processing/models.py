@@ -39,8 +39,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 - Unauthorized access to proprietary methods
 
 For official licensing inquiries ONLY: mlaiel@live.de
-"""
-import uuid
+"""import uuid
 import hashlib
 import numpy as np
 from typing import Dict, List, Optional, Union, Any, Tuple, Set

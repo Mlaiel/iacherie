@@ -10,8 +10,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import smtplib
 import json
@@ -1382,7 +1381,6 @@ class EmailNotificationChannel(BaseNotificationChannel):
         </body>
         </html>
         """
-
 class SlackNotificationChannel(BaseNotificationChannel):
     """Slack notification channel."""    
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:

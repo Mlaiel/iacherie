@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Upload créateur → Validation sécurité → Storage multi-cloud → 
 CDN distribution → Compression optimale → Accès ultra-rapide → Analytics storage
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
 from contextlib import asynccontextmanager

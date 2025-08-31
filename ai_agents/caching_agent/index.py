@@ -11,8 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Any unauthorized use, copying, distribution, or commercialization without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
 will result in immediate legal action.
-"""
-# Core Management Components
+"""# Core Management Components
 from .manager import CachingManager, CacheConfig, CacheStats, CacheEntry
 
 # Storage Layer Components

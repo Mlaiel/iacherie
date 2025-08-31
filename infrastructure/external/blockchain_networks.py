@@ -5,8 +5,7 @@ Date: 2025-07-31 06:28:26
 
 Module infrastructure professionnel avec patterns enterprise.
 ==================================================================
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import asyncio
 import logging
 from datetime import datetime

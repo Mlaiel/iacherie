@@ -11,8 +11,7 @@ Responsibility: Monitoring temps réel et analytics des sauvegardes
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import json

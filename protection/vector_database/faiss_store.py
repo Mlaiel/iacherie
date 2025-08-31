@@ -6,8 +6,7 @@ Optimized for real-time similarity search across millions of content fingerprint
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import numpy as np
+"""import numpy as np
 import asyncio
 import logging
 import pickle

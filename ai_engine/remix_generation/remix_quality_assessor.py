@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Évaluateur de qualité de remix IA ultra-avancé avec analyse multidimensionnelle
 TECHNOLOGIES: Deep Learning, Audio Quality Metrics, Perceptual Analysis, Neural Assessment
 LOGIQUE MÉTIER: Audio input → Multi-modal analysis → Quality scoring → Recommendations → Assessment report
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

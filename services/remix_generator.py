@@ -3,8 +3,7 @@ AI-powered remix and music generation service.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 from dataclasses import dataclass

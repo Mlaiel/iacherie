@@ -7,8 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise artifact management system for multi-format content platform.
 Handles storage, versioning, distribution, and lifecycle management of build artifacts.
 ================================================================
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 import hashlib

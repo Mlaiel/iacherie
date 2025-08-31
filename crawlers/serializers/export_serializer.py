@@ -28,8 +28,7 @@ Expertise combinée:
 - Audio/Vidéo: Export spécialisé pour métadonnées multimédia
 - DevOps: Automation et scaling pour génération de rapports
 - IA Prompt Engineer: Génération automatique de rapports narratifs par IA
-"""
-import logging
+"""import logging
 import io
 import csv
 from typing import Dict, List, Optional, Any, Union, BinaryIO, TextIO

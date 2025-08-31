@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -50,8 +49,7 @@ logger = logging.getLogger(__name__)
 class PartnershipManager:
     """    Core partnership management system for strategic business relationships.
     Handles partnership lifecycle, contract management, and revenue optimization.
-    """
-    def __init__(
+    """    def __init__(
         self,
         db_session: AsyncSession,
         contract_engine: Optional[ContractEngine] = None,

@@ -3,8 +3,7 @@
 
 Auteur: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel - Tous droits réservés
-"""
-import sys
+"""import sys
 import warnings
 import importlib
 

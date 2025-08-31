@@ -19,8 +19,7 @@ Completion Assessment → Reward Distribution → Community Engagement
 CHALLENGE ENGINE ARCHITECTURE:
 Challenge Factory → Lifecycle Manager → Progress Tracker → 
 Validation Engine → Reward Calculator → Analytics Collector
-"""
-from typing import Dict, List, Optional, Any, Union, Callable
+"""from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from datetime import datetime, timedelta, timezone

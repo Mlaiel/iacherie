@@ -19,8 +19,7 @@ License: Proprietary - Unauthorized use prohibited
 ⚠️  PROPRIETARY SECURITY CODE ⚠️
 This security implementation contains proprietary algorithms and methods.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import hmac
 import json

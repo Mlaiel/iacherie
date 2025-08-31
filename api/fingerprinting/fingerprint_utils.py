@@ -8,8 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Common utilities and helper functions for fingerprinting operations
-"""
-import hashlib
+"""import hashlib
 import mimetypes
 import time
 import asyncio

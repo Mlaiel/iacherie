@@ -25,8 +25,7 @@ This analytics orchestration system contains proprietary integration frameworks,
 system coordination algorithms, and enterprise architecture patterns developed by Fahed Mlaiel.
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All system integration patterns and orchestration logic are protected intellectual property.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any

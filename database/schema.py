@@ -3,8 +3,7 @@ SQL schema for PostgreSQL database.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from sqlalchemy import text
+"""from sqlalchemy import text
 from ..core.database import database_manager
 from ..core.logging import logger
 

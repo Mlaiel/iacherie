@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -29,8 +28,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -118,8 +116,7 @@ class TestContentFingerprintingUltraIndustrial:
     - Sécurité cryptographique des fingerprints
     - Résistance aux attaques adversariales
     - Intégration blockchain pour l'immutabilité
-    """
-    def _create_valid_wav_audio(self) -> bytes:
+    """    def _create_valid_wav_audio(self) -> bytes:
         """Create a valid WAV audio file in memory"""        import struct
         import math
         
@@ -929,8 +926,7 @@ class TestContentFingerprintingUltraIndustrial:
 
 
 class TestFingerprintMatcher:
-    """Comprehensive tests for FingerprintMatcher class"""
-    @pytest.fixture
+    """Comprehensive tests for FingerprintMatcher class"""    @pytest.fixture
     def matcher(self, test_config):
         """Create FingerprintMatcher instance for testing"""        return FingerprintMatcher(test_config.get('fingerprint_matching', {}))
 
@@ -1370,8 +1366,7 @@ class TestFingerprintMatcher:
 
 @pytest.mark.integration
 class TestFingerprintingIntegration:
-    """Integration tests for fingerprinting system"""
-    @pytest.mark.asyncio
+    """Integration tests for fingerprinting system"""    @pytest.mark.asyncio
     async def test_end_to_end_fingerprinting_workflow(self, test_config, sample_content_metadata, test_temp_directory):
         """Test complete fingerprinting workflow from content to matching"""        
         fingerprinter = ContentFingerprinter(test_config.get('fingerprinting', {}))

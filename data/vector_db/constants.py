@@ -22,8 +22,7 @@ TEAM SPECIALTIES:
 - Audio Processing Specialist: Audio fingerprinting & analysis
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
-"""
-from enum import Enum, IntEnum
+"""from enum import Enum, IntEnum
 from typing import Dict, List, Tuple, Any, Final
 
 # ================================
@@ -517,8 +516,7 @@ Violations will result in immediate legal action including but not limited to:
 - Injunctive relief
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-LEGAL_DISCLAIMERS: Final[Dict[str, str]] = {
+"""LEGAL_DISCLAIMERS: Final[Dict[str, str]] = {
     "warranty": "This software is provided 'as is' without warranty of any kind.",
     "liability": "The author shall not be liable for any damages arising from use.",
     "trademark": "All trademarks are property of their respective owners.",

@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -29,8 +28,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -107,8 +105,7 @@ class TestUltraIndustrialContentEncryption:
     - Chiffrement multi-couches pour contenu multimédia
     - Performance extrême avec accélération matérielle
     - Tests de sécurité contre attaques sophistiquées
-    """
-    @pytest.fixture
+    """    @pytest.fixture
     def enterprise_encryption_config(self):
         """Configuration ultra-avancée pour le chiffrement"""        return {
             'algorithms': {
@@ -1517,8 +1514,7 @@ class TestUltraIndustrialContentEncryption:
 
 
 class TestDigitalWatermarker:
-    """Comprehensive tests for DigitalWatermarker class"""
-    @pytest.fixture
+    """Comprehensive tests for DigitalWatermarker class"""    @pytest.fixture
     def digital_watermarker(self, test_config):
         """Create DigitalWatermarker instance for testing"""        return DigitalWatermarker(test_config.get('watermarking', {}))
 
@@ -1984,8 +1980,7 @@ class TestDigitalWatermarker:
 
 
 class TestCryptoProvider:
-    """Tests for cryptographic provider functionality"""
-    @pytest.mark.asyncio
+    """Tests for cryptographic provider functionality"""    @pytest.mark.asyncio
     async def test_random_key_generation(self):
         """Test cryptographically secure random key generation"""        
         crypto_provider = CryptoProvider()
@@ -2029,8 +2024,7 @@ class TestCryptoProvider:
 
 
 class TestEncryptionIntegration:
-    """Integration tests for encryption system"""
-    @pytest.mark.asyncio
+    """Integration tests for encryption system"""    @pytest.mark.asyncio
     async def test_end_to_end_content_protection_workflow(self, test_config, sample_content_metadata):
         """Test complete content protection workflow with encryption and watermarking"""        
         content_encryptor = ContentEncryptor(test_config.get('encryption', {}))

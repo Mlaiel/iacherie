@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-from typing import Dict, Any, Optional, List
+"""from typing import Dict, Any, Optional, List
 from datetime import datetime, timezone
 from enum import Enum
 

@@ -19,8 +19,7 @@ Incentive Optimization → User Motivation → Revenue Impact
 REWARD REPOSITORY ARCHITECTURE:
 Reward Configuration → Distribution Engine → Virtual Currency → 
 Economic Balance → Analytics Tracking → Performance Optimization
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

@@ -35,8 +35,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 
 Comprehensive test suite for ProtectionConfig module ensuring 100% copyright
 protection, watermarking, and anti-piracy capabilities for content creators.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

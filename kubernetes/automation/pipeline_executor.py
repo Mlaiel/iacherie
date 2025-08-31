@@ -6,8 +6,7 @@ and intelligent workflow management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable, Awaitable
@@ -171,8 +170,7 @@ class PipelineExecutor(BaseComponent):
     parallel execution, conditional workflows, manual approvals,
     error handling, and intelligent retry mechanisms for
     deployment automation in the IA Influencer Agent platform.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

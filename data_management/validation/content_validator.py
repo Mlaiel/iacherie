@@ -14,8 +14,7 @@ Validation avancée pour musiciens, influenceurs, photographes, blogueurs, comé
 - Détection de contenu inapproprié
 - Validation métadonnées et structure
 - Support multi-format avec AI
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from pathlib import Path

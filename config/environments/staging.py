@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement staging pour tests pré-production.
 ==================================================================
-"""
-import os
+"""import os
 from typing import Dict, Any, List, Optional
 from .base import (
     BaseEnvironmentConfigManager, 

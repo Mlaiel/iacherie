@@ -35,8 +35,7 @@ Development Team Specialties:
 - Microservices Specialist: Distributed systems and APIs
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: Infrastructure automation and monitoring
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging

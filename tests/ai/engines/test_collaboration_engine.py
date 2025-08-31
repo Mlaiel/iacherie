@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -42,8 +41,7 @@ FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT
 IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -72,8 +70,7 @@ from collaboration_engine import (
 
 
 class TestCollaborationEngine:
-    """Comprehensive test suite for CollaborationEngine"""
-    @pytest.fixture
+    """Comprehensive test suite for CollaborationEngine"""    @pytest.fixture
     async def collaboration_engine(self):
         """Create collaboration engine instance"""        config = {
             'max_matches': 10,

@@ -27,8 +27,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union, Callable
+"""from typing import Dict, List, Optional, Any, Tuple, Union, Callable
 import logging
 import asyncio
 from datetime import datetime, timezone, timedelta

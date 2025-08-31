@@ -7,8 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise notification system for CI/CD pipeline events and alerts.
 Multi-channel communication with intelligent routing and escalation.
 ================================================================
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
 import json

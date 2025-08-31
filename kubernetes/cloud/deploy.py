@@ -12,8 +12,7 @@ IMPORTANT COPYRIGHT NOTICE:
 This deployment script is part of the IA Influencer Agent platform.
 Unauthorized reproduction, distribution, or modification is strictly prohibited.
 For licensing inquiries, contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import argparse
 import logging
 import os

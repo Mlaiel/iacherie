@@ -11,8 +11,7 @@ Email: mlaiel@live.de
 
 This module provides comprehensive multi-platform content distribution including
 automated publishing, metadata optimization, and cross-platform analytics.
-"""
-import logging
+"""import logging
 import uuid
 import asyncio
 from datetime import datetime, timedelta

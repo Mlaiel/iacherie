@@ -35,8 +35,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 
 Comprehensive integration test suite validating cross-module functionality,
 end-to-end workflows, and system-wide consistency for all AI configuration components.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

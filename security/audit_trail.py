@@ -4,8 +4,7 @@ Comprehensive audit trail system for security events, access logging, and compli
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging

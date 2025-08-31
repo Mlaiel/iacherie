@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -45,8 +44,7 @@ logger = logging.getLogger(__name__)
 class ContractEngine:
     """    Advanced contract generation and management engine for partnerships.
     Handles legal document creation, template management, and contract lifecycle.
-    """
-    def __init__(self, templates_path: Optional[str] = None):
+    """    def __init__(self, templates_path: Optional[str] = None):
         self.templates_path = templates_path or "./contract_templates"
         self.template_env = Environment(
             loader=FileSystemLoader(self.templates_path),

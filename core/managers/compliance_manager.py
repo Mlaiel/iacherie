@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Données utilisateur → Analyse conformité → Application réglementations → 
 Audit trails → Protection données → Rapports compliance → Notifications légales
-"""
-from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
+"""from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
 from contextlib import asynccontextmanager

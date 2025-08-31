@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -29,8 +28,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -90,8 +88,7 @@ class TestUltraIndustrialBlockchainVerification:
     - Intégration avec systèmes de royalties distribuées
     - Résistance aux attaques blockchain avancées
     - Conformité avec standards juridiques internationaux
-    """
-    async def _create_proof_dict(self, blockchain_verifier, content_id, owner_id, content_hash, statement, metadata):
+    """    async def _create_proof_dict(self, blockchain_verifier, content_id, owner_id, content_hash, statement, metadata):
         """Helper method to create proof and return as dict for test compatibility"""        proof_obj = await blockchain_verifier.create_proof_of_ownership(
             content_id, owner_id, content_hash, statement, metadata
         )
@@ -1267,8 +1264,7 @@ class TestUltraIndustrialBlockchainVerification:
 
 
 class TestBlockchainIntegration:
-    """Integration tests for blockchain verification system"""
-    async def _create_proof_dict(self, blockchain_verifier, content_id, owner_id, content_hash, statement, metadata):
+    """Integration tests for blockchain verification system"""    async def _create_proof_dict(self, blockchain_verifier, content_id, owner_id, content_hash, statement, metadata):
         """Helper method to create proof and return as dict for test compatibility"""        proof_obj = await blockchain_verifier.create_proof_of_ownership(
             content_id, owner_id, content_hash, statement, metadata
         )

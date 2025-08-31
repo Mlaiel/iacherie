@@ -12,8 +12,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is the exclusive intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
-"""
-from typing import Dict, Any, Optional
+"""from typing import Dict, Any, Optional
 import asyncio
 import logging
 

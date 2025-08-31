@@ -45,8 +45,7 @@ This module provides:
 - Multi-jurisdictional compliance automation
 - Advanced threat detection and response
 - Legal intelligence and precedent analysis
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import secrets

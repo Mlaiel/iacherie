@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -25,8 +24,7 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will face legal action under international copyright law.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -40,8 +38,7 @@ from datetime import datetime, timezone
 
 
 class TestAIEnginesStructure:
-    """Test the AI engines module structure and functionality"""
-    def test_module_directory_structure(self):
+    """Test the AI engines module structure and functionality"""    def test_module_directory_structure(self):
         """Test that all required module directories exist"""        base_path = "/workspaces/Ainflue/backend/ai/engines"
         
         required_files = [

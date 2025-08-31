@@ -11,8 +11,7 @@ Development Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Type, Union
 from enum import Enum
 from dataclasses import dataclass

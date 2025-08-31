@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ engagement prediction, social competition, badge generation, and progression ana
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import unittest
+"""import unittest
 import asyncio
 from unittest.mock import Mock, AsyncMock, patch
 from datetime import datetime, timezone, timedelta
@@ -29,8 +27,7 @@ import json
 
 
 class TestGamificationAgentModule(unittest.TestCase):
-    """Comprehensive test suite for Gamification Agent Module"""
-    def setUp(self):
+    """Comprehensive test suite for Gamification Agent Module"""    def setUp(self):
         """Set up test fixtures"""        self.sample_user_data = {
             "user_id": "test_user_123",
             "level": 5,
@@ -411,8 +408,7 @@ class TestGamificationAgentModule(unittest.TestCase):
 
 
 class TestGamificationPerformance(unittest.TestCase):
-    """Performance tests for gamification system"""
-    def test_large_user_base_simulation(self):
+    """Performance tests for gamification system"""    def test_large_user_base_simulation(self):
         """Test system performance with large user base"""        num_users = 10000
         challenges_per_user = 3
         

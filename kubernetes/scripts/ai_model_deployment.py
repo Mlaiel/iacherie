@@ -26,8 +26,7 @@ strictly prohibited and may result in severe legal action under German
 and international copyright laws.
 
 Specialization: AI/ML Systems Architecture & Enterprise Model Deployment
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import os
@@ -185,8 +184,7 @@ class AIModelDeploymentManager:
     - Performance monitoring and alerting
     - Security and compliance enforcement
     - Resource optimization and cost management
-    """
-    def __init__(self, config_path: Optional[str] = None):
+    """    def __init__(self, config_path: Optional[str] = None):
         """Initialize the AI model deployment manager."""        self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
@@ -499,8 +497,7 @@ def postprocess_output(prediction: Any) -> Dict[str, Any]:
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-"""
-    async def _deploy_to_kubernetes(
+"""    async def _deploy_to_kubernetes(
         self,
         model_config: ModelConfig,
         deployment_config: DeploymentConfig,

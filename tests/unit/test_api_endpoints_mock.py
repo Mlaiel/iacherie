@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Mock-based tests for API endpoints that work without FastAPI dependencies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete API test coverage without external dependencies
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

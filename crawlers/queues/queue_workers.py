@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Worker initialization → Task assignment → Platform specialization → 
 Load balancing → Health monitoring → Performance optimization → Scaling decisions
-"""
-from typing import Any, Dict, List, Optional, Set, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Set, Callable, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta

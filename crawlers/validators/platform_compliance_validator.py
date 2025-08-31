@@ -16,8 +16,7 @@ Features:
 - Creator program compliance validation
 - Platform-specific content guidelines enforcement
 - Revenue optimization recommendations
-"""
-import re
+"""import re
 import json
 import mimetypes
 from enum import Enum

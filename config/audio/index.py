@@ -17,8 +17,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass
 from enum import Enum
@@ -321,7 +320,6 @@ The system represents 1500+ hours of expert development work combining:
 For licensing, custom implementations, or enterprise solutions:
 Contact: mlaiel@live.de
 """
-
 def print_legal_notice():
     """Print legal and copyright notice"""    print(LEGAL_NOTICE)
 

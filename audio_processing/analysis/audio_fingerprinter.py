@@ -32,8 +32,7 @@ engineering, or replication is strictly prohibited and will result in
 immediate legal action under German and international copyright law.
 
 Contact: mlaiel@live.de
-"""
-import numpy as np
+"""import numpy as np
 import logging
 import hashlib
 from typing import Dict, List, Optional, Tuple, Any, Union

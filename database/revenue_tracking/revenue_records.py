@@ -5,8 +5,7 @@ des transactions financières pour la plateforme IA Influencer Agent.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer & Financial Systems Architect
-"""
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum

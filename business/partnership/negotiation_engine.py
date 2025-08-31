@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -65,8 +64,7 @@ class NegotiationPriority(Enum):
 class NegotiationEngine:
     """    Advanced AI-powered negotiation engine for partnership deals.
     Handles strategy optimization, term negotiation, and deal closing.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.logger = logger
         self.negotiation_strategies = self._load_negotiation_strategies()
         self.market_benchmarks = self._load_market_benchmarks()

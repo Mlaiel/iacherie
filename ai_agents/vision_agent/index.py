@@ -11,8 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Ce code et cette conception architecturale sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 L'utilisation, la copie, la distribution ou la commercialisation non autorisées sont strictement interdites.
 Contact: mlaiel@live.de pour les demandes de licence.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime

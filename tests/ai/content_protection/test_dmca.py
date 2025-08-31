@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -29,8 +28,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -97,8 +95,7 @@ class TestUltraIndustrialDMCAManagement:
     - Integration avec plateformes majeures (YouTube, Facebook, etc.)
     - Escalade automatique vers actions légales
     - Monitoring en temps réel et alertes instantanées
-    """
-    @pytest.fixture
+    """    @pytest.fixture
     def enterprise_dmca_config(self):
         """Configuration ultra-avancée pour le DMCA management"""        return {
             'legal_frameworks': {

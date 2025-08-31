@@ -12,8 +12,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER BASE PROCESSOR:
 Input Data → Validation → Processing → Feature Extraction → 
 Output Generation → Quality Check → Performance Monitoring
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 import logging
 import time

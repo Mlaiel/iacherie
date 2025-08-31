@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER DISTRIBUTION:
 Content Preparation → Platform Optimization → Automated Upload → Cross-Platform Sync → 
 Performance Monitoring → A/B Testing → Distribution Analytics → ROI Optimization
-"""
-import json
+"""import json
 import logging
 import asyncio
 import time

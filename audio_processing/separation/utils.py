@@ -11,8 +11,7 @@ License: Proprietary - Contact for licensing
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 import mimetypes

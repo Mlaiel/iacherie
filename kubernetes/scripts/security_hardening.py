@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Security Hardening Manager
 Automated security hardening and compliance for the IA Influencer Agent platform
-"""
-import os
+"""import os
 import sys
 import time
 import json

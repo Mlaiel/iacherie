@@ -4,8 +4,7 @@ Core application settings and environment-specific configurations
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from datetime import timedelta

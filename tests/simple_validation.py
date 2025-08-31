@@ -2,8 +2,7 @@
 ================================================
 
 Basic validation without external dependencies
-"""
-import sys
+"""import sys
 import os
 from unittest.mock import Mock
 

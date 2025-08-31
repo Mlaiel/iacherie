@@ -3,8 +3,7 @@ Real-time alert management and notification system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from typing import Dict, Any, List
 from datetime import datetime
 import json

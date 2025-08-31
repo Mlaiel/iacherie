@@ -33,8 +33,7 @@ is strictly prohibited and will result in legal action.
 
 This is proprietary software developed by Fahed Mlaiel. Commercial use requires
 explicit written permission. For licensing inquiries, contact: mlaiel@live.de
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime
 import logging
 import asyncio

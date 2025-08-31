@@ -9,8 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de middleware pour le traitement d'événements avec chaîne de traitement,
     authentification, validation, logging et métriques.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Awaitable
+"""from typing import Any, Dict, List, Optional, Union, Callable, Awaitable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

@@ -5,8 +5,7 @@ intelligent query rewriting, and adaptive execution strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import time
 import hashlib
 from datetime import datetime, timedelta

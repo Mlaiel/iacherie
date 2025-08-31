@@ -10,8 +10,7 @@ Description:
     Bus central d'événements pour la distribution temps réel des événements
     dans la plateforme IA-Influencer-Agent. Support pub/sub pattern avec 
     persistance et routage intelligent.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum

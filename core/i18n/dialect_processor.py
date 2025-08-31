@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Text input → Dialect detection → Regional analysis → Variant identification → 
 Linguistic features → Cultural markers → Processing recommendations
-"""
-import logging
+"""import logging
 import asyncio
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union, Set

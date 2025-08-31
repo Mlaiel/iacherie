@@ -45,8 +45,7 @@ Core Capabilities:
 📈 SEO Optimization & Metadata
 🎥 Live Streaming & Real-Time Processing
 ⚡ High-Performance Processing Pipeline
-"""
-# Import all major components for easy access
+"""# Import all major components for easy access
 from .core import (
     VisionProcessor,
     ImageAnalyzer, 

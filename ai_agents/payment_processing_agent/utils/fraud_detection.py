@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import logging
+"""import logging
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Tuple
@@ -105,8 +104,7 @@ class FraudDetectionEngine:
     
     Combines rule-based detection, machine learning models, and behavioral
     analysis for comprehensive fraud prevention and risk scoring.
-    """
-    def __init__(
+    """    def __init__(
         self,
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None

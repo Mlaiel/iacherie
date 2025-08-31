@@ -7,8 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from pathlib import Path
 

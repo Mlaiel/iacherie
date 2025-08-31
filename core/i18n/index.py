@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Component registry → Module discovery → Service coordination → 
 Health monitoring → Performance tracking → Centralized management
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Type, Union
 from datetime import datetime

@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER IMAGE PROCESSOR:
 Image Upload → Format Detection → Quality Analysis → Metadata Extraction → 
 Fingerprinting → Watermark Detection → Content Analysis → Optimization → Protection
-"""
-import cv2
+"""import cv2
 import numpy as np
 from PIL import Image, ImageStat, ExifTags
 import hashlib

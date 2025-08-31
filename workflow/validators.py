@@ -3,8 +3,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-from typing import Dict, Any, List, Optional, Set, Callable, Union
+"""from typing import Dict, Any, List, Optional, Set, Callable, Union
 from dataclasses import dataclass
 from enum import Enum
 import re

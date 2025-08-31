@@ -3,8 +3,7 @@ Platform-specific configs, feature flags, and environment management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Flexible mobile platform configuration for multi-environment deployment
-"""
-import json
+"""import json
 import logging
 import os
 from datetime import datetime, timedelta

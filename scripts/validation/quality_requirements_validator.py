@@ -5,8 +5,7 @@ Validates the following requirements:
 - Security: Zero vulnerabilités critiques/hautes  
 - Documentation: 100% APIs documentées
 - Monitoring: 50+ métriques métier
-"""
-import json
+"""import json
 import os
 import subprocess
 import sys

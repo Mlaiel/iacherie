@@ -20,8 +20,7 @@ Team Specialties:
 - Audio Processing: Fahed Mlaiel
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -54,8 +53,7 @@ class OrchestrationPlatform:
     
     Provides enterprise-grade container orchestration, deployment management,
     and infrastructure automation capabilities.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize orchestration platform."""        self.initialized = False
         self.start_time = datetime.now()
         

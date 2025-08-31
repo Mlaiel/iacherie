@@ -11,8 +11,7 @@ Responsibility: Central index for all data models with utilities and factory met
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Type, Any, Optional, Union
+"""from typing import Dict, List, Type, Any, Optional, Union
 from datetime import datetime, timezone
 import importlib
 import inspect

@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -34,8 +33,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact Officiel : Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import pytest
 import sys
 import os
@@ -82,8 +80,7 @@ class TestContentProtectorUltraIndustrial:
     - Sécurité cryptographique avancée
     - Monitoring et analytics en temps réel
     - Conformité légale internationale
-    """
-    @pytest.fixture
+    """    @pytest.fixture
     def enterprise_protection_config(self):
         """Configuration ultra-avancée pour le système de protection"""        return {
             'protection_engines': {

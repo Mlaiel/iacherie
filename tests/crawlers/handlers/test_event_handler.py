@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests for real-time event management, queue processing, and worker systems.
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,8 +45,7 @@ from crawlers.handlers.event_handler import (
 
 
 class TestEvent:
-    """Test suite for Event class."""
-    def test_event_creation(self):
+    """Test suite for Event class."""    def test_event_creation(self):
         """Test event object creation."""        event = Event(
             event_id='test-001',
             event_type='content_upload',
@@ -94,8 +91,7 @@ class TestEvent:
 
 
 class TestEventHandler:
-    """Test suite for EventHandler base class."""
-    def test_handler_creation(self):
+    """Test suite for EventHandler base class."""    def test_handler_creation(self):
         """Test handler initialization."""        handler = EventHandler('test_handler')
         assert handler.name == 'test_handler'
         assert handler.handler_id is not None
@@ -124,8 +120,7 @@ class TestEventHandler:
 
 
 class TestAsyncEventHandler:
-    """Test suite for AsyncEventHandler class."""
-    @pytest.mark.asyncio
+    """Test suite for AsyncEventHandler class."""    @pytest.mark.asyncio
     async def test_async_handler_execution(self):
         """Test async event handling."""        async def test_coroutine(event):
             return f"Processed {event.event_type}"
@@ -168,8 +163,7 @@ class TestAsyncEventHandler:
 
 
 class TestSyncEventHandler:
-    """Test suite for SyncEventHandler class."""
-    @pytest.mark.asyncio
+    """Test suite for SyncEventHandler class."""    @pytest.mark.asyncio
     async def test_sync_handler_execution(self):
         """Test sync event handling in thread pool."""        def test_function(event):
             return f"Sync processed {event.event_type}"
@@ -205,8 +199,7 @@ class TestSyncEventHandler:
 
 
 class TestEventQueue:
-    """Test suite for EventQueue class."""
-    def test_queue_initialization(self):
+    """Test suite for EventQueue class."""    def test_queue_initialization(self):
         """Test queue setup."""        queue = EventQueue()
         assert queue.redis_client is not None
         assert queue.queue_name == 'ia_influencer_events'
@@ -276,8 +269,7 @@ class TestEventQueue:
 
 
 class TestEventRegistry:
-    """Test suite for EventRegistry class."""
-    def test_registry_initialization(self):
+    """Test suite for EventRegistry class."""    def test_registry_initialization(self):
         """Test registry setup."""        registry = EventRegistry()
         assert len(registry.handlers) == 0
         assert len(registry.event_types) == 0
@@ -329,8 +321,7 @@ class TestEventRegistry:
 
 
 class TestEventDispatcher:
-    """Test suite for EventDispatcher class."""
-    def test_dispatcher_initialization(self):
+    """Test suite for EventDispatcher class."""    def test_dispatcher_initialization(self):
         """Test dispatcher setup."""        dispatcher = EventDispatcher()
         assert dispatcher.queue is not None
         assert dispatcher.registry is not None
@@ -404,8 +395,7 @@ class TestEventDispatcher:
 
 
 class TestEventWorker:
-    """Test suite for EventWorker class."""
-    def test_worker_initialization(self):
+    """Test suite for EventWorker class."""    def test_worker_initialization(self):
         """Test worker setup."""        dispatcher = EventDispatcher()
         worker = EventWorker('worker-1', dispatcher)
         
@@ -452,8 +442,7 @@ class TestEventWorker:
 
 
 class TestIntegration:
-    """Integration tests for event handling system."""
-    @pytest.mark.asyncio
+    """Integration tests for event handling system."""    @pytest.mark.asyncio
     async def test_complete_event_flow(self):
         """Test complete event processing flow."""        dispatcher = EventDispatcher()
         

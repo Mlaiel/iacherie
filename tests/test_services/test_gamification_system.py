@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -16,8 +15,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import unittest
+"""import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
 from datetime import datetime, timedelta
@@ -26,8 +24,7 @@ import json
 
 
 class TestGamificationSystem(unittest.TestCase):
-    """Test suite for GamificationSystem class"""
-    def setUp(self):
+    """Test suite for GamificationSystem class"""    def setUp(self):
         """Set up test fixtures"""        self.gamification = None  # Will be mocked
         self.sample_user_profile = {
             "user_id": "user_123",

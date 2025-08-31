@@ -7,8 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in trend analysis, viral content prediction,
 market trend identification, and content timing optimization.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta

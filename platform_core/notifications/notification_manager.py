@@ -14,8 +14,7 @@ Notifications intelligentes avec templates et targeting avancé
 - Templates dynamiques avec personnalisation IA
 - Scheduling et automation de campagnes
 - Analytics et tracking des engagements
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid

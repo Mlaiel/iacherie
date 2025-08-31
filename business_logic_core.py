@@ -7,8 +7,7 @@ This module provides a top-level import alias for the core business logic
 to maintain backward compatibility with existing test imports.
 
 Author: Auto-generated for import compatibility
-"""
-# Import directly from the business_logic_core.py file to avoid complex dependencies
+"""# Import directly from the business_logic_core.py file to avoid complex dependencies
 import sys
 from pathlib import Path
 

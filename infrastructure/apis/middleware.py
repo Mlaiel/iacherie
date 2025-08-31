@@ -7,8 +7,7 @@ Date: 2025-07-31 06:28:26
 API professionnel avec authentification, validation, et monitoring.
 Routes consolidées: 0
 ==================================================================
-"""
-from fastapi import FastAPI, HTTPException, Depends, status, Request, Response
+"""from fastapi import FastAPI, HTTPException, Depends, status, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials

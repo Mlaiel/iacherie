@@ -10,8 +10,7 @@ Features:
 - Concurrent session management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import hashlib
+"""import hashlib
 import hmac
 import secrets
 import json

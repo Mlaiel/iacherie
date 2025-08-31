@@ -18,8 +18,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""
-import asyncio
+"""import asyncio
 import json
 import time
 from datetime import datetime, timedelta
@@ -106,8 +105,7 @@ class HealthAlertingSystem:
     
     Provides real-time alerting, multi-channel notifications, and incident
     management for the IA Influencer Agent platform health monitoring.
-    """
-    def __init__(self, config: Dict[str, Any], redis_client: Optional[aioredis.Redis] = None):
+    """    def __init__(self, config: Dict[str, Any], redis_client: Optional[aioredis.Redis] = None):
         """        Initialize health alerting system
         
         Args:

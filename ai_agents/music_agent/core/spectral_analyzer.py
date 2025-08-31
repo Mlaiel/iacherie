@@ -6,8 +6,7 @@ feature extraction, and intelligent music understanding capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple

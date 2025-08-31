@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive API integration capabilities for external services
 including streaming platforms, payment processors, analytics services, and content
 distribution networks.
-"""
-import logging
+"""import logging
 import asyncio
 import aiohttp
 import jwt

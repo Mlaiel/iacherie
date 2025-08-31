@@ -20,8 +20,7 @@ Features:
 - Automated copyright violation detection for music content
 - Multi-region content discovery and availability tracking
 - Comprehensive music metadata extraction and analysis
-"""
-import asyncio
+"""import asyncio
 import json
 import re
 import jwt

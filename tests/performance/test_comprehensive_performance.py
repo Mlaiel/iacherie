@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -22,8 +21,7 @@ Integration test demonstrating all performance and monitoring enhancements:
 - Monitoring & alerting system verification
 
 Author: Performance Optimization Team
-"""
-import asyncio
+"""import asyncio
 import time
 import json
 import pytest

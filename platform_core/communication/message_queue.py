@@ -14,8 +14,7 @@ Message queue enterprise avec traitement distribué
 - Dead Letter Queue pour gestion d'erreurs
 - Priority queues avec backpressure
 - Monitoring temps réel et métriques avancées
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time

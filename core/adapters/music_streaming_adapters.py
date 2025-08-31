@@ -19,8 +19,7 @@ Supported Platforms:
 - Amazon Music: Developer API
 - Tidal: Artist tools integration
 - Bandcamp: Fan funding, Direct sales
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field

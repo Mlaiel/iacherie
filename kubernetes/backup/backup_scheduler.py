@@ -6,8 +6,7 @@ with support for various scheduling patterns and backup types.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta, time
 from typing import Dict, List, Optional, Any, Callable, Tuple
@@ -74,8 +73,7 @@ class BackupScheduler:
     
     Supports various scheduling patterns including cron expressions,
     interval-based scheduling, and one-time executions.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize backup scheduler."""        self.logger = logging.getLogger(__name__)
         self.schedules: Dict[str, ScheduleConfig] = {}
         self.executions: List[ScheduleExecution] = []

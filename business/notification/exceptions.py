@@ -15,8 +15,7 @@ Architecture Pattern: Exception Hierarchy with Business Context
 Processing Level: Industrial-Grade Error Management
 Creation Pattern: Enterprise Exception Handling
 Business Logic Integration: Complete Error Tracking and Recovery
-"""
-import traceback
+"""import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass

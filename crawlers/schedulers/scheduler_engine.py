@@ -26,8 +26,7 @@ Business Logic Integration:
 Creator upload → AI pattern analysis → Intelligent prediction → 
 Adaptive scheduling → Performance optimization → Learning feedback → 
 Continuous improvement → Enhanced protection → Revenue optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import json

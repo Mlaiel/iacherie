@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade security configuration and compliance management.
 ==================================================================
-"""
-import logging
+"""import logging
 import os
 import hashlib
 import secrets

@@ -14,8 +14,7 @@ Gestion complète des abonnements SaaS avec billing automatique
 - Prorata automatique et changements de plan
 - Usage-based billing et facturation à l'usage
 - Gestion des essais gratuits et coupons
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid

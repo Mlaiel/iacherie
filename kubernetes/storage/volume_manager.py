@@ -24,8 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content upload → Volume allocation → Performance optimization → 
 Backup scheduling → Scaling management → Monitoring alerts → Recovery procedures
-"""
-import logging
+"""import logging
 import asyncio
 import json
 import yaml

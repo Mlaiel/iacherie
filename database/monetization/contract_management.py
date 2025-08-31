@@ -24,8 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
     CheckConstraint, event

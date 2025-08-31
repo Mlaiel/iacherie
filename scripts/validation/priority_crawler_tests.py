@@ -9,8 +9,7 @@ Comprehensive tests for Spotify, YouTube, and Instagram crawlers to verify:
 - Error handling
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import pytest
 import logging
 import os

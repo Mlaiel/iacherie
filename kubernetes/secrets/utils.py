@@ -25,8 +25,7 @@ PROHIBITED ACTIONS:
 ❌ Reverse engineering, decompilation, or concept extraction
 
 Any violation will result in immediate legal action under International Copyright Law.
-"""
-import os
+"""import os
 import re
 import hmac
 import hashlib

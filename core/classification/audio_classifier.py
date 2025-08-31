@@ -5,8 +5,7 @@ Provides genre detection, mood analysis, quality assessment, and similarity matc
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import numpy as np
+"""import numpy as np
 import librosa
 import torch
 import tensorflow as tf

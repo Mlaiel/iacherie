@@ -18,8 +18,7 @@ legal action. Contact mlaiel@live.de for authorization.
 
 Comprehensive test suite for the complete surveillance module implementation.
 Tests all professional modules, integration, and enterprise functionality.
-"""
-import asyncio
+"""import asyncio
 import pytest
 import logging
 from datetime import datetime, timedelta

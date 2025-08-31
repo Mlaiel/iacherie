@@ -10,8 +10,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple

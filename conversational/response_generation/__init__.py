@@ -22,8 +22,7 @@ Features:
 - Cross-platform strategy optimization
 - Global market intelligence and expansion
 - Real-time performance analytics
-"""
-# Core Response Generation
+"""# Core Response Generation
 from .response_engine import (
     ResponseEngine,
     ResponseOrchestrator,

@@ -8,8 +8,7 @@ WARNING: This code, concept, and intellectual property are exclusively owned by
 Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution, 
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
-"""
-import os
+"""import os
 import json
 import logging
 from typing import Dict, List, Optional, Any, Union

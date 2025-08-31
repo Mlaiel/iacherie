@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive AutoML capabilities including automated model selection,
 hyperparameter optimization, and neural architecture search.
-"""
-import logging
+"""import logging
 import numpy as np
 import json
 import time

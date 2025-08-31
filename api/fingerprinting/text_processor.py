@@ -8,8 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Advanced text fingerprinting processor for multi-format content protection
-"""
-import hashlib
+"""import hashlib
 import re
 from typing import Dict, List, Optional, Tuple, Any
 import asyncio

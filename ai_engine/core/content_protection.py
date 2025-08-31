@@ -11,8 +11,7 @@ This cutting-edge content protection system is protected intellectual property.
 Any unauthorized copying, distribution, or use will result in immediate legal action.
 
 Business Logic: Content Upload → Fingerprint Generation → Protection Registration → Violation Detection → Automated Enforcement
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import uuid

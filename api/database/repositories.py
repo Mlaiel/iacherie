@@ -9,8 +9,7 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Optional, List, Dict, Any, Union, Type, Tuple, Generic, TypeVar
 from datetime import datetime, timedelta
 from dataclasses import dataclass

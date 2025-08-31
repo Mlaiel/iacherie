@@ -21,8 +21,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 import logging
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session

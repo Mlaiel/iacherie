@@ -5,8 +5,7 @@ Tests imports and basic functionality to ensure everything works
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-import sys
+"""import sys
 import traceback
 
 def test_imports():

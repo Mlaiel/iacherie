@@ -24,8 +24,7 @@ This innovative revenue management system represents months of research, develop
 intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted to the 
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from datetime import datetime, timezone
@@ -777,8 +776,7 @@ contract RevenueShare {
         }
     }
 }
-"""
-contract_address = await agent.deploy_smart_contract(
+"""contract_address = await agent.deploy_smart_contract(
     contract_code=contract_code,
     constructor_args=[],
     gas_limit=2000000

@@ -14,8 +14,7 @@ COPYRIGHT WARNING: This code is proprietary. Unauthorized use, copying, or
 redistribution without explicit written permission from Fahed Mlaiel is 
 strictly prohibited and will result in legal action.
 ================================================================================
-"""
-import logging
+"""import logging
 import asyncio
 import json
 import uuid

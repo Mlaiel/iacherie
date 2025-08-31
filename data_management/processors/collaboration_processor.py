@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER COLLABORATION:
 Creator Profile Analysis → Content Style Matching → Audience Compatibility → 
 Brand Alignment → Collaboration Opportunity Generation → Partnership Recommendations
-"""
-import json
+"""import json
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple

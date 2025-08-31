@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Requête utilisateur → Analyse intention → Routing intelligent → 
 Orchestration agents → Coordination tâches → Agrégation résultats → Réponse optimisée
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager

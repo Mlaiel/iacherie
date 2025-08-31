@@ -3,8 +3,7 @@ Provides comprehensive overview and navigation for all mobile modules
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import importlib.util
 import os

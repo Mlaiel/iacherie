@@ -22,8 +22,7 @@ Ce code est protégé par le droit d'auteur. Toute utilisation, reproduction,
 ou distribution non autorisée est strictement interdite.
 This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -76,8 +75,7 @@ class MarketplaceSystem:
     - Monetization and revenue optimization
     
     This is the main entry point for all marketplace operations.
-    """
-    def __init__(self, config: Optional[MarketplaceConfig] = None):
+    """    def __init__(self, config: Optional[MarketplaceConfig] = None):
         """        Initialize the complete marketplace system.
         
         Args:

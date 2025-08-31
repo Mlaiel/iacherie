@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Engine de mastering automatique professionnel avec IA ultra-avancée
 TECHNOLOGIES: Deep Learning Mastering, Dynamic Range Control, Spectral Enhancement, Loudness Optimization
 LOGIQUE MÉTIER: Audio input → Analysis → AI Processing → Professional Mastering → Quality Validation
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

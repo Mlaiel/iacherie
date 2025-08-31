@@ -6,8 +6,7 @@ Implements multi-format processing, transformation, and enrichment.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import time
 import hashlib

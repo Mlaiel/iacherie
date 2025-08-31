@@ -16,8 +16,7 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""
-import asyncio
+"""import asyncio
 import time
 import json
 from datetime import datetime, timedelta
@@ -65,8 +64,7 @@ class DatabaseHealthChecker:
     
     Monitors all database systems including PostgreSQL, Redis, MongoDB,
     and vector databases with performance metrics and alerting.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         """        Initialize database health checker
         
         Args:

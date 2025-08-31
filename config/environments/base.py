@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Configuration environnement de base pour toutes les plateformes.
 Gestion centralisée des variables d'environnement enterprise.
 ==================================================================
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from enum import Enum
 from pathlib import Path
 from typing import Dict, Any, Optional, List, Union

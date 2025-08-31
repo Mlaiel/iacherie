@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 import pickle
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -98,8 +97,7 @@ class FAISSConfig:
     
     Manages vector indexing for content fingerprinting, similarity search,
     and content protection across audio, video, image, and text content.
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: FAISSEnvironment = FAISSEnvironment.DEVELOPMENT,
                  content_type: FAISSContentType = FAISSContentType.AUDIO_FINGERPRINT):
         self.environment = environment

@@ -22,8 +22,7 @@ Advanced type system supporting:
 TYPE CLASSIFICATION LOGIC:
 Migration Request → Type Analysis → Priority Assignment → 
 Category Classification → Risk Assessment → Execution Strategy Selection
-"""
-from enum import Enum, IntEnum
+"""from enum import Enum, IntEnum
 from typing import Optional, List, Dict, Any
 from dataclasses import dataclass
 

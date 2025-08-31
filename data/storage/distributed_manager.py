@@ -22,8 +22,7 @@ LOGIQUE MÉTIER INTÉGRÉE:
 Content Distribution → Provider Selection → Load Balancing → 
 Fault Detection → Automatic Failover → Performance Optimization → 
 Geographic Distribution → Latency Minimization → Cost Optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta

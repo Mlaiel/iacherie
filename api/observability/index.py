@@ -10,8 +10,7 @@ Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 🚨 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE 🚨
 Ce code est la propriété exclusive de Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta

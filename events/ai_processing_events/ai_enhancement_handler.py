@@ -8,8 +8,7 @@ AI Analysis → Enhancement → Optimization → Protection → SEO → Collabor
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple
 from datetime import datetime, timedelta

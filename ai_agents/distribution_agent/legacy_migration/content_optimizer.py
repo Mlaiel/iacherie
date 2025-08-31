@@ -3,8 +3,7 @@ Optimizes content for each platform's specific requirements and audience.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple
 import re

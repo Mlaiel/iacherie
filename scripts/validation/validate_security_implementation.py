@@ -4,8 +4,7 @@ Simple validation test for the implemented security features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import sys
+"""import sys
 import os
 import asyncio
 from datetime import datetime, timezone, timedelta

@@ -4,8 +4,7 @@ Advanced configuration management utilities and managers
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import os
+"""import os
 import json
 import yaml
 from typing import Dict, List, Optional, Any, Union, Type

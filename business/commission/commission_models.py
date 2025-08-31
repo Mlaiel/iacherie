@@ -14,8 +14,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-from typing import Dict, List, Optional, Union, Any
+"""from typing import Dict, List, Optional, Union, Any
 from datetime import datetime, timedelta
 from enum import Enum, auto
 from decimal import Decimal

@@ -5,8 +5,7 @@ health monitoring and compliance monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 © 2025 - All rights reserved. Unauthorized use prohibited.
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
 from enum import Enum

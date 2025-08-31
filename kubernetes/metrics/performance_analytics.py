@@ -30,8 +30,7 @@ Features:
 - Advanced bottleneck identification with root cause analysis
 - Predictive scaling with capacity planning
 - Performance forecasting with trend analysis
-"""
-import logging
+"""import logging
 import asyncio
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple, Set

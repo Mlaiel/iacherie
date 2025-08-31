@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Synthèse vocale IA ultra-avancée avec deep learning et vocodeurs neuraux
 TECHNOLOGIES: WaveNet, Tacotron, Neural Vocoders, Phoneme Processing, Prosody Control
 LOGIQUE MÉTIER: Text/Phonemes → Prosody analysis → Neural synthesis → Voice conversion → Quality enhancement
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

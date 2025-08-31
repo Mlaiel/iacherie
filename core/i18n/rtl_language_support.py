@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Text analysis → RTL detection → BiDi processing → Layout adaptation → 
 CSS generation → Direction handling → Mixed content support → UI transformation
-"""
-import logging
+"""import logging
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime

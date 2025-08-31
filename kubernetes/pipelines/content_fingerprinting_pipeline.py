@@ -25,8 +25,7 @@ Technologies:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import numpy as np

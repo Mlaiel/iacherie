@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Production environment configuration with enterprise-grade security and performance.
 Handles large-scale multi-format content processing, AI fingerprinting, and monetization.
 ====================================================
-"""
-import os
+"""import os
 import secrets
 import logging
 from typing import Dict, Any, List, Optional, Set

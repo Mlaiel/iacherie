@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Requête utilisateur → Analyse patterns → Cache intelligent → 
 Prédiction AI → Préchargement smart → Response ultra-rapide → Analytics optimisation
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
 from contextlib import asynccontextmanager

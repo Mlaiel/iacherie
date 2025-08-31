@@ -12,8 +12,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Set, Union
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -125,8 +124,7 @@ class RoleDefinition:
 
 
 class UserRolesConfig:
-    """Enterprise user roles and permissions configuration."""
-    # Role hierarchy and inheritance
+    """Enterprise user roles and permissions configuration."""    # Role hierarchy and inheritance
     ROLE_HIERARCHY = {
         UserRole.PLATFORM_ADMIN: {
             "level": 10,

@@ -19,8 +19,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 🚨 INTELLECTUAL PROPERTY WARNING 🚨
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-import logging
+"""import logging
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta

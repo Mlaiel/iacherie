@@ -16,8 +16,7 @@ Features:
 - Multi-modal analysis (visual + audio)
 - Temporal pattern recognition
 - High-performance parallel processing
-"""
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn

@@ -11,8 +11,7 @@ Email: mlaiel@live.de
 
 This index provides convenient access to all audio processing components
 and serves as the main entry point for the audio module.
-"""
-# Main orchestration and management
+"""# Main orchestration and management
 from .audio_manager import (
     AudioManager,
     AudioProcessingStatus,

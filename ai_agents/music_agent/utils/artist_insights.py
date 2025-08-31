@@ -14,8 +14,7 @@ written permission is strictly forbidden and will result in legal prosecution
 under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -236,8 +235,7 @@ class ArtistInsights:
     
     Provides deep insights into artist performance, audience behavior, market position,
     and strategic recommendations for growth and optimization.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize artist insights engine"""        self.spotify_agent = SpotifyAgent()
         self.analytics_agent = AnalyticsAgent()
         self.performance_analyzer = PerformanceAnalyzer()

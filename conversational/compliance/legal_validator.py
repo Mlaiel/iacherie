@@ -6,8 +6,7 @@ including risk assessment, regulatory compliance, and legal disclaimer managemen
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Set

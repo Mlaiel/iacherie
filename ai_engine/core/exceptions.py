@@ -7,8 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""
-import traceback
+"""import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 from enum import Enum

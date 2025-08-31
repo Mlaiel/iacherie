@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade environment-specific configuration management for multi-format 
 content creators → AI processing → protection → monetization → collaboration.
 ==================================================================
-"""
-import os
+"""import os
 import yaml
 import json
 import logging

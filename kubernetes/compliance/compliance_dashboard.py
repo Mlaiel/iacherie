@@ -11,8 +11,7 @@ This module provides comprehensive compliance dashboard functionality including:
 - Regulatory status dashboards
 - Policy management interface
 - Violation tracking and remediation
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -115,8 +114,7 @@ class DashboardWidget:
 class ComplianceDashboard:
     """    Enterprise-grade compliance dashboard providing comprehensive
     compliance monitoring, reporting, and management interface.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.audit_logger = AuditLogger()
         self.compliance_monitor = ComplianceMonitor()
         self.gdpr_manager = GDPRComplianceManager()

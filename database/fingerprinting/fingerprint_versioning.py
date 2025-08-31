@@ -5,8 +5,7 @@ diff analysis, rollback capabilities, and evolution monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import hashlib

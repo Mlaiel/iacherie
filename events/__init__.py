@@ -26,8 +26,7 @@ Project Team Expertise:
 - DevOps Engineer: Infrastructure automation and deployment
 - Audio Engineer: Audio processing and music technology
 - Microservices Architect: Distributed systems and scalability
-"""
-from typing import Dict, Any, Optional, List
+"""from typing import Dict, Any, Optional, List
 import logging
 from enum import Enum
 

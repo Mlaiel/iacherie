@@ -6,8 +6,7 @@ capabilities with automated rollback and verification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import shutil
 import tempfile
@@ -82,8 +81,7 @@ class RecoveryManager:
     
     Handles backup restoration, point-in-time recovery, selective restoration,
     and automated rollback with verification capabilities.
-    """
-    def __init__(self, storage_config: Dict[str, Any]):
+    """    def __init__(self, storage_config: Dict[str, Any]):
         """        Initialize recovery manager.
         
         Args:

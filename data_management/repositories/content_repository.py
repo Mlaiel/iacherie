@@ -19,8 +19,7 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 CONTENT REPOSITORY ARCHITECTURE:
 Content Upload → Format Detection → AI Processing → Fingerprint Generation → 
 Metadata Extraction → Cache Storage → Vector Indexing → Protection Registration
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

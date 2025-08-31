@@ -8,8 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
-"""
-import pytest
+"""import pytest
 import pytest_asyncio
 import asyncio
 import json

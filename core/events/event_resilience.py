@@ -14,8 +14,7 @@ Description:
     Système avancé de résilience pour les événements incluant circuit breakers,
     bulkheads, timeout gestion, retry avec backoff, et recovery automatique.
     Garantit la stabilité de la plateforme IA-Influencer-Agent.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

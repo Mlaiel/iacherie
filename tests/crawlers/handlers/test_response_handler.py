@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests for API response processing, validation, and normalization.
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -46,8 +44,7 @@ from crawlers.handlers.response_handler import (
 
 
 class TestPlatformResponse:
-    """Test suite for platform response models."""
-    def test_youtube_response_creation(self):
+    """Test suite for platform response models."""    def test_youtube_response_creation(self):
         """Test YouTube response model."""        response = YouTubeResponse(
             video_id="abc123",
             title="Test Video",
@@ -132,8 +129,7 @@ class TestPlatformResponse:
 
 
 class TestResponseValidator:
-    """Test suite for ResponseValidator class."""
-    def test_validator_initialization(self):
+    """Test suite for ResponseValidator class."""    def test_validator_initialization(self):
         """Test validator setup."""        validator = ResponseValidator()
         assert validator.schemas is not None
         assert len(validator.schemas) > 0
@@ -228,8 +224,7 @@ class TestResponseValidator:
 
 
 class TestResponseNormalizer:
-    """Test suite for ResponseNormalizer class."""
-    def test_normalizer_initialization(self):
+    """Test suite for ResponseNormalizer class."""    def test_normalizer_initialization(self):
         """Test normalizer setup."""        normalizer = ResponseNormalizer()
         assert hasattr(normalizer, 'field_mappings')
         assert 'youtube' in normalizer.field_mappings
@@ -346,8 +341,7 @@ class TestResponseNormalizer:
 
 
 class TestResponseProcessor:
-    """Test suite for ResponseProcessor class."""
-    def test_processor_initialization(self):
+    """Test suite for ResponseProcessor class."""    def test_processor_initialization(self):
         """Test processor setup."""        processor = ResponseProcessor()
         assert processor.validator is not None
         assert processor.normalizer is not None
@@ -500,8 +494,7 @@ class TestResponseProcessor:
 
 
 class TestIntegration:
-    """Integration tests for response handling system."""
-    @pytest.mark.asyncio
+    """Integration tests for response handling system."""    @pytest.mark.asyncio
     async def test_end_to_end_processing(self):
         """Test complete response processing pipeline."""        processor = ResponseProcessor()
         

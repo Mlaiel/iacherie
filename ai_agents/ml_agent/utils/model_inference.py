@@ -12,8 +12,7 @@ Any unauthorized use, copying, distribution, or commercialization without explic
 is strictly PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid

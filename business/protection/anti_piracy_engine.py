@@ -13,8 +13,7 @@ This module provides comprehensive anti-piracy protection including:
 
 Business Logic: Content Upload → AI Analysis → Piracy Detection → 
 Enforcement → Revenue Recovery → Legal Documentation
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json

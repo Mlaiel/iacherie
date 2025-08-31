@@ -3,8 +3,7 @@ Professional error hierarchy with comprehensive business logic coverage.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, Optional, Union
+"""from typing import Any, Dict, Optional, Union
 from fastapi import HTTPException, status
 from enum import Enum
 

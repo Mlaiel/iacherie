@@ -11,8 +11,7 @@ Professional contract lifecycle management system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Contract Specialist + Blockchain Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta

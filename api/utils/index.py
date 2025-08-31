@@ -4,8 +4,7 @@ Main entry point for utility functions and helpers
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-# File and media utilities
+"""# File and media utilities
 from .files import (
     FileManager,
     MediaUploadHandler,

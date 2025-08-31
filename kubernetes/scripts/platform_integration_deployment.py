@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Platform Integration Deployment Manager
 Handles deployment of platform APIs integration for multi-platform content monitoring
-"""
-import os
+"""import os
 import sys
 import time
 import json

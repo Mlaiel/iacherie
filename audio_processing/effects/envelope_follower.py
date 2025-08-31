@@ -5,8 +5,7 @@ multiple detection modes and adaptive response characteristics.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import numpy as np
+"""import numpy as np
 from typing import Optional
 
 

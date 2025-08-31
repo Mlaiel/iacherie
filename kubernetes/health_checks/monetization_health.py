@@ -16,8 +16,7 @@ Copyright: IA Influencer Agent Platform - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""
-import asyncio
+"""import asyncio
 import time
 import json
 from datetime import datetime, timedelta
@@ -61,8 +60,7 @@ class MonetizationHealthChecker:
     
     Monitors all revenue tracking, payment processing, and platform
     integration components for the monetization pipeline.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         """        Initialize monetization health checker
         
         Args:

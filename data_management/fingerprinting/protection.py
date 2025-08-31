@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC PROTECTION:
 Violation Detection → Evidence Collection → Legal Processing → Automated Takedown → 
 Manual Review → Escalation → Revenue Recovery → Brand Protection → Analytics
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from abc import ABC, abstractmethod
 from enum import Enum
 from dataclasses import dataclass, field

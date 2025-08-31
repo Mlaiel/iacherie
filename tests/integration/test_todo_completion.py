@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -20,8 +19,7 @@ Simple validation script to verify that the critical TODO items have been
 properly implemented without external dependencies.
 
 Author: Copilot Assistant
-"""
-import os
+"""import os
 import re
 import sys
 from pathlib import Path

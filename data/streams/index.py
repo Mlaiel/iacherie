@@ -17,8 +17,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, List, Optional, Any, Type
+"""from typing import Dict, List, Optional, Any, Type
 import logging
 
 # Core Stream Components

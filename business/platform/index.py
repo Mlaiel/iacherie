@@ -5,8 +5,7 @@ including orchestration, content processing, distribution, analytics, and more.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any
 
 from .platform_orchestrator import PlatformOrchestrator

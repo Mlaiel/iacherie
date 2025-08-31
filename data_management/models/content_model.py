@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC CONTENT PIPELINE:
 Upload → Validation → AI Fingerprinting → Metadata Extraction → Vector Embeddings → 
 Indexing → Protection → SEO Optimization → Multi-Platform Distribution → Revenue Analytics
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, ClassVar
+"""from typing import Dict, List, Optional, Any, Union, Tuple, ClassVar
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field

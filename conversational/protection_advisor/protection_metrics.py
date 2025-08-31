@@ -5,8 +5,7 @@ the effectiveness of content protection strategies and implementations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -92,8 +91,7 @@ class ProtectionMetrics:
     - Comparative benchmarking
     - Trend analysis and forecasting
     - Real-time monitoring dashboards
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.metric_definitions = self._load_metric_definitions()
         self.benchmark_data = self._load_benchmark_data()
         self.cache_ttl = 1800  # 30 minutes

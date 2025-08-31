@@ -7,8 +7,7 @@ for multi-format creator content (audio, video, image, text).
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-from typing import Dict, Any, List, Optional, Union, Tuple
+"""from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum

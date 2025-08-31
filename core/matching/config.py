@@ -10,8 +10,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This configuration module contains proprietary settings and algorithms
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
-"""
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from datetime import timedelta

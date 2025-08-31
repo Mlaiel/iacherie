@@ -6,8 +6,7 @@ Provides custom exceptions, validation functions, and error management utilities
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Any, Dict, List, Optional, Union
+"""from typing import Any, Dict, List, Optional, Union
 import logging
 import traceback
 

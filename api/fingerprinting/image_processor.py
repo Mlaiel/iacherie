@@ -8,8 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Advanced image fingerprinting processor for multi-format content protection
-"""
-import cv2
+"""import cv2
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
 import asyncio

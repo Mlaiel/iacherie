@@ -11,8 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import json
 

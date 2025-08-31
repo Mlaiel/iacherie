@@ -7,8 +7,7 @@ Provides comprehensive reporting on test coverage across critical modules.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Validate test coverage meets production quality standards
-"""
-import subprocess
+"""import subprocess
 import sys
 import os
 from pathlib import Path

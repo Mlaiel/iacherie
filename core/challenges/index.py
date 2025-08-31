@@ -19,8 +19,7 @@ Configuration Management → Performance Monitoring → Health Checks
 CHALLENGE SYSTEM INDEX ARCHITECTURE:
 Service Locator → Factory Registry → Configuration Manager → 
 Health Monitor → Performance Tracker → Resource Manager
-"""
-from typing import Dict, List, Optional, Any, Type, TypeVar, Callable
+"""from typing import Dict, List, Optional, Any, Type, TypeVar, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timezone

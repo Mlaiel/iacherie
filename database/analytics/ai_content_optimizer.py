@@ -9,8 +9,7 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
-"""
-from typing import Dict, List, Optional, Tuple, Any, Union
+"""from typing import Dict, List, Optional, Tuple, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 from enum import Enum

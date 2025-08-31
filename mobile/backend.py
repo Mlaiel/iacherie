@@ -3,8 +3,7 @@ Enterprise-grade mobile backend services with FastAPI integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
-"""
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from datetime import datetime, timedelta

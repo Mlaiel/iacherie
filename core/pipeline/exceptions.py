@@ -7,8 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Error Detection → Classification → Context Collection → Recovery Strategy → Monitoring → Escalation
-"""
-import logging
+"""import logging
 import traceback
 import json
 import uuid

@@ -10,8 +10,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This demonstration module contains proprietary algorithms and workflows
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
-"""
-import asyncio
+"""import asyncio
 import time
 import json
 import random

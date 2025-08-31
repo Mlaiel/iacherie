@@ -22,8 +22,7 @@ LOGIQUE MÉTIER INTÉGRÉE:
 Metric Collection → Real-time Analysis → Anomaly Detection → 
 Performance Prediction → Optimization Recommendations → 
 Alert Generation → Dashboard Updates → Historical Analytics
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import statistics

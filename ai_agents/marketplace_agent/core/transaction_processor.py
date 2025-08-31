@@ -5,8 +5,7 @@ and fraud detection for marketplace transactions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -101,8 +100,7 @@ class TransactionProcessor:
     - Real-time transaction validation and monitoring
     - Automated dispute resolution workflows
     - Compliance with financial regulations
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize transaction processor.
         
         Args:

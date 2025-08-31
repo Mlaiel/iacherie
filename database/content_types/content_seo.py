@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 
 🎯 LOGIQUE MÉTIER SEO :
 User Upload → IA Analysis → SEO Auto-Optimization → Multi-Platform Distribution → Performance Tracking
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

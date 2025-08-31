@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -146,8 +145,7 @@ class BrandAnalyzer:
     - Performance trend analysis
     - Market positioning insights
     - Growth opportunity identification
-    """
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         
         # Initialize analysis components
@@ -1011,8 +1009,7 @@ class ValueCalculator:
     """    Specialized Brand Value Calculator
     
     Advanced financial modeling for brand valuation using multiple methodologies.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.valuation_models = {
             "relief_from_royalty": self._relief_from_royalty_method,
             "premium_pricing": self._premium_pricing_method,

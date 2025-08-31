@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests online learning, bandits, reinforcement learning, and optimization algorit
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -56,8 +54,7 @@ from ai.personalization.exceptions import (
 
 
 class TestAdaptiveLearningAlgorithm(IsolatedAsyncioTestCase):
-    """Base tests for AdaptiveLearningAlgorithm abstract class"""
-    async def asyncSetUp(self):
+    """Base tests for AdaptiveLearningAlgorithm abstract class"""    async def asyncSetUp(self):
         """Set up test environment"""        # Test with concrete implementation (OnlineLearningAlgorithm)
         self.algorithm = OnlineLearningAlgorithm(
             learning_rate=0.01,
@@ -110,8 +107,7 @@ class TestAdaptiveLearningAlgorithm(IsolatedAsyncioTestCase):
 
 
 class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
-    """Comprehensive tests for OnlineLearningAlgorithm"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for OnlineLearningAlgorithm"""    async def asyncSetUp(self):
         """Set up test environment"""        self.algorithm = OnlineLearningAlgorithm(
             learning_rate=0.05,
             decay_factor=0.9,
@@ -263,8 +259,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
 
 
 class TestMultiArmedBandit(IsolatedAsyncioTestCase):
-    """Comprehensive tests for MultiArmedBandit algorithms"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for MultiArmedBandit algorithms"""    async def asyncSetUp(self):
         """Set up test environment"""        self.n_arms = 10
         self.bandit = MultiArmedBandit(
             n_arms=self.n_arms,
@@ -343,8 +338,7 @@ class TestMultiArmedBandit(IsolatedAsyncioTestCase):
 
 
 class TestContextualBandit(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContextualBandit algorithms"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContextualBandit algorithms"""    async def asyncSetUp(self):
         """Set up test environment"""        self.n_arms = 5
         self.context_dim = 10
         self.bandit = ContextualBandit(
@@ -447,8 +441,7 @@ class TestContextualBandit(IsolatedAsyncioTestCase):
 
 
 class TestQLearningAgent(IsolatedAsyncioTestCase):
-    """Comprehensive tests for Q-Learning reinforcement learning agent"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for Q-Learning reinforcement learning agent"""    async def asyncSetUp(self):
         """Set up test environment"""        self.n_states = 20
         self.n_actions = 4
         self.agent = QLearningAgent(
@@ -580,8 +573,7 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
 
 
 class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
-    """Comprehensive tests for Policy Gradient reinforcement learning agent"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for Policy Gradient reinforcement learning agent"""    async def asyncSetUp(self):
         """Set up test environment"""        self.n_states = 10
         self.n_actions = 3
         self.agent = PolicyGradientAgent(
@@ -667,8 +659,7 @@ class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
 
 
 class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
-    """Comprehensive tests for Gradient Boosted Personalization"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for Gradient Boosted Personalization"""    async def asyncSetUp(self):
         """Set up test environment"""        self.algorithm = GradientBoostedPersonalization(
             n_estimators=10,
             learning_rate=0.1,
@@ -756,8 +747,7 @@ class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
 
 
 class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
-    """Comprehensive tests for Online Matrix Factorization"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for Online Matrix Factorization"""    async def asyncSetUp(self):
         """Set up test environment"""        self.algorithm = OnlineMatrixFactorization(
             n_factors=20,
             learning_rate=0.01,
@@ -869,8 +859,7 @@ class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
 
 
 class TestBayesianOptimization(IsolatedAsyncioTestCase):
-    """Comprehensive tests for Bayesian Optimization"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for Bayesian Optimization"""    async def asyncSetUp(self):
         """Set up test environment"""        self.optimizer = BayesianOptimization(
             bounds={'x': (-5.0, 5.0), 'y': (-3.0, 3.0)},
             acquisition_function='expected_improvement',
@@ -956,8 +945,7 @@ class TestBayesianOptimization(IsolatedAsyncioTestCase):
 
 
 class TestAlgorithmPerformanceAndScalability(IsolatedAsyncioTestCase):
-    """Performance and scalability tests for all algorithms"""
-    async def test_algorithm_training_speed(self):
+    """Performance and scalability tests for all algorithms"""    async def test_algorithm_training_speed(self):
         """Test training speed across different algorithms"""        algorithms_to_test = [
             OnlineLearningAlgorithm(learning_rate=0.1),
             OnlineMatrixFactorization(n_factors=10),
@@ -1040,8 +1028,7 @@ class TestAlgorithmPerformanceAndScalability(IsolatedAsyncioTestCase):
 
 
 class TestAlgorithmRobustness(IsolatedAsyncioTestCase):
-    """Robustness and edge case tests"""
-    async def test_empty_data_handling(self):
+    """Robustness and edge case tests"""    async def test_empty_data_handling(self):
         """Test handling of empty or insufficient data"""        algorithm = OnlineLearningAlgorithm()
         
         # Test with no initialization

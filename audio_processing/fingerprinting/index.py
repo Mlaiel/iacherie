@@ -19,8 +19,7 @@ Team Specialization:
 - Audio Processing Expert: Advanced signal processing
 - DevOps Engineer: Production deployment and monitoring
 - AI Prompt Engineer: Intelligent content analysis
-"""
-import asyncio
+"""import asyncio
 import logging
 import signal
 import sys

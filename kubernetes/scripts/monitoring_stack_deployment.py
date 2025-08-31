@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Production monitoring stack deployment with Prometheus, Grafana, Jaeger, and ELK.
 ==========================================================
-"""
-import os
+"""import os
 import yaml
 import logging
 from typing import Dict, Any, List, Optional

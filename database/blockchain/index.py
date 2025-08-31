@@ -5,8 +5,7 @@ in the IA Influencer Agent content protection ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-from typing import Dict, List, Any, Optional, Union
+"""from typing import Dict, List, Any, Optional, Union
 import logging
 from datetime import datetime
 import asyncio

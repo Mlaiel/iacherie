@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Content Protection Deployment Manager
 Specialized deployment automation for AI fingerprinting and content protection systems
-"""
-import os
+"""import os
 import sys
 import time
 import json

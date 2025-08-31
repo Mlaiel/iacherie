@@ -3,8 +3,7 @@ Complete security audit implementation for infrastructure and application securi
 
 Author: AI Assistant
 Purpose: Complete security audit capabilities for infrastructure
-"""
-import json
+"""import json
 import datetime
 import hashlib
 import re

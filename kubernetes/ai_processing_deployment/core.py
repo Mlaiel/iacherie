@@ -11,8 +11,7 @@ Features:
 - Multi-tenant processing isolation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import os
 from dataclasses import dataclass

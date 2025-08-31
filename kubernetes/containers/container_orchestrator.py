@@ -17,8 +17,7 @@ Advanced container orchestration for IA-Influencer-Agent platform.
 Includes intelligent service mesh, predictive auto-scaling, advanced load balancing,
 traffic management, canary deployments, and complete container lifecycle management
 optimized for AI processing, content protection, and monetization workflows.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 import asyncio
 import logging
 import json

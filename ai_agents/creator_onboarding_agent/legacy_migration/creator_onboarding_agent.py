@@ -4,8 +4,7 @@ Enterprise-grade onboarding system for multi-format creators with AI-powered
 content analysis, rights protection setup, and intelligent platform integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple

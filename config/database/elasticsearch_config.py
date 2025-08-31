@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 import json
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -194,8 +193,7 @@ class ElasticsearchConfig:
     
     Handles search indexing, analytics, content discovery, and monitoring
     across multi-tenant content protection platform.
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: ElasticsearchEnvironment = ElasticsearchEnvironment.DEVELOPMENT,
                  workload_type: ElasticsearchWorkloadType = ElasticsearchWorkloadType.SEARCH,
                  cluster_type: ElasticsearchClusterType = ElasticsearchClusterType.SINGLE_NODE):

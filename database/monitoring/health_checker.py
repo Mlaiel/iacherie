@@ -10,8 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""
-import asyncio
+"""import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple

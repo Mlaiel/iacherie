@@ -13,8 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Production-ready Docker infrastructure index for comprehensive platform deployment
 and management of IA-Influencer multi-format content protection system.
-"""
-import asyncio
+"""import asyncio
 import logging
 import sys
 from pathlib import Path

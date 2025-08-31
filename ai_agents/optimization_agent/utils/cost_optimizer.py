@@ -29,8 +29,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading
@@ -401,8 +400,7 @@ class CostOptimizer(BaseAgent):
     - Cost anomaly detection and automated alerting
     - Budget management with intelligent spending controls
     - Financial reporting and business intelligence
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         super().__init__()
         self.config = config or {}
         
@@ -951,8 +949,7 @@ class CostOptimizer:
     - Multi-cloud cost management
     - ROI analysis and optimization
     - Predictive cost modeling
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.cost_calculator = CostCalculator()
         self.budget_tracker = BudgetTracker()

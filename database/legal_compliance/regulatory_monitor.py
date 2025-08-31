@@ -5,8 +5,7 @@ for the IA Influencer Agent platform across multiple legal frameworks.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio

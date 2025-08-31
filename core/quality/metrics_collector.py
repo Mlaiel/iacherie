@@ -9,8 +9,7 @@ Quality insights → Automated reporting → Continuous improvement
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import csv
 import io
 import logging

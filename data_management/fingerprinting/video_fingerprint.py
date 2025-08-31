@@ -27,8 +27,7 @@ VIDEO FINGERPRINTING TECHNOLOGIES:
 ├── 🧠 Deep Features (CNN + ResNet + EfficientNet)
 ├── 📊 Temporal Analysis (Frame Sequences + Patterns)
 └── 🛡️ Protection System (Monitoring + Takedown)
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 import numpy as np

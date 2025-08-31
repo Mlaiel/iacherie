@@ -18,8 +18,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""
-import re
+"""import re
 import mimetypes
 import magic
 import hashlib

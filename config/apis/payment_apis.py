@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures payment processing APIs for automated monetization,
 revenue tracking, and financial transactions across multiple providers.
-"""
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum

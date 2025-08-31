@@ -12,8 +12,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 This module provides advanced content distribution capabilities across multiple
 platforms with intelligent routing, optimization, and analytics.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field

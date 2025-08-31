@@ -5,8 +5,7 @@ predictive insights, and AI-powered business intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -87,8 +86,7 @@ class MarketplaceAnalytics:
     - User behavior analysis and segmentation
     - Revenue optimization and trend analysis
     - Custom analytics and reporting
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize marketplace analytics engine.
         
         Args:

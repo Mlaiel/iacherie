@@ -3,8 +3,7 @@ Enterprise-grade role-based access control with fine-grained permissions
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Backend Senior + Database Administrator
-"""
-import json
+"""import json
 import re
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple

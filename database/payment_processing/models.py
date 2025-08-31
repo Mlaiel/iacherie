@@ -26,8 +26,7 @@ ENTERPRISE FEATURES:
 - Comprehensive audit logging and compliance tracking
 - International tax calculation and reporting
 - Advanced dispute management and resolution
-"""
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, Integer, String, DateTime, Decimal, Boolean, Text, 
     ForeignKey, Index, CheckConstraint, UniqueConstraint, JSON,
     BigInteger, Float, TIMESTAMP, Interval, ARRAY as SQLArray

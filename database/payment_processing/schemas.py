@@ -11,8 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from pydantic import BaseModel, Field, validator, root_validator
+"""from pydantic import BaseModel, Field, validator, root_validator
 from typing import Optional, List, Dict, Any, Union
 from decimal import Decimal
 from datetime import datetime

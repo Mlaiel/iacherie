@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -35,8 +34,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import json
 import pytest
 import sys
@@ -67,8 +65,7 @@ from ai.observability.logging import (
 
 
 class TestStructuredLoggingComprehensive:
-    """Ultra-comprehensive test suite for Structured Logging"""
-    @pytest.fixture
+    """Ultra-comprehensive test suite for Structured Logging"""    @pytest.fixture
     def temp_log_dir(self):
         """Create temporary directory for log files"""        with tempfile.TemporaryDirectory() as temp_dir:
             yield Path(temp_dir)

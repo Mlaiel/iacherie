@@ -37,8 +37,7 @@ Enterprise Features:
 - Creator economy market intelligence and benchmarking
 - Revenue risk assessment and diversification strategies
 - Automated monetization opportunity detection and optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from datetime import datetime, timedelta

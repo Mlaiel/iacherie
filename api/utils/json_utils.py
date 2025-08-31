@@ -5,8 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import json
+"""import json
 import jsonschema
 from typing import Dict, Any, List, Optional, Union, Type, Callable
 from dataclasses import dataclass, field, asdict, is_dataclass

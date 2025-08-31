@@ -2,8 +2,7 @@
 
 This module provides enhanced performance optimization features without 
 external dependencies to satisfy the checklist requirements.
-"""
-import time
+"""import time
 import threading
 import logging
 from typing import Dict, List, Any, Optional, Tuple

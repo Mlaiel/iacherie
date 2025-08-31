@@ -3,8 +3,7 @@ Device authentication, biometric auth, and mobile-specific security
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Secure mobile access and content protection for creators
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import hmac
 import base64

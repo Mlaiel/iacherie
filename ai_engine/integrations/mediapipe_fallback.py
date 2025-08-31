@@ -5,8 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Fallback implementation for MediaPipe functionality when the library is not available.
 Provides basic content detection capabilities using alternative methods.
-"""
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from PIL import Image

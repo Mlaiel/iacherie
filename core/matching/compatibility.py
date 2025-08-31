@@ -7,8 +7,7 @@ brand alignment, and collaboration potential.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
-"""
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass

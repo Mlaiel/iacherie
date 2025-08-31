@@ -6,8 +6,7 @@ Captures screenshots, metadata, and digital fingerprints as legal proof.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import base64

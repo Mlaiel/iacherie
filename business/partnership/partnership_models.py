@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer  
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Any, Set, Union
+"""from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum

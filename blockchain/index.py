@@ -4,8 +4,7 @@ Main entry point for blockchain infrastructure access
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-# Core blockchain infrastructure
+"""# Core blockchain infrastructure
 from .connection import BlockchainConnection, MultiNetworkManager, NetworkConfig
 from .transaction_manager import TransactionManager, TransactionRequest, TransactionResult
 from .smart_contracts import SmartContractManager, ContractManager, SmartContract

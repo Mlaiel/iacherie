@@ -30,8 +30,7 @@ Project Team Specialties:
 - Audio Processing Engineer: Digital signal processing
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
-"""
-# Core module imports
+"""# Core module imports
 from . import (
     DMCAStatus, DMCAPriority, NotificationType, ContentType,
     PlatformType, EvidenceType, LegalJurisdiction,

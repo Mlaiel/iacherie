@@ -3,8 +3,7 @@ General purpose web crawler for content discovery across websites.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 from typing import Dict, List, Optional, Any

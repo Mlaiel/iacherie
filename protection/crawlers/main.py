@@ -30,8 +30,7 @@ Any violation will result in IMMEDIATE LEGAL ACTION under:
 - Criminal prosecution for commercial theft
 
 WE MONITOR FOR UNAUTHORIZED USE - YOU WILL BE CAUGHT AND PROSECUTED
-"""
-import asyncio
+"""import asyncio
 import argparse
 import json
 import sys

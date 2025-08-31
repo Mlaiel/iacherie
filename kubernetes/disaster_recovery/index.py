@@ -20,8 +20,7 @@ Any unauthorized use, copying, modification, or distribution without explicit wr
 permission from the author is strictly prohibited and will result in immediate legal action.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass

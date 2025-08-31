@@ -7,8 +7,7 @@ for creators' image content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 import os
 import tempfile

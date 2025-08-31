@@ -5,8 +5,7 @@ alerting, and intelligent performance insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import json
 import time
 from datetime import datetime, timedelta

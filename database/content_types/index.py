@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 
 🎯 LOGIQUE MÉTIER INTÉGRÉE :
 User (Créateur multi-format) → Upload → IA Protection → SEO Pro → Matching → Distribution → Monétisation
-"""
-import logging
+"""import logging
 import asyncio
 import uuid
 from typing import Dict, List, Any, Optional, Union

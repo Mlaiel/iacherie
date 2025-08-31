@@ -5,8 +5,7 @@ orchestrating delivery, optimization, and performance tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
@@ -129,8 +128,7 @@ class DistributionManager:
     Manages automated content distribution across social media platforms,
     streaming services, and content networks with intelligent optimization,
     scheduling, and performance tracking.
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize distribution management system.
         
         Args:

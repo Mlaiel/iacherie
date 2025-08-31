@@ -10,8 +10,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + DBA + Security + Mic
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
-"""
-import numpy as np
+"""import numpy as np
 import torch
 import faiss
 from typing import Dict, List, Optional, Tuple, Any, Union

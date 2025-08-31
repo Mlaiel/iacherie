@@ -26,8 +26,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any reproduction, modification, distribution or use without explicit 
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
 from dataclasses import dataclass, field, asdict
@@ -123,8 +122,7 @@ class CollaborationConfigurationManager:
     - Configuration versioning and audit trails
     - Real-time configuration updates
     - Disaster recovery and backup
-    """
-    def __init__(self, config_dir: str = "./config"):
+    """    def __init__(self, config_dir: str = "./config"):
         """Initialize the collaboration configuration manager."""        self.config_dir = Path(config_dir)
         
         # Configuration storage

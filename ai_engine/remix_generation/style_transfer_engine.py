@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Engine de transfert de style neural ultra-avancé pour remixes professionnels
 TECHNOLOGIES: Neural Style Transfer, Deep Learning, Audio Style Analysis
 LOGIQUE MÉTIER: Source audio → Style analysis → Neural transfer → Quality optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

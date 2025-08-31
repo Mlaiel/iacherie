@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive distributed training capabilities including
 data parallelism, model parallelism, and distributed training orchestration.
-"""
-import logging
+"""import logging
 import json
 import os
 import time

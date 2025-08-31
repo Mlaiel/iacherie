@@ -12,8 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta

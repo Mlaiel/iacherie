@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade performance optimization and resource management.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field

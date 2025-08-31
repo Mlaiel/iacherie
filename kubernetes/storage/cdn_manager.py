@@ -24,8 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content upload → Origin storage → CDN distribution → Edge caching → 
 Global delivery → Performance optimization → Analytics tracking → Cost optimization
-"""
-import logging
+"""import logging
 import asyncio
 import json
 import boto3

@@ -27,8 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd

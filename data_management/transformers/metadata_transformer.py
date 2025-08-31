@@ -11,8 +11,7 @@ Contact: mlaiel@live.de
 AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
 de ce code ou de cette technologie est strictement interdite et sera
 poursuivie selon les lois allemandes et internationales.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import json

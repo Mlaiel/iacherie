@@ -25,8 +25,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any reproduction, modification, distribution or use without explicit 
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import unittest
 import pytest
@@ -131,8 +130,7 @@ class CollaborationTestingFramework:
     - Creator-specific scenario testing
     - Chaos engineering and fault tolerance testing
     - Automated test reporting and analytics
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         """Initialize the collaboration testing framework."""        self.config = config
         
         # Test execution and results

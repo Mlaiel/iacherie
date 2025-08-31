@@ -11,8 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
 

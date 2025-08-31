@@ -11,8 +11,7 @@ Responsibility: Compression avancée multi-format avec optimisation intelligente
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 import zstandard as zstd
 import gzip

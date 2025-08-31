@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -33,8 +32,7 @@ Team Expertise:
 - System Design: Multi-component orchestration, workflow automation, enterprise scalability
 - Content Security: End-to-end protection, cryptographic systems, legal compliance
 - Performance Engineering: High-throughput processing, distributed systems, fault tolerance
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -70,8 +68,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestUltraIndustrialMainSystem:
-    """Ultra-industrial main system testing with complete workflow orchestration and real business logic"""
-    @pytest_asyncio.fixture
+    """Ultra-industrial main system testing with complete workflow orchestration and real business logic"""    @pytest_asyncio.fixture
     async def enterprise_protection_orchestrator(self):
         """Create enterprise-grade content protection orchestrator"""        logger.info("Initializing enterprise protection orchestrator")
         

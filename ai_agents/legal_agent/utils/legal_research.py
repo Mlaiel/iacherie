@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import re
@@ -1581,8 +1580,7 @@ class CaseLawAnalyzer:
         - Potential risks and challenges
         - Strategic recommendations
         - Conflicting authorities analysis
-        """
-    def _get_case_limit_for_scope(self, scope: ResearchScope) -> int:
+        """    def _get_case_limit_for_scope(self, scope: ResearchScope) -> int:
         """Get case limit based on research scope"""        scope_limits = {
             ResearchScope.NARROW: 25,
             ResearchScope.FOCUSED: 50,

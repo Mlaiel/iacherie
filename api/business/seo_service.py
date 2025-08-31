@@ -11,8 +11,7 @@ WARNING: This code is proprietary intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import logging
+"""import logging
 import re
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple

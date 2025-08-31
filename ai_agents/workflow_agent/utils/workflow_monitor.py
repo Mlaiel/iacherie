@@ -20,8 +20,7 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Callable, Union, Tuple, Set
@@ -126,8 +125,7 @@ class WorkflowMonitor(BaseAgent):
     
     This monitor provides comprehensive observability with real-time metrics,
     alerting, health checks, and performance analytics.
-    """
-    def __init__(self, retention_days: int = 30):
+    """    def __init__(self, retention_days: int = 30):
         """Initialize the workflow monitor."""        super().__init__()
         self.logger = logging.getLogger(__name__)
         

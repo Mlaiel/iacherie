@@ -6,8 +6,7 @@ Provides the main recommendation system with configuration management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Any, Dict, List, Optional, Union
+"""from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import asyncio

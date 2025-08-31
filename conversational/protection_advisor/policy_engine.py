@@ -5,8 +5,7 @@ for content protection, compliance, and business rules.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass
@@ -159,8 +158,7 @@ class PolicyEngine:
     - Real-time policy updates
     - Performance optimization and caching
     - Comprehensive audit and compliance
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.policies = {}
         self.policy_hierarchy = {}
         self.evaluation_cache = {}

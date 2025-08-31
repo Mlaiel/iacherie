@@ -5,8 +5,7 @@ Client Business Module of the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""
-# Core client management imports
+"""# Core client management imports
 from .manager import ClientManager, ClientRegistrationData, ClientUpdateData, ClientType
 from .content import ContentManager, ContentUploadData, ContentProcessingOptions, SupportedFormat
 from .profile import ProfileManager, ProfileUpdateData, PortfolioItemData, CreatorTier

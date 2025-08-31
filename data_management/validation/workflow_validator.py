@@ -14,8 +14,7 @@ Validation complète des workflows de création de contenu
 - Validation étapes métier multi-formats
 - Orchestration validation bout-en-bout
 - Conformité business et qualité intégrée
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
 from pathlib import Path

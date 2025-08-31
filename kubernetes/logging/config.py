@@ -8,8 +8,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit 
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 from typing import Dict, Any, List
 
 

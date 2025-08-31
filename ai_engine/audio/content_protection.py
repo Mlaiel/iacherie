@@ -11,8 +11,7 @@ Email: mlaiel@live.de
 
 This module provides advanced content protection capabilities including
 digital rights management, piracy detection, and automated copyright enforcement.
-"""
-import logging
+"""import logging
 import hashlib
 import uuid
 from datetime import datetime, timedelta

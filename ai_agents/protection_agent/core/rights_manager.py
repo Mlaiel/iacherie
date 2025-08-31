@@ -4,8 +4,7 @@ Handles digital rights, licensing, monetization, and distribution control
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-from typing import Dict, List, Any, Optional, Union, Set
+"""from typing import Dict, List, Any, Optional, Union, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum

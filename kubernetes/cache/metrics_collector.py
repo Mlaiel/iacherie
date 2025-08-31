@@ -33,8 +33,7 @@ Key Performance Indicators:
 - Revenue analytics latency: <5 seconds for real-time insights
 - Creator dashboard response time: <2 seconds for all interactions
 - AI model inference time: <10 seconds for content analysis
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import statistics
@@ -793,8 +792,7 @@ class Alert:
 class CacheMetricsCollector:
     """    Enterprise cache metrics collector with real-time monitoring,
     analytics, and intelligent alerting capabilities.
-    """
-    def __init__(self, config: CacheConfiguration):
+    """    def __init__(self, config: CacheConfiguration):
         """        Initialize cache metrics collector.
         
         Args:

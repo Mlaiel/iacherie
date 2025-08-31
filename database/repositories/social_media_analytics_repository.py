@@ -22,8 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-from typing import Dict, List, Optional, Union, Any, Tuple
+"""from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text, case
 from datetime import datetime, timedelta

@@ -23,8 +23,7 @@ Lizenz: Strikt Proprietär - Unbefugte Nutzung strengstens verboten
 - 🛡️ GDPR/SOX/PCI-DSS konforme Log-Aufbewahrung
 - 📈 Prädiktive Leistungsanalyse durch Log-Mining
 - 🌐 Multi-Tenant Log-Segregation mit Sicherheitsebenen
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import logging.handlers

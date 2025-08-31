@@ -15,8 +15,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
-"""
-from typing import Dict, Any
+"""from typing import Dict, Any
 from pathlib import Path
 
 # Default configuration for development environment

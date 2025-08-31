@@ -5,8 +5,7 @@ attack signatures, and emerging threats through machine learning and rule-based 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import numpy as np

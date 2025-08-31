@@ -11,8 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone
 from enum import Enum

@@ -22,8 +22,7 @@ Enterprise schema versioning system supporting:
 VERSION CONTROL LOGIC:
 Version Detection → Compatibility Analysis → Evolution Planning → 
 Migration Sequencing → Rollback Preparation → Version Synchronization
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Set, Tuple, Any
 from dataclasses import dataclass, field

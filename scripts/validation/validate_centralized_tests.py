@@ -7,8 +7,7 @@ implemented and addresses the critical testing gap identified in the project.
 
 Author: Copilot Assistant
 Purpose: Resolve "Tests Manquants: Pas de tests unitaires centralisés"
-"""
-import os
+"""import os
 import sys
 import asyncio
 from pathlib import Path

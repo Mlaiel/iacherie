@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import hmac
@@ -123,8 +122,7 @@ class ForensicAnalyzer:
     - Automated forensic reporting
     - Network forensics and malware analysis
     - Compliance and legal evidence handling
-    """
-    def __init__(self, config: Optional[ForensicConfiguration] = None):
+    """    def __init__(self, config: Optional[ForensicConfiguration] = None):
         self.config = config or ForensicConfiguration()
         self.metrics = ForensicMetrics()
         

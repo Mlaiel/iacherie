@@ -14,8 +14,7 @@ prosecuted to the full extent of the law.
 Module: backend.deployment.kubernetes
 Purpose: Kubernetes deployment automation and management tools
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import os
+"""import os
 import sys
 import subprocess
 import argparse

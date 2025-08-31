@@ -1,7 +1,6 @@
 """Exception Handling and Error Management for Copyright Enforcement
 Professional error handling, custom exceptions, and error recovery
-"""
-import logging
+"""import logging
 import traceback
 from typing import Dict, List, Optional, Any, Union, Type, Set, Callable
 from dataclasses import dataclass, field

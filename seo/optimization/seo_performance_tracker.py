@@ -5,8 +5,7 @@ with real-time metrics, historical data analysis, and performance optimization i
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -109,8 +108,7 @@ class PerformanceReport:
 class SEOPerformanceTracker:
     """    Advanced SEO performance tracking system that monitors, analyzes, and reports
     on comprehensive SEO metrics with real-time alerts and optimization recommendations.
-    """
-    def __init__(self, domain: str, tracking_keywords: List[str] = None):
+    """    def __init__(self, domain: str, tracking_keywords: List[str] = None):
         """        Initialize the SEO performance tracker.
         
         Args:

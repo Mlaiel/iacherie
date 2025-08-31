@@ -12,8 +12,7 @@ Team Expertise:
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-import logging
+"""import logging
 import sys
 from pathlib import Path
 from typing import Dict, Any, Optional, List

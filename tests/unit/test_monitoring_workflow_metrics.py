@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,8 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 """Unit tests for monitoring.workflow_metrics module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -26,8 +24,7 @@ from monitoring.workflow_metrics import WorkflowMetrics, NotificationService
 
 
 class TestWorkflowMetrics:
-    """Test cases for WorkflowMetrics class"""
-    def test_init(self):
+    """Test cases for WorkflowMetrics class"""    def test_init(self):
         """Test WorkflowMetrics initialization"""        metrics = WorkflowMetrics()
         assert metrics.metrics == {}
 
@@ -93,8 +90,7 @@ class TestWorkflowMetrics:
 
 
 class TestNotificationService:
-    """Test cases for NotificationService class"""
-    def test_init(self):
+    """Test cases for NotificationService class"""    def test_init(self):
         """Test NotificationService initialization"""        service = NotificationService()
         assert service.notifications == []
 

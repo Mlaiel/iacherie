@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Content input → Language detection → Cultural markers → Geographic indicators → 
 Regional patterns → Temporal analysis → Context enrichment → Locale prediction
-"""
-import logging
+"""import logging
 import asyncio
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union, Set

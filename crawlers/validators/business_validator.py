@@ -15,8 +15,7 @@ Features:
 - Industry-specific compliance checks
 - Monetization and licensing validation
 - Creator profile validation
-"""
-import re
+"""import re
 from enum import Enum
 from typing import Dict, List, Any, Optional, Union, Callable, Type
 from dataclasses import dataclass, field

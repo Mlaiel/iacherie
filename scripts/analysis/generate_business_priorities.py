@@ -4,8 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 Extrait les insights business critiques de l'analyse TODO et génère
 des recommandations d'actions concrètes par impact métier.
-"""
-import json
+"""import json
 from pathlib import Path
 from typing import Dict, List
 from datetime import datetime

@@ -18,8 +18,7 @@ Usage:
     content_optimizer = optimizer.get_content_protection_optimizer()
     monetization_optimizer = optimizer.get_monetization_optimizer()
     multimedia_optimizer = optimizer.get_multimedia_optimizer()
-"""
-import asyncio
+"""import asyncio
 from typing import Dict, Any, Optional
 from sqlalchemy.ext.asyncio import AsyncEngine
 

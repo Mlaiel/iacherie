@@ -6,8 +6,7 @@ on high-quality semantic embeddings using state-of-the-art models.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple

@@ -16,8 +16,7 @@ Contact: mlaiel@live.de
 
 MISSION: Index central et orchestrateur du système de génération de remix IA
 LOGIQUE MÉTIER: Coordination des modèles IA, gestion des workflows, orchestration des processus
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Union

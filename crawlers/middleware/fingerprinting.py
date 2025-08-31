@@ -17,8 +17,7 @@ Key Features:
 - Text fingerprinting: Semantic embeddings, structural analysis, plagiarism detection
 - Real-time similarity detection with FAISS vector search
 - Multi-platform content monitoring and protection
-"""
-import asyncio
+"""import asyncio
 import json
 import time
 import hashlib

@@ -6,8 +6,7 @@ music catalog management, and intelligent music discovery capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""
-from .core.musickit_engine import MusicKitEngine, AppleMusicTrack, AppleMusicPlaylist
+"""from .core.musickit_engine import MusicKitEngine, AppleMusicTrack, AppleMusicPlaylist
 from .adapters.musickit_adapter import MusicKitAdapter
 from .utils.apple_auth import AppleAuthManager
 

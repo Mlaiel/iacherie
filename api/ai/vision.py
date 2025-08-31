@@ -1,5 +1,4 @@
-"""Computer Vision: object detection, scene analysis, content moderation."""
-import logging
+"""Computer Vision: object detection, scene analysis, content moderation."""import logging
 from typing import Dict, List, Tuple
 
 logger = logging.getLogger(__name__)

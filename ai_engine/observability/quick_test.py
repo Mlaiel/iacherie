@@ -5,8 +5,7 @@ Tests core functionality without complex imports to verify the module works.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import sys
+"""import sys
 import asyncio
 from datetime import datetime, timezone
 

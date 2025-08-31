@@ -33,8 +33,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 - Permanent legal documentation and public disclosure of violation
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 import logging
 
 logger = logging.getLogger(__name__)

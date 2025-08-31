@@ -11,8 +11,7 @@ Addresses the full requirement: "INFRASTRUCTURE - Docker Compose, Monitoring, Da
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import sys
+"""import sys
 import subprocess
 import time
 from pathlib import Path

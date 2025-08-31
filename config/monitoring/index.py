@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 import logging
 from datetime import datetime
 

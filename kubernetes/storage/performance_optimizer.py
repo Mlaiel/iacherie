@@ -24,8 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Performance monitoring → AI analysis → Bottleneck detection → 
 Optimization recommendations → Automatic tuning → Capacity planning → ROI analysis
-"""
-import logging
+"""import logging
 import asyncio
 import numpy as np
 import pandas as pd

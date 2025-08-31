@@ -5,8 +5,7 @@ Complete Instagram Basic Display API integration for content sharing and analyti
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import aiofiles
 from typing import Dict, List, Optional, Any

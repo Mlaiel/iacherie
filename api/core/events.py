@@ -3,8 +3,7 @@ Implements professional event sourcing and domain events patterns.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, List, Optional, Type, Callable, Union
+"""from typing import Any, Dict, List, Optional, Type, Callable, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime, timezone

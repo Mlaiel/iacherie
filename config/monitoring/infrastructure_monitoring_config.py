@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union, Tuple
 from dataclasses import dataclass, field

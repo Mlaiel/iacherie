@@ -22,8 +22,7 @@ PLATFORMS SUPPORTÉES:
 🎬 YouTube, TikTok, Instagram, Twitch (Influenceurs/Comédiens)
 📸 Instagram, Pinterest, Getty Images (Photographes)
 📝 Medium, Substack, WordPress (Blogueurs)
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta

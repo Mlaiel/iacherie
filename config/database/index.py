@@ -5,8 +5,7 @@ Professional Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 WARNING: This code is proprietary and belongs to Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 from enum import Enum
 

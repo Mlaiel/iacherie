@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Comprehensive health check utility for deployment environments.
 Provides real-time monitoring, diagnostics, and alerting.
 ======================================================
-"""
-import os
+"""import os
 import sys
 import asyncio
 import logging

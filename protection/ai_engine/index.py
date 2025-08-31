@@ -21,8 +21,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from datetime import datetime

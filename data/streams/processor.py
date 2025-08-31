@@ -13,8 +13,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from datetime import datetime, timezone, timedelta

@@ -23,8 +23,7 @@ ENTERPRISE CONFIGURATION FEATURES:
 - Auto-scaling and load balancing
 - Disaster recovery configurations
 - Multi-region deployment support
-"""
-from typing import Dict, Any, Optional, List, Union
+"""from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
 import os

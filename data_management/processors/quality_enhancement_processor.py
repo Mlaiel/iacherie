@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER QUALITY ENHANCEMENT:
 Content Analysis → Quality Assessment → Enhancement Processing → AI Upscaling → 
 Noise Reduction → Color Correction → Audio Enhancement → Format Optimization
-"""
-import json
+"""import json
 import logging
 import asyncio
 import tempfile

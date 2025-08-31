@@ -15,8 +15,7 @@ Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
 MISSION: Validation complète du système core pour déploiement production
-"""
-import os
+"""import os
 import sys
 import importlib
 import asyncio

@@ -9,8 +9,7 @@ Contact: mlaiel@live.de
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This validation system is proprietary and confidential.
 Unauthorized use is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Tuple

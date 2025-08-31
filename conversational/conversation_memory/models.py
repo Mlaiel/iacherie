@@ -9,8 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
-"""
-from datetime import datetime, timezone
+"""from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum, auto

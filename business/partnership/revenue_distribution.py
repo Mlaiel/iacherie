@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -59,8 +58,7 @@ class PayoutFrequency(Enum):
 class RevenueDistributionService:
     """    Advanced revenue distribution and calculation service.
     Handles complex revenue sharing, tax calculations, and payout management.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.logger = logger
         self.tax_rates = self._load_tax_rates()
         self.platform_fees = self._load_platform_fees()

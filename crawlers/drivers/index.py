@@ -11,8 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
-"""
-# Import all components from the module
+"""# Import all components from the module
 from . import *
 
 # Convenience factory functions for common patterns

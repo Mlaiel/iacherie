@@ -3,8 +3,7 @@ Mobile-optimized API endpoints with offline support and sync
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Efficient mobile API access for content management and collaboration
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import gzip

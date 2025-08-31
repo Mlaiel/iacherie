@@ -10,8 +10,7 @@ Tests the complete system integration including:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import asyncio
 import json
 from datetime import datetime

@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Security environment configuration for protection and compliance.
 Handles authentication, authorization, encryption, and security monitoring.
 ==================================================
-"""
-import os
+"""import os
 import logging
 import secrets
 from typing import Dict, Any, List, Optional, Set, Union

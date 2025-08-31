@@ -11,8 +11,7 @@ droit d'auteur. Contact: mlaiel@live.de
 Exemple complet d'utilisation de la pipeline de monétisation créateur :
 User (musicien/blogueur/photographe/influencer/comédien) → Upload multi-format → 
 AI protection droits → SEO pro → Matching collaboration → Distribution multi-plateformes → Tracking revenus
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List
 from datetime import datetime

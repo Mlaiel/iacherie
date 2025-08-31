@@ -1,8 +1,7 @@
 """Simple configuration module for Ainflue platform.
 
 This provides a basic configuration when the complex config module is not available.
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional
 
 

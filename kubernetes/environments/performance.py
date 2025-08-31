@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Performance environment configuration for optimization and tuning.
 Handles caching strategies, database optimization, and resource management.
 =====================================================
-"""
-import os
+"""import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
 from dataclasses import dataclass, field

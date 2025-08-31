@@ -15,8 +15,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import statistics

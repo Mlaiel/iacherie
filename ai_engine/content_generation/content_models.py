@@ -8,8 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-from typing import Dict, Any, List, Optional, Union, Literal
+"""from typing import Dict, Any, List, Optional, Union, Literal
 from datetime import datetime
 from pydantic import BaseModel, Field, validator, EmailStr
 from enum import Enum

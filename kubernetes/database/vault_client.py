@@ -62,8 +62,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Secret usage analytics
 - Error rate monitoring
 - Alert integration
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import os

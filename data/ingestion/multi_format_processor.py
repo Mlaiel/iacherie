@@ -12,8 +12,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 import mimetypes
 from datetime import datetime

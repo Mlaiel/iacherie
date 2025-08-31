@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Performance analysis → Bottleneck detection → ML optimization → Strategy adjustment →
 Resource allocation → Predictive scaling → Performance validation → Continuous learning
-"""
-from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta

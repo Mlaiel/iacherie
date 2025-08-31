@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Performance Optimization Manager
 Automated performance monitoring, analysis, and optimization for the IA Influencer Agent platform
-"""
-import os
+"""import os
 import sys
 import time
 import json

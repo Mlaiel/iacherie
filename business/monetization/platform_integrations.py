@@ -13,8 +13,7 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Platform Connection → Data Sync → Revenue Aggregation → Performance Analytics
 ==================================================================
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field

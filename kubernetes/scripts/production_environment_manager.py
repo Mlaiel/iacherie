@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Complete production environment configuration with optimized settings.
 ===================================================================
-"""
-import os
+"""import os
 import yaml
 import logging
 from typing import Dict, Any, List, Optional

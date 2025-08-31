@@ -6,8 +6,7 @@ and revenue distribution in the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from datetime import datetime, date
+"""from datetime import datetime, date
 from typing import Optional, Dict, List, Any, Union
 from decimal import Decimal
 from enum import Enum

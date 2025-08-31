@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -123,8 +122,7 @@ class ComplianceTracker:
     - Breach notification automation
     - Real-time compliance scoring
     - Automated compliance reporting
-    """
-    def __init__(self, config: Optional[ComplianceConfiguration] = None):
+    """    def __init__(self, config: Optional[ComplianceConfiguration] = None):
         self.config = config or ComplianceConfiguration()
         self.metrics = ComplianceMetrics()
         

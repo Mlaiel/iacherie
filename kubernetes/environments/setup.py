@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Automated setup utility for deployment environments.
 Provides one-click environment initialization and validation.
 ===============================================
-"""
-import os
+"""import os
 import sys
 import asyncio
 import logging

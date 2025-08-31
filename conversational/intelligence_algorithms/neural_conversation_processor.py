@@ -24,8 +24,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ PROPRIETARY CODE WARNING ⚠️
 This neural conversation system is proprietary intellectual property.
 Unauthorized use is strictly prohibited and legally prosecuted.
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

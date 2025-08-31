@@ -6,8 +6,7 @@ All templates are embedded directly in this module to respect the 3-level depth 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Multi-format Content Protection Platform
-"""
-import os
+"""import os
 import json
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Set, Callable
@@ -525,8 +524,7 @@ class NotificationTemplate:
 
 
 class NotificationTemplateEngine:
-    """Enterprise notification template engine with AI-powered personalization and comprehensive analytics."""
-    def __init__(self):
+    """Enterprise notification template engine with AI-powered personalization and comprehensive analytics."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         self.content_generator = ContentGenerator()

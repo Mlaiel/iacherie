@@ -5,8 +5,7 @@ intelligent advisory services for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -108,8 +107,7 @@ class AdvisoryOrchestrator:
     - Result synthesis
     - Priority-based execution
     - Performance optimization
-    """
-    def __init__(self):
+    """    def __init__(self):
         # Initialize all advisor components
         self.advisor_core = ProtectionAdvisorCore()
         self.risk_analyzer = RiskAnalyzer()

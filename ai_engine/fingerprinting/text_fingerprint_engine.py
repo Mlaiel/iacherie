@@ -3,8 +3,7 @@ Text fingerprinting with BERT embeddings, semantic similarity, and plagiarism de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 import hashlib
 import re

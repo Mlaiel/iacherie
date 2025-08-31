@@ -5,8 +5,7 @@ and database-specific metrics with intelligent alerting and trend analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import time
 import psutil
 from datetime import datetime, timedelta

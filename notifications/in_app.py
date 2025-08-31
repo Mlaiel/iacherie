@@ -1,5 +1,4 @@
-"""Enterprise in-app notification service with real-time delivery and user experience optimization."""
-import os
+"""Enterprise in-app notification service with real-time delivery and user experience optimization."""import os
 import json
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Set
@@ -167,8 +166,7 @@ class NotificationPreferences:
 
 
 class InAppNotifier:
-    """Enterprise in-app notification service with real-time delivery and comprehensive user experience."""
-    def __init__(self):
+    """Enterprise in-app notification service with real-time delivery and comprehensive user experience."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         

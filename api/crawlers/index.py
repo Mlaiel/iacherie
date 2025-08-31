@@ -8,8 +8,7 @@ Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 
 LEGAL WARNING: All intellectual property belongs exclusively to Fahed Mlaiel.
 Unauthorized use will result in immediate legal action.
-"""
-from typing import Dict, Any, List, Type
+"""from typing import Dict, Any, List, Type
 import importlib
 import logging
 

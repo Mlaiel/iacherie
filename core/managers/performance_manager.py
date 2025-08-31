@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Monitoring continu → Analyse performance → Détection anomalies → 
 Optimisation automatique → Scaling intelligent → Alertes proactives → Rapports performance
-"""
-from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
+"""from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
 from contextlib import asynccontextmanager

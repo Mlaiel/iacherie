@@ -3,8 +3,7 @@ PKI and certificate management with automated renewal
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import os
+"""import os
 import logging
 import json
 import threading

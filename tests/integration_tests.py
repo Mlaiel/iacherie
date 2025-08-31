@@ -5,8 +5,7 @@ End-to-end, load, and security tests for production readiness.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import pytest
 import aiohttp
 import time

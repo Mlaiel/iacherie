@@ -9,8 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de gestion de webhooks pour intégrations externes avec retry,
     signature et transformation pour la plateforme IA-Influencer-Agent.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable
+"""from typing import Any, Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

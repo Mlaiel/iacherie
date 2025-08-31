@@ -18,8 +18,7 @@ Tests de sécurité enterprise-grade pour toutes les couches:
 - Tests de chiffrement et cryptographie
 - Tests de sécurité API et microservices
 - Tests de sécurité infrastructure et conteneurs
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import time

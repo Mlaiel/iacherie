@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 URL surveillance → Priority analysis → Queue routing → Worker distribution → 
 Rate limiting → Content extraction → Protection analysis → Notification pipeline
-"""
-from typing import Any, Dict, List, Optional, Union, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta

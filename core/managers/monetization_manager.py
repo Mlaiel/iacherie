@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Contenu protégé → Analyse marché IA → Stratégies monétisation → 
 Optimisation prix → Matching partenaires → Licensing automatique → Revenus maximisés
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager

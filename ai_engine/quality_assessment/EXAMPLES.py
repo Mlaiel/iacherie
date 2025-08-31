@@ -14,8 +14,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 NOTE: This is an example/testing file - actual tests should be in the tests_backend directory
-"""
-import asyncio
+"""import asyncio
 import logging
 from pathlib import Path
 from typing import Dict, Any, List

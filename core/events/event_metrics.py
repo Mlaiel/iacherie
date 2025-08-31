@@ -13,8 +13,7 @@ Contact autorisations : mlaiel@live.de
 Description:
     Système avancé de métriques et analytics pour les événements de la plateforme
     IA-Influencer-Agent. Monitoring temps réel, KPIs business et alertes intelligentes.
-"""
-from typing import Any, Dict, List, Optional, Union, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

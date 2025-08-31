@@ -6,8 +6,7 @@ and real-time analytics for optimal system performance and scaling decisions.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 © 2025 All Rights Reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 import psutil
 import time

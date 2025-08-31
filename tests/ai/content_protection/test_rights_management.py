@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -29,8 +28,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -98,8 +96,7 @@ class TestUltraIndustrialRightsManagement:
     - Intégration blockchain pour preuves d'ownership
     - Analytics prédictifs de valorisation des droits
     - Automatisation des négociations contractuelles
-    """
-    @pytest.fixture
+    """    @pytest.fixture
     def enterprise_rights_config(self):
         """Configuration ultra-avancée pour la gestion des droits"""        return {
             'legal_frameworks': {
@@ -1197,8 +1194,7 @@ class TestUltraIndustrialRightsManagement:
 
 
 class TestLicenseManager:
-    """Comprehensive tests for LicenseManager class"""
-    @pytest.fixture
+    """Comprehensive tests for LicenseManager class"""    @pytest.fixture
     def license_manager(self, test_config):
         """Create LicenseManager instance for testing"""        return LicenseManager(test_config.get('license_management', {}))
 

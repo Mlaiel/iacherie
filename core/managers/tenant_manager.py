@@ -5,8 +5,7 @@ Type: Manager Core - IA-Influencer-Agent
 Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
-"""
-from typing import Any, Dict, List, Optional, Union, Callable
+"""from typing import Any, Dict, List, Optional, Union, Callable
 import logging
 import asyncio
 from contextlib import asynccontextmanager

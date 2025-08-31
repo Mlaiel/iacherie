@@ -27,8 +27,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Leg
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query, Body
+"""from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query, Body
 from fastapi.security import HTTPBearer
 from fastapi.responses import JSONResponse, FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession

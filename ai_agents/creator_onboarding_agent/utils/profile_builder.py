@@ -4,8 +4,7 @@ Advanced AI-powered system for building comprehensive creator profiles
 with multi-format analysis, preference detection, and optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple

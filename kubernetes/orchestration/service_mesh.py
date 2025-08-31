@@ -11,8 +11,7 @@ Features:
 - Observability and distributed tracing
 - Circuit breaker and retry policies
 - Canary deployments and A/B testing
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -118,8 +117,7 @@ class ServiceMeshManager(BaseDeploymentManager):
     
     Manages service mesh infrastructure for the IA Influencer Agent
     platform with advanced traffic management, security, and observability.
-    """
-    def __init__(
+    """    def __init__(
         self,
         mesh_type: ServiceMeshType = ServiceMeshType.ISTIO,
         mesh_namespace: str = "istio-system",

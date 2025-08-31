@@ -37,8 +37,7 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 Migration Failure → Risk Assessment → Rollback Strategy Selection → 
 Data Backup Verification → Rollback Execution → Integrity Validation → Recovery Confirmation
-"""
-import asyncio
+"""import asyncio
 import logging
 import traceback
 import psutil

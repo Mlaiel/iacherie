@@ -2,8 +2,7 @@
 ===============================================================
 Module: backend/data_management/repositories/platform_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 from datetime import datetime
 

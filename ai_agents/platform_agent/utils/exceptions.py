@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-from typing import Optional, Dict, Any, List
+"""from typing import Optional, Dict, Any, List
 from enum import Enum
 import traceback
 from datetime import datetime

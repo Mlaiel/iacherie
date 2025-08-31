@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Cloud environment configuration for multi-cloud deployment.
 Handles AWS, GCP, Azure infrastructure provisioning and management.
 ===============================================
-"""
-import os
+"""import os
 import json
 import logging
 from typing import Dict, Any, List, Optional, Set, Union

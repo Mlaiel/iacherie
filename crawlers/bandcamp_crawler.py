@@ -2,8 +2,7 @@
 Advanced industrial-grade Bandcamp crawler for independent music content protection and analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import json
 import re
 from datetime import datetime, timedelta

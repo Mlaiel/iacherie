@@ -6,8 +6,7 @@ Enhanced functional verification for crawler implementations beyond static analy
 Tests actual functionality, initialization, and core capabilities of priority crawlers.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import sys
+"""import sys
 import os
 import ast
 import inspect

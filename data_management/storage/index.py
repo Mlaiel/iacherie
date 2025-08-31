@@ -16,8 +16,7 @@ Contact: mlaiel@live.de
 - Backend Senior: Fahed Mlaiel  
 - Storage Architecture: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime

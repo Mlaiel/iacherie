@@ -3,8 +3,7 @@ Enterprise-grade validators with comprehensive business rule enforcement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Type
+"""from typing import Any, Dict, List, Optional, Union, Callable, Type
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum

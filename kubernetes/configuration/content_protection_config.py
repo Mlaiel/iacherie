@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 Enterprise-grade content protection configuration for multi-format creators
 → AI fingerprinting → real-time monitoring → automated takedown → legal compliance.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple
 from dataclasses import dataclass, field

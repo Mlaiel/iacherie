@@ -3,8 +3,7 @@ Central configuration and utility functions for the cache system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import os
+"""import os
 import json
 from typing import Dict, Any, Optional
 from dataclasses import dataclass

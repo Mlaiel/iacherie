@@ -19,8 +19,7 @@ Leaderboard Generation → Competitive Analytics → Social Recognition
 LEADERBOARD REPOSITORY ARCHITECTURE:
 Score Aggregation → Ranking Calculation → Real-time Updates → 
 Performance Analytics → Competition Management → Social Features
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

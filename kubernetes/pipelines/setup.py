@@ -6,8 +6,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""
-from setuptools import setup, find_packages
+"""from setuptools import setup, find_packages
 import os
 from pathlib import Path
 

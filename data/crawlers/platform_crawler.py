@@ -6,8 +6,7 @@ Provides foundation for platform-specific crawlers with advanced detection capab
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta

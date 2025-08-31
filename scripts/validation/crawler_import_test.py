@@ -6,8 +6,7 @@ Tests crawler imports and basic functionality using mocks to avoid dependency is
 This provides functional verification that the crawlers can be imported and initialized.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import sys
+"""import sys
 import os
 import importlib.util
 from pathlib import Path

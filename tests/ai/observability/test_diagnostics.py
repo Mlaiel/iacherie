@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -47,8 +46,7 @@ from Fahed Mlaiel will result in immediate legal action under German and interna
 copyright law, financial damages claims, and criminal prosecution where applicable.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import json
 import numpy as np
 import pandas as pd

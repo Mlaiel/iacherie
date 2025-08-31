@@ -1,8 +1,7 @@
 """Placeholder Agent Implementations for Business Logic Core
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 from typing import Dict, Any, Optional
 from ..base import BaseAgent, AgentRequest, AgentResponse
 

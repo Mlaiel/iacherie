@@ -19,8 +19,7 @@ Supported Platforms:
 - Segment: Customer data platform, Event streaming
 - Hotjar: Heatmaps, Session recordings, User feedback
 - Custom Analytics: Self-hosted analytics solutions
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field

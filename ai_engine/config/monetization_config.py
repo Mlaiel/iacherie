@@ -8,8 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field, asdict

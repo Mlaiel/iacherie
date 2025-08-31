@@ -12,8 +12,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -84,8 +83,7 @@ class FeatureAccess:
 
 
 class TenantConfig:
-    """Enterprise multi-tenant configuration management."""
-    # Tier-based resource limits
+    """Enterprise multi-tenant configuration management."""    # Tier-based resource limits
     TIER_LIMITS = {
         TenantTier.STARTER: ResourceLimits(
             max_users=5,

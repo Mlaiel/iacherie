@@ -4,8 +4,7 @@ Professional blockchain smart contract interface and management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Any unauthorized use, reproduction, or distribution
 of this code without explicit written permission is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field

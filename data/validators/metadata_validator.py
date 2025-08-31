@@ -18,8 +18,7 @@ Features:
 - Copyright and licensing metadata management
 - Multilingual metadata support
 - Real-time metadata validation and enrichment
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Set, Tuple
 from pathlib import Path

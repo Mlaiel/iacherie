@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests profile building, preference learning, demographic analysis, and behaviora
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -58,8 +56,7 @@ from ai.personalization.exceptions import (
 
 
 class TestUserProfile(IsolatedAsyncioTestCase):
-    """Comprehensive tests for UserProfile class"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for UserProfile class"""    async def asyncSetUp(self):
         """Set up test environment"""        self.user_id = 'user_12345'
         self.profile_data = self._generate_profile_data()
         self.profile = UserProfile(
@@ -247,8 +244,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
 
 
 class TestUserProfileManager(IsolatedAsyncioTestCase):
-    """Comprehensive tests for UserProfileManager"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for UserProfileManager"""    async def asyncSetUp(self):
         """Set up test environment"""        self.manager = UserProfileManager(
             storage_backend='memory',  # Use in-memory storage for tests
             cache_size=100,
@@ -407,8 +403,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
 
 
 class TestProfileBuilder(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ProfileBuilder"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ProfileBuilder"""    async def asyncSetUp(self):
         """Set up test environment"""        self.builder = ProfileBuilder(
             confidence_threshold=0.7,
             min_interactions=10,
@@ -532,8 +527,7 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
 
 
 class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PreferenceAnalyzer"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for PreferenceAnalyzer"""    async def asyncSetUp(self):
         """Set up test environment"""        self.analyzer = PreferenceAnalyzer(
             weight_decay=0.95,
             novelty_factor=0.1,
@@ -655,8 +649,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
 
 
 class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for BehavioralAnalyzer"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for BehavioralAnalyzer"""    async def asyncSetUp(self):
         """Set up test environment"""        self.analyzer = BehavioralAnalyzer(
             session_timeout=30,  # minutes
             behavior_types=['listening', 'interaction', 'navigation'],
@@ -827,8 +820,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
 
 
 class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for DemographicAnalyzer"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for DemographicAnalyzer"""    async def asyncSetUp(self):
         """Set up test environment"""        self.analyzer = DemographicAnalyzer(
             privacy_level=PrivacyLevel.MEDIUM,
             anonymization_threshold=5
@@ -941,8 +933,7 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
 
 
 class TestProfilePerformanceAndScalability(IsolatedAsyncioTestCase):
-    """Performance and scalability tests for profile management"""
-    async def test_large_scale_profile_operations(self):
+    """Performance and scalability tests for profile management"""    async def test_large_scale_profile_operations(self):
         """Test profile operations at scale"""        manager = UserProfileManager(storage_backend='memory')
         
         # Generate large number of profiles
@@ -1031,8 +1022,7 @@ class TestProfilePerformanceAndScalability(IsolatedAsyncioTestCase):
 
 
 class TestProfileRobustness(IsolatedAsyncioTestCase):
-    """Robustness and edge case tests"""
-    async def test_invalid_profile_data_handling(self):
+    """Robustness and edge case tests"""    async def test_invalid_profile_data_handling(self):
         """Test handling of invalid profile data"""        manager = UserProfileManager(storage_backend='memory')
         
         # Test with completely invalid data

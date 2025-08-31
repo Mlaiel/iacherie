@@ -7,8 +7,7 @@ digital avec techniques d'IA et surveillance multi-plateformes.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib

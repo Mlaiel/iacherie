@@ -10,8 +10,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""
-import asyncio
+"""import asyncio
 import logging
 import re
 from typing import Dict, List, Optional, Any, Union

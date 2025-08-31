@@ -11,8 +11,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: User Registration → Credential Encryption → Security Policy Enforcement → 
 Password History → Account Protection → Audit Logging
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import secrets
 import string

@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading
@@ -133,8 +132,7 @@ class OptimizationAgent(BaseAgent):
     - Cost reduction
     - Quality improvement
     - Multi-format content optimization
-    """
-    def __init__(self, agent_id: str = None, config: Dict = None):
+    """    def __init__(self, agent_id: str = None, config: Dict = None):
         super().__init__(agent_id, config)
         
         self.optimization_type = OptimizationType.PERFORMANCE

@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -33,8 +32,7 @@ Team Expertise:
 - Integration Testing: Component interaction validation, data flow verification, performance testing
 - Enterprise Systems: Scalability testing, reliability validation, business process integration
 - Quality Assurance: End-to-end testing, regression testing, performance benchmarking
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -76,8 +74,7 @@ def create_protection_system(config=None):
 
 
 class TestUltraIndustrialSystemIntegration:
-    """Ultra-industrial system integration testing with comprehensive component interaction validation"""
-    @pytest_asyncio.fixture
+    """Ultra-industrial system integration testing with comprehensive component interaction validation"""    @pytest_asyncio.fixture
     async def enterprise_integrated_system(self):
         """Create enterprise-grade integrated content protection system"""        logger.info("Initializing enterprise integrated system")
         

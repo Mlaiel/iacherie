@@ -1,5 +1,4 @@
-"""Email notification service using SendGrid or SMTP."""
-import os
+"""Email notification service using SendGrid or SMTP."""import os
 from typing import Dict, List, Optional
 from datetime import datetime
 import smtplib

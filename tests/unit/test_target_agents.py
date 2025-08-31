@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,8 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #!/usr/bin/env python3
 """Quick verification test for the 5 target agents
 Tests that they can be imported and instantiated correctly
-"""
-import sys
+"""import sys
 import os
 sys.path.append(os.path.dirname(__file__))
 

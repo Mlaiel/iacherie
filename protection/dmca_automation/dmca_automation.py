@@ -12,8 +12,7 @@ Ultra-advanced automated DMCA takedown notice generation and management:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Legal Tech Expert + Compliance Specialist + Automation Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timedelta

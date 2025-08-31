@@ -19,8 +19,7 @@ IA protection rights → Web Surveillance → Violation Detection → Automated 
 WEB CRAWLER REPOSITORY ARCHITECTURE:
 Crawl Scheduling → Multi-Platform Monitoring → Content Fingerprinting → 
 Violation Detection → Evidence Collection → Alert Generation → Takedown Processing
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union, Set
+"""from typing import Dict, List, Optional, Any, Tuple, Union, Set
 import logging
 import asyncio
 import hashlib

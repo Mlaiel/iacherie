@@ -30,8 +30,7 @@ Features:
 - Real-time business metrics and alerts
 - Competitive analysis and market insights
 - ROI analysis and cost optimization
-"""
-import logging
+"""import logging
 import asyncio
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple

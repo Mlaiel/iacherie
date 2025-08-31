@@ -6,8 +6,7 @@ scheduling, and platform-specific optimization for maximum reach and engagement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path

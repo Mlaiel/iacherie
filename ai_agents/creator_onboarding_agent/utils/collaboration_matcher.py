@@ -4,8 +4,7 @@ Advanced AI-powered system for identifying optimal creator collaboration
 opportunities with compatibility analysis, project matching, and networking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple, Set

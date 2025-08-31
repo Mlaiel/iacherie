@@ -9,8 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de dispatch d'événements avec routage intelligent, gestion d'erreurs,
     retry automatique et orchestration des handlers pour la plateforme IA-Influencer-Agent.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Type
+"""from typing import Any, Dict, List, Optional, Union, Callable, Type
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta

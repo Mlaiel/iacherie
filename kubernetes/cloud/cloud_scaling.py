@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive auto-scaling capabilities for the IA Influencer
 Agent platform, supporting intelligent scaling decisions, predictive scaling,
 and multi-cloud scaling orchestration.
-"""
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple

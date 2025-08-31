@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Resource monitoring → ML prediction → Dynamic allocation → 
 Cost optimization → Performance tuning → Capacity planning → Auto-scaling
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
 import logging
 import asyncio
 import psutil
@@ -130,8 +129,7 @@ class ResourceManager:
     - Performance monitoring
     - Auto-scaling integration
     - Multi-tenant resource isolation
-    """
-    def __init__(self, allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED):
+    """    def __init__(self, allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED):
         self.allocation_strategy = allocation_strategy
         self.resource_limits: Dict[ResourceType, ResourceLimit] = {}
         self.current_allocations: Dict[str, ResourceAllocation] = {}

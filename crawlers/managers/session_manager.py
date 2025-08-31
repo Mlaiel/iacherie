@@ -6,8 +6,7 @@ authentication, cookies, and multi-domain session handling.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 import time

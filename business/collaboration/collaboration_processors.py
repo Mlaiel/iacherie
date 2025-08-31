@@ -3,8 +3,7 @@ Professional business logic processors for collaboration workflows
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-from typing import Dict, List, Optional, Any, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime, timedelta
 import asyncio
 import logging

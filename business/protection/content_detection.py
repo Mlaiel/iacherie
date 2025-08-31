@@ -3,8 +3,7 @@ Professional content identification and analysis system for IA Influencer Protec
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import hashlib
+"""import hashlib
 import imagehash
 import librosa
 import numpy as np

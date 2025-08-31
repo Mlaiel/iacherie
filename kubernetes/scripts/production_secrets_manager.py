@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Production secrets management with automated rotation and validation.
 ==============================================================
-"""
-import os
+"""import os
 import base64
 import secrets
 import logging

@@ -14,8 +14,7 @@ written permission is strictly forbidden and will result in legal prosecution
 under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -94,8 +93,7 @@ class SpotifyIntegration:
     
     Provides comprehensive Spotify analytics, artist management, track optimization,
     and release strategy recommendations for music content creators.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize Spotify integration with enhanced capabilities"""        self.security_manager = SecurityManager()
         self.spotify_agent = SpotifyAgent()
         

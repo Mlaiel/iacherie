@@ -7,8 +7,7 @@ pour qu'ils fonctionnent avec la structure actuelle du projet.
 
 Author: GitHub Copilot
 Date: 2025-08-31
-"""
-import os
+"""import os
 import re
 from pathlib import Path
 from typing import Dict, List
@@ -82,8 +81,7 @@ Ce module doit être complété avec la véritable implémentation.
 
 Author: GitHub Copilot (auto-généré)
 Date: 2025-08-31
-"""
-# Classes et fonctions de base pour les tests
+"""# Classes et fonctions de base pour les tests
 class BaseClass:
     """Classe de base minimale"""    pass
 
@@ -145,8 +143,7 @@ __all__ = [
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 

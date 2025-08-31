@@ -10,8 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ STRICT COPYRIGHT PROTECTION ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum

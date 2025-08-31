@@ -18,8 +18,7 @@ Team Expertise:
 - Security Specialist: Enterprise Security & Compliance
 - Microservices Architect: Distributed Systems
 - IA Prompt Engineer: Advanced AI Integration
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import structlog

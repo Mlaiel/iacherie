@@ -19,8 +19,7 @@ LOGIQUE MÉTIER: User (musicien) → Upload audio → IA analysis → Style tran
 Remix generation → Quality enhancement → Collaborative editing → Export professionnel
 
 Technologies IA: WaveNet, MuseNet, AIVA, Magenta, Jukebox, Neural Style Transfer
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."

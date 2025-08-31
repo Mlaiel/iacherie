@@ -7,8 +7,7 @@ OF THIS CODE IS STRICTLY PROHIBITED.
 Advanced revenue optimization algorithms for content monetization,
 pricing strategies, and automated payout optimization.
 Specialized for multi-platform creator economy optimization.
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field

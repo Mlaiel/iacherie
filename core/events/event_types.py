@@ -10,8 +10,7 @@ Description:
     Définitions des types d'événements métier pour la plateforme IA-Influencer-Agent.
     Couvre tous les événements de la logique métier : contenu, protection, monétisation, 
     collaboration et système.
-"""
-from typing import Any, Dict, List, Optional, Union
+"""from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum

@@ -5,8 +5,7 @@ chunking, parallel processing, and comprehensive error handling.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Union, Callable, Awaitable, TypeVar, Generic

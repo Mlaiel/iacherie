@@ -8,8 +8,7 @@ according to the unified business requirements.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-from fastapi import APIRouter
+"""from fastapi import APIRouter
 from .auth_endpoints import router as auth_router
 from .content_endpoints import router as content_router  
 from .collaboration_endpoints import router as collaboration_router

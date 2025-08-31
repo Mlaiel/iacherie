@@ -20,8 +20,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • Security Expert : Cybersécurité & protection contenu
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
 from dataclasses import dataclass, asdict
@@ -178,8 +177,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
     - User and admin analysis
     - Forward tracking
     - Reaction monitoring
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  api_id: Optional[int] = None,
                  api_hash: Optional[str] = None,
                  session_name: str = 'telegram_crawler',

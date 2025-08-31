@@ -5,8 +5,7 @@ management, creator collaboration orchestration, and AI-powered monetization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -129,8 +128,7 @@ class MarketplaceAgent(BaseAgent):
     - Secure transaction processing
     - Advanced analytics and insights
     - Multi-platform distribution
-    """
-    def __init__(self, config: Optional[MarketplaceConfig] = None):
+    """    def __init__(self, config: Optional[MarketplaceConfig] = None):
         """        Initialize marketplace agent with configuration.
         
         Args:

@@ -22,8 +22,7 @@ TECHNOLOGIES IA INTÉGRÉES:
 🎬 Vidéo: OpenCV, YOLO, Frame Analysis, Motion Vectors (>90% précision)
 📸 Images: CLIP, ImageHash, Perceptual Hashing (>92% précision)
 📝 Texte: BERT, RoBERTa, Vector Similarity (>88% précision)
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta

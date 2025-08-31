@@ -14,8 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Distributed Systems Engineer + Synchronization Expert + State Management Specialist
-"""
-import asyncio
+"""import asyncio
 import json
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple, Set

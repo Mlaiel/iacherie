@@ -9,8 +9,7 @@ Algorithm optimization → Engagement prediction → Performance recommendations
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import re
 import hashlib
 from datetime import datetime, timezone, timedelta

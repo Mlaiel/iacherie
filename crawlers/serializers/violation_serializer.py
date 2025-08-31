@@ -28,8 +28,7 @@ Expertise combinée:
 - Audio/Vidéo: Détection de violations multimédia avancée
 - DevOps: Monitoring et alertes en temps réel des violations
 - IA Prompt Engineer: Génération automatique de notices légales
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field

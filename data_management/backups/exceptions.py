@@ -11,8 +11,7 @@ Responsibility: Exceptions hiérarchiques pour système de sauvegarde
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 from datetime import datetime
 
 

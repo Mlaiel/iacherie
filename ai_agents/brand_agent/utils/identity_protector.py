@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import whois
@@ -229,8 +228,7 @@ class IdentityProtector:
     - Anti-counterfeiting measures
     - Legal document generation
     - Automated threat response
-    """
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.protection_level = ProtectionLevel.STANDARD
         
@@ -1238,8 +1236,7 @@ class TrademarkGuardian:
     """    Specialized Trademark Protection & Legal Action Coordinator
     
     Handles complex trademark protection scenarios and coordinates legal responses.
-    """
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.legal_generator = LegalDocumentGenerator()
         self.pending_actions: Dict[str, Dict[str, Any]] = {}

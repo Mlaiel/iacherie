@@ -14,8 +14,7 @@ Client HTTP intelligent avec découverte de services automatique
 - Load balancing intelligent et failover
 - Retry automatique avec backoff exponentiel
 - Authentification centralisée et cache des tokens
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time

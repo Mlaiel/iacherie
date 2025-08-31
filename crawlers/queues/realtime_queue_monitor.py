@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Queue metrics collection → Real-time analysis → Anomaly detection → 
 Alert generation → Auto-recovery → Performance optimization → Predictive scaling
-"""
-from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable, AsyncGenerator
+"""from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable, AsyncGenerator
 import logging
 import asyncio
 from datetime import datetime, timedelta

@@ -4,8 +4,7 @@ Manages configuration settings for the competitor monitoring agent.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-import os
+"""import os
 import json
 import logging
 from typing import Dict, Any, Optional

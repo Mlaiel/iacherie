@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Production Requirements Demonstration Script
 Shows the implementation of all performance and quality requirements
-"""
-import asyncio
+"""import asyncio
 import sys
 import os
 from datetime import datetime

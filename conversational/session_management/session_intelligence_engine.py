@@ -23,8 +23,7 @@ Team Specialists:
 - Audio Engineer: Audio Intelligence Integration
 - DevOps: ML Model Deployment & Scaling
 - IA Prompt Engineer: Conversational Intelligence Optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd

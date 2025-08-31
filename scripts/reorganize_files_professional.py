@@ -4,8 +4,7 @@ Reorganizes ALL files into professional enterprise architecture
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 import shutil
 import logging
 from pathlib import Path

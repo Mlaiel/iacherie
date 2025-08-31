@@ -14,8 +14,7 @@ Système complet de déploiement de modèles ML
 - Strategies avancées (Blue-Green, Canary)
 - Auto-scaling et load balancing
 - Health monitoring et rollback
-"""
-from .deployment_manager import (
+"""from .deployment_manager import (
     ModelDeploymentManager,
     DeploymentConfig,
     DeploymentInfo,

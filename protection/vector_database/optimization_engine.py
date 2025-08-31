@@ -15,8 +15,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import time

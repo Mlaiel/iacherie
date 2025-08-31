@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -17,8 +16,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 1. python main.py starts without error
 2. API responds on /health
 3. Tests pass without error configuration
-"""
-import sys
+"""import sys
 import subprocess
 import time
 import requests

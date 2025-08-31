@@ -9,8 +9,7 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Type, Generic, TypeVar
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Type, Generic, TypeVar
 from abc import ABC, abstractmethod
 from enum import Enum
 from datetime import datetime, date

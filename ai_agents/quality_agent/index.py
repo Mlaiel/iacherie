@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-from .quality_agent import QualityAgent, QualityAgentManager
+"""from .quality_agent import QualityAgent, QualityAgentManager
 from .quality_assessor import QualityAssessor, ContentScorer
 from .quality_enhancer import QualityEnhancer, ImprovementEngine
 from .standards_checker import StandardsChecker, ComplianceValidator

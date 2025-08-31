@@ -11,8 +11,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Quick Reference Index for the Advanced Integrations Module
-"""
-# Integration Module Structure
+"""# Integration Module Structure
 INTEGRATION_MODULES = {
     "social_platforms": {
         "description": "Social media platform integration and management",

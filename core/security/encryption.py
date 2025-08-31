@@ -16,8 +16,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""
-import os
+"""import os
 import secrets
 import hashlib
 import hmac

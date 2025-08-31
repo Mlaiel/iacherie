@@ -14,8 +14,7 @@ Supports complete creator monetization ecosystem:
 ⚠️ COPYRIGHT NOTICE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This code and all associated concepts are the EXCLUSIVE PROPERTY of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta

@@ -16,8 +16,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Quick start → Component discovery → System initialization → 
 Example workflows → Performance monitoring → Shutdown
-"""
-import asyncio
+"""import asyncio
 import logging
 import sys
 from datetime import datetime, timedelta
@@ -79,8 +78,7 @@ class WorkersQuickStart:
     - Component usage demonstrations
     - Performance monitoring examples
     - Complete workflow samples
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.system_initialized = False
         self.demo_user_id = "demo_user_123"
         

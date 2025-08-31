@@ -10,8 +10,7 @@ All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited
 WARNING: This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import shutil
@@ -40,8 +39,7 @@ class BackupUtils:
     
     Contains common operations, validation helpers, and optimization
     utilities used across the backup system.
-    """
-    def __init__(self, config: Optional[BackupConfig] = None):
+    """    def __init__(self, config: Optional[BackupConfig] = None):
         """        Initialize backup utilities.
         
         Args:

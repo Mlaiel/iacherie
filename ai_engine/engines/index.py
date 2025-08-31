@@ -30,8 +30,7 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
-"""
-from typing import Dict, Type, Any, Optional, List, Union
+"""from typing import Dict, Type, Any, Optional, List, Union
 import logging
 from enum import Enum
 

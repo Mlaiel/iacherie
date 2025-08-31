@@ -7,8 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Configuration Loading → Validation → Environment Resolution → Dynamic Updates → Monitoring
-"""
-import os
+"""import os
 import json
 import yaml
 import logging

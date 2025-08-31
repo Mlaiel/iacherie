@@ -20,8 +20,7 @@ Copyright Protection → Content Tracking
 FINGERPRINT REPOSITORY ARCHITECTURE:
 Fingerprint Generation → Hash Storage → Similarity Search → 
 Match Detection → Content Tracking → Protection Monitoring
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

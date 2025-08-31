@@ -19,8 +19,7 @@ Spécialisations Équipe Expert:
 - Ingénieur ML: Analyse prédictive et reconnaissance de motifs
 - Administrateur BD: Gestion données haute performance
 - Ingénieur Sécurité: Cryptographie et protection
-"""
-import asyncio
+"""import asyncio
 import logging
 import signal
 import sys

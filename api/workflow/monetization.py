@@ -7,8 +7,7 @@ multi-platform revenue tracking and distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-from typing import Dict, Any, List, Optional, Union
+"""from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum

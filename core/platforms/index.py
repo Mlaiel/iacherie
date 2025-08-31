@@ -5,8 +5,7 @@ Central index for all platform integrations and utilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-from typing import Dict, List, Type, Optional
+"""from typing import Dict, List, Type, Optional
 import logging
 
 from .base import PlatformBase, PlatformType, PlatformConfig

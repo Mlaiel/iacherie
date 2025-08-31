@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import re

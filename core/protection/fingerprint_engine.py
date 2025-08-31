@@ -9,8 +9,7 @@ This module provides advanced fingerprinting capabilities for content protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import hashlib
+"""import hashlib
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Union, Any
 from dataclasses import dataclass

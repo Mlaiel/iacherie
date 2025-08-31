@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Task analysis → ML classification → Performance prediction → 
 Optimal worker selection → Real-time routing → Performance feedback → Model adaptation
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
 from datetime import datetime, timedelta

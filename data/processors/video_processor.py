@@ -15,8 +15,7 @@ Features:
 - Frame-by-frame analysis and object detection
 - Video quality assessment and improvement
 - Batch processing for large video collections
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import cv2

@@ -33,8 +33,7 @@ Unauthorized use, copying, reverse engineering, or commercial exploitation
 is strictly prohibited under international copyright law.
 
 Contact: mlaiel@live.de
-"""
-import numpy as np
+"""import numpy as np
 import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable

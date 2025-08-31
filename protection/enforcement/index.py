@@ -1,7 +1,6 @@
 """Index file for Content Protection Enforcement Module
 Main entry point and orchestration for comprehensive copyright enforcement system
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime

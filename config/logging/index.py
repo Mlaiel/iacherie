@@ -25,8 +25,7 @@ PROHIBITED and will result in immediate legal action under German and Internatio
 Contact: mlaiel@live.de for licensing inquiries ONLY.
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import sys
 from typing import Dict, List, Optional, Union, Any
 from enum import Enum

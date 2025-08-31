@@ -26,8 +26,7 @@ copyright law. This includes but is not limited to code theft, concept copying,
 or unauthorized derivative works.
 
 Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Optional, Any, Type, Union, List
 from dataclasses import dataclass

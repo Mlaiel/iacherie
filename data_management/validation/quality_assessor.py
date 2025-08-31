@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 - Scoring multi-critères avec IA
 - Recommandations d'amélioration personnalisées
 - Standards de qualité par type de créateur
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from pathlib import Path

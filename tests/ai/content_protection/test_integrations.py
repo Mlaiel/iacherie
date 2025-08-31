@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -33,8 +32,7 @@ Team Expertise:
 - Integration Engineering: Multi-platform APIs, OAuth/JWT security, rate limiting, webhooks
 - Content Distribution: YouTube, TikTok, Instagram, Spotify, Twitch, Facebook integrations
 - Enterprise Connectors: Salesforce, Microsoft, Google Workspace, Adobe Creative Cloud
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -75,8 +73,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestUltraIndustrialPlatformIntegrations:
-    """Ultra-industrial platform integrations testing with real business logic and enterprise APIs"""
-    @pytest_asyncio.fixture
+    """Ultra-industrial platform integrations testing with real business logic and enterprise APIs"""    @pytest_asyncio.fixture
     async def enterprise_integration_manager(self):
         """Create enterprise-grade integration manager with advanced configuration"""        logger.info("Initializing enterprise integration manager")
         
@@ -1359,8 +1356,7 @@ class TestUltraIndustrialPlatformIntegrations:
 
 
 class TestSocialMediaIntegrator:
-    """Tests for social media platform integrations"""
-    @pytest.fixture
+    """Tests for social media platform integrations"""    @pytest.fixture
     def social_media_integrator(self, test_config):
         """Create SocialMediaIntegrator instance for testing"""        return SocialMediaIntegrator(test_config.get('social_media', {}))
 
@@ -1463,8 +1459,7 @@ class TestSocialMediaIntegrator:
 
 
 class TestBlockchainIntegrator:
-    """Tests for blockchain platform integrations"""
-    @pytest.fixture
+    """Tests for blockchain platform integrations"""    @pytest.fixture
     def blockchain_integrator(self, test_config):
         """Create BlockchainIntegrator instance for testing"""        return BlockchainIntegrator(test_config.get('blockchain_integrations', {}))
 
@@ -1518,8 +1513,7 @@ class TestBlockchainIntegrator:
 
 
 class TestCloudStorageIntegrator:
-    """Tests for cloud storage integrations"""
-    @pytest.fixture
+    """Tests for cloud storage integrations"""    @pytest.fixture
     def cloud_storage_integrator(self, test_config):
         """Create CloudStorageIntegrator instance for testing"""        return CloudStorageIntegrator(test_config.get('cloud_storage', {}))
 
@@ -1573,8 +1567,7 @@ class TestCloudStorageIntegrator:
 
 
 class TestNotificationIntegrator:
-    """Tests for notification service integrations"""
-    @pytest.fixture
+    """Tests for notification service integrations"""    @pytest.fixture
     def notification_integrator(self, test_config):
         """Create NotificationIntegrator instance for testing"""        return NotificationIntegrator(test_config.get('notifications', {}))
 
@@ -1649,8 +1642,7 @@ class TestNotificationIntegrator:
 
 
 class TestAnalyticsIntegrator:
-    """Tests for analytics platform integrations"""
-    @pytest.fixture
+    """Tests for analytics platform integrations"""    @pytest.fixture
     def analytics_integrator(self, test_config):
         """Create AnalyticsIntegrator instance for testing"""        return AnalyticsIntegrator(test_config.get('analytics_integrations', {}))
 
@@ -1708,8 +1700,7 @@ class TestAnalyticsIntegrator:
 
 
 class TestLegalPlatformIntegrator:
-    """Tests for legal platform integrations"""
-    @pytest.fixture
+    """Tests for legal platform integrations"""    @pytest.fixture
     def legal_integrator(self, test_config):
         """Create LegalPlatformIntegrator instance for testing"""        return LegalPlatformIntegrator(test_config.get('legal_platforms', {}))
 
@@ -1770,8 +1761,7 @@ class TestLegalPlatformIntegrator:
 
 
 class TestIntegrationsPerformance:
-    """Performance tests for integrations"""
-    @pytest.mark.performance
+    """Performance tests for integrations"""    @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_concurrent_api_requests(self):
         """Test concurrent API request handling"""        
@@ -1809,8 +1799,7 @@ class TestIntegrationsPerformance:
 
 
 class TestIntegrationsResilience:
-    """Resilience and error handling tests"""
-    @pytest.mark.asyncio
+    """Resilience and error handling tests"""    @pytest.mark.asyncio
     async def test_api_failure_resilience(self):
         """Test resilience to API failures"""        
         platform_integrator = PlatformIntegrator({})

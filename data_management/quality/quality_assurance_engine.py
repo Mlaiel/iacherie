@@ -25,8 +25,7 @@ DIMENSIONS QUALITÉ:
 📝 Content Quality: Readability, SEO, Grammar, Relevance
 🛡️ Security Quality: Malware Scan, Privacy Check, Copyright Compliance
 🚀 Performance Quality: Load Time, Compression Ratio, Streaming Readiness
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta

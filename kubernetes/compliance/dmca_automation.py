@@ -3,8 +3,7 @@ Automated Digital Millennium Copyright Act compliance and takedown management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta

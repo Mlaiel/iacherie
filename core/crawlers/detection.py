@@ -10,8 +10,7 @@ Unauthorized use, copying or distribution prohibited.
 Advanced AI-powered violation detection system for content protection.
 Uses multiple algorithms including similarity matching, metadata analysis,
 and machine learning models to detect unauthorized content usage.
-"""
-import logging
+"""import logging
 import hashlib
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple

@@ -9,8 +9,7 @@ for the Ainflue platform. This script demonstrates all three alert categories:
 - AI Alerts (Model Drift, Accuracy Degradation)
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, Any

@@ -10,8 +10,7 @@ Features:
 - Audit trail for API key usage
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import secrets
+"""import secrets
 import hashlib
 import hmac
 import json

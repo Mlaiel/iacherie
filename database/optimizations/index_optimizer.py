@@ -5,8 +5,7 @@ including automated index creation, usage analysis, and intelligent recommendati
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import re
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Set, Tuple, Union

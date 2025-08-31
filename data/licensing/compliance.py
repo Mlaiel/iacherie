@@ -6,8 +6,7 @@ for licensing agreements and regulatory requirements.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from typing import Dict, List, Any, Optional, Tuple
+"""from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, date, timedelta
 from uuid import UUID
 import logging

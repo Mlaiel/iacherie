@@ -8,8 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use is strictly prohibited. Contact: mlaiel@live.de
-"""
-# REGISTRE COMPLET DES AGENTS EXISTANTS - État Réel du 13 Août 2025
+"""# REGISTRE COMPLET DES AGENTS EXISTANTS - État Réel du 13 Août 2025
 
 EXISTING_AGENTS_REGISTRY = {
     # ═══════════════════════════════════════════════════════════════

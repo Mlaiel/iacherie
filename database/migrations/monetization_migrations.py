@@ -22,8 +22,7 @@ Monetization migrations for:
 MIGRATION STRATEGY:
 Revenue Schema → Payment Systems → Subscription Management → 
 Analytics Integration → Compliance Framework → Optimization Engine
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass

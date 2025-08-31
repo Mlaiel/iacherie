@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive cloud services integration supporting AWS, Azure,
 GCP, and other cloud providers with advanced resource management, cost optimization,
 and security features.
-"""
-import logging
+"""import logging
 import asyncio
 import time
 import boto3

@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -166,8 +165,7 @@ class PriorityFilter(MessageFilter):
 class MessageRouter:
     """    Enterprise message routing and orchestration system
     Handles intelligent routing across multiple messaging protocols
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.routes: Dict[MessageType, List[RouteConfig]] = {}
         self.handlers: Dict[str, MessageHandler] = {}
         self.transformers: Dict[str, MessageTransformer] = {}

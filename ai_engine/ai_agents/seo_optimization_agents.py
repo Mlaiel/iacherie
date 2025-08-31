@@ -7,8 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in SEO optimization, keyword research,
 content discoverability, and search engine ranking improvement for creators.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta

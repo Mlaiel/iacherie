@@ -14,8 +14,7 @@ Monitoring et alertes automatiques pour la facturation
 - Alertes échéances et impayés automatiques
 - Monitoring revenus et seuils critiques
 - Notifications multi-canaux et escalation
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid

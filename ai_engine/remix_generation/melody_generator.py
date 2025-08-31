@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Générateur de mélodies IA ultra-avancé avec réseaux de neurones
 TECHNOLOGIES: Deep Learning, RNN/LSTM, Transformer, Music Theory, Harmonic Analysis
 LOGIQUE MÉTIER: Musical context → AI analysis → Melodic composition → Harmonic validation → Quality assessment
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

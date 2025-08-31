@@ -14,8 +14,7 @@ Validation avancée des empreintes numériques pour protection du contenu
 - Validation d'unicité et détection de doublons
 - Analyse de similarité avec base existante
 - Intégration avec système de protection des droits
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
 from pathlib import Path

@@ -52,8 +52,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Respects robots.txt and platform terms of service.
 Contact: mlaiel@live.de for enterprise licensing.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import base64
 import hashlib
 import json

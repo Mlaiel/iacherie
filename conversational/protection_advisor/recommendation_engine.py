@@ -20,8 +20,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
@@ -223,8 +222,7 @@ class RecommendationEngine:
     - Advanced analytics with A/B testing and effectiveness tracking
     - Enterprise-grade performance optimization and scalability
     - Continuous learning and recommendation model improvement
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize the Recommendation Engine with enterprise components."""        self.ai_models = AIModelManager()
         self.metrics_collector = MetricsCollector()
         

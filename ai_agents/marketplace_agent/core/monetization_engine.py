@@ -5,8 +5,7 @@ and AI-powered monetization optimization for marketplace content.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -83,8 +82,7 @@ class MonetizationEngine:
     - Performance-based pricing strategies
     - Market analysis and competitive pricing
     - Revenue forecasting and optimization
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize monetization engine.
         
         Args:

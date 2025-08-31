@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Service Orchestration Manager
 Container orchestration and microservices management for the IA Influencer Agent platform
-"""
-import os
+"""import os
 import sys
 import time
 import json

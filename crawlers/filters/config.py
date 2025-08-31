@@ -27,8 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Union, Any
+"""from typing import Dict, List, Optional, Union, Any
 from enum import Enum
 from dataclasses import dataclass, field
 from pydantic import BaseModel, Field, validator

@@ -11,8 +11,7 @@ Features:
 - Advanced clustering and indexing strategies
 - Scalable architecture for millions of fingerprints
 - Real-time matching with <100ms response time
-"""
-import numpy as np
+"""import numpy as np
 import faiss
 import pickle
 import asyncio

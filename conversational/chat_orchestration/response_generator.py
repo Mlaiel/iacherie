@@ -5,8 +5,7 @@ Generates contextual, personalized responses with monetization insights and
 content protection guidance for different creator types.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -421,8 +420,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
 - Syndication tracking: Monitor content republishing
 - SEO monitoring: Protect search rankings from scrapers
 - Legal framework: Terms of use and content policies"""            
-            content += """
-**Current Protection Status:**
+            content += """**Current Protection Status:**
 ✅ Content fingerprinting active
 ✅ Monitoring systems deployed
 ✅ Legal framework in place

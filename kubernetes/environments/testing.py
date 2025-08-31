@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Testing environment configuration for automated testing and CI/CD pipelines.
 Optimized for unit tests, integration tests, and automated quality assurance.
 =================================================
-"""
-import os
+"""import os
 import tempfile
 import logging
 from typing import Dict, Any, List, Optional, Set

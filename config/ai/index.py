@@ -14,8 +14,7 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, List, Optional, Union, Any, Type
+"""from typing import Dict, List, Optional, Union, Any, Type
 import logging
 import os
 from datetime import datetime

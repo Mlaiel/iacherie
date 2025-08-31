@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,8 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 """Unit tests for ai_engine.personalization.core module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -66,8 +64,7 @@ except ImportError as e:
 
 
 class TestPersonalizationConfig:
-    """Test cases for PersonalizationConfig dataclass"""
-    def test_default_initialization(self):
+    """Test cases for PersonalizationConfig dataclass"""    def test_default_initialization(self):
         """Test PersonalizationConfig with default values"""        config = PersonalizationConfig()
         
         assert config.model_type == PersonalizationType.HYBRID
@@ -106,8 +103,7 @@ class TestPersonalizationConfig:
 
 
 class TestUserProfile:
-    """Test cases for UserProfile dataclass"""
-    def test_user_profile_initialization(self):
+    """Test cases for UserProfile dataclass"""    def test_user_profile_initialization(self):
         """Test UserProfile initialization"""        created_time = datetime.utcnow()
         profile = UserProfile(
             user_id="test_user_123",
@@ -163,8 +159,7 @@ class TestUserProfile:
 
 
 class TestContentItem:
-    """Test cases for ContentItem dataclass"""
-    def test_content_item_initialization(self):
+    """Test cases for ContentItem dataclass"""    def test_content_item_initialization(self):
         """Test ContentItem initialization"""        created_time = datetime.utcnow()
         content = ContentItem(
             content_id="content_123",
@@ -195,8 +190,7 @@ class TestContentItem:
 
 
 class TestPersonalizationEngine:
-    """Test cases for PersonalizationEngine class"""
-    def setup_method(self):
+    """Test cases for PersonalizationEngine class"""    def setup_method(self):
         """Setup test fixtures"""        self.config = PersonalizationConfig(
             model_type=PersonalizationType.HYBRID,
             num_recommendations=10,
@@ -475,8 +469,7 @@ class TestPersonalizationEngine:
 
 
 class TestUserProfileManager:
-    """Test cases for UserProfileManager class"""
-    def setup_method(self):
+    """Test cases for UserProfileManager class"""    def setup_method(self):
         """Setup test fixtures"""        self.config = PersonalizationConfig()
         self.manager = UserProfileManager(self.config)
 
@@ -589,8 +582,7 @@ class TestUserProfileManager:
 
 
 class TestContentPersonalizer:
-    """Test cases for ContentPersonalizer class"""
-    def setup_method(self):
+    """Test cases for ContentPersonalizer class"""    def setup_method(self):
         """Setup test fixtures"""        self.config = PersonalizationConfig()
         self.personalizer = ContentPersonalizer(self.config)
 
@@ -714,8 +706,7 @@ class TestContentPersonalizer:
 
 
 class TestEnumTypes:
-    """Test cases for enum types"""
-    def test_personalization_type_enum(self):
+    """Test cases for enum types"""    def test_personalization_type_enum(self):
         """Test PersonalizationType enum values"""        assert PersonalizationType.COLLABORATIVE_FILTERING.value == "collaborative_filtering"
         assert PersonalizationType.CONTENT_BASED.value == "content_based"
         assert PersonalizationType.HYBRID.value == "hybrid"

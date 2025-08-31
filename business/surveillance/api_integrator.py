@@ -6,8 +6,7 @@ content detection services, and third-party surveillance tools.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 import time

@@ -19,8 +19,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -240,8 +239,7 @@ class ProtectionAdvisorCore:
     - Enterprise-grade security and encryption
     - Performance monitoring and analytics
     - Machine learning-based prediction models
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize the Protection Advisor with enterprise components."""        self.security_manager = SecurityManager()
         self.ai_models = AIModelManager()
         

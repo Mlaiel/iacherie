@@ -17,8 +17,7 @@ Violators will be prosecuted to the full extent of the law.
 - Audio Engineer: Professional Audio Processing
 - DevOps Engineer: Cloud Infrastructure & CI/CD
 - IA Prompt Engineer: Advanced Prompt Engineering & LLM Integration
-"""
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
 from enum import Enum

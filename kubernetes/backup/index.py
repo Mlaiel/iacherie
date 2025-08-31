@@ -10,8 +10,7 @@ All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited
 WARNING: This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -43,8 +42,7 @@ class BackupPlatform:
     
     This is the main entry point for all backup operations in the IA Influencer
     Agent Platform, providing simplified access to all backup services.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         """        Initialize backup platform.
         
         Args:

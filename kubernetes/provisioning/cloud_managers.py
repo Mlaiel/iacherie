@@ -10,8 +10,7 @@ This software and all associated intellectual property belong exclusively to Fah
 Any unauthorized use, reproduction, distribution, or appropriation of this code, concept, 
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
 is strictly prohibited and will result in immediate legal action. All rights reserved.
-"""
-import boto3
+"""import boto3
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass

@@ -10,8 +10,7 @@ Enterprise Content Protection Platform - Legal Compliance Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json

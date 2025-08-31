@@ -8,8 +8,7 @@ License: Proprietary - All rights reserved
 WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
-"""
-import asyncio
+"""import asyncio
 import asyncpg
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union

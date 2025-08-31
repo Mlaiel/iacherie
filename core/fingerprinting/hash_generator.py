@@ -4,8 +4,7 @@ Advanced hash generation utilities for fingerprinting systems
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-import hashlib
+"""import hashlib
 import hmac
 import secrets
 import time

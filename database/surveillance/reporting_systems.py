@@ -6,8 +6,7 @@ Generates detailed reports for various stakeholders and compliance requirements.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All Rights Reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta

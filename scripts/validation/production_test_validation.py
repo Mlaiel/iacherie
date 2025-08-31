@@ -7,8 +7,7 @@ infrastructure is operational and provides quality validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Demonstrate successful resolution of critical testing gap
-"""
-import subprocess
+"""import subprocess
 import sys
 import os
 from pathlib import Path

@@ -25,8 +25,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, Any, List, Optional, Tuple, Union

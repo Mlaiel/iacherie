@@ -6,8 +6,7 @@ Handles CRUD operations, complex queries, and data validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from typing import List, Optional, Dict, Any, Tuple
+"""from typing import List, Optional, Dict, Any, Tuple
 from datetime import datetime, date
 from decimal import Decimal
 import logging

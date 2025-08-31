@@ -13,8 +13,7 @@ Industrial-grade content protection engine providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-import hashlib
+"""import hashlib
 import numpy as np
 import cv2
 import librosa

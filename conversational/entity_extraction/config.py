@@ -11,8 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 from pathlib import Path

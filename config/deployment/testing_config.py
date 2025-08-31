@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 import pytest
 import asyncio
 import docker
@@ -607,8 +606,7 @@ class TestingConfig:
     def _get_conftest_content(self) -> str:
         """Generate conftest.py content"""        return '''"""Pytest configuration and fixtures for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import asyncio
 import os
 from typing import AsyncGenerator, Generator
@@ -703,8 +701,7 @@ def setup_test_environment(monkeypatch):
     def _get_test_fixtures_content(self) -> str:
         """Generate test_fixtures.py content"""        return '''"""Test fixtures and data for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 from typing import Dict, List, Any
 import json
 import tempfile
@@ -815,8 +812,7 @@ def mock_api_responses() -> Dict[str, Any]:
     def _get_test_data_factory_content(self) -> str:
         """Generate test_data_factory.py content"""        return '''"""Test data factory for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import random
+"""import random
 import string
 import uuid
 from datetime import datetime, timedelta
@@ -958,8 +954,7 @@ class TestDataFactory:
     def _get_test_utils_content(self) -> str:
         """Generate test_utils.py content"""        return '''"""Test utilities for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import json
 import time
 from typing import Dict, List, Any, Optional, Callable

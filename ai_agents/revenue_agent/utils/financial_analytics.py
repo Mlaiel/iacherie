@@ -24,8 +24,7 @@ This innovative financial analytics system represents months of research, develo
 intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted to the 
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid

@@ -6,8 +6,7 @@ Provides comprehensive models for creators, content, and recommendations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
 from enum import Enum
 from datetime import datetime

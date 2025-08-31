@@ -14,8 +14,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
 import asyncio

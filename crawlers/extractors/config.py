@@ -27,8 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-import os
+"""import os
 import json
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field

@@ -11,8 +11,7 @@ Professional blockchain smart contract management system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Blockchain Engineer + Smart Contract Developer + Legal Tech Specialist
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta

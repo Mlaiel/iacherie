@@ -11,8 +11,7 @@ This suite combines:
 4. Compliance verification with requirements
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import os
+"""import os
 import ast
 import json
 import sys

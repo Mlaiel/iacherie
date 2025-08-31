@@ -19,8 +19,7 @@ IA protection rights → Web Surveillance → Violation Detection → Automated 
 WEB CRAWLER MODEL ARCHITECTURE:
 Crawl Scheduling → Multi-Platform Monitoring → Content Fingerprinting → 
 Violation Detection → Evidence Collection → Alert Generation → Takedown Processing
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
 from enum import Enum

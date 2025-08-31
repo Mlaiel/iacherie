@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -34,8 +33,7 @@ and will result in immediate legal action under German and International copyrig
 
 Comprehensive test suite for the complete discovery module, validating all components
 and their interactions with industrial-grade rigor.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

@@ -43,8 +43,7 @@ This includes but not limited to: reverse engineering, code analysis, concept th
 All violations will be prosecuted to the FULL EXTENT of international copyright law.
 Legal action will be taken immediately against any infringement.
 Contact: mlaiel@live.de for authorized licensing only.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum

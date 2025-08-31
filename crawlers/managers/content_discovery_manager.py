@@ -6,8 +6,7 @@ Manages intelligent content discovery across social media platforms and web serv
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta

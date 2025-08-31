@@ -24,8 +24,7 @@ Developed by Expert Team:
 🎵 Audio Expert: Audio Platform Integration
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Platform Optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal

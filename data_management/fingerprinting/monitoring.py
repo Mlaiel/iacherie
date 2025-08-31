@@ -26,8 +26,7 @@ MONITORING TECHNOLOGIES:
 ├── 🔍 Image Recognition (OpenCV + YOLO + OCR)
 ├── 🎵 Audio Detection (Chromaprint + Spectral Analysis)
 └── 🛡️ Violation Evidence (Screenshots + Metadata + Legal)
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from enum import Enum

@@ -10,8 +10,7 @@ This module provides comprehensive incident response capabilities:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Callable
@@ -119,8 +118,7 @@ class IncidentResponseSystem:
     - Incident tracking and timeline management
     - Integration with failover and business continuity systems
     - Post-incident analysis and learning
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)

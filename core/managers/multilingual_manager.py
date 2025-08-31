@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Contenu multilingue → Détection langue → Traduction temps réel → 
 Reconnaissance vocale → Synthèse vocale → Optimisation culturelle → Distribution ciblée
-"""
-from typing import Any, Dict, List, Optional, Union, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Union, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager

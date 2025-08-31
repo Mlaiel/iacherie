@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -33,8 +32,7 @@ DevOps Engineer
 IA Prompt Engineer
 
 Contact Officiel : Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -99,8 +97,7 @@ class TestUltraIndustrialPiracyDetection:
     - Résistance aux techniques d'évasion avancées
     - Intégration avec systèmes légaux automatisés
     - Analytics prédictifs de menaces
-    """
-    @pytest.fixture
+    """    @pytest.fixture
     def enterprise_detection_config(self):
         """Configuration ultra-avancée pour la détection de piratage"""        return {
             'detection_algorithms': {
@@ -1275,8 +1272,7 @@ class TestUltraIndustrialPiracyDetection:
 
 
 class TestDetectionIntegration:
-    """Integration tests for content detection system"""
-    @pytest.mark.asyncio
+    """Integration tests for content detection system"""    @pytest.mark.asyncio
     async def test_end_to_end_detection_workflow(self, test_config, sample_content_metadata):
         """Test complete content detection workflow"""        
         content_detector = ContentDetector(test_config.get('content_detection', {}))

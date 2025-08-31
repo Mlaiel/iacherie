@@ -13,8 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written per
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional, List, Callable, Awaitable, Union
 from pydantic import BaseSettings, Field
 from enum import Enum

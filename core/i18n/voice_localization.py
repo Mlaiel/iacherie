@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Text input → Language detection → Voice profile selection → Accent adaptation → 
 Cultural pronunciation → TTS synthesis → Audio processing → Quality enhancement
-"""
-import logging
+"""import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Tuple, Union

@@ -10,8 +10,7 @@ Logique Métier: User (musicien/blogueur/photographe/influencer/comédien) → U
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Tous droits réservés - Utilisation non autorisée strictement interdite
-"""
-import asyncio
+"""import asyncio
 import logging
 import signal
 import sys

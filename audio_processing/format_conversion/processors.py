@@ -5,8 +5,7 @@ Provides professional-grade audio processing capabilities for format conversion.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Tuple, Union
 from dataclasses import dataclass

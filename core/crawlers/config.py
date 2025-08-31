@@ -10,8 +10,7 @@ Unauthorized use, copying or distribution prohibited.
 Professional configuration management for web crawling operations.
 Handles platform-specific settings, rate limiting, API credentials,
 and monitoring thresholds for optimal crawling performance.
-"""
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum

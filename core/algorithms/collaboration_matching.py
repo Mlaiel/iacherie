@@ -13,8 +13,7 @@ Advanced algorithm engine for intelligent creator collaboration matching providi
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-import numpy as np
+"""import numpy as np
 import pandas as pd
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging

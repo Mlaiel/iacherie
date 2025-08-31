@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests content filtering, ranking, diversity, and real-time adaptation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -60,8 +58,7 @@ from ai.personalization.exceptions import (
 
 
 class TestContentItem(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentItem class"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentItem class"""    async def asyncSetUp(self):
         """Set up test environment"""        self.content_data = self._generate_content_data()
         self.content_item = ContentItem(
             item_id='track_12345',
@@ -201,8 +198,7 @@ class TestContentItem(IsolatedAsyncioTestCase):
 
 
 class TestContentCatalog(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentCatalog"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentCatalog"""    async def asyncSetUp(self):
         """Set up test environment"""        self.catalog = ContentCatalog(
             index_features=['genre', 'energy', 'valence', 'tempo'],
             similarity_threshold=0.1,
@@ -343,8 +339,7 @@ class TestContentCatalog(IsolatedAsyncioTestCase):
 
 
 class TestContentRecommender(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentRecommender"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentRecommender"""    async def asyncSetUp(self):
         """Set up test environment"""        self.recommender = ContentRecommender(
             strategy=PersonalizationStrategy.HYBRID,
             diversity_weight=0.3,
@@ -611,8 +606,7 @@ class TestContentRecommender(IsolatedAsyncioTestCase):
 
 
 class TestContentFilter(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentFilter"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentFilter"""    async def asyncSetUp(self):
         """Set up test environment"""        self.filter = ContentFilter(
             filter_types=[FilterType.QUALITY, FilterType.CONTENT, FilterType.BEHAVIORAL],
             quality_threshold=0.6,
@@ -768,8 +762,7 @@ class TestContentFilter(IsolatedAsyncioTestCase):
 
 
 class TestContentRanker(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentRanker"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentRanker"""    async def asyncSetUp(self):
         """Set up test environment"""        self.ranker = ContentRanker(
             ranking_method=RankingMethod.HYBRID,
             relevance_weight=0.4,
@@ -965,8 +958,7 @@ class TestContentRanker(IsolatedAsyncioTestCase):
 
 
 class TestContentDiversifier(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ContentDiversifier"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ContentDiversifier"""    async def asyncSetUp(self):
         """Set up test environment"""        self.diversifier = ContentDiversifier(
             strategy=DiversityStrategy.FEATURE_BASED,
             diversity_threshold=0.3,
@@ -1152,8 +1144,7 @@ class TestContentDiversifier(IsolatedAsyncioTestCase):
 
 
 class TestRealTimeAdapter(IsolatedAsyncioTestCase):
-    """Comprehensive tests for RealTimeAdapter"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for RealTimeAdapter"""    async def asyncSetUp(self):
         """Set up test environment"""        self.adapter = RealTimeAdapter(
             adaptation_rate=0.1,
             feedback_window=100,
@@ -1314,8 +1305,7 @@ class TestRealTimeAdapter(IsolatedAsyncioTestCase):
 
 
 class TestContentPerformanceAndScalability(IsolatedAsyncioTestCase):
-    """Performance and scalability tests for content operations"""
-    async def test_large_catalog_operations(self):
+    """Performance and scalability tests for content operations"""    async def test_large_catalog_operations(self):
         """Test operations on large content catalogs"""        # Generate large catalog
         large_catalog = ContentCatalog()
         n_items = 5000

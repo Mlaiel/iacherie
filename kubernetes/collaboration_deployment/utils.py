@@ -25,8 +25,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any reproduction, modification, distribution or use without explicit 
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import functools
 from typing import Dict, List, Optional, Any, Union, Callable, Type

@@ -9,8 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 from pathlib import Path

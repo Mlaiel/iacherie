@@ -3,8 +3,7 @@ AI-Powered Social Media Trend Detection and Analysis System
 
 This module provides comprehensive trend monitoring capabilities including
 real-time detection, viral content identification, sentiment tracking, and predictive analytics.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging

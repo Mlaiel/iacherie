@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Application Deployment Manager
 Handles complete application deployment lifecycle including zero-downtime deployments
-"""
-import os
+"""import os
 import sys
 import time
 import json

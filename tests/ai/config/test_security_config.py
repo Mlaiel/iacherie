@@ -35,8 +35,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 
 Comprehensive test suite for SecurityConfig module ensuring 100% security,
 authentication, encryption, and threat protection for the IA platform.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

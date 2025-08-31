@@ -7,8 +7,7 @@ Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import zipfile

@@ -4,8 +4,7 @@ Advanced video fingerprinting for content protection and identification
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 import numpy as np

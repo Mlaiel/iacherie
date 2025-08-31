@@ -13,8 +13,7 @@ This optimized version:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete unit test coverage and quality validation
-"""
-import subprocess
+"""import subprocess
 import sys
 import os
 import time

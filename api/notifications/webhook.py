@@ -1,5 +1,4 @@
-"""Enterprise webhook notification service with intelligent routing and retry mechanisms."""
-import os
+"""Enterprise webhook notification service with intelligent routing and retry mechanisms."""import os
 import json
 import aiohttp
 import asyncio
@@ -127,8 +126,7 @@ class WebhookDeliveryResult:
 
 
 class WebhookNotifier:
-    """Enterprise webhook notification service with intelligent delivery and comprehensive analytics."""
-    def __init__(self):
+    """Enterprise webhook notification service with intelligent delivery and comprehensive analytics."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         

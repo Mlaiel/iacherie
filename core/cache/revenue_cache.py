@@ -3,8 +3,7 @@ Specialized caching for monetization, revenue tracking, and financial analytics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Any, Dict, List, Optional, Union, Tuple

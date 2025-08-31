@@ -7,8 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
 from typing import Optional, Dict, Any, List

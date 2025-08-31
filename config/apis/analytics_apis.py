@@ -5,8 +5,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This module configures analytics and business intelligence APIs including
 Google Analytics, Mixpanel, Segment, and other tracking services for
 comprehensive user behavior and business metrics analysis.
-"""
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum

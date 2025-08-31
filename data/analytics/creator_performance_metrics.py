@@ -11,8 +11,7 @@ Recommandations Croissance → Matching Collaboration → Monétisation Optimis�
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""
-from typing import Dict, List, Any, Optional, Union
+"""from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum

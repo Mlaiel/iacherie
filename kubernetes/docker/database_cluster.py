@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional database cluster Docker configuration for high-availability
 PostgreSQL with read replicas and performance optimization.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -167,8 +166,7 @@ RUN chmod +x /usr/local/bin/custom-entrypoint.sh
 
 ENTRYPOINT ["custom-entrypoint.sh"]
 CMD ["postgres"]
-"""
-    def generate_replica_dockerfile(self) -> str:
+"""    def generate_replica_dockerfile(self) -> str:
         """Generate Dockerfile for PostgreSQL replica"""        return f"""# IA-Influencer PostgreSQL Replica - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Read-only replica with streaming replication
@@ -226,8 +224,7 @@ RUN chmod +x /usr/local/bin/replica-entrypoint.sh
 
 ENTRYPOINT ["replica-entrypoint.sh"]
 CMD ["postgres"]
-"""
-    def generate_docker_compose_services(self) -> Dict[str, Any]:
+"""    def generate_docker_compose_services(self) -> Dict[str, Any]:
         """Generate docker-compose services for database cluster"""        services = {}
         
         # PostgreSQL Master
@@ -480,8 +477,7 @@ track_activities = on
 track_counts = on
 track_io_timing = on
 track_functions = all
-"""
-    def generate_init_script(self) -> str:
+"""    def generate_init_script(self) -> str:
         """Generate database initialization script"""        return f"""#!/bin/bash
 # IA-Influencer Database Initialization Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -545,8 +541,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 EOSQL
 
 echo "Database initialization completed successfully."
-"""
-    def save_config_files(self, output_dir: str) -> List[str]:
+"""    def save_config_files(self, output_dir: str) -> List[str]:
         """Save all configuration files to output directory"""        import os
         from pathlib import Path
         

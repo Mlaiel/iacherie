@@ -16,8 +16,7 @@ Architecture Enterprise 3-Niveaux:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""
-from typing import Dict, Any, Optional, List, Union
+"""from typing import Dict, Any, Optional, List, Union
 import logging
 import asyncio
 from datetime import datetime

@@ -8,8 +8,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-from datetime import datetime
+"""from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set, Union
 from uuid import UUID

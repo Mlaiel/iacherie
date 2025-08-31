@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import cv2
@@ -187,8 +186,7 @@ class ConsistencyChecker:
     - Logo usage compliance monitoring
     - Tone of voice consistency analysis
     - Layout and design guideline enforcement
-    """
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.guidelines: Optional[BrandGuidelines] = None
         
@@ -844,8 +842,7 @@ class StyleGuardian:
     """    Advanced Style Guardian System
     
     Real-time brand style monitoring and enforcement across all digital touchpoints.
-    """
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.consistency_checker = ConsistencyChecker(brand_id)
         self.auto_fix_enabled = False

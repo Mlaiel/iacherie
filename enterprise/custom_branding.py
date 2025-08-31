@@ -12,8 +12,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid
@@ -819,7 +818,6 @@ document.addEventListener('DOMContentLoaded', () => {
     box-shadow: var(--shadow-lg);
 }
 """
-
 class BrandAssetManager:
     """Comprehensive brand asset management system"""    
     def __init__(self):

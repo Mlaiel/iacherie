@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Monitoring environment configuration for observability and alerting.
 Handles metrics collection, logging, tracing, and real-time monitoring.
 =====================================================
-"""
-import os
+"""import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
 from dataclasses import dataclass, field

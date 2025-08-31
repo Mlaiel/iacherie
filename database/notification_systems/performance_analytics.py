@@ -19,8 +19,7 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, date
 from enum import Enum, IntEnum
@@ -167,8 +166,7 @@ class PerformanceAnalyticsManager:
     - Notifications performance et alertes
     - Prédictions et recommandations
     - Analytics concurrentiel et benchmarking
-    """
-    def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
+    """    def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
         self.db_pool = db_pool
         self.redis = redis_client
         self.ml_models = self._init_ml_models()

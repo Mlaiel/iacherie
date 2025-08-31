@@ -5,8 +5,7 @@ across different platforms and industries with real-time trend detection and pre
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -86,8 +85,7 @@ class TrendAnalysis:
 class TrendingAnalyzer:
     """    AI-powered trending content analyzer that identifies, analyzes, and predicts
     trending topics and content patterns across multiple platforms and industries.
-    """
-    def __init__(self, region: str = "US", industry: str = "general"):
+    """    def __init__(self, region: str = "US", industry: str = "general"):
         """        Initialize the trending analyzer.
         
         Args:

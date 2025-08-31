@@ -14,8 +14,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Content upload → Format detection → Technical validation → 
 Business rule validation → Quality scoring → Enhancement recommendations
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass

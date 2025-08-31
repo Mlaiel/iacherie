@@ -17,8 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Analyseur et générateur de progressions harmoniques IA ultra-avancé
 TECHNOLOGIES: Deep Learning, Music Theory, Harmonic Analysis, Chord Progression Generation
 LOGIQUE MÉTIER: Musical context → Harmonic analysis → Progression generation → Voice leading → Quality validation
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import torch

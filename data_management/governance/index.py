@@ -8,8 +8,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 Email: mlaiel@live.de
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited ⚠️
-"""
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 

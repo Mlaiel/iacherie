@@ -25,8 +25,7 @@ This metrics aggregation system contains proprietary data processing algorithms,
 aggregation methodologies, and statistical analysis frameworks developed by Fahed Mlaiel.
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All data consolidation processes and metrics calculations are protected intellectual property.
-"""
-import asyncio
+"""import asyncio
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta

@@ -6,8 +6,7 @@ for comprehensive system and application monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
-"""
-import time
+"""import time
 import psutil
 import asyncio
 import threading

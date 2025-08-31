@@ -1,8 +1,7 @@
 """Rights Tracking Module - Service Initialization and Entry Point
 Point d'entrée principal du module de suivi des droits
 Système d'initialisation et coordination des services
-"""
-import asyncio
+"""import asyncio
 import logging
 import sys
 from typing import Dict, List, Optional, Any

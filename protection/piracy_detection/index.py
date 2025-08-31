@@ -11,8 +11,7 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 
 This index provides quick access to all piracy detection system components.
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 
 # Import all system components

@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-from typing import Dict, List, Optional, Any, Type
+"""from typing import Dict, List, Optional, Any, Type
 import logging
 
 from .audit_trail_agent import AuditTrailAgent

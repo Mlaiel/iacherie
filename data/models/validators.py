@@ -12,8 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import re
+"""import re
 import uuid
 from typing import Dict, List, Any, Optional, Union, Callable
 from datetime import datetime, date, timedelta

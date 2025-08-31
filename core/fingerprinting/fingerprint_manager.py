@@ -4,8 +4,7 @@ Central management system for all fingerprinting operations
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import time

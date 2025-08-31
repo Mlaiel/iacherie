@@ -11,8 +11,7 @@ Email: mlaiel@live.de
 
 This module provides comprehensive digital rights management including
 licensing, royalty tracking, and automated rights enforcement.
-"""
-import logging
+"""import logging
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union, Tuple, Set, TYPE_CHECKING

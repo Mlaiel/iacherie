@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional backend services Docker configuration for high-performance
 multi-format content processing and real-time protection systems.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -220,8 +219,7 @@ CMD ["gunicorn", \\
      "--access-logfile", "-", \\
      "--error-logfile", "-", \\
      "main:app"]
-"""
-    def generate_docker_compose_service(self) -> Dict[str, Any]:
+"""    def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate docker-compose service configuration"""        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,

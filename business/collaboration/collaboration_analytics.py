@@ -3,8 +3,7 @@ Professional analytics and insights for collaboration performance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 import asyncio
 import logging

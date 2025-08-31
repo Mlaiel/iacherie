@@ -5,8 +5,7 @@ Provides standardized architecture, training, and deployment capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import torch
+"""import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader

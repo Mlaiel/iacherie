@@ -3,8 +3,7 @@
 =============================================
 
 Quick verification of crawler implementations and API connectivity.
-"""
-import asyncio
+"""import asyncio
 import json
 import sys
 import importlib.util

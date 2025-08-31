@@ -3,8 +3,7 @@ AI-Powered User Behavior Analysis and Profiling System
 
 This module provides comprehensive user profiling capabilities including
 behavioral analysis, interest prediction, demographic inference, and personalization insights.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging

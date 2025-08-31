@@ -16,8 +16,7 @@ Features:
 - Privacy impact assessments
 - Consent management
 - Data subject rights automation
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging

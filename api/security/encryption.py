@@ -3,8 +3,7 @@ Military-grade encryption with key management and secure communications
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Cryptography Specialist + Backend Senior
-"""
-import os
+"""import os
 import secrets
 import hashlib
 import hmac

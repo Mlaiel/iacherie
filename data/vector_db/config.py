@@ -12,8 +12,7 @@ modification, or use of this code without explicit written permission from
 Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 For licensing and authorization requests, contact: mlaiel@live.de
-"""
-import os
+"""import os
 import json
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, asdict

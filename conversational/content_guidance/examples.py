@@ -8,8 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""
-import asyncio
+"""import asyncio
 import json
 from datetime import datetime
 from typing import Dict, List, Any

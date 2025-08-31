@@ -12,8 +12,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import re
 from datetime import datetime, timedelta

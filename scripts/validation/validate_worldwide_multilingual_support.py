@@ -7,8 +7,7 @@ tous les langues et dialecte locale du monde entier"
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 import sys
 import re
 from typing import List, Dict, Set

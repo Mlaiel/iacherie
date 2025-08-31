@@ -7,8 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Central Access → Component Discovery → Health Validation → Quick Utilities
-"""
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional, Type
 from datetime import datetime
 

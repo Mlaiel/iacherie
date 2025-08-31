@@ -3,8 +3,7 @@ Central access point for all monetization components and services
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Dict, Any, Optional
+"""from typing import Dict, Any, Optional
 import logging
 from sqlalchemy.ext.asyncio import AsyncSession
 

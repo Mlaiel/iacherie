@@ -6,8 +6,7 @@ and optimization on Bandcamp platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field

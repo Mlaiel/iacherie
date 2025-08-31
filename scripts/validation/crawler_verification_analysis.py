@@ -8,8 +8,7 @@ This tool analyzes all crawler implementations to distinguish between:
 - API connectivity status
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import os
+"""import os
 import ast
 import re
 import asyncio

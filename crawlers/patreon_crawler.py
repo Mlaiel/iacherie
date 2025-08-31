@@ -21,8 +21,7 @@ Features:
 - Subscription tier analysis and monetization tracking
 - Comprehensive creator analytics and patron behavior analysis
 - Multi-tier content access monitoring and protection
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging

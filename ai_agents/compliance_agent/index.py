@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 
 # Core Compliance Management Components
 from .compliance_agent import (

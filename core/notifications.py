@@ -14,8 +14,7 @@ distribution, or use without explicit written permission from Fahed Mlaiel is st
 prohibited and will result in legal action.
 
 All rights reserved © 2025 Fahed Mlaiel
-"""
-import asyncio
+"""import asyncio
 import logging
 import smtplib
 import json

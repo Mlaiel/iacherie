@@ -6,8 +6,7 @@ dynamic configuration updates across deployment environments.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -80,8 +79,7 @@ class ConfigurationManager(BaseComponent):
     Manages application configurations, secrets, and environment-specific
     settings across multiple deployment environments with encryption,
     templating, and dynamic updates.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

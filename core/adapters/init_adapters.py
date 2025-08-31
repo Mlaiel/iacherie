@@ -11,8 +11,7 @@ of this code is strictly prohibited without explicit written permission.
 
 Usage:
     python init_adapters.py [--environment ENV] [--config-dir DIR] [--auto-register]
-"""
-import asyncio
+"""import asyncio
 import logging
 import argparse
 import sys

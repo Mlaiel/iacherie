@@ -6,8 +6,7 @@ for backup data with key management and security features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import base64
 import hashlib
@@ -76,8 +75,7 @@ class BackupEncryption:
     
     Provides symmetric and asymmetric encryption, key derivation,
     integrity verification, and secure key management.
-    """
-    def __init__(
+    """    def __init__(
         self,
         master_key: Optional[str] = None,
         key_manager: Optional[KeyManager] = None,

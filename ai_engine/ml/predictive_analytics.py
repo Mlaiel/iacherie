@@ -3,8 +3,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive predictive analytics capabilities for the IA Influencer Agent platform.
-"""
-import logging
+"""import logging
 import numpy as np
 import pandas as pd
 import time

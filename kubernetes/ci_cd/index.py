@@ -14,8 +14,7 @@ prohibited and will result in legal action.
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + 
 Security Expert + Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
-"""
-import asyncio
+"""import asyncio
 import logging
 import sys
 from typing import Dict, List, Optional, Any

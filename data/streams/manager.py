@@ -6,8 +6,7 @@ protection monitoring, and revenue tracking across multiple platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, AsyncGenerator
 from datetime import datetime, timezone

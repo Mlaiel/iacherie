@@ -5,8 +5,7 @@ Intelligent revenue anomaly detection and alerting for the Ainflue platform.
 Detects unusual revenue patterns, drops, spikes, and fraud indicators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass

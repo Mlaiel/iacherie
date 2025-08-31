@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Lightweight security audit tests that work without heavy dependencies.
 These tests focus on real security validation without complex mocking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -37,8 +35,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestSecurityAuditFundamentals:
-    """Test fundamental security audit capabilities"""
-    def test_password_security_requirements(self):
+    """Test fundamental security audit capabilities"""    def test_password_security_requirements(self):
         """Test password security validation"""        # Test weak passwords
         weak_passwords = ["123456", "password", "admin", "qwerty", "abc123"]
         strong_passwords = ["MyStr0ng!P@ssw0rd2024", "C0mpl3x#P@ssw0rd!", "Secur3&C0mpl1cat3d!"]
@@ -126,8 +123,7 @@ class TestSecurityAuditFundamentals:
 
 
 class TestSecurityConfigAudit:
-    """Test security configuration audit"""
-    def test_debug_mode_disabled(self):
+    """Test security configuration audit"""    def test_debug_mode_disabled(self):
         """Test that debug mode is disabled in production"""        # Check common debug environment variables
         debug_vars = ["DEBUG", "FLASK_DEBUG", "DJANGO_DEBUG", "NODE_ENV"]
         
@@ -211,8 +207,7 @@ class TestSecurityConfigAudit:
 
 
 class TestSecurityVulnerabilityBasics:
-    """Test basic vulnerability detection"""
-    def test_sql_injection_patterns(self):
+    """Test basic vulnerability detection"""    def test_sql_injection_patterns(self):
         """Test SQL injection pattern detection"""        # Common SQL injection patterns
         injection_patterns = [
             "'; DROP TABLE users; --",
@@ -276,8 +271,7 @@ class TestSecurityVulnerabilityBasics:
 
 
 class TestComplianceBasics:
-    """Test basic compliance requirements"""
-    def test_data_retention_policies(self):
+    """Test basic compliance requirements"""    def test_data_retention_policies(self):
         """Test data retention policy compliance"""        # Simulate data retention check
         data_types = {
             "user_logs": {"retention_days": 365, "required_max": 1095},  # 3 years max

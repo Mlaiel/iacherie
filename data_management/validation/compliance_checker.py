@@ -15,8 +15,7 @@ Vérification automatisée des conformités multi-juridictionnelles
 - Copyright et propriété intellectuelle
 - Standards plateformes (YouTube, TikTok, Instagram)
 - Conformité business multi-créateurs
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
 from pathlib import Path

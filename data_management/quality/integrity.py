@@ -14,8 +14,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Content upload → Integrity verification → Corruption detection → 
 Metadata validation → Consistency checking → Data authenticity verification
-"""
-import logging
+"""import logging
 import hashlib
 import hmac
 import json

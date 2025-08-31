@@ -15,8 +15,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This data validation engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib

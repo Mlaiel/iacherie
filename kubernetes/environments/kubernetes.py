@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Kubernetes environment configuration for container orchestration.
 Handles scaling, service discovery, secrets management, and deployment strategies.
 ====================================================
-"""
-import os
+"""import os
 import yaml
 import logging
 from typing import Dict, Any, List, Optional, Set

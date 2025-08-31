@@ -19,8 +19,7 @@ SPÉCIALITÉS DE L'ÉQUIPE:
 Description:
     Système de stockage d'événements avec support multi-backend, archivage,
     compression, chiffrement et optimisations de performance.
-"""
-from typing import Any, Dict, List, Optional, Union, AsyncIterator, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Union, AsyncIterator, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

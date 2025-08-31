@@ -3,8 +3,7 @@ Advanced caching strategies, policies, and optimization algorithms
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import time

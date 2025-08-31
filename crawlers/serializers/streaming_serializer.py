@@ -28,8 +28,7 @@ Expertise combinée:
 - Audio/Vidéo: Streaming optimisé pour contenu multimédia haute qualité
 - DevOps: Monitoring et scaling automatique des flux temps réel
 - IA Prompt Engineer: Streaming intelligent pour interactions IA en temps réel
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, AsyncGenerator, Callable
 from datetime import datetime, timedelta

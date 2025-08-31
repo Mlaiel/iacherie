@@ -6,8 +6,7 @@ and rights management.
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field

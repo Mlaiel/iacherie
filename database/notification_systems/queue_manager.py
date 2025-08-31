@@ -12,8 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
-"""
-from typing import Dict, List, Optional, Any, Union, Callable
+"""from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from enum import Enum

@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. 
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""
-from typing import Dict, Type, List, Optional, Any
+"""from typing import Dict, Type, List, Optional, Any
 import logging
 
 # Import all engines

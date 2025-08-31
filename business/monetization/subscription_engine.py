@@ -13,8 +13,7 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: User Registration → Subscription Selection → Content Access → Retention Optimization
 ==================================================================
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field

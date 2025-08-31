@@ -46,8 +46,7 @@ This code is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for licensing inquiries.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging

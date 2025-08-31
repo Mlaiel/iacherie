@@ -33,8 +33,7 @@ action including but not limited to:
 
 Contact Fahed Mlaiel at mlaiel@live.de for ANY usage authorization.
 All activities are logged and monitored for legal compliance.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -184,8 +183,7 @@ __legal_notice__ = """⚖️ LEGAL WARNING: This software is the exclusive intel
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-class ContentProtectionService:
+"""class ContentProtectionService:
     """    Main service class for the Content Protection System.
     
     Provides a unified interface to all content protection capabilities

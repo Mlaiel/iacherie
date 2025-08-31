@@ -3,8 +3,7 @@ Core configuration management for the AI-powered content protection platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 from typing import Optional, List
 from pydantic_settings import BaseSettings
 from pydantic import Field, PostgresDsn, RedisDsn

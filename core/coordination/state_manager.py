@@ -13,8 +13,7 @@ Contact: mlaiel@live.de for authorization.
 
 🎯 BUSINESS LOGIC:
 State Definition → Transition Rules → State Changes → Validation → Persistence → Notification
-"""
-import asyncio
+"""import asyncio
 import uuid
 import threading
 from datetime import datetime, timezone, timedelta

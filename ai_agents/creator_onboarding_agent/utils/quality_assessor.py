@@ -4,8 +4,7 @@ Enterprise-grade content quality assessment with AI-powered scoring,
 multi-dimensional quality metrics, and optimization recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple

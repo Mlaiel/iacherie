@@ -6,8 +6,7 @@ licensing automation, and financial analytics for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import uuid
+"""import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any, Tuple
 from decimal import Decimal

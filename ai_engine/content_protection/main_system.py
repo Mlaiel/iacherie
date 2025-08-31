@@ -13,8 +13,7 @@ modification, or distribution without explicit written permission is STRICTLY
 PROHIBITED and will be prosecuted to the full extent of the law.
 
 For licensing inquiries: mlaiel@live.de
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Callable, Tuple
 from datetime import datetime, timezone, timedelta

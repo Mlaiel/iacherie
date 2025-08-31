@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -451,7 +450,6 @@ ENABLE_METRICS=true
 METRICS_PORT=9090
 LOG_LEVEL=INFO
 """
-
 # Global configuration instance
 config_manager = ConfigManager()
 config = config_manager.config

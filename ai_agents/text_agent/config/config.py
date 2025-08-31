@@ -5,8 +5,7 @@ Can be overridden through environment variables or config files.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 from typing import List, Dict, Any
 
 # Text Processing Configuration

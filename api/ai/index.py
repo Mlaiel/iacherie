@@ -10,8 +10,7 @@ permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will re
 in legal action.
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-# Quick import access for all AI modules
+"""# Quick import access for all AI modules
 try:
     from content_analysis import (
         ContentAnalysisEngine,

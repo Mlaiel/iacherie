@@ -14,8 +14,7 @@ distribution, or use without explicit written permission from Fahed Mlaiel is st
 prohibited and will result in legal action.
 
 All rights reserved © 2025 Fahed Mlaiel
-"""
-import os
+"""import os
 import base64
 import hashlib
 import hmac

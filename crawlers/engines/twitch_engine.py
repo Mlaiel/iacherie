@@ -20,8 +20,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • Security Expert : Cybersécurité & protection contenu
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
 from dataclasses import dataclass, asdict
@@ -181,8 +180,7 @@ class TwitchCrawlerEngine(BaseCrawlerEngine):
     - VOD content analysis
     - Subscriber and follower tracking
     - Revenue and monetization data
-    """
-    def __init__(self, 
+    """    def __init__(self, 
                  client_id: Optional[str] = None,
                  client_secret: Optional[str] = None,
                  access_token: Optional[str] = None,

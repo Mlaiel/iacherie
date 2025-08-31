@@ -15,8 +15,7 @@ Professional audio analysis engine for musical content creators providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-import numpy as np
+"""import numpy as np
 import librosa
 import essentia.standard as es
 from typing import Dict, List, Any, Optional, Tuple, Union

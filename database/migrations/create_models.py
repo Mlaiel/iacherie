@@ -25,8 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-import logging
+"""import logging
 from datetime import datetime, timezone
 from sqlalchemy import create_engine, MetaData, Table, Column, String, DateTime, Boolean, Integer, Text, Numeric, JSON, ForeignKey, Index
 from sqlalchemy.dialects.postgresql import UUID, ARRAY, ENUM

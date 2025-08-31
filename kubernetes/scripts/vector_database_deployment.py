@@ -25,8 +25,7 @@ strictly prohibited and may result in severe legal action under German
 and international copyright laws.
 
 Specialization: Vector Database Architecture & High-Performance Similarity Search
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import os
@@ -129,8 +128,7 @@ class VectorDatabaseDeploymentManager:
     - Performance monitoring and optimization
     - Security and access control
     - Cost optimization
-    """
-    def __init__(self, config_path: Optional[str] = None):
+    """    def __init__(self, config_path: Optional[str] = None):
         """Initialize the vector database deployment manager."""        self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()

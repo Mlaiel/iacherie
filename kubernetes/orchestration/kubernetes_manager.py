@@ -10,8 +10,7 @@ Features:
 - Service mesh integration
 - Rolling deployments with zero downtime
 - Health monitoring and self-healing
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -88,8 +87,7 @@ class KubernetesManager(BaseDeploymentManager):
     
     Manages Kubernetes clusters, deployments, and services for the
     IA Influencer Agent platform with enterprise-grade features.
-    """
-    def __init__(
+    """    def __init__(
         self,
         cluster_config: Optional[str] = None,
         namespace: str = "ia-influencer-agent",

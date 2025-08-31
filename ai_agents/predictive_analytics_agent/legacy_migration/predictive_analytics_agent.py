@@ -22,8 +22,7 @@ Enterprise Features:
 - Revenue forecasting with dynamic market factors
 - Viral content prediction with algorithm favorability scoring
 - Comprehensive competitive intelligence and benchmarking
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -251,8 +250,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
     - PostgreSQL integration for persistent prediction storage
     - Comprehensive audit logging and compliance tracking
     - Enterprise security with end-to-end encryption
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         """Initialize the Predictive Analytics Agent with enterprise configurations"""        
         # Define agent capabilities
         agent_config = {

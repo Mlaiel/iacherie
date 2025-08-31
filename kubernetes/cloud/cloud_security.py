@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive security management for the IA Influencer
 Agent platform across multiple cloud providers, including threat detection,
 compliance monitoring, identity management, and security automation.
-"""
-import logging
+"""import logging
 import asyncio
 import hashlib
 import hmac

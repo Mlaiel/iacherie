@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER FINGERPRINTING:
 Content Upload → Type Detection → AI Analysis → Feature Extraction → 
 Vector Embedding → Hash Generation → FAISS Storage → Similarity Indexing
-"""
-import numpy as np
+"""import numpy as np
 import hashlib
 import cv2
 import librosa

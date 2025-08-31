@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import logging
 import smtplib
 import time
@@ -68,8 +67,7 @@ class NotificationPreferences(BaseModel):
 class EmailNotificationManager:
     """    Enterprise email notification management system
     Handles templated emails, delivery tracking, and bounce management
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.smtp_config = {
             "server": settings.SMTP_SERVER,
             "port": settings.SMTP_PORT,
@@ -312,8 +310,7 @@ class EmailNotificationManager:
 class SMSNotificationManager:
     """    Enterprise SMS notification management system
     Handles SMS delivery via Twilio and other providers
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.twilio_client = None
         if settings.TWILIO_ACCOUNT_SID and settings.TWILIO_AUTH_TOKEN:
             self.twilio_client = TwilioClient(
@@ -454,8 +451,7 @@ class SMSNotificationManager:
 class MultiChannelNotificationManager:
     """    Unified notification manager for email, SMS, and push notifications
     Handles user preferences and delivery orchestration
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.email_manager = EmailNotificationManager()
         self.sms_manager = SMSNotificationManager()
         self.user_preferences: Dict[str, NotificationPreferences] = {}

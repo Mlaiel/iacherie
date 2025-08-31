@@ -6,8 +6,7 @@ Comprehensive crawler verification combining static analysis with implementation
 Addresses the requirement: "Identifier crawlers avec implémentation réelle vs stub - vérifier fonctionnalité"
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import os
+"""import os
 import ast
 import re
 import json

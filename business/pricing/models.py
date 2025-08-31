@@ -35,8 +35,7 @@ Business Logic Flow:
 Creator Registration → Content Upload → Pricing Analysis → Dynamic Optimization → 
 Revenue Tracking → Performance Analytics → Tier Management
 ================================================================
-"""
-from sqlalchemy import Column, Integer, String, DateTime, Decimal, Boolean, JSON, Text, ForeignKey, Index
+"""from sqlalchemy import Column, Integer, String, DateTime, Decimal, Boolean, JSON, Text, ForeignKey, Index
 from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship

@@ -2,8 +2,7 @@
 Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Main entry point for the optimization module with unified API interface.
-"""
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 import asyncio
 import logging
 

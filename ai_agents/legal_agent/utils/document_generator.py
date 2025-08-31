@@ -17,8 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid
@@ -1457,8 +1456,7 @@ class DocumentGenerator:
         - Include all necessary legal clauses and disclaimers
         
         Generate complete, ready-to-use legal document content.
-        """
-    def _calculate_expiration_date(self, doc_type: DocumentType) -> Optional[datetime]:
+        """    def _calculate_expiration_date(self, doc_type: DocumentType) -> Optional[datetime]:
         """Calculate document expiration date"""        expiration_periods = {
             DocumentType.TERMS_OF_SERVICE: 365,  # 1 year
             DocumentType.PRIVACY_POLICY: 365,    # 1 year

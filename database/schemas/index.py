@@ -12,8 +12,7 @@ ALL RIGHTS RESERVED - This code, concept, and implementation are the exclusive
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, 
 modification, or distribution is strictly prohibited and will result in immediate 
 legal action under German and international copyright law.
-"""
-from typing import Dict, List, Type, Any, Optional
+"""from typing import Dict, List, Type, Any, Optional
 from datetime import datetime
 import inspect
 

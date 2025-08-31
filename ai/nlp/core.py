@@ -11,8 +11,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 This code is proprietary and confidential. Unauthorized use, modification, 
 distribution, or copying is strictly prohibited without explicit written 
 permission from the author Fahed Mlaiel (mlaiel@live.de).
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union

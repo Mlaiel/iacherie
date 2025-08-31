@@ -14,8 +14,7 @@ Advanced content verification system using AI and blockchain
 technology. Provides comprehensive authenticity verification,
 integrity checks, and ownership validation for digital content
 across multiple formats and platforms.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Protocol, Set, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Protocol, Set, Callable
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, asdict
 from enum import Enum, IntEnum

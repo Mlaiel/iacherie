@@ -4,8 +4,7 @@ Enterprise-grade security configuration for authentication, encryption, and prot
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import os
+"""import os
 import secrets
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field

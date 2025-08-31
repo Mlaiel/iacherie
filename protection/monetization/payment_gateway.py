@@ -3,8 +3,7 @@ Handles all payment processing, validation, and gateway integrations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
 from datetime import datetime, timedelta

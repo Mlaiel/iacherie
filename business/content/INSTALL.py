@@ -16,8 +16,7 @@ Expert Team Specialties:
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
-"""
-import os
+"""import os
 import sys
 import subprocess
 import asyncio

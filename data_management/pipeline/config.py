@@ -9,8 +9,7 @@ explicite de l'auteur est strictement interdite et constitue une violation du
 droit d'auteur. Contact: mlaiel@live.de
 
 Configuration centralisée pour tous les composants de la pipeline créateur
-"""
-import os
+"""import os
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
 from enum import Enum

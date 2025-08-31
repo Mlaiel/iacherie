@@ -14,8 +14,7 @@ Description:
     Point d'accès central pour le système de gestion d'événements de la plateforme
     IA-Influencer-Agent. Facilite l'initialisation et la configuration de tous
     les composants d'événements.
-"""
-from typing import Any, Dict, List, Optional, Union
+"""from typing import Any, Dict, List, Optional, Union
 import asyncio
 import logging
 from datetime import timedelta

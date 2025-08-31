@@ -5,8 +5,7 @@ including performance tracking, audience analysis, and revenue analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta

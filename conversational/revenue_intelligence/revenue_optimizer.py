@@ -34,8 +34,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This revolutionary revenue optimization platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 import pandas as pd
 import json

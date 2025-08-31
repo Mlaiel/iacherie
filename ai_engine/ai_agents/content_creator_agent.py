@@ -14,8 +14,7 @@ Agent spécialisé dans la création automatisée de contenu multimédia
 - Optimisation pour plateformes sociales
 - Personnalisation basée sur l'audience
 - Intégration avec outils de création
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone

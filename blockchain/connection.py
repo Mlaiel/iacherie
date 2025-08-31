@@ -6,8 +6,7 @@ for the IA Influencer Agent platform's blockchain functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited.
-"""
-from typing import Dict, Optional, Any, Union
+"""from typing import Dict, Optional, Any, Union
 import asyncio
 from web3 import Web3
 from web3.middleware import geth_poa_middleware

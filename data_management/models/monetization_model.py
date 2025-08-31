@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC MONETIZATION PIPELINE:
 Content Creation → Revenue Eligibility → Multi-Platform Distribution → 
 Real-Time Analytics → AI Revenue Optimization → Automated Payouts → Tax Reporting
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field

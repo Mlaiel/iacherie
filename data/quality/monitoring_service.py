@@ -6,8 +6,7 @@ Provides real-time alerts, trend analysis, and automated quality monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-from typing import Dict, Any, List, Optional, Callable, Set
+"""from typing import Dict, Any, List, Optional, Callable, Set
 import asyncio
 import logging
 from datetime import datetime, timedelta

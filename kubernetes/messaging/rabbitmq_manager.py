@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import ssl
@@ -81,8 +80,7 @@ class QueueConfig(BaseModel):
 class RabbitMQManager:
     """    Enterprise RabbitMQ cluster deployment and management system
     Handles high-performance messaging for IA content processing pipeline
-    """
-    def __init__(self, config: Optional[RabbitMQClusterConfig] = None):
+    """    def __init__(self, config: Optional[RabbitMQClusterConfig] = None):
         self.config = config or self._get_default_config()
         self.docker_client = docker.from_env()
         self.health_checker = HealthChecker()

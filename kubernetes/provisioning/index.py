@@ -28,8 +28,7 @@ Contact: mlaiel@live.de pour toute demande d'autorisation.
 - Audio Engineer: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-import asyncio
+"""import asyncio
 import logging
 import sys
 from datetime import datetime
@@ -147,8 +146,7 @@ class ProvisioningOrchestrator:
     - Applications (microservices, APIs, frontends)
     - Sécurité (certificats, firewalls, accès)
     - Monitoring (métriques, logs, alertes)
-    """
-    def __init__(self, config_path: Optional[str] = None):
+    """    def __init__(self, config_path: Optional[str] = None):
         """        Initialise l'orchestrateur de provisioning.
         
         Args:

@@ -4,8 +4,7 @@ Advanced database configuration for PostgreSQL, Redis, MongoDB, Elasticsearch
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import os
+"""import os
 from typing import Dict, Optional, List, Any
 from dataclasses import dataclass, field
 from sqlalchemy import create_engine

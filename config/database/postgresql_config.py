@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -114,8 +113,7 @@ class PostgreSQLConfig:
     
     Handles multi-tenant database configuration, connection pooling, security,
     and performance optimization for content protection and monetization workflows.
-    """
-    def __init__(self, environment: PostgreSQLEnvironment = PostgreSQLEnvironment.DEVELOPMENT):
+    """    def __init__(self, environment: PostgreSQLEnvironment = PostgreSQLEnvironment.DEVELOPMENT):
         self.environment = environment
         self.credentials = self._load_credentials()
         self.pool_config = self._get_pool_config()

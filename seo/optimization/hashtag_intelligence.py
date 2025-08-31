@@ -5,8 +5,7 @@ for social media content across different platforms with trend analysis and perf
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from dataclasses import dataclass
@@ -73,8 +72,7 @@ class HashtagStrategy:
 class HashtagIntelligence:
     """    AI-powered hashtag intelligence system that generates optimized hashtag strategies
     for social media content across multiple platforms.
-    """
-    def __init__(self, language: str = "en", region: str = "US"):
+    """    def __init__(self, language: str = "en", region: str = "US"):
         """        Initialize the hashtag intelligence system.
         
         Args:

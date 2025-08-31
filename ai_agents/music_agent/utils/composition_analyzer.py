@@ -14,8 +14,7 @@ written permission is strictly forbidden and will result in legal prosecution
 under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime
@@ -139,8 +138,7 @@ class CompositionAnalyzer:
     
     Provides comprehensive analysis of musical compositions including harmony,
     rhythm, melody, and structure with AI-powered insights and recommendations.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize composition analyzer with ML models"""        self.music_analyzer = MusicAnalyzer()
         self.style_analyzer = MusicStyleAnalyzer()
         self.beat_detector = BeatDetector()

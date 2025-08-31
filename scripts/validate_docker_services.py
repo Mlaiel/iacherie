@@ -7,8 +7,7 @@ Addresses the requirement: "Docker Compose - tester démarrage services"
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import subprocess
+"""import subprocess
 import time
 import sys
 import json

@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides unified external API integration with automatic client creation,
 request handling, error management, and response processing for all configured platforms.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging

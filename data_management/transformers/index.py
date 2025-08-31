@@ -20,8 +20,7 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel (mlaiel@live.de)
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Union, Any
 from pathlib import Path

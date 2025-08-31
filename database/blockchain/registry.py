@@ -5,8 +5,7 @@ technology for immutable proof of ownership and creation timestamps.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-from typing import Dict, List, Any, Optional, Union
+"""from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
 import json

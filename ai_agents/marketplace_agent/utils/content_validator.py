@@ -5,8 +5,7 @@ and appropriateness using advanced AI analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime
@@ -92,8 +91,7 @@ class ContentValidator:
     - AI-powered content categorization
     - Technical quality assessment
     - Market readiness evaluation
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize content validator.
         
         Args:

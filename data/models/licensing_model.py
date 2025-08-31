@@ -12,8 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from datetime import datetime, date
+"""from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
 from enum import Enum

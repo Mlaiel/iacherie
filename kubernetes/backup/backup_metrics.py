@@ -10,8 +10,7 @@ All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited
 WARNING: This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -79,8 +78,7 @@ class BackupMetrics:
     
     Provides real-time metrics collection, Prometheus integration,
     performance analytics, and operational insights.
-    """
-    def __init__(self, enable_prometheus: bool = True):
+    """    def __init__(self, enable_prometheus: bool = True):
         """        Initialize backup metrics system.
         
         Args:

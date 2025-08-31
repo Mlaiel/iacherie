@@ -6,8 +6,7 @@ comprehensive deployment event communication.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -129,8 +128,7 @@ class NotificationHandler(BaseComponent):
     Provides comprehensive notification capabilities including multi-channel
     delivery, intelligent routing, rate limiting, template management,
     and delivery tracking for deployment automation events.
-    """
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

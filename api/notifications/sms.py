@@ -1,5 +1,4 @@
-"""Enterprise SMS notification service with multi-provider support and delivery tracking."""
-import os
+"""Enterprise SMS notification service with multi-provider support and delivery tracking."""import os
 import aiohttp
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -63,8 +62,7 @@ class SMSDeliveryResult:
 
 
 class SMSNotifier:
-    """Enterprise SMS notification service with intelligent routing and analytics."""
-    def __init__(self):
+    """Enterprise SMS notification service with intelligent routing and analytics."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         

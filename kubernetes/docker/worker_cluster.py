@@ -13,8 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional Docker configuration for distributed worker cluster
 supporting high-performance async task processing, queue management,
 and auto-scaling for IA-Influencer multi-format content processing.
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -218,8 +217,7 @@ ENV PYTHONPATH=/app \\
 COPY scripts/workers/entrypoint.sh /app/scripts/
 ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 CMD ["celery", "worker", "-A", "workers.celery_app", "--loglevel=info"]
-"""
-    def generate_docker_compose_services(self) -> Dict[str, Any]:
+"""    def generate_docker_compose_services(self) -> Dict[str, Any]:
         """Generate Docker Compose services for worker cluster"""        services = {}
         
         # Generate worker services for each queue
@@ -526,8 +524,7 @@ alive-progress==3.1.5
 pytest==7.4.3
 pytest-asyncio==0.21.1
 pytest-celery==0.0.0a1
-"""
-    def generate_worker_config_files(self) -> Dict[str, str]:
+"""    def generate_worker_config_files(self) -> Dict[str, str]:
         """Generate worker configuration files"""        configs = {}
         
         # Celery configuration
@@ -681,8 +678,7 @@ worker_log_color = False
 broker_connection_retry_on_startup = True
 broker_connection_retry = True
 broker_connection_max_retries = 100
-"""
-        # Autoscaler configuration
+"""        # Autoscaler configuration
         configs["autoscaler_config.py"] = """# Worker Autoscaler Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -764,8 +760,7 @@ AUTOSCALER_CONFIG: Dict[str, Any] = {
         'log_level': 'INFO'
     }
 }
-"""
-        return configs
+"""        return configs
     
     def generate_scripts(self) -> Dict[str, str]:
         """Generate worker scripts"""        scripts = {}
@@ -822,8 +817,7 @@ else
     echo "👷 Starting Celery Worker..."
     exec "$@"
 fi
-"""
-        # Health check script
+"""        # Health check script
         scripts["health-check.sh"] = """#!/bin/bash
 # Worker Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -873,8 +867,7 @@ fi
 
 echo "✅ Worker health check passed"
 exit 0
-"""
-        # Model downloader script
+"""        # Model downloader script
         scripts["download-models.sh"] = """#!/bin/bash
 # ML Models Downloader Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -933,8 +926,7 @@ print('✅ Image models downloaded')
 chown -R worker:worker /app/models/
 
 echo "✅ All ML models downloaded successfully!"
-"""
-        return scripts
+"""        return scripts
     
     def save_config_files(self, output_dir: str) -> List[str]:
         """Save all worker cluster configuration files"""        output_path = Path(output_dir)

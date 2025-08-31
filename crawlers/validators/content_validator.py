@@ -14,8 +14,7 @@ Features:
 - Platform-specific compliance
 - Business rule enforcement
 - Security threat detection
-"""
-import re
+"""import re
 import hashlib
 import mimetypes
 from enum import Enum

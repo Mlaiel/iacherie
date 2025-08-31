@@ -234,8 +234,7 @@ if health['overall_status'] == 'unhealthy':
     # Déclencher protocoles d'urgence
     await emergency_protocols.activate()
 ```
-"""
-import asyncio
+"""import asyncio
 import sys
 from pathlib import Path
 from typing import Dict, Any, Optional

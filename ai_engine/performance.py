@@ -9,8 +9,7 @@ Contact: mlaiel@live.de
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
 This performance system contains proprietary optimization algorithms.
 Unauthorized use is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import psutil

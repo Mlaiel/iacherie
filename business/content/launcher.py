@@ -12,8 +12,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
-"""
-import os
+"""import os
 import sys
 import asyncio
 import argparse

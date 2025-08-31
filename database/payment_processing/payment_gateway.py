@@ -20,8 +20,7 @@ ENTERPRISE FEATURES:
 - Multi-currency and international support
 - Blockchain integration for crypto payments
 - Advanced security and fraud prevention
-"""
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional, List, Union
 from enum import Enum
 from dataclasses import dataclass

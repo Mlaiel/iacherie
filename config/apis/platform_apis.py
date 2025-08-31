@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures all external platform APIs including Spotify, YouTube, Instagram,
 TikTok, Twitter/X, and other social media platforms for content distribution and analytics.
-"""
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum

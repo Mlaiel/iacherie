@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import os
@@ -60,8 +59,7 @@ class MessagingInfrastructureConfig(BaseModel):
 class MessagingDeploymentOrchestrator:
     """    Enterprise messaging infrastructure deployment orchestrator
     Manages complete lifecycle of multi-protocol messaging systems
-    """
-    def __init__(self, config: Optional[MessagingInfrastructureConfig] = None):
+    """    def __init__(self, config: Optional[MessagingInfrastructureConfig] = None):
         self.config = config or self._get_default_config()
         self.health_checker = HealthChecker()
         
@@ -865,8 +863,7 @@ settings = get_settings()
 class MessagingDeploymentOrchestrator:
     """    Enterprise messaging deployment orchestrator
     Manages complete messaging infrastructure for IA content processing
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.kafka_manager: Optional[KafkaManager] = None
         self.rabbitmq_manager: Optional[RabbitMQManager] = None
         self.celery_manager: Optional[CeleryManager] = None

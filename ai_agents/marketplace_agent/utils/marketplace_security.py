@@ -5,8 +5,7 @@ threat analysis, user verification, and transaction security.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -107,8 +106,7 @@ class MarketplaceSecurity:
     - Transaction security monitoring and validation
     - Threat intelligence and risk assessment
     - Automated security response and incident management
-    """
-    def __init__(self, config: MarketplaceConfig):
+    """    def __init__(self, config: MarketplaceConfig):
         """        Initialize marketplace security system.
         
         Args:

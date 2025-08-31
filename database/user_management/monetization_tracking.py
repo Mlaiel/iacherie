@@ -12,8 +12,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 écrite explicite est strictement interdite et fera l'objet de 
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
-"""
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Index
+"""from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Index
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timedelta
@@ -325,8 +324,7 @@ Index('idx_analytics_creator_period', RevenueAnalytics.creator_id, RevenueAnalyt
 
 class MonetizationRepository:
     """    Repository pour la gestion de la monétisation et des revenus.
-    """
-    def __init__(self, db_session: Session):
+    """    def __init__(self, db_session: Session):
         self.db = db_session
 
     def record_transaction(self, transaction_data: Dict[str, Any]) -> RevenueTransaction:

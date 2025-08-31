@@ -14,8 +14,7 @@ Gestion unifiée des paiements via multiple providers
 - Failover automatique et load balancing
 - Chiffrement end-to-end et compliance PCI
 - Webhook handling et reconciliation automatique
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time

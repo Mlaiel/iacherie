@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, Optional, List, Any, Union, Tuple
+"""from typing import Dict, Optional, List, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import hashlib

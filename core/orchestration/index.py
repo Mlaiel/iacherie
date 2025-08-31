@@ -11,8 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from typing import Dict, List, Optional, Any, Union
@@ -84,8 +83,7 @@ class OrchestrationSystem:
     - Health monitoring and diagnostics
     - Performance optimization
     - Graceful shutdown handling
-    """
-    def __init__(self, config: Optional[OrchestrationSystemConfig] = None):
+    """    def __init__(self, config: Optional[OrchestrationSystemConfig] = None):
         """Initialize the orchestration system."""        self.config = config or OrchestrationSystemConfig()
         self.logger = self._setup_logging()
         

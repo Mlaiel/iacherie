@@ -15,8 +15,7 @@ AVERTISSEMENT LÉGAL:
 Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
-"""
-from typing import Dict, List, Optional, Any, Union, BinaryIO, Generator
+"""from typing import Dict, List, Optional, Any, Union, BinaryIO, Generator
 import logging
 import asyncio
 import aiofiles

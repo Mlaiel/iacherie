@@ -12,8 +12,7 @@ Ce logiciel est propriétaire et confidentiel.
 Toute utilisation, modification ou distribution non autorisée par une personne ou entité
 sans consentement écrit explicite de Fahed Mlaiel (mlaiel@live.de) est strictement interdite.
 Les contrevenants feront l'objet de poursuites judiciaires selon le droit international du copyright.
-"""
-import sys
+"""import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 

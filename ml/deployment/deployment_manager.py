@@ -14,8 +14,7 @@ Déploiement automatisé et monitoring des modèles ML
 - A/B testing et canary deployments
 - Auto-scaling et load balancing
 - Health checks et rollback automatique
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid

@@ -6,8 +6,7 @@ audio fingerprints, video analysis, image hashes, and text embeddings.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 from datetime import datetime, timedelta
@@ -40,8 +39,7 @@ class ContentBackupService:
     
     Manages backup and recovery of all content protection data including
     fingerprints, metadata, and original content references.
-    """
-    def __init__(self, storage_config: Dict[str, Any]):
+    """    def __init__(self, storage_config: Dict[str, Any]):
         """        Initialize content backup service.
         
         Args:

@@ -5,8 +5,7 @@ Provides comprehensive analytics, metrics, and insights for chat sessions,
 user interactions, and system performance optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, asdict

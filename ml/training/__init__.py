@@ -14,8 +14,7 @@ Composants d'entraînement et d'optimisation des modèles
 - Hyperparameter tuning avancé avec Optuna
 - Cross-validation et validation robuste
 - Gestion des expériences et métriques
-"""
-from .automl_pipeline import (
+"""from .automl_pipeline import (
     AutoMLPipeline,
     AutoMLConfig,
     AutoMLPipelineFactory,

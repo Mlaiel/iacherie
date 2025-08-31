@@ -24,8 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content creation → Backup scheduling → Multi-cloud replication → 
 Encryption & compression → Recovery testing → Compliance reporting → Disaster recovery
-"""
-import logging
+"""import logging
 import asyncio
 import json
 import yaml

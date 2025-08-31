@@ -13,8 +13,7 @@ This script demonstrates real-world usage scenarios for:
 - AI model management
 - Emergency scaling procedures
 - Multi-platform integration
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, Any

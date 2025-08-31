@@ -6,8 +6,7 @@ Implements multiple similarity algorithms with configurable thresholds.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import numpy as np
+"""import numpy as np
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union

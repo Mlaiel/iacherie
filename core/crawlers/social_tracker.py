@@ -7,8 +7,7 @@ de réseaux sociaux et détection de violations de contenu.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import re

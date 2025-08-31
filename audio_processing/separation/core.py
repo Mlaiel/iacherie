@@ -5,8 +5,7 @@ for the entire audio separation system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 import threading
 from pathlib import Path

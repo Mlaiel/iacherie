@@ -27,8 +27,7 @@ Spécialités de l'équipe:
 - Audio: Traitement optimisé contenus audio/musique
 - DevOps: Déploiement et monitoring automatisé
 - IA Prompt Engineer: Optimisation interactions IA
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import traceback

@@ -8,8 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Advanced database management for content fingerprints with high-performance storage
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timezone

@@ -14,8 +14,7 @@ Pipeline automatisé d'entraînement de modèles ML
 - Architecture search et optimization
 - Cross-validation et validation robuste
 - Model comparison et selection automatique
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid

@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER SOCIAL MEDIA:
 Content Planning → Multi-Platform Publishing → Audience Engagement → Performance Analytics → 
 Community Management → Trend Analysis → Influencer Collaboration → Brand Monitoring
-"""
-import json
+"""import json
 import logging
 import asyncio
 import time

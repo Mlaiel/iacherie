@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive compliance capabilities including
 regulatory compliance, data governance, model auditing, and ethics checking.
-"""
-import logging
+"""import logging
 import json
 import os
 import time

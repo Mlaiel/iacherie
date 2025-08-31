@@ -8,8 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-import asyncio
+"""import asyncio
 import sys
 import traceback
 import logging

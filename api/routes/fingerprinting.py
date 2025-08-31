@@ -3,8 +3,7 @@ Multi-format content fingerprinting and analysis endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime
 import os

@@ -6,8 +6,7 @@ All endpoints are professionally designed following enterprise-grade standards.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-from .router import router
+"""from .router import router
 from .auth_endpoints import router as auth_router
 from .content_endpoints import router as content_router
 from .collaboration_endpoints import router as collaboration_router
@@ -187,8 +186,7 @@ BUSINESS_LOGIC_FLOW = """IA Influencer Agent Business Logic Flow:
 
 Target Users: Musicians, Bloggers, Photographers, Influencers, Actors
 Platform Coverage: Spotify, YouTube, Instagram, TikTok, Facebook, Twitter, 500+ others
-"""
-# API Configuration and Standards
+"""# API Configuration and Standards
 API_STANDARDS = {
     "architecture": "3-level depth compliance (backend/app/api)",
     "authentication": "JWT + OAuth2 with multi-factor support",

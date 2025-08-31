@@ -18,8 +18,7 @@ Features:
 - High-quality text processing
 - Real-time analysis capabilities
 - Extensible architecture
-"""
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn

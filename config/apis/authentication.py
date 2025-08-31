@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive authentication management for external APIs
 including OAuth2 flows, API key management, JWT tokens, and refresh mechanisms.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import base64
 import hashlib

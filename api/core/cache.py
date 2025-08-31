@@ -3,8 +3,7 @@ Professional multi-level caching with intelligent invalidation strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Any, Optional, Dict, List, Union, Callable, TypeVar
+"""from typing import Any, Optional, Dict, List, Union, Callable, TypeVar
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone

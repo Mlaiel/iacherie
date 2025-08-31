@@ -27,8 +27,7 @@ Violators will face:
 - Immediate cease and desist enforcement
 
 Contact: mlaiel@live.de for any authorization requests.
-"""
-import asyncio
+"""import asyncio
 import json
 import hashlib
 import secrets

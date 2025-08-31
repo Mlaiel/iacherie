@@ -19,8 +19,7 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -129,8 +128,7 @@ class EnterpriseNotificationOrchestrator:
     - Monitoring global et métriques
     - Optimisation des performances
     - Gestion des pannes et recovery
-    """
-    def __init__(self, config: NotificationSystemConfig):
+    """    def __init__(self, config: NotificationSystemConfig):
         self.config = config
         self.managers = {}
         self.is_initialized = False

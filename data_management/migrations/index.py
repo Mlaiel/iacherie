@@ -17,8 +17,7 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic Integration:
 Creator Upload → Schema Evolution → Data Migration → Integrity Validation → 
 Protection Setup → Fingerprint Processing → Monetization Configuration → Platform Sync
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone

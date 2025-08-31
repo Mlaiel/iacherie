@@ -13,8 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import time
+"""import time
 import threading
 from typing import Dict, List, Optional, Any, Callable, Union
 from dataclasses import dataclass, field

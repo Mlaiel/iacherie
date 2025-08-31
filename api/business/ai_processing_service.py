@@ -6,8 +6,7 @@ for multi-format content including audio, video, images, and text.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Tuple

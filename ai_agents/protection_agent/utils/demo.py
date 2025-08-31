@@ -14,8 +14,7 @@ This demonstration shows how to:
 
 IMPORTANT: This is demonstration code for the proprietary Protection Agent
 developed by Fahed Mlaiel. All usage requires explicit licensing.
-"""
-import asyncio
+"""import asyncio
 import json
 from datetime import datetime
 from typing import Dict, List

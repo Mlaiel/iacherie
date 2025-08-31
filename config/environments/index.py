@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Point d'entrée principal pour le système de configuration d'environnements.
 Fournit des fonctions utilitaires et des raccourcis pour l'utilisation quotidienne.
 ==================================================================
-"""
-import os
+"""import os
 import sys
 from typing import Dict, Any, Optional, List
 from enum import Enum

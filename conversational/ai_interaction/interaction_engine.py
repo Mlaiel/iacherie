@@ -7,8 +7,7 @@ Provides intelligent content analysis, strategic recommendations, and real-time 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid

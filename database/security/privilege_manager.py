@@ -22,8 +22,7 @@ Contact: mlaiel@live.de
 ⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -314,7 +313,6 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         """Build PostgreSQL privilege check query"""        # Simplified query - in production would check information_schema
         return f"""        SELECT has_table_privilege('{principal_id}', '{resource_id}', '{privilege_type.value}')
         """
-
 class PrivilegeManager:
     """    Enterprise-grade database privilege manager
     

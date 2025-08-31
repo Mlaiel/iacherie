@@ -1,7 +1,6 @@
 """Evidence Collection and Documentation System
 Professional evidence gathering for copyright enforcement cases
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from dataclasses import dataclass, field

@@ -16,8 +16,7 @@ Features:
 - Real-time processing capabilities
 - High accuracy recognition
 - Extensible architecture
-"""
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn

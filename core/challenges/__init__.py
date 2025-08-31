@@ -20,8 +20,7 @@ Multi-platform distribution
 CHALLENGE SYSTEM ARCHITECTURE:
 Challenge Creation → User Participation → Progress Tracking → 
 Competition Management → Scoring & Ranking → Reward Distribution
-"""
-from .challenge_engine import (
+"""from .challenge_engine import (
     ChallengeEngine,
     ChallengeType,
     ChallengeCategory,

@@ -13,8 +13,7 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Content Registration → Rights Verification → License Generation → Royalty Tracking
 ==================================================================
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field

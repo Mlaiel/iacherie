@@ -51,8 +51,7 @@ Business Logic Flow:
 Creator Interactions → Multi-Format Behavioral Analysis → Engagement Profiling → 
 Psychological Assessment → Collaboration Matching → Revenue Optimization → 
 Cross-Platform Distribution → Performance Analytics → Behavioral Adaptation
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta

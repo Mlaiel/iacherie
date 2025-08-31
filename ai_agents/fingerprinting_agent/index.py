@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-from .fingerprinting_agent import FingerprintingAgent, FingerprintType, FingerprintQuality
+"""from .fingerprinting_agent import FingerprintingAgent, FingerprintType, FingerprintQuality
 from .audio_fingerprinter import AudioFingerprinter, AudioFingerprintQuality
 from .video_fingerprinter import VideoFingerprinter, VideoFingerprintQuality
 from .image_fingerprinter import ImageFingerprinter, ImageFingerprintQuality

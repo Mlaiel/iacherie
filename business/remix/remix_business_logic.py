@@ -19,8 +19,7 @@ LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → 
 Matching collaboration + gamifications → Distribution multi-plateformes → Remix IA professionnel → Monétisation
 
 ARCHITECTURE: Enterprise-grade business logic pour remix IA industriel avec optimisation revenus
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta

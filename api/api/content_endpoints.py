@@ -6,8 +6,7 @@ and distribution for musicians, bloggers, photographers, influencers, and actors
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-import os
+"""import os
 import uuid
 from datetime import datetime
 from typing import List, Optional, Dict, Any

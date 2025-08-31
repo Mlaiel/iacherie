@@ -6,8 +6,7 @@ Supports multiple audio formats and real-time fingerprint generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import numpy as np
+"""import numpy as np
 import hashlib
 import io
 import logging

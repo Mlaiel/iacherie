@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import base64
+"""import base64
 import hashlib
 import logging
 import os
@@ -46,8 +45,7 @@ class SecurityConfig(BaseModel):
 class MessageSecurityManager:
     """    Enterprise message security manager
     Handles encryption, signing, and security validation for messaging
-    """
-    def __init__(self, config: Optional[SecurityConfig] = None):
+    """    def __init__(self, config: Optional[SecurityConfig] = None):
         self.config = config or SecurityConfig()
         self.encryption_key: Optional[bytes] = None
         self.signing_key: Optional[rsa.RSAPrivateKey] = None

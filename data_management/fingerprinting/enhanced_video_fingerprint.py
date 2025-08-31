@@ -28,8 +28,7 @@ VIDEO FINGERPRINTING TECHNOLOGIES:
 ├── 🎵 Audio-Visual Fusion (Multi-modal)
 ├── ⚡ GPU Acceleration (CUDA + OpenCL)
 └── 🛡️ Protection Pipeline (Automated)
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Generator
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Generator
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from enum import Enum

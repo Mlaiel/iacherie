@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional monitoring stack Docker configuration for comprehensive
 observability, metrics collection, and alerting systems.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -175,8 +174,7 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
     scrape_interval: 30s
-"""
-    def generate_alert_rules(self) -> str:
+"""    def generate_alert_rules(self) -> str:
         """Generate Prometheus alert rules"""        return """# IA-Influencer Alert Rules
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -308,8 +306,7 @@ groups:
         annotations:
           summary: "Revenue tracking errors"
           description: "{{ $value }} revenue tracking errors per second"
-"""
-    def generate_docker_compose_services(self) -> Dict[str, Any]:
+"""    def generate_docker_compose_services(self) -> Dict[str, Any]:
         """Generate docker-compose services for monitoring stack"""        services = {
             # Prometheus
             "prometheus": {

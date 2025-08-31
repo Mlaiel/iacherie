@@ -6,8 +6,7 @@ du contenu multimédia dans la plateforme IA Influencer Agent.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Database Architect, ORM Specialist, Content Management Expert
 Copyright: Fahed Mlaiel - All rights reserved
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum

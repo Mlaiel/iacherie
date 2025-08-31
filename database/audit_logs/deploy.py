@@ -24,8 +24,7 @@ This revolutionary deployment automation system is the EXCLUSIVE property of Fah
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-import os
+"""import os
 import sys
 import subprocess
 import logging

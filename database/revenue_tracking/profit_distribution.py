@@ -9,8 +9,7 @@ prohibited and will result in severe legal consequences.
 
 Automated profit distribution for multi-format content creators, with advanced commission
 calculation, real-time payout scheduling, and compliance with international financial regulations.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional, Tuple
 from decimal import Decimal
 from datetime import datetime, timedelta

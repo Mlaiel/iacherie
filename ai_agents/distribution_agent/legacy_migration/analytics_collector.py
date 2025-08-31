@@ -13,8 +13,7 @@ without written authorization is STRICTLY PROHIBITED and will result in
 immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta, timezone

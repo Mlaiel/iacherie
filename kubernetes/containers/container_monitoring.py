@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Advanced container monitoring and observability for IA-Influencer-Agent platform.
 Includes metrics collection, alerting, health checks, and performance monitoring.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 import json

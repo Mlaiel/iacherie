@@ -11,8 +11,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import hmac
 import secrets

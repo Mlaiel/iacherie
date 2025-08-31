@@ -11,8 +11,7 @@ Any unauthorized use, copying, modification, or distribution
 without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid

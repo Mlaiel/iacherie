@@ -11,8 +11,7 @@ This module provides specialized recovery capabilities for content protection pl
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -118,8 +117,7 @@ class ContentRecoverySystem:
     - Real-time content integrity verification and repair
     - Automated content metadata restoration
     - Cross-platform content synchronization recovery
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -926,8 +924,7 @@ class ContentRecoverySystem:
     - Cross-platform content correlation and verification
     - Advanced forensic analysis for corruption detection
     - Creator-specific recovery prioritization
-    """
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)

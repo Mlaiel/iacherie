@@ -8,8 +8,7 @@ Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
-"""
-import asyncio
+"""import asyncio
 import logging
 import uuid
 import aiohttp

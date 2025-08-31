@@ -18,8 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""
-from typing import Optional, Dict, Any, Union, List
+"""from typing import Optional, Dict, Any, Union, List
 from datetime import datetime
 
 

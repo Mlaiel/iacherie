@@ -11,8 +11,7 @@ STRICT COPYRIGHT WARNING: This code and concept are EXCLUSIVE intellectual prope
 ANY unauthorized use, copying, or theft without explicit written authorization is STRICTLY PROHIBITED
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc

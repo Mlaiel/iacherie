@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive cloud migration capabilities for the IA
 Influencer Agent platform, including assessment, planning, execution, and
 validation of cloud migrations across different providers and architectures.
-"""
-import logging
+"""import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Union, Tuple

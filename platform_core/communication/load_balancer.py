@@ -14,8 +14,7 @@ Répartition de charge avancée avec détection de pannes
 - Health checking proactif et réactif
 - Circuit breaker pattern intégré
 - Métriques temps réel et auto-scaling
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import random

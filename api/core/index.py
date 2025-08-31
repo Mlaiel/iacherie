@@ -3,8 +3,7 @@ Professional module navigation and system overview.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-from typing import Dict, List, Any
+"""from typing import Dict, List, Any
 from dataclasses import dataclass
 
 
@@ -395,7 +394,6 @@ async def process_content():
         }
 ```
     """
-
 # Module metadata for discovery
 __module_info__ = {
     "name": "Core Infrastructure Index",

@@ -3,8 +3,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Simplified model training without MLflow, wandb, optuna dependencies.
-"""
-import logging
+"""import logging
 import time
 import json
 from typing import Dict, List, Optional, Union, Any, Callable, Tuple

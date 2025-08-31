@@ -20,8 +20,7 @@ legal action. Contact mlaiel@live.de for authorization.
 
 Advanced business intelligence engine for creator economy analysis, revenue optimization,
 and strategic insights based on surveillance data and market intelligence.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
 from dataclasses import dataclass, field

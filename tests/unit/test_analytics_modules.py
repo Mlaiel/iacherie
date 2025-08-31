@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -25,8 +24,7 @@ Comprehensive unit tests for all analytics modules including:
 
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure analytics accuracy and reliability
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

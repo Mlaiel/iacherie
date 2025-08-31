@@ -6,8 +6,7 @@ and cultural adaptation for global content distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -95,8 +94,7 @@ class MultilingualSEOResult:
 class MultilingualSEO:
     """    Comprehensive multilingual SEO system that handles content localization,
     international keyword research, and technical implementation for global reach.
-    """
-    def __init__(self):
+    """    def __init__(self):
         """Initialize the multilingual SEO system."""        self.language_mappings = self._initialize_language_mappings()
         self.cultural_data = self._initialize_cultural_data()
         self.search_engines = self._initialize_search_engines()

@@ -23,8 +23,7 @@ Team Specialists:
 - Audio Engineer: Audio Content Session Management
 - DevOps: Content Scalability & Performance
 - IA Prompt Engineer: Content-Aware Conversational Experience
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import mimetypes

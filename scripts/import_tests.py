@@ -7,8 +7,7 @@ de l'ancien projet IA-Influencer vers le nouveau projet Ainflue.
 
 Author: GitHub Copilot
 Date: 2025-08-31
-"""
-import os
+"""import os
 import sys
 import shutil
 import re
@@ -191,8 +190,7 @@ importée et adaptée de l'ancien projet IA-Influencer.
 
 Author: GitHub Copilot (adapté du projet original)
 Date: 2025-08-31
-"""
-import pytest
+"""import pytest
 import asyncio
 import logging
 import os

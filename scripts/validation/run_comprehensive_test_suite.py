@@ -3,8 +3,7 @@ Runs all tests for the Ainflue platform including unit, integration, performance
 
 Author: AI Assistant
 Purpose: Run complete test suite and generate comprehensive reports
-"""
-import subprocess
+"""import subprocess
 import json
 import datetime
 import sys

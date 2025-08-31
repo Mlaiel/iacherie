@@ -14,8 +14,7 @@ Point d'entrée centralisé pour toutes les fonctionnalités de validation
 - Configuration centralisée
 - Utilité pour tests et intégrations
 - Documentation des composants disponibles
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 from pathlib import Path
 

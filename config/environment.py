@@ -6,8 +6,7 @@ environment validation, and security features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import os
+"""import os
 import json
 import logging
 from typing import Dict, Any, Optional, List, Union

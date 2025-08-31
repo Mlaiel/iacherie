@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade regulatory compliance framework implementation.
 ==================================================================
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Set
 from dataclasses import dataclass, field

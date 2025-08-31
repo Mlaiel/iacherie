@@ -17,8 +17,7 @@ Violators will be prosecuted to the full extent of the law.
 - Audio Engineer: Professional Audio Processing
 - DevOps Engineer: Cloud Infrastructure & CI/CD
 - IA Prompt Engineer: Advanced Prompt Engineering & LLM Integration
-"""
-from marshmallow import Schema, fields, validate, post_load, ValidationError
+"""from marshmallow import Schema, fields, validate, post_load, ValidationError
 from typing import Dict, List, Any
 from datetime import datetime
 import re

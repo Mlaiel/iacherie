@@ -21,8 +21,7 @@ Distribution multi-plateformes → Remix IA professionnel → Monétisation avan
 
 MISSION: Logique métier remix et génération de contenu IA pour créateurs multi-format
 ARCHITECTURE: Business logic enterprise-grade pour remix IA industriel
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "Copyright 2025 Fahed Mlaiel. All rights reserved."

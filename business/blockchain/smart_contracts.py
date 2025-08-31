@@ -5,8 +5,7 @@ royalty distribution, governance, and staking mechanisms on multiple blockchain 
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass

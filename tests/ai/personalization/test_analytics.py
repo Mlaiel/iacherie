@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests recommendation metrics, user engagement analytics, and system performance.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -54,8 +52,7 @@ from ai.personalization.analytics import (
 
 
 class TestAnalyticsEngine(IsolatedAsyncioTestCase):
-    """Comprehensive tests for AnalyticsEngine"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for AnalyticsEngine"""    async def asyncSetUp(self):
         """Set up test environment"""        self.engine = AnalyticsEngine(
             metrics_window=timedelta(days=30),
             sampling_rate=0.1,
@@ -168,8 +165,7 @@ class TestAnalyticsEngine(IsolatedAsyncioTestCase):
 
 
 class TestMetricsCalculator(IsolatedAsyncioTestCase):
-    """Comprehensive tests for MetricsCalculator"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for MetricsCalculator"""    async def asyncSetUp(self):
         """Set up test environment"""        self.calculator = MetricsCalculator()
         self.metrics_data = self._generate_metrics_data()
 
@@ -322,8 +318,7 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
 
 
 class TestPerformanceMonitor(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PerformanceMonitor"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for PerformanceMonitor"""    async def asyncSetUp(self):
         """Set up test environment"""        self.monitor = PerformanceMonitor(
             monitoring_interval=timedelta(minutes=5),
             alert_thresholds={
@@ -451,8 +446,7 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
 
 
 class TestABTestAnalyzer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ABTestAnalyzer"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ABTestAnalyzer"""    async def asyncSetUp(self):
         """Set up test environment"""        self.analyzer = ABTestAnalyzer(
             confidence_level=0.95,
             minimum_sample_size=100,
@@ -588,8 +582,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
 
 
 class TestReportGenerator(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ReportGenerator"""
-    async def asyncSetUp(self):
+    """Comprehensive tests for ReportGenerator"""    async def asyncSetUp(self):
         """Set up test environment"""        self.generator = ReportGenerator(
             report_formats=['json', 'html', 'pdf'],
             template_path='templates/',
@@ -728,8 +721,7 @@ class TestReportGenerator(IsolatedAsyncioTestCase):
 
 
 class TestAnalyticsPerformanceAndScalability(IsolatedAsyncioTestCase):
-    """Performance and scalability tests for analytics operations"""
-    async def test_large_dataset_processing(self):
+    """Performance and scalability tests for analytics operations"""    async def test_large_dataset_processing(self):
         """Test analytics processing on large datasets"""        calculator = MetricsCalculator()
         
         # Generate large dataset

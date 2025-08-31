@@ -4,8 +4,7 @@ High-performance similarity matching and vector search for fingerprints
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import time

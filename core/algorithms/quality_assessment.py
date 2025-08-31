@@ -13,8 +13,7 @@ Industrial-grade content quality assessment engine providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-import numpy as np
+"""import numpy as np
 import cv2
 import librosa
 import torch

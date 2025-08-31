@@ -11,8 +11,7 @@ Professional legal compliance management system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Compliance Officer + Risk Manager
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta

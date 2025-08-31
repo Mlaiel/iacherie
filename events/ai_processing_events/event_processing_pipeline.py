@@ -9,8 +9,7 @@ Content Upload → AI Processing → Protection → SEO → Collaboration → Di
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Callable, Awaitable
 from datetime import datetime, timedelta

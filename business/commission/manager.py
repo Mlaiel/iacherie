@@ -19,8 +19,7 @@ concepts without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
 strictly prohibited and will result in immediate legal action.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime, timedelta

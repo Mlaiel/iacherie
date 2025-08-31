@@ -5,8 +5,7 @@ adaptive query rewriting, and intelligent execution plan optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import re
 import json
 import hashlib

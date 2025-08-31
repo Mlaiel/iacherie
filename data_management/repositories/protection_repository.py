@@ -20,8 +20,7 @@ Violation Detection → Automated Response → Legal Documentation
 PROTECTION REPOSITORY ARCHITECTURE:
 Content Registration → Fingerprint Generation → Monitoring Setup → 
 Violation Detection → Response Management → Legal Documentation → Recovery Tracking
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

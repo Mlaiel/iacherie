@@ -23,8 +23,7 @@ Team Specializations:
 - Audio Engineer: Professional audio processing
 - DevOps Engineer: CI/CD & infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt optimization
-"""
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
 from datetime import datetime

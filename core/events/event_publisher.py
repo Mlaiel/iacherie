@@ -9,8 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de publication d'événements avec notifications temps réel,
     intégrations multi-canaux et orchestration pour la plateforme IA-Influencer-Agent.
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum

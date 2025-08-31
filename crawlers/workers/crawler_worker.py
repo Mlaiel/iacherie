@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Request crawler → Worker pool → Load balancing → 
 Platform extraction → Content protection → Result processing → Notification
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -146,8 +145,7 @@ class CrawlerWorker:
     - Platform-specific optimization
     - Content fingerprinting integration
     - Real-time performance metrics
-    """
-    def __init__(self, config: WorkerConfig):
+    """    def __init__(self, config: WorkerConfig):
         self.config = config
         self.worker_id = config.worker_id
         self.status = WorkerStatus.IDLE

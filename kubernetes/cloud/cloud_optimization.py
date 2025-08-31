@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides enterprise-grade cloud cost optimization and performance
 management for the IA Influencer Agent platform, enabling automatic cost
 reduction and resource optimization across multi-cloud environments.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime, timedelta

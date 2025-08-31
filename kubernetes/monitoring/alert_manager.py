@@ -6,8 +6,7 @@ and intelligent alert correlation and deduplication.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 import time
 import logging
 from typing import Dict, List, Optional, Callable, Any, Union

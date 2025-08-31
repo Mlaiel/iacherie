@@ -28,8 +28,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This unified matching service contains proprietary algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass

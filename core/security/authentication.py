@@ -10,8 +10,7 @@ Features:
 - Single Sign-On (SSO) integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import jwt
+"""import jwt
 import bcrypt
 import pyotp
 import secrets

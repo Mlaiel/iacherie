@@ -4,8 +4,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive content type definitions, format specifications,
 and quality metrics for the IA Influencer Agent platform.
-"""
-import logging
+"""import logging
 from enum import Enum, IntEnum
 from typing import Dict, List, Any, Optional, Set
 from dataclasses import dataclass

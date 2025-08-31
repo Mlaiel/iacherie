@@ -21,8 +21,7 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Tuple, Set
 from urllib.parse import urlparse, urljoin, quote, unquote, parse_qs

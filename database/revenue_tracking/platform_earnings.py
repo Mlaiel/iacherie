@@ -5,8 +5,7 @@ avancées et optimisation des performances financières.
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer & Platform Revenue Architect
-"""
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum

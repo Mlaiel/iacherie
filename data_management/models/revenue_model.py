@@ -19,8 +19,7 @@ IA protection rights → Professional SEO → Collaboration matching → Multi-p
 REVENUE MODEL ARCHITECTURE:
 Revenue Tracking → Platform Integration → Payment Processing → 
 Tax Calculations → Currency Exchange → Performance Analytics → Automated Payouts
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from decimal import Decimal
 from datetime import datetime, timezone
 from dataclasses import dataclass, field, asdict

@@ -8,8 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Configuration management for content fingerprinting system
-"""
-import os
+"""import os
 import json
 from typing import Dict, Any, Optional
 from pathlib import Path

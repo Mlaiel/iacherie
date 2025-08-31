@@ -3,8 +3,7 @@ AI-Powered Performance Analysis and Optimization System
 
 This module provides comprehensive performance optimization including
 system monitoring, bottleneck detection, resource optimization, and intelligent scaling.
-"""
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging

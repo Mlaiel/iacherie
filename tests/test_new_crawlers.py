@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -17,8 +16,7 @@ Basic tests for the newly added crawler modules.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -34,8 +32,7 @@ from crawlers import (
 
 
 class TestNewCrawlers:
-    """Test cases for new crawler modules"""
-    @pytest.mark.asyncio
+    """Test cases for new crawler modules"""    @pytest.mark.asyncio
     async def test_spotify_crawler(self):
         """Test Spotify crawler basic functionality"""        async with SpotifyCrawler() as crawler:
             results = await crawler.search_tracks(

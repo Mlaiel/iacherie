@@ -16,8 +16,7 @@ Contact obligatoire: mlaiel@live.de
 ARCHITECTURE PROCESSORS:
 Base Processors → Specialized Processors → Async Versions → Factory Pattern → 
 Manager Registry → Configuration Hub → Performance Monitoring → Error Handling
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Type
 from datetime import datetime, timezone

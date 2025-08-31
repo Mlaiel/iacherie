@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Health Monitoring System
 Comprehensive health monitoring and alerting for the IA Influencer Agent platform
-"""
-import os
+"""import os
 import sys
 import time
 import json

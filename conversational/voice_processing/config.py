@@ -39,8 +39,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 - Unauthorized access to proprietary methods
 
 For official licensing inquiries ONLY: mlaiel@live.de
-"""
-import os
+"""import os
 import sys
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field

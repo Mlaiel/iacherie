@@ -37,8 +37,7 @@ Key Invalidation Features:
 - Creator notification system for content-affecting invalidations
 - Rollback capability for accidental invalidations
 - Batch invalidation optimization for efficiency
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -808,8 +807,7 @@ class DependencyRelation:
 class InvalidationStrategy:
     """    Enterprise cache invalidation strategy manager with AI optimization,
     dependency tracking, and intelligent lifecycle management.
-    """
-    def __init__(
+    """    def __init__(
         self,
         config: CacheConfiguration,
         metrics_collector: CacheMetricsCollector

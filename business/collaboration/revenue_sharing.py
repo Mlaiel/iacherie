@@ -3,8 +3,7 @@ Professional revenue management and distribution system for collaborations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-from typing import Dict, List, Optional, Any, Set, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field

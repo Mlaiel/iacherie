@@ -12,8 +12,7 @@ Any unauthorized use, copying, distribution, or commercialization is STRICTLY PR
 Violations will result in immediate legal action under German and International IP law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Any, Optional

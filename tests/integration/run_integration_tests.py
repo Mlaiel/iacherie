@@ -9,8 +9,7 @@ Executes all high-priority integration tests for the Ainflue platform:
 5. Multilingual Interface Switching Tests
 
 Author: Integration Test Suite
-"""
-import asyncio
+"""import asyncio
 import sys
 import os
 import subprocess

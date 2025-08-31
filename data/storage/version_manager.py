@@ -22,8 +22,7 @@ LOGIQUE MÉTIER:
 Content Creation → Version Tracking → Change Detection → 
 Delta Storage → Conflict Resolution → Rollback Support → 
 Branch Management → Collaboration History → Audit Trail
-"""
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json

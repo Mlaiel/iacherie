@@ -24,8 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Créateur upload → S3 validation → Multi-région replication → 
 Lifecycle policies → Cost optimization → Backup strategy → CDN integration
-"""
-import logging
+"""import logging
 import asyncio
 import boto3
 import json

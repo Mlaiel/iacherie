@@ -12,8 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -69,8 +68,7 @@ class RealTimeMessage(BaseModel):
 class RealTimeCommunicationManager:
     """    Enterprise real-time communication manager
     Handles WebSocket connections, notifications, and live updates
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.connections: Dict[str, WebSocketConnection] = {}
         self.user_connections: Dict[str, List[str]] = {}  # user_id -> connection_ids
         self.channel_subscribers: Dict[str, Set[str]] = {}  # channel -> connection_ids

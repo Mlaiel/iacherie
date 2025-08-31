@@ -7,8 +7,7 @@ Performs comprehensive checks on module integrity and functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-import sys
+"""import sys
 import logging
 from typing import Dict, Any, List
 

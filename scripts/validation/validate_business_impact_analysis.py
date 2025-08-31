@@ -4,8 +4,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Script de validation pour vérifier la précision de l'analyse des TODOs par impact métier.
-"""
-import json
+"""import json
 import sys
 from pathlib import Path
 from typing import List, Dict

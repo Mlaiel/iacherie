@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Load monitoring → Trend analysis → Resource prediction → 
 Scaling decision → Worker allocation → Performance validation → Optimization
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -119,8 +118,7 @@ class WorkerScalingManager:
     - Performance impact assessment
     - Automatic rule learning
     - Cooldown management
-    """
-    def __init__(self, config: PoolConfig):
+    """    def __init__(self, config: PoolConfig):
         self.config = config
         
         # Scaling configuration

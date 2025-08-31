@@ -3,8 +3,7 @@ Comprehensive caching decorators and utilities for automatic cache management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import logging
 import functools
 import inspect

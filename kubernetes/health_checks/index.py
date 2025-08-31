@@ -22,8 +22,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
@@ -91,8 +90,7 @@ class HealthMonitoringOrchestrator:
     This class provides the main interface for health monitoring across
     the entire platform, coordinating all subsystem health checkers and
     providing unified health status reporting.
-    """
-    def __init__(self, config: Dict[str, Any], app=None, redis_client=None):
+    """    def __init__(self, config: Dict[str, Any], app=None, redis_client=None):
         """        Initialize health monitoring orchestrator
         
         Args:

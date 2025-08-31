@@ -37,8 +37,7 @@ For licensing inquiries: mlaiel@live.de
 Business Logic Flow:
 Content Creation → Revenue Source Setup → Usage Tracking → Payment Processing → 
 Revenue Distribution → Analytics Generation → Tax Calculation → Compliance Reporting
-"""
-import asyncio
+"""import asyncio
 import logging
 import traceback
 import decimal

@@ -6,8 +6,7 @@ Validates critical production requirements are met.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import subprocess
+"""import subprocess
 import sys
 import time
 import json

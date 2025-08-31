@@ -4,8 +4,7 @@ Comprehensive analysis of all implemented agents in the Ainflue platform
 
 Author: GitHub Copilot Analysis
 Purpose: CRITIQUE - AGENTS IA verification
-"""
-import os
+"""import os
 import ast
 import json
 import re

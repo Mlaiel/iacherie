@@ -13,8 +13,7 @@ Toute tentative de copie, reproduction, ou utilisation non autorisée
 fera l'objet de poursuites judiciaires au maximum prévu par la loi.
 L'usage de ce code sans licence appropriée constitue une violation
 des droits de propriété intellectuelle.
-"""
-from alembic import op
+"""from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 from datetime import datetime

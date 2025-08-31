@@ -21,8 +21,7 @@ ENTERPRISE FEATURES:
 - Gestion des erreurs et retry automatiques
 - Circuit breaker et load balancing intégrés
 - Conformité et sécurité enforced
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
 from decimal import Decimal

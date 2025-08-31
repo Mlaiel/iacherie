@@ -10,8 +10,7 @@ This module provides comprehensive consent management functionality including:
 - Consent withdrawal processing
 - Privacy preference centers
 - Compliance-ready consent documentation
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -130,8 +129,7 @@ class PrivacyPreferences:
 class ConsentManager:
     """    Enterprise-grade consent management system providing comprehensive
     consent orchestration, tracking, and compliance functionality.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.audit_logger = AuditLogger()
         self.session_cache = {}
         self.consent_templates = {}

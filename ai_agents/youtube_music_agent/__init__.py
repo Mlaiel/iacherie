@@ -6,8 +6,7 @@ copyright monitoring, and content protection capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""
-from .core.youtube_music_engine import YouTubeMusicEngine, YouTubeTrack, YouTubePlaylist
+"""from .core.youtube_music_engine import YouTubeMusicEngine, YouTubeTrack, YouTubePlaylist
 from .core.copyright_monitor import CopyrightMonitor
 from .utils.youtube_auth import YouTubeAuthManager
 

@@ -15,8 +15,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
 This demonstration module showcases proprietary algorithms and AI systems
 developed by Fahed Mlaiel. Unauthorized use is strictly prohibited.
-"""
-import argparse
+"""import argparse
 import asyncio
 import logging
 import sys

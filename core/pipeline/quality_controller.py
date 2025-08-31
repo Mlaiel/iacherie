@@ -7,8 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Quality Definitions → Automated Testing → Performance Analysis → Compliance Verification → Optimization Recommendations
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import statistics

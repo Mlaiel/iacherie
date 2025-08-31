@@ -11,8 +11,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: MFA Setup → Device Registration → Authentication Challenge → 
 Backup Codes → Recovery → Audit Logging
-"""
-import asyncio
+"""import asyncio
 import secrets
 import string
 from datetime import datetime, timedelta, timezone

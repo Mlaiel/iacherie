@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Event ingestion → Event validation → Event routing → 
 Processing pipeline → State management → Notification → Audit trail
-"""
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
 import json
@@ -142,8 +141,7 @@ class EventProcessor:
     - Retry mechanisms with backoff
     - Event correlation and causation
     - Performance monitoring
-    """
-    def __init__(self, processor_id: str = None, max_concurrent_events: int = 100):
+    """    def __init__(self, processor_id: str = None, max_concurrent_events: int = 100):
         self.processor_id = processor_id or str(uuid.uuid4())
         self.max_concurrent_events = max_concurrent_events
         
@@ -780,8 +778,7 @@ class EventProcessor:
 
 
 class WorkerEventFactory:
-    """Factory for creating worker events"""
-    @staticmethod
+    """Factory for creating worker events"""    @staticmethod
     def create_worker_started_event(worker_id: str, worker_config: Dict[str, Any]) -> WorkerEvent:
         """Create worker started event"""        return WorkerEvent(
             event_id=str(uuid.uuid4()),

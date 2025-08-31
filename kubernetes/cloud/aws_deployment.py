@@ -13,8 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive AWS deployment and management capabilities
 for the IA Influencer Agent platform, including EC2, ECS, Lambda, RDS, S3,
 CloudFront, and other AWS services.
-"""
-import logging
+"""import logging
 import asyncio
 import boto3
 from typing import Dict, List, Any, Optional, Union, Tuple

@@ -13,8 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from enum import Enum

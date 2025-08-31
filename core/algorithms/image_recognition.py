@@ -15,8 +15,7 @@ Professional image recognition engine for visual content creators providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-import cv2
+"""import cv2
 import numpy as np
 import torch
 import torchvision.transforms as transforms

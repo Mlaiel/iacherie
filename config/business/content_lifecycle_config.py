@@ -12,8 +12,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Tuple
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -105,8 +104,7 @@ class ContentMetadata:
 
 
 class ContentLifecycleConfig:
-    """Enterprise content lifecycle management configuration."""
-    # Valid state transitions
+    """Enterprise content lifecycle management configuration."""    # Valid state transitions
     STATE_TRANSITIONS = [
         # Initial upload flow
         StateTransition(

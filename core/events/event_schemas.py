@@ -19,8 +19,7 @@ SPÉCIALITÉS DE L'ÉQUIPE:
 Description:
     Système de gestion des schémas d'événements avec validation, versioning,
     migration et compatibilité. Support des formats JSON Schema, Avro et Protobuf.
-"""
-from typing import Any, Dict, List, Optional, Union, Type, Generic, TypeVar, Set
+"""from typing import Any, Dict, List, Optional, Union, Type, Generic, TypeVar, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum

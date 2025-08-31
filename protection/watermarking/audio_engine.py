@@ -10,8 +10,7 @@ This audio watermarking engine, concept, and all associated code are the exclusi
 property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distribution 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
 prohibited and will result in legal action.
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union, BinaryIO

@@ -17,8 +17,7 @@ Features:
 - Real-time violation detection with AI
 - DMCA notice generation
 - Revenue recovery tracking
-"""
-from .manager import ContentProtectionManager
+"""from .manager import ContentProtectionManager
 from .core.protection_engine import ContentProtectionEngine
 from .core.platform_monitor import PlatformMonitor
 from .core.fingerprint_generator import FingerprintGenerator

@@ -49,8 +49,7 @@ prosecuted to the full extent of the law in Germany and internationally.
 
 Contact: mlaiel@live.de for licensing inquiries only.
 All rights reserved worldwide.
-"""
-from .spectral_analyzer import SpectralAnalyzer
+"""from .spectral_analyzer import SpectralAnalyzer
 from .melody_extractor import MelodyExtractor
 from .rhythm_analyzer import RhythmAnalyzer
 from .quality_assessment import AudioQualityAssessment

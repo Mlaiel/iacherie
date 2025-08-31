@@ -21,8 +21,7 @@ Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
-"""
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 import asyncio
 import logging
 from datetime import datetime

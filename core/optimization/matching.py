@@ -3,8 +3,7 @@ Copyright (C) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Advanced optimization for collaboration matching, partnership algorithms,
 recommendation systems, and audience targeting.
-"""
-import asyncio
+"""import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass

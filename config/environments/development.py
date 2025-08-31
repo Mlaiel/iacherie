@@ -13,8 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement développement avec debugging avancé.
 ==================================================================
-"""
-import os
+"""import os
 from typing import Dict, Any, List, Optional
 from .base import (
     BaseEnvironmentConfigManager, 

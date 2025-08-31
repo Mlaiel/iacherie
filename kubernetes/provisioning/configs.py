@@ -25,8 +25,7 @@ Architecture Components:
 - Database and service connection management
 - Monitoring and logging configuration
 - Security and compliance settings
-"""
-import os
+"""import os
 import json
 import yaml
 import logging

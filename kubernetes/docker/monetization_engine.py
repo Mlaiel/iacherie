@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional monetization engine Docker configuration for revenue
 tracking, payment processing, and automated payout systems.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -263,8 +262,7 @@ CMD ["gunicorn", \\
      "--log-level", "{self.log_level.lower()}", \\
      "--preload", \\
      "main:app"]
-"""
-    def _generate_feature_env_vars(self) -> str:
+"""    def _generate_feature_env_vars(self) -> str:
         """Generate feature-specific environment variables"""        env_vars = []
         for feature, enabled in self.enabled_features.items():
             env_vars.append(f"ENV FEATURE_{feature.upper()}={str(enabled).lower()}")
@@ -563,8 +561,7 @@ pytest-asyncio==0.21.1
 black==23.11.0
 isort==5.12.0
 flake8==6.1.0
-"""
-    def save_config_files(self, output_dir: str) -> List[str]:
+"""    def save_config_files(self, output_dir: str) -> List[str]:
         """Save all configuration files to output directory"""        import os
         from pathlib import Path
         

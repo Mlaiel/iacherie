@@ -28,8 +28,7 @@ Expertise combinée:
 - Audio/Vidéo: Cache optimisé pour contenu multimédia lourd
 - DevOps: Monitoring et scaling automatique des systèmes de cache
 - IA Prompt Engineer: Cache intelligent pour réponses IA optimisées
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field

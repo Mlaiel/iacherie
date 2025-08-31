@@ -8,8 +8,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from typing import Dict, Any, Optional, List
+"""from typing import Dict, Any, Optional, List
 from datetime import datetime, timedelta
 from decimal import Decimal
 

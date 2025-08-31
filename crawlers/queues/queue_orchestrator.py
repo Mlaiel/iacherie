@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Request reception → Queue routing → Priority analysis → Worker assignment → 
 Load balancing → Execution monitoring → Result processing → Performance optimization
-"""
-from typing import Any, Dict, List, Optional, Set, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Set, Callable, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta

@@ -6,8 +6,7 @@ customizable templates, and automated validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-import logging
+"""import logging
 import hashlib
 import json
 from typing import Dict, List, Optional, Any, Union

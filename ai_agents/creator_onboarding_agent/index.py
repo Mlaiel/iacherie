@@ -4,8 +4,7 @@ Central routing and module management for the Creator Onboarding Agent system.
 Provides unified access to all onboarding components and services.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-from .creator_onboarding_agent import CreatorOnboardingAgent
+"""from .creator_onboarding_agent import CreatorOnboardingAgent
 from .onboarding_manager import OnboardingManager
 from .profile_builder import ProfileBuilder
 from .content_analyzer import ContentAnalyzer

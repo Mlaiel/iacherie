@@ -6,8 +6,7 @@ intelligent content scraping, and advanced audio discovery capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""
-from .core.soundcloud_engine import SoundCloudEngine, SoundCloudTrack, SoundCloudPlaylist
+"""from .core.soundcloud_engine import SoundCloudEngine, SoundCloudTrack, SoundCloudPlaylist
 from .core.intelligent_scraper import IntelligentScraper
 from .utils.soundcloud_auth import SoundCloudAuthManager
 

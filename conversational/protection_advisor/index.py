@@ -16,8 +16,7 @@ Team Specialization:
 - Audio Processing Expert: Advanced signal processing algorithms
 - DevOps Engineer: Production deployment & monitoring systems
 - AI Prompt Engineer: Intelligent content analysis & classification
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, asdict
@@ -119,8 +118,7 @@ class ProtectionAdvisorIndex:
     - Request queuing and priority management
     - Comprehensive analytics and reporting
     - Service discovery and coordination
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.services = {}
         self.service_health = {}
         self.request_queue = asyncio.PriorityQueue()

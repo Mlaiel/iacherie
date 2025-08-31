@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -19,8 +18,7 @@ Tests for multi-format content processing, validation, and fingerprint preparati
 Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,8 +45,7 @@ from crawlers.handlers.content_handler import (
 
 
 class TestContentTypeDetector:
-    """Test suite for ContentTypeDetector class."""
-    def test_init(self):
+    """Test suite for ContentTypeDetector class."""    def test_init(self):
         """Test detector initialization."""        detector = ContentTypeDetector()
         assert detector.supported_types == {
             'audio': ['mp3', 'wav', 'flac', 'm4a', 'aac', 'ogg'],
@@ -113,8 +110,7 @@ class TestContentTypeDetector:
 
 
 class TestContentProcessor:
-    """Test suite for ContentProcessor class."""
-    def test_init(self):
+    """Test suite for ContentProcessor class."""    def test_init(self):
         """Test processor initialization."""        processor = ContentProcessor()
         assert processor.detector is not None
         assert hasattr(processor, 'audio_extractor')
@@ -293,8 +289,7 @@ class TestContentProcessor:
 
 
 class TestContentHandler:
-    """Test suite for ContentHandler class."""
-    def test_init(self):
+    """Test suite for ContentHandler class."""    def test_init(self):
         """Test handler initialization."""        handler = ContentHandler()
         assert handler.processor is not None
         assert handler.detector is not None
@@ -389,8 +384,7 @@ class TestContentHandler:
 
 
 class TestIntegration:
-    """Integration tests for content handler components."""
-    @pytest.mark.asyncio
+    """Integration tests for content handler components."""    @pytest.mark.asyncio
     async def test_end_to_end_processing(self):
         """Test complete end-to-end content processing."""        handler = ContentHandler()
         

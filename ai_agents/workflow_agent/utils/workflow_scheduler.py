@@ -20,8 +20,7 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Callable, Union, Tuple, Set
@@ -126,8 +125,7 @@ class WorkflowScheduler(BaseAgent):
     
     This scheduler provides intelligent scheduling capabilities with
     resource optimization, adaptive timing, and complex scheduling patterns.
-    """
-    def __init__(self, max_concurrent_executions: int = 50):
+    """    def __init__(self, max_concurrent_executions: int = 50):
         """Initialize the workflow scheduler."""        super().__init__()
         self.logger = logging.getLogger(__name__)
         

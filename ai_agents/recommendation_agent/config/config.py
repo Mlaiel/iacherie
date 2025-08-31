@@ -8,8 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
 Unauthorized modification or redistribution is prohibited.
-"""
-from typing import Dict, Any
+"""from typing import Dict, Any
 
 """Enterprise Configuration Template for Recommendation Agent
 
@@ -21,8 +20,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
 Unauthorized modification or redistribution is prohibited.
-"""
-from typing import Dict, Any
+"""from typing import Dict, Any
 import os
 
 # Development Environment Configuration

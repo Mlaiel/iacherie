@@ -9,8 +9,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, Integer, String, Text, Boolean, DateTime, Float, 
     BigInteger, JSON, LargeBinary, ForeignKey, Index, 
     UniqueConstraint, CheckConstraint, Enum as SQLEnum

@@ -13,8 +13,7 @@ Business Logic Validation:
 - AI protection metadata validation
 - Monetization data accuracy checks
 - Cross-platform compliance validation
-"""
-import re
+"""import re
 import json
 import time
 import hashlib

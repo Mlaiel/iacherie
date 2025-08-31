@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Database Migration Manager
 Handles database schema migrations, data migrations, and version control
-"""
-import os
+"""import os
 import sys
 import time
 import json

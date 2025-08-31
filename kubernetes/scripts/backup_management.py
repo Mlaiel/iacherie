@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Backup Management System
 Comprehensive backup and restore operations for the IA Influencer Agent platform
-"""
-import os
+"""import os
 import sys
 import time
 import json

@@ -27,8 +27,7 @@ Microservices: Scalable Distributed Architecture
 Audio: Signal Processing & Fingerprinting
 DevOps: Infrastructure & Cloud Deployment
 IA Prompt Engineer: AI Model Integration & Optimization
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Union, Tuple

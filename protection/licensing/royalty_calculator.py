@@ -11,8 +11,7 @@ Professional royalty and revenue calculation system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Financial Engineer + Music Business Analyst + Tax Specialist
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta

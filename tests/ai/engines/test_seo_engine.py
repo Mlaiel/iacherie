@@ -4,8 +4,7 @@
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -42,8 +41,7 @@ FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT
 IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -69,8 +67,7 @@ from seo_engine import (
 
 
 class TestSEOEngine:
-    """Comprehensive test suite for SEOEngine"""
-    @pytest.fixture
+    """Comprehensive test suite for SEOEngine"""    @pytest.fixture
     async def seo_engine(self):
         """Create SEO engine instance"""        config = {
             'api_key': 'test_key',

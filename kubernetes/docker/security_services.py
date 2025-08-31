@@ -12,8 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Docker configuration for enterprise security services
 supporting multi-layer security, threat detection, and compliance monitoring.
-"""
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -178,8 +177,7 @@ ENV PYTHONPATH=/app \\
 COPY scripts/security/entrypoint.sh /app/scripts/
 ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 CMD ["python", "-m", "security.main"]
-"""
-    def generate_docker_compose_service(self) -> Dict[str, Any]:
+"""    def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate Docker Compose service configuration"""        return {
             "image": f"{self.registry_url}/{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -446,8 +444,7 @@ typer==0.9.0
 pytest==7.4.3
 pytest-asyncio==0.21.1
 pytest-cov==4.1.0
-"""
-    def generate_security_config_files(self) -> Dict[str, str]:
+"""    def generate_security_config_files(self) -> Dict[str, str]:
         """Generate security configuration files"""        configs = {}
         
         # ModSecurity configuration
@@ -511,8 +508,7 @@ SecRule ARGS "@detectXSS" \\
     tag:'language-multi',\\
     tag:'platform-multi',\\
     tag:'attack-xss'"
-"""
-        # Suricata configuration
+"""        # Suricata configuration
         configs["suricata.yaml"] = """# Suricata IDS Configuration for IA-Influencer
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -661,8 +657,7 @@ rule-files:
 
 classification-file: /etc/suricata/classification.config
 reference-config-file: /etc/suricata/reference.config
-"""
-        # Fail2ban configuration
+"""        # Fail2ban configuration
         configs["fail2ban_jail.conf"] = """# Fail2ban configuration for IA-Influencer
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -731,8 +726,7 @@ logpath = /app/logs/security/api-security.log
 maxretry = 10
 findtime = 300
 bantime = 7200
-"""
-        return configs
+"""        return configs
     
     def generate_entrypoint_script(self) -> str:
         """Generate entrypoint script for security services"""        return """#!/bin/bash

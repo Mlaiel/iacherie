@@ -3,8 +3,7 @@ Advanced analytics and reporting for payment data in IA Influencer Agent platfor
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
-"""
-from typing import Dict, Any, List, Optional, Tuple
+"""from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum

@@ -12,8 +12,7 @@ Ultra-advanced DRM protection and license management system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Cryptography Expert + DRM Specialist + Security Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union
 from datetime import datetime, timedelta

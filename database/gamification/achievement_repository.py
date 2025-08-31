@@ -19,8 +19,7 @@ Progress Monitoring → Engagement Analytics → Reward Calculation
 ACHIEVEMENT REPOSITORY ARCHITECTURE:
 Achievement Definition → Progress Tracking → Unlock Validation → 
 Badge Management → Analytics Collection → Performance Optimization
-"""
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib

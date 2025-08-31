@@ -70,8 +70,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Indexing sur données chiffrées
 - Cache intelligent des clés
 - Batch encryption operations
-"""
-import asyncio
+"""import asyncio
 import hashlib
 import secrets
 import base64

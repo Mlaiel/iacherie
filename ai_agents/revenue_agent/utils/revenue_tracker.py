@@ -24,8 +24,7 @@ This innovative revenue tracking system represents months of research, developme
 intellectual investment by Fahed Mlaiel. Any unauthorized use will be prosecuted to the 
 full extent of the law. We maintain comprehensive monitoring and will pursue legal action 
 against any individual or organization attempting to steal or replicate this work.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid

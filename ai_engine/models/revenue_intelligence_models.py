@@ -11,8 +11,7 @@ Development Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
-"""
-import torch
+"""import torch
 import torch.nn as nn
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Union, Any

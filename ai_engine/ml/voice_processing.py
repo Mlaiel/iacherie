@@ -18,8 +18,7 @@ Features:
 - Emotional state detection
 - Speaker verification
 - Voice biometric analysis
-"""
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn

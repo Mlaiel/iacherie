@@ -37,8 +37,7 @@ User Upload → AI Content Analysis → Rights Verification → Multi-Layer Wate
 → Advanced Fingerprinting → Blockchain Registration → Quantum Encryption
 → Real-time Monitoring → AI Violation Detection → Automated DMCA Processing
 → Legal Evidence Collection → Revenue Protection → Compliance Reporting
-"""
-from typing import (
+"""from typing import (
     Dict, List, Any, Optional, Union, Tuple, Callable, 
     AsyncGenerator, Set, Type, Protocol
 )

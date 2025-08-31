@@ -5,8 +5,7 @@ in the enterprise event system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-from enum import Enum
+"""from enum import Enum
 from typing import List, Set
 
 class EventStatus(Enum):

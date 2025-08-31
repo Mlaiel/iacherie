@@ -21,8 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum

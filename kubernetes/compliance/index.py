@@ -8,8 +8,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 This module provides the main entry point for the compliance system,
 handling initialization, configuration, and orchestration of all
 compliance components.
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import sys
@@ -46,8 +45,7 @@ logger = get_logger(__name__)
 class ComplianceSystemManager:
     """    Main compliance system manager orchestrating all compliance components
     and providing unified access to compliance functionality.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.initialized = False
         self.components = {}
         self.status = "initializing"

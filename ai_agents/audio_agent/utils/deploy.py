@@ -10,8 +10,7 @@ Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sec
 ⚠️  PROPRIETARY DEPLOYMENT AUTOMATION - AUTHORIZED PERSONNEL ONLY ⚠️
 This deployment script contains proprietary deployment procedures and configurations.
 Unauthorized use or modification is strictly prohibited. Contact: mlaiel@live.de
-"""
-import asyncio
+"""import asyncio
 import sys
 import os
 import time

@@ -7,8 +7,7 @@ et identifier ceux qui fonctionnent déjà.
 
 Author: GitHub Copilot
 Date: 2025-08-31
-"""
-import os
+"""import os
 import sys
 from pathlib import Path
 import subprocess
@@ -124,8 +123,7 @@ def create_simple_test_example():
 ======================================================
 
 Ce test démontre que l'infrastructure de test est opérationnelle.
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path

@@ -3,8 +3,7 @@ Enterprise-grade authentication with multi-factor support
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Security Expert + Backend Senior
-"""
-import jwt
+"""import jwt
 import bcrypt
 import secrets
 import hashlib

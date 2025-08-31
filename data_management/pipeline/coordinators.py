@@ -3,8 +3,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 Advanced coordination systems for orchestrating multi-format content processing
 pipelines across distributed infrastructure with AI-powered optimization.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime, timedelta

@@ -1,5 +1,4 @@
-"""Enterprise notification orchestration service with intelligent routing and comprehensive analytics."""
-import os
+"""Enterprise notification orchestration service with intelligent routing and comprehensive analytics."""import os
 import json
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Set, Callable
@@ -165,8 +164,7 @@ class DeliveryResult:
 
 
 class NotificationOrchestrator:
-    """Enterprise notification orchestration service with intelligent delivery and comprehensive analytics."""
-    def __init__(self):
+    """Enterprise notification orchestration service with intelligent delivery and comprehensive analytics."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         

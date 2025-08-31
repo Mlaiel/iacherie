@@ -4,8 +4,7 @@ Quick validation script for the secrets management module
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import sys
+"""import sys
 import os
 import traceback
 from typing import Dict, Any

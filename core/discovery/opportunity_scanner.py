@@ -31,8 +31,7 @@ Features:
 - Competitive analysis and market positioning
 - Seasonal and event-based opportunity tracking
 - Geographic market expansion identification
-"""
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union

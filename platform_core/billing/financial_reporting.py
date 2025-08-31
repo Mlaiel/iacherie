@@ -14,8 +14,7 @@ Système de reporting financier enterprise avec analytics avancées
 - Analytics revenue avec cohorts et prédictions
 - Export comptable (SAP, QuickBooks, Sage)
 - Conformité GAAP/IFRS et audit trails
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid

@@ -28,8 +28,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading
@@ -456,8 +455,7 @@ class ResourceManager(BaseAgent):
     - Advanced resource analytics and performance insights
     - Container and microservice resource orchestration
     - GPU and specialized hardware resource management
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         super().__init__()
         self.config = config or {}
         
@@ -1189,8 +1187,7 @@ class ResourceManager:
     - Dynamic scaling and optimization
     - Resource usage analytics and reporting
     - Automatic resource cleanup and garbage collection
-    """
-    def __init__(self, config: Dict[str, Any] = None):
+    """    def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.resource_monitor = ResourceMonitor()
         self.resource_predictor = ResourcePredictor()

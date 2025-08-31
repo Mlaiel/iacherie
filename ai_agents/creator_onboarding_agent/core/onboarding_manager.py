@@ -4,8 +4,7 @@ Enterprise-grade onboarding management system with workflow orchestration,
 session persistence, and intelligent progress tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple

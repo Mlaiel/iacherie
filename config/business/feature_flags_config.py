@@ -12,8 +12,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -97,8 +96,7 @@ class ABTestConfig:
 
 
 class FeatureFlagsConfig:
-    """Enterprise feature flags management configuration."""
-    # Core feature flags
+    """Enterprise feature flags management configuration."""    # Core feature flags
     CORE_FEATURES = {
         "ai_fingerprinting": FeatureFlag(
             key="ai_fingerprinting",

@@ -20,8 +20,7 @@ License: Proprietary - Unauthorized use strictly prohibited
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -921,8 +920,7 @@ is strictly prohibited and will result in immediate legal action.
 For licensing inquiries, contact: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-# Export main classes and functions
+"""# Export main classes and functions
 __all__ = [
     "MonitoringIndex",
     "MonitoringIndexStatus",

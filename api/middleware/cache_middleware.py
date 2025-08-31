@@ -3,8 +3,7 @@ High-performance response caching middleware for FastAPI endpoints
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import hashlib
 import time

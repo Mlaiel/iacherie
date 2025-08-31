@@ -5,8 +5,7 @@ and registration within the IA Influencer Agent system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 © 2025 - All rights reserved. Unauthorized use prohibited.
-"""
-import inspect
+"""import inspect
 from typing import Dict, List, Type, Any, Optional
 from abc import ABC
 import importlib

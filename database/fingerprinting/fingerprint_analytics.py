@@ -5,8 +5,7 @@ analysis, trend detection, and business intelligence capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-import asyncio
+"""import asyncio
 import json
 import logging
 import numpy as np

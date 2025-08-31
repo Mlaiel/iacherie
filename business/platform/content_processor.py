@@ -5,8 +5,7 @@ for multiple content types including audio, video, image, and text content.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 import mimetypes
 from typing import Dict, List, Optional, Any, Tuple, Union

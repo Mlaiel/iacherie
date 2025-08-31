@@ -3,8 +3,7 @@ Secure HashiCorp Vault integration for secrets management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-import os
+"""import os
 import logging
 import hvac
 from typing import Dict, List, Optional, Any, Union

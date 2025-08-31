@@ -5,8 +5,7 @@ Example demonstrating how to use the Platform APIs Integration module.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from integrations.platforms import PlatformCoordinator
 
