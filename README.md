@@ -1,10 +1,12 @@
 # Ainflue - AI-Powered Content Protection & Monetization Platform
 
 **Project Creator & Lead Developer:** Fahed Mlaiel <mlaiel@live.de>  
-**Team Specialties:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
+**Team Specialties:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️ **CRITICAL LEGAL WARNING**  
 This code and concept are the exclusive intellectual property of **Fahed Mlaiel**. Any unauthorized use, reproduction, distribution, or theft of this code, concept, or intellectual property without explicit written permission from Fahed Mlaiel is **STRICTLY PROHIBITED** and will be prosecuted to the **FULL EXTENT OF THE LAW**. This includes but is not limited to: copying code, stealing concepts, unauthorized distribution, reverse engineering, or any form of intellectual property infringement.
+
+**⚖️ STRONG WARNING FOR THOSE WHO THINK OF STEALING THE IDEA, CONCEPT OR CODE:** Any person or entity attempting to steal, copy, reproduce, or use this intellectual property without clear written authorization from **Fahed Mlaiel** (mlaiel@live.de) will face immediate legal action including but not limited to civil lawsuits for damages, criminal prosecution for intellectual property theft, and international legal enforcement. This warning is clear and unambiguous - unauthorized use is theft and will be prosecuted to the fullest extent of the law.
 
 **Contact:** mlaiel@live.de for licensing inquiries and authorized use permissions.
 

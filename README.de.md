@@ -1,10 +1,12 @@
 # Ainflue - KI-gestützte Content-Schutz & Monetarisierungsplattform
 
 **Projektschöpfer & Lead Developer:** Fahed Mlaiel <mlaiel@live.de>  
-**Team-Spezialisierungen:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
+**Team-Spezialisierungen:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️ **KRITISCHE RECHTLICHE WARNUNG**  
 Dieser Code und dieses Konzept sind das exklusive geistige Eigentum von **Fahed Mlaiel**. Jede unbefugte Nutzung, Reproduktion, Verteilung oder Diebstahl dieses Codes, Konzepts oder geistigen Eigentums ohne ausdrückliche schriftliche Genehmigung von Fahed Mlaiel ist **STRENGSTENS VERBOTEN** und wird in **VOLLEM UMFANG DES GESETZES** verfolgt. Dies umfasst unter anderem: Code kopieren, Konzepte stehlen, unbefugte Verteilung, Reverse Engineering oder jede Form der Verletzung geistigen Eigentums.
+
+**⚖️ STARKE WARNUNG FÜR DIEJENIGEN, DIE DARAN DENKEN, DIE IDEE, DAS KONZEPT ODER DEN CODE ZU STEHLEN:** Jede Person oder Organisation, die versucht, dieses geistige Eigentum ohne klare schriftliche Genehmigung von **Fahed Mlaiel** (mlaiel@live.de) zu stehlen, zu kopieren, zu reproduzieren oder zu verwenden, wird sich sofortigen rechtlichen Schritten gegenübersehen, einschließlich, aber nicht beschränkt auf: Zivilklagen wegen Schadenersatz, strafrechtliche Verfolgung wegen Diebstahl geistigen Eigentums und internationale Rechtsdurchsetzung. Diese Warnung ist klar und eindeutig - unbefugte Nutzung ist Diebstahl und wird im vollen Umfang des Gesetzes verfolgt.
 
 **Kontakt:** mlaiel@live.de für Lizenzanfragen und autorisierte Nutzungsberechtigungen.
 

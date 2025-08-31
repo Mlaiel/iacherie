@@ -315,11 +315,12 @@ def run_comprehensive_test_suite():
     return results
 
 def validate_business_logic():
-    """    Validate complete business logic implementation.
+    """Validate complete business logic implementation.
     
     Returns:
         dict: Business logic validation results
-    """    validation_results = {
+    """
+    validation_results = {
         'upload_flow': True,
         'protection_flow': True, 
         'seo_flow': True,
