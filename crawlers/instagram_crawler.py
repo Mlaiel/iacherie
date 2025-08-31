@@ -2,51 +2,25 @@
 =================
 
 Professional Instagram content crawler with advanced monitoring capabilities.
-Implements Instagram Basic Display API and scraping techniques.
+Implements Instagram Basic Display API and Graph API integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-
-WARNING: This code is protected by copyright law. Any unauthorized copying, 
-distribution, or modification is strictly prohibited and will result in 
-legal action. Contact mlaiel@live.de for licensing.
-
-Project Team Specialties:
-- Lead Dev IA: Advanced AI integration and machine learning
-- Backend Senior: Scalable architecture and microservices  
-- ML Engineer: Content analysis and recommendation systems
-- DBA: High-performance database optimization
-- Security Expert: Enterprise-grade security and encryption
-- Microservices Architect: Distributed systems design
-- Audio Engineer: Advanced audio processing and analysis
-- DevOps Engineer: CI/CD and infrastructure automation
-- IA Prompt Engineer: Intelligent prompt optimization
 """
 import asyncio
 import logging
-from typing import Dict, List, Optional, Union, AsyncGenerator
+import json
+import time
+import re
+import os
+from typing import Dict, List, Optional, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass
-import json
-import re
 from urllib.parse import urlparse, parse_qs
 
-import aiohttp
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-
-from ..utils.rate_limiter import InstagramRateLimiter
-from ..utils.proxy_manager import ProxyManager
-from ..utils.user_agent_rotator import UserAgentRotator
-from ...core.config import get_settings
-from ...core.exceptions import CrawlerError, RateLimitError
-from ...database.models import CrawlResult, ContentMatch
+from .core import BaseCrawler, CrawlerResult, RateLimiter
 
 logger = logging.getLogger(__name__)
-settings = get_settings()
 
 @dataclass
 class InstagramPost:
