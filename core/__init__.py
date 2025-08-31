@@ -21,7 +21,8 @@ Monétisation avancée
 
 MISSION: Moteur fondamental de la plateforme IA-Influencer-Agent pour créateurs
 ARCHITECTURE: 22 modules core enterprise-grade pour production industrielle
-"""__version__ = "3.0.0"
+"""
+__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "Copyright 2025 Fahed Mlaiel. All rights reserved."
@@ -529,7 +530,8 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 Pour toute demande de licence ou autorisation: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. Tous droits réservés.
-"""def get_legal_notice() -> str:
+"""
+def get_legal_notice() -> str:
     """Retourne l'avertissement légal"""
     return LEGAL_NOTICE
 
