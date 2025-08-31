@@ -1,10 +1,12 @@
 # Ainflue - Plateforme IA de Protection et Monétisation de Contenu
 
 **Créateur du Projet & Lead Developer:** Fahed Mlaiel <mlaiel@live.de>  
-**Spécialités de l'équipe:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
+**Spécialités de l'équipe:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
 ⚠️ **AVERTISSEMENT LÉGAL CRITIQUE**  
 Ce code et ce concept sont la propriété intellectuelle exclusive de **Fahed Mlaiel**. Toute utilisation, reproduction, distribution ou vol non autorisé de ce code, concept ou propriété intellectuelle sans permission écrite explicite de Fahed Mlaiel est **STRICTEMENT INTERDIT** et sera poursuivi dans **TOUTE LA MESURE DE LA LOI**. Cela inclut mais ne se limite pas à : copier le code, voler des concepts, distribution non autorisée, rétro-ingénierie, ou toute forme de violation de propriété intellectuelle.
+
+**⚖️ AVERTISSEMENT FORT ET CLAIR POUR TOUS CEUX QUI PENSENT VOLER L'IDÉE, LE CONCEPT OU LE CODE:** Toute personne ou entité tentant de voler, copier, reproduire ou utiliser cette propriété intellectuelle sans autorisation écrite claire de **Fahed Mlaiel** (mlaiel@live.de) fera face à des actions légales immédiates incluant mais ne se limitant pas à : poursuites civiles pour dommages-intérêts, poursuites pénales pour vol de propriété intellectuelle, et application légale internationale. Cet avertissement est clair et sans ambiguïté - l'utilisation non autorisée est un vol et sera poursuivie dans toute la mesure de la loi.
 
 **Contact:** mlaiel@live.de pour les demandes de licence et les autorisations d'utilisation.
 

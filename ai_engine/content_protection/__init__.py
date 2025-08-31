@@ -379,27 +379,30 @@ SYSTEM_INFO = {
 
 
 def get_system_info() -> Dict[str, Any]:
-    """    Get comprehensive system information and capabilities
+    """Get comprehensive system information and capabilities
     
     Returns:
         System information dictionary
-    """    return SYSTEM_INFO.copy()
+    """
+    return SYSTEM_INFO.copy()
 
 
 def get_module_version() -> str:
-    """    Get module version string
+    """Get module version string
     
     Returns:
         Version string
-    """    return __version__
+    """
+    return __version__
 
 
 def verify_installation() -> Dict[str, Any]:
-    """    Verify module installation and dependencies
+    """Verify module installation and dependencies
     
     Returns:
         Installation verification results
-    """    verification = {
+    """
+    verification = {
         "module_loaded": IMPORT_SUCCESS,
         "version": __version__,
         "dependencies": {},
@@ -447,7 +450,8 @@ def verify_installation() -> Dict[str, Any]:
 
 
 def print_legal_notice():
-    """Print the intellectual property legal notice"""    notice = f"""{'='*80}
+    """Print the intellectual property legal notice"""
+    notice = f"""{'='*80}
     ULTRA-INDUSTRIAL AI CONTENT PROTECTION MODULE
     Version: {__version__}
     Author: {__author__} ({__email__})
@@ -467,7 +471,8 @@ For licensing inquiries, contact: {__email__}
 
 
 def print_system_banner():
-    """Print system startup banner with key information"""    banner = f"""╔═══════════════════════════════════════════════════════════════════════════════╗
+    """Print system startup banner with key information"""
+    banner = f"""╔═══════════════════════════════════════════════════════════════════════════════╗
 ║                 ULTRA-INDUSTRIAL CONTENT PROTECTION SYSTEM                   ║
 ║                        Version: {__version__:<25}                        ║
 ║                        Author: {__author__:<26}                         ║
@@ -491,7 +496,8 @@ def print_system_banner():
 
 # Initialize logging for the module
 def _init_module_logging():
-    """Initialize module-level logging"""    logger = logging.getLogger(__name__)
+    """Initialize module-level logging"""
+    logger = logging.getLogger(__name__)
     
     if not logger.handlers:
         handler = logging.StreamHandler()
@@ -552,7 +558,8 @@ class ContentProtectionSystem:
     DMCA automation, blockchain verification, and analytics.
     """    
     def __init__(self, config=None):
-        """Initialize the complete content protection system"""        self.config = config or {}
+        """Initialize the complete content protection system"""
+        self.config = config or {}
         
         # Initialize all subsystems
         self.fingerprinter = ContentFingerprinter(config.get('fingerprinting', {}))
