@@ -103,22 +103,26 @@ SAMPLE_FINGERPRINT_DATA = {
 
 @pytest.fixture
 def test_config():
-    """Provide test configuration"""    return TEST_CONFIG.copy()
+    """
+    return TEST_CONFIG.copy()
 
 
 @pytest.fixture
 def sample_content_metadata():
-    """Provide sample content metadata"""    return SAMPLE_CONTENT_METADATA.copy()
+    """
+    return SAMPLE_CONTENT_METADATA.copy()
 
 
 @pytest.fixture
 def sample_rights_data():
-    """Provide sample rights data"""    return SAMPLE_RIGHTS_DATA.copy()
+    """
+    return SAMPLE_RIGHTS_DATA.copy()
 
 
 @pytest.fixture
 def sample_fingerprint_data():
-    """Provide sample fingerprint data"""    return SAMPLE_FINGERPRINT_DATA.copy()
+    """
+    return SAMPLE_FINGERPRINT_DATA.copy()
 
 
 @pytest.fixture

@@ -388,11 +388,13 @@ TEST_DATA = TestDataSets()
 # Fixtures pytest communes
 @pytest.fixture(scope="session")
 def test_config():
-    """Fixture pour la configuration de test globale."""    return TEST_CONFIG
+    """
+    return TEST_CONFIG
 
 @pytest.fixture(scope="session") 
 def test_data():
-    """Fixture pour les jeux de données de test."""    return TEST_DATA
+    """
+    return TEST_DATA
 
 @pytest.fixture(scope="function")
 def test_environment():

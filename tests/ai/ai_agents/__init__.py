@@ -289,13 +289,16 @@ __license__ = "Proprietary"
 
 # Test utilities and helpers
 def get_test_config():
-    """Get the test configuration"""    return TEST_CONFIG.copy()
+    """
+    return TEST_CONFIG.copy()
 
 def get_expert_team_info():
-    """Get expert team information"""    return EXPERT_TEAM.copy()
+    """
+    return EXPERT_TEAM.copy()
 
 def get_copyright_info():
-    """Get copyright and legal information"""    return COPYRIGHT_INFO.copy()
+    """
+    return COPYRIGHT_INFO.copy()
 
 def setup_test_environment():
     """Setup the test environment"""    # Create test directories if they don't exist

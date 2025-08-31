@@ -123,11 +123,13 @@ class TestConfig:
 
 @pytest.fixture
 def test_config():
-    """Provide test configuration"""    return TestConfig()
+    """
+    return TestConfig()
 
 @pytest.fixture
 def sample_content():
-    """Provide sample content for testing"""    return {
+    """
+    return {
         'text': "Sample text content for AI processing and testing",
         'audio': "sample_audio_data_placeholder",
         'video': "sample_video_data_placeholder", 
@@ -140,7 +142,8 @@ def sample_content():
 
 @pytest.fixture
 def test_options():
-    """Provide test options"""    return {
+    """
+    return {
         'content_type': 'mixed_media',
         'quality_target': 'professional',
         'protection_level': 'enterprise',

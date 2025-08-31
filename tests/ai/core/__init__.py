@@ -106,16 +106,20 @@ MOCK_CREATORS = {
 
 # Test utilities
 def get_test_config():
-    """Get test configuration"""    return TEST_CONFIG.copy()
+    """Get test configuration"""
+    return TEST_CONFIG.copy()
 
 def get_test_data_config():
-    """Get test data configuration"""    return TEST_DATA_CONFIG.copy()
+    """Get test data configuration"""
+    return TEST_DATA_CONFIG.copy()
 
 def get_mock_creator(creator_type: str):
-    """Get mock creator data"""    return MOCK_CREATORS.get(creator_type, {})
+    """Get mock creator data"""
+    return MOCK_CREATORS.get(creator_type, {})
 
 def get_all_mock_creators():
-    """Get all mock creator data"""    return MOCK_CREATORS.copy()
+    """
+    return MOCK_CREATORS.copy()
 
 # Test result tracking
 class TestResults:
