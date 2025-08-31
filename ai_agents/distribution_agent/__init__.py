@@ -116,7 +116,7 @@ __all__ = [
     'DistributionAgentManager',
     'DistributionManagerLegacy'
 ]
-prosecuted to the full extent of the law.
+
 """# Core Distribution Engine Imports
 from .core.distribution_engine import (
     DistributionEngine,
