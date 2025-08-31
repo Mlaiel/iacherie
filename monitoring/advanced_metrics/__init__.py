@@ -21,7 +21,9 @@ User (musician/blogger/photographer/influencer/comedian)
 → SEO professional optimization 
 → Collaboration matching + gamification
 → Distribution multi-platforms
-"""__version__ = "1.0.0"
+"""
+
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary"
