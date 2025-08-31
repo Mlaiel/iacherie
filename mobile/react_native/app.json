@@ -1,0 +1,71 @@
+{
+  "expo": {
+    "name": "Ainflue - AI Content Protection",
+    "slug": "ainflue-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a1a2e"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ainflue.mobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to camera to upload and edit content.",
+        "NSMicrophoneUsageDescription": "This app needs access to microphone to record and edit audio content.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to photo library to upload and manage your content.",
+        "NSDocumentsFolderUsageDescription": "This app needs access to documents to upload and manage files."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a1a2e"
+      },
+      "package": "com.ainflue.mobile",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.WAKE_LOCK",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.VIBRATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-camera",
+      "expo-media-library",
+      "expo-document-picker",
+      "expo-av",
+      "expo-image-picker",
+      "expo-file-system",
+      "expo-notifications",
+      "expo-background-fetch",
+      "expo-task-manager"
+    ],
+    "scheme": "ainflue",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "runtimeVersion": "exposdk:49.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "ainflue-mobile-project"
+      }
+    }
+  }
+}
