@@ -124,10 +124,12 @@ MODEL_REGISTRY = {
 }
 
 def get_model(model_name: str):
-    """Get model class by name"""    return MODEL_REGISTRY.get(model_name.lower())
+    """Get model class by name"""
+    return MODEL_REGISTRY.get(model_name.lower())
 
 def list_available_models():
-    """List all available model names"""    return list(MODEL_REGISTRY.keys())
+    """List all available model names"""
+    return list(MODEL_REGISTRY.keys())
 
 # Export all models
 __all__ = [
