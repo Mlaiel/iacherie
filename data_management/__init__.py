@@ -23,7 +23,9 @@ SUPPORTS FORMATS:
 📸 Images: JPG, PNG, GIF, SVG, WEBP, TIFF (Photographes)
 📝 Texte: TXT, MD, HTML, PDF, DOCX (Blogueurs)
 📊 Données: JSON, CSV, XML, YAML (Analytics)
-"""__version__ = "3.0.0"
+"""
+
+__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __team__ = "Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices"
 
