@@ -68,6 +68,10 @@ class TransformationType(Enum):
     DOCUMENT_EXTRACT_TEXT = "document_extract_text"
     DOCUMENT_SUMMARIZE = "document_summarize"
     
+    # Transformations métadonnées
+    METADATA_NORMALIZE = "metadata_normalize"
+    METADATA_ENRICH = "metadata_enrich"
+    
     # Transformations protection
     CONTENT_FINGERPRINT = "content_fingerprint"
     CONTENT_PROTECTION = "content_protection"

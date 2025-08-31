@@ -131,22 +131,4 @@ def list_available_models():
     """List all available model names"""
     return list(MODEL_REGISTRY.keys())
 
-# Export all models
-__all__ = [
-    "ProtectionModel", "ViolationModel", "TakedownModel",
-    
-    # Monetization Models
-    "MonetizationModel", "RevenueTrackingModel", "PaymentModel",
-    
-    # Collaboration Models
-    "CollaborationModel", "MatchingModel", "ProjectModel",
-    
-    # Platform Models
-    "PlatformModel", "IntegrationModel", "APIModel",
-    
-    # Audit Models
-    "AuditModel", "LogModel", "EventModel",
-    
-    # Governance Models
-    "GovernanceModel", "ComplianceModel", "PolicyModel"
-]
+
