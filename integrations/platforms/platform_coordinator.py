@@ -25,6 +25,11 @@ from .spotify_artists_api import SpotifyArtistsAPI, SpotifyTrack, SpotifyAnalyti
 from .facebook_rights_api import FacebookRightsAPI, FacebookRightsClaim
 from .twitter_api_v2 import TwitterAPIv2, Tweet, TwitterAnalytics
 from .dmca_services_api import DMCAServicesAPI, DMCARequest
+from .linkedin_api import LinkedInAPI, LinkedInPost, LinkedInAnalytics
+from .pinterest_api import PinterestAPI, PinterestPin, PinterestAnalytics
+from .discord_bot_api import DiscordBotAPI, DiscordMessage, DiscordAnalytics
+from .telegram_bot_api import TelegramBotAPI, TelegramMessage, TelegramAnalytics
+from .snapchat_snap_kit_api import SnapchatSnapKitAPI, SnapchatStory, SnapchatAnalytics
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +78,11 @@ class PlatformCoordinator:
         self.spotify_api = SpotifyArtistsAPI(self.rate_limiter)
         self.facebook_api = FacebookRightsAPI(self.rate_limiter)
         self.twitter_api = TwitterAPIv2(self.rate_limiter)
+        self.linkedin_api = LinkedInAPI(self.rate_limiter)
+        self.pinterest_api = PinterestAPI(self.rate_limiter)
+        self.discord_api = DiscordBotAPI(self.rate_limiter)
+        self.telegram_api = TelegramBotAPI(self.rate_limiter)
+        self.snapchat_api = SnapchatSnapKitAPI(self.rate_limiter)
         self.dmca_api = DMCAServicesAPI(self.rate_limiter)
         
         # Token storage (in production, this should be a secure database)
@@ -91,6 +101,11 @@ class PlatformCoordinator:
         await self.spotify_api.__aenter__()
         await self.facebook_api.__aenter__()
         await self.twitter_api.__aenter__()
+        await self.linkedin_api.__aenter__()
+        await self.pinterest_api.__aenter__()
+        await self.discord_api.__aenter__()
+        await self.telegram_api.__aenter__()
+        await self.snapchat_api.__aenter__()
         await self.dmca_api.__aenter__()
         return self
         
@@ -104,6 +119,11 @@ class PlatformCoordinator:
         await self.spotify_api.__aexit__(exc_type, exc_val, exc_tb)
         await self.facebook_api.__aexit__(exc_type, exc_val, exc_tb)
         await self.twitter_api.__aexit__(exc_type, exc_val, exc_tb)
+        await self.linkedin_api.__aexit__(exc_type, exc_val, exc_tb)
+        await self.pinterest_api.__aexit__(exc_type, exc_val, exc_tb)
+        await self.discord_api.__aexit__(exc_type, exc_val, exc_tb)
+        await self.telegram_api.__aexit__(exc_type, exc_val, exc_tb)
+        await self.snapchat_api.__aexit__(exc_type, exc_val, exc_tb)
         await self.dmca_api.__aexit__(exc_type, exc_val, exc_tb)
         
     def configure_platform_oauth(
@@ -268,7 +288,7 @@ class PlatformCoordinator:
     ) -> Dict[str, Any]:
         """Sync content across multiple platforms"""
         
-        platforms = platforms or ["youtube", "instagram", "tiktok", "twitter"]
+        platforms = platforms or ["youtube", "instagram", "tiktok", "twitter", "linkedin", "pinterest", "discord", "telegram", "snapchat"]
         platform_specific_data = platform_specific_data or {}
         results = {}
         
@@ -320,6 +340,75 @@ class PlatformCoordinator:
                     )
                     results[platform] = {"success": True, "content_id": tweet.tweet_id}
                     
+                elif platform == "linkedin":
+                    # LinkedIn post
+                    post_content = f"{content_title}\n\n{content_description}"
+                    media_urls = platform_data.get("media_urls", [])
+                    
+                    post = await self.linkedin_api.create_post(
+                        tokens, post_content, 
+                        visibility=platform_data.get("visibility", "PUBLIC"),
+                        media_urls=media_urls
+                    )
+                    results[platform] = {"success": True, "content_id": post.post_id}
+                    
+                elif platform == "pinterest":
+                    # Pinterest requires board_id and media_url
+                    if "board_id" in platform_data and "media_url" in platform_data:
+                        pin = await self.pinterest_api.create_pin(
+                            tokens,
+                            board_id=platform_data["board_id"],
+                            title=content_title,
+                            description=content_description,
+                            media_url=platform_data["media_url"],
+                            link=platform_data.get("link")
+                        )
+                        results[platform] = {"success": True, "content_id": pin.pin_id}
+                    else:
+                        results[platform] = {"success": False, "error": "Board ID and media URL required"}
+                        
+                elif platform == "discord":
+                    # Discord message to specified channel
+                    if "channel_id" in platform_data:
+                        message_content = f"**{content_title}**\n\n{content_description}"
+                        message = await self.discord_api.send_message(
+                            tokens,
+                            channel_id=platform_data["channel_id"],
+                            content=message_content,
+                            embeds=platform_data.get("embeds")
+                        )
+                        results[platform] = {"success": True, "content_id": message.message_id}
+                    else:
+                        results[platform] = {"success": False, "error": "Channel ID required"}
+                        
+                elif platform == "telegram":
+                    # Telegram message to specified chat
+                    if "chat_id" in platform_data and "bot_token" in platform_data:
+                        message_text = f"*{content_title}*\n\n{content_description}"
+                        message = await self.telegram_api.send_message(
+                            platform_data["bot_token"],
+                            chat_id=platform_data["chat_id"],
+                            text=message_text,
+                            parse_mode="Markdown"
+                        )
+                        results[platform] = {"success": True, "content_id": message.message_id}
+                    else:
+                        results[platform] = {"success": False, "error": "Chat ID and bot token required"}
+                        
+                elif platform == "snapchat":
+                    # Snapchat story sharing URL
+                    if "media_url" in platform_data:
+                        sharing_url = await self.snapchat_api.create_story_sharing_url(
+                            tokens,
+                            media_url=platform_data["media_url"],
+                            caption=f"{content_title} - {content_description}",
+                            attachment_url=platform_data.get("attachment_url"),
+                            sticker_url=platform_data.get("sticker_url")
+                        )
+                        results[platform] = {"success": True, "content_id": sharing_url}
+                    else:
+                        results[platform] = {"success": False, "error": "Media URL required"}
+                    
                 else:
                     results[platform] = {"success": False, "error": "Platform not supported for this content type"}
                     
@@ -338,7 +427,7 @@ class PlatformCoordinator:
     ) -> CrossPlatformAnalytics:
         """Get aggregated analytics across all platforms"""
         
-        platforms = platforms or ["youtube", "instagram", "tiktok", "spotify", "twitter"]
+        platforms = platforms or ["youtube", "instagram", "tiktok", "spotify", "twitter", "linkedin", "pinterest", "discord", "telegram", "snapchat"]
         platform_breakdown = {}
         
         total_content = 0
@@ -394,6 +483,69 @@ class PlatformCoordinator:
                     # Note: Spotify for Artists analytics would require special access
                     platform_data["followers"] = profile.get("followers", {}).get("total", 0)
                     
+                elif platform == "twitter":
+                    user_info = await self.twitter_api.get_me(tokens)
+                    platform_data["followers"] = user_info.public_metrics.get("followers_count", 0)
+                    platform_data["engagement"] = user_info.public_metrics.get("like_count", 0)
+                    
+                elif platform == "linkedin":
+                    try:
+                        profile = await self.linkedin_api.get_profile(tokens)
+                        platform_data["followers"] = profile.connections_count
+                        # LinkedIn analytics would require additional API calls
+                    except Exception as e:
+                        logger.warning(f"Could not get LinkedIn analytics: {e}")
+                        
+                elif platform == "pinterest":
+                    try:
+                        user = await self.pinterest_api.get_user_profile(tokens)
+                        platform_data["followers"] = user.follower_count
+                        platform_data["content_count"] = user.pin_count
+                        
+                        # Get user analytics for the period
+                        analytics = await self.pinterest_api.get_user_analytics(tokens, since, until)
+                        platform_data["views"] = analytics.impressions
+                        platform_data["engagement"] = analytics.saves + analytics.clicks
+                    except Exception as e:
+                        logger.warning(f"Could not get Pinterest analytics: {e}")
+                        
+                elif platform == "discord":
+                    try:
+                        guilds = await self.discord_api.get_bot_guilds(tokens)
+                        total_members = sum(guild.member_count for guild in guilds)
+                        platform_data["followers"] = total_members
+                        platform_data["content_count"] = len(guilds)
+                        
+                        # Get analytics for the first guild as example
+                        if guilds:
+                            analytics = await self.discord_api.get_server_analytics(
+                                tokens, guilds[0].guild_id, since, until
+                            )
+                            platform_data["engagement"] = analytics.total_messages
+                    except Exception as e:
+                        logger.warning(f"Could not get Discord analytics: {e}")
+                        
+                elif platform == "telegram":
+                    try:
+                        # Note: Telegram bot API doesn't provide comprehensive analytics
+                        # This would require bot token from platform_data
+                        bot_token = platform_data.get("bot_token")
+                        if bot_token:
+                            bot_info = await self.telegram_api.get_me(bot_token)
+                            platform_data["bot_username"] = bot_info.username
+                    except Exception as e:
+                        logger.warning(f"Could not get Telegram analytics: {e}")
+                        
+                elif platform == "snapchat":
+                    try:
+                        user = await self.snapchat_api.get_user_info(tokens)
+                        analytics = await self.snapchat_api.get_analytics(tokens, since, until)
+                        platform_data["views"] = analytics.total_views
+                        platform_data["engagement"] = analytics.total_screenshots
+                        platform_data["followers"] = 0  # Not available in Snap Kit
+                    except Exception as e:
+                        logger.warning(f"Could not get Snapchat analytics: {e}")
+                
                 elif platform == "twitter":
                     user_info = await self.twitter_api.get_me(tokens)
                     platform_data["followers"] = user_info.public_metrics.get("followers_count", 0)
@@ -495,6 +647,33 @@ class PlatformCoordinator:
             elif platform == "twitter":
                 user_info = await self.twitter_api.get_me(tokens)
                 return {"user_info": asdict(user_info)}
+                
+            elif platform == "linkedin":
+                profile = await self.linkedin_api.get_profile(tokens)
+                return {"profile": asdict(profile)}
+                
+            elif platform == "pinterest":
+                user = await self.pinterest_api.get_user_profile(tokens)
+                boards = await self.pinterest_api.get_user_boards(tokens, page_size=10)
+                return {"user": asdict(user), "boards": boards}
+                
+            elif platform == "discord":
+                guilds = await self.discord_api.get_bot_guilds(tokens, limit=10)
+                return {"guilds": [asdict(guild) for guild in guilds]}
+                
+            elif platform == "telegram":
+                # Requires bot token from platform_data or user context
+                bot_token = insight_type  # Using insight_type parameter for bot_token
+                if bot_token and bot_token != "overview":
+                    bot_info = await self.telegram_api.get_me(bot_token)
+                    return {"bot_info": asdict(bot_info)}
+                else:
+                    return {"error": "Bot token required for Telegram insights"}
+                    
+            elif platform == "snapchat":
+                user = await self.snapchat_api.get_user_info(tokens)
+                bitmoji = await self.snapchat_api.get_user_bitmoji(tokens)
+                return {"user": asdict(user), "bitmoji": asdict(bitmoji)}
                 
             else:
                 return {"error": f"Insights not available for platform: {platform}"}
