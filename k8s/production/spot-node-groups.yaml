@@ -1,0 +1,621 @@
+# Spot Instance Node Groups for Ainflue Platform Production
+# Cost-optimized node groups with spot instances across multiple AZs
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+# Spot Instance Node Group for General Workloads - AZ us-east-1a
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-spot-general-us-east-1a
+  namespace: ainflue-production
+  labels:
+    environment: production
+    node-type: spot-general
+    availability-zone: us-east-1a
+    cost-optimization: spot-instance
+  annotations:
+    description: "Spot instance node group for general workloads in us-east-1a"
+    cluster-autoscaler/node-template/label/node-type: "spot-general"
+    cluster-autoscaler/node-template/label/availability-zone: "us-east-1a"
+    cluster-autoscaler/node-template/label/spot-instance: "true"
+    cluster-autoscaler/node-template/taint/spot-instance: "true:NoSchedule"
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20231025
+  machineType: m5.large
+  maxSize: 10
+  minSize: 0
+  rootVolumeSize: 50
+  rootVolumeType: gp3
+  rootVolumeIops: 3000
+  subnets:
+  - us-east-1a
+  role: Node
+  nodeLabels:
+    node-type: spot-general
+    availability-zone: us-east-1a
+    spot-instance: "true"
+    cost-optimization: enabled
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+  taints:
+  - spot-instance=true:NoSchedule
+  instanceMetadata:
+    httpTokens: required
+    httpPutResponseHopLimit: 1
+  spotDurationInMinutes: 0  # No duration limit for maximum savings
+  spotMaxPrice: "0.10"  # Maximum price per hour
+  mixedInstancesPolicy:
+    instances:
+    - m5.large
+    - m5.xlarge
+    - m5a.large
+    - m5a.xlarge
+    - m4.large
+    - m4.xlarge
+    onDemandAboveBase: 0
+    onDemandBase: 0
+    spotAllocationStrategy: diversified
+    spotInstancePools: 4
+  cloudLabels:
+    Environment: production
+    Project: ainflue
+    NodeType: spot-general
+    CostOptimization: spot-instance
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+
+---
+# Spot Instance Node Group for General Workloads - AZ us-east-1b
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-spot-general-us-east-1b
+  namespace: ainflue-production
+  labels:
+    environment: production
+    node-type: spot-general
+    availability-zone: us-east-1b
+    cost-optimization: spot-instance
+  annotations:
+    description: "Spot instance node group for general workloads in us-east-1b"
+    cluster-autoscaler/node-template/label/node-type: "spot-general"
+    cluster-autoscaler/node-template/label/availability-zone: "us-east-1b"
+    cluster-autoscaler/node-template/label/spot-instance: "true"
+    cluster-autoscaler/node-template/taint/spot-instance: "true:NoSchedule"
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20231025
+  machineType: m5.large
+  maxSize: 10
+  minSize: 0
+  rootVolumeSize: 50
+  rootVolumeType: gp3
+  rootVolumeIops: 3000
+  subnets:
+  - us-east-1b
+  role: Node
+  nodeLabels:
+    node-type: spot-general
+    availability-zone: us-east-1b
+    spot-instance: "true"
+    cost-optimization: enabled
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+  taints:
+  - spot-instance=true:NoSchedule
+  instanceMetadata:
+    httpTokens: required
+    httpPutResponseHopLimit: 1
+  spotDurationInMinutes: 0
+  spotMaxPrice: "0.10"
+  mixedInstancesPolicy:
+    instances:
+    - m5.large
+    - m5.xlarge
+    - m5a.large
+    - m5a.xlarge
+    - m4.large
+    - m4.xlarge
+    onDemandAboveBase: 0
+    onDemandBase: 0
+    spotAllocationStrategy: diversified
+    spotInstancePools: 4
+  cloudLabels:
+    Environment: production
+    Project: ainflue
+    NodeType: spot-general
+    CostOptimization: spot-instance
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+
+---
+# Spot Instance Node Group for General Workloads - AZ us-east-1c
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-spot-general-us-east-1c
+  namespace: ainflue-production
+  labels:
+    environment: production
+    node-type: spot-general
+    availability-zone: us-east-1c
+    cost-optimization: spot-instance
+  annotations:
+    description: "Spot instance node group for general workloads in us-east-1c"
+    cluster-autoscaler/node-template/label/node-type: "spot-general"
+    cluster-autoscaler/node-template/label/availability-zone: "us-east-1c"
+    cluster-autoscaler/node-template/label/spot-instance: "true"
+    cluster-autoscaler/node-template/taint/spot-instance: "true:NoSchedule"
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20231025
+  machineType: m5.large
+  maxSize: 10
+  minSize: 0
+  rootVolumeSize: 50
+  rootVolumeType: gp3
+  rootVolumeIops: 3000
+  subnets:
+  - us-east-1c
+  role: Node
+  nodeLabels:
+    node-type: spot-general
+    availability-zone: us-east-1c
+    spot-instance: "true"
+    cost-optimization: enabled
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+  taints:
+  - spot-instance=true:NoSchedule
+  instanceMetadata:
+    httpTokens: required
+    httpPutResponseHopLimit: 1
+  spotDurationInMinutes: 0
+  spotMaxPrice: "0.10"
+  mixedInstancesPolicy:
+    instances:
+    - m5.large
+    - m5.xlarge
+    - m5a.large
+    - m5a.xlarge
+    - m4.large
+    - m4.xlarge
+    onDemandAboveBase: 0
+    onDemandBase: 0
+    spotAllocationStrategy: diversified
+    spotInstancePools: 4
+  cloudLabels:
+    Environment: production
+    Project: ainflue
+    NodeType: spot-general
+    CostOptimization: spot-instance
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+
+---
+# Spot Instance Node Group for AI/GPU Workloads - Multi-AZ
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-spot-gpu-multi-az
+  namespace: ainflue-production
+  labels:
+    environment: production
+    node-type: spot-gpu
+    cost-optimization: spot-instance
+    workload-type: ai-processing
+  annotations:
+    description: "Spot instance node group for AI/GPU workloads across multiple AZs"
+    cluster-autoscaler/node-template/label/node-type: "spot-gpu"
+    cluster-autoscaler/node-template/label/gpu-enabled: "true"
+    cluster-autoscaler/node-template/label/spot-instance: "true"
+    cluster-autoscaler/node-template/taint/spot-instance: "true:NoSchedule"
+    cluster-autoscaler/node-template/taint/gpu-workload: "true:NoSchedule"
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20231025
+  machineType: g4dn.xlarge
+  maxSize: 8
+  minSize: 0
+  rootVolumeSize: 100
+  rootVolumeType: gp3
+  rootVolumeIops: 3000
+  subnets:
+  - us-east-1a
+  - us-east-1b
+  - us-east-1c
+  role: Node
+  nodeLabels:
+    node-type: spot-gpu
+    gpu-enabled: "true"
+    spot-instance: "true"
+    cost-optimization: enabled
+    nvidia.com/gpu.present: "true"
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+  taints:
+  - spot-instance=true:NoSchedule
+  - gpu-workload=true:NoSchedule
+  - nvidia.com/gpu=true:NoSchedule
+  instanceMetadata:
+    httpTokens: required
+    httpPutResponseHopLimit: 1
+  spotDurationInMinutes: 0
+  spotMaxPrice: "0.50"  # Higher price for GPU instances
+  mixedInstancesPolicy:
+    instances:
+    - g4dn.xlarge
+    - g4dn.2xlarge
+    - g4ad.xlarge
+    - g4ad.2xlarge
+    onDemandAboveBase: 0
+    onDemandBase: 0
+    spotAllocationStrategy: diversified
+    spotInstancePools: 2
+  cloudLabels:
+    Environment: production
+    Project: ainflue
+    NodeType: spot-gpu
+    CostOptimization: spot-instance
+    WorkloadType: ai-processing
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+  # GPU driver installation
+  additionalUserData: |
+    #!/bin/bash
+    # Install NVIDIA drivers and container runtime
+    curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | apt-key add -
+    distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+    curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | tee /etc/apt/sources.list.d/nvidia-docker.list
+    apt-get update && apt-get install -y nvidia-docker2
+    systemctl restart docker
+    
+    # Install NVIDIA device plugin
+    kubectl apply -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.14.0/nvidia-device-plugin.yml
+
+---
+# On-Demand Node Group for Critical Workloads (High Availability)
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  name: ainflue-ondemand-critical-multi-az
+  namespace: ainflue-production
+  labels:
+    environment: production
+    node-type: ondemand-critical
+    availability: high
+    workload-type: critical-services
+  annotations:
+    description: "On-demand node group for critical workloads requiring high availability"
+    cluster-autoscaler/node-template/label/node-type: "ondemand-critical"
+    cluster-autoscaler/node-template/label/availability: "high"
+    cluster-autoscaler/node-template/label/spot-instance: "false"
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20231025
+  machineType: m5.xlarge
+  maxSize: 6
+  minSize: 3  # Always maintain minimum for critical services
+  rootVolumeSize: 50
+  rootVolumeType: gp3
+  rootVolumeIops: 3000
+  subnets:
+  - us-east-1a
+  - us-east-1b
+  - us-east-1c
+  role: Node
+  nodeLabels:
+    node-type: ondemand-critical
+    availability: high
+    spot-instance: "false"
+    critical-workload: "true"
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+  # No taints for critical workloads - they should be schedulable by default
+  instanceMetadata:
+    httpTokens: required
+    httpPutResponseHopLimit: 1
+  cloudLabels:
+    Environment: production
+    Project: ainflue
+    NodeType: ondemand-critical
+    Availability: high
+    WorkloadType: critical-services
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/ainflue-production: "owned"
+
+---
+# Terraform AWS EKS Node Group Configuration for Spot Instances
+# This is an alternative configuration for EKS-based deployments
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eks-spot-nodegroup-config
+  namespace: ainflue-production
+  labels:
+    environment: production
+    config-type: terraform-reference
+  annotations:
+    description: "Terraform configuration reference for EKS spot node groups"
+data:
+  spot-nodegroup.tf: |
+    # Spot Instance Node Group for EKS
+    resource "aws_eks_node_group" "ainflue_spot_general" {
+      cluster_name    = var.cluster_name
+      node_group_name = "ainflue-spot-general"
+      node_role_arn   = aws_iam_role.eks_node_role.arn
+      subnet_ids      = var.private_subnet_ids
+      
+      capacity_type  = "SPOT"
+      instance_types = ["m5.large", "m5.xlarge", "m5a.large", "m5a.xlarge", "m4.large", "m4.xlarge"]
+      
+      scaling_config {
+        desired_size = 3
+        max_size     = 15
+        min_size     = 0
+      }
+      
+      update_config {
+        max_unavailable = 1
+      }
+      
+      labels = {
+        node-type = "spot-general"
+        spot-instance = "true"
+        cost-optimization = "enabled"
+        "k8s.io/cluster-autoscaler/enabled" = "true"
+        "k8s.io/cluster-autoscaler/ainflue-production" = "owned"
+      }
+      
+      taint {
+        key    = "spot-instance"
+        value  = "true"
+        effect = "NO_SCHEDULE"
+      }
+      
+      tags = {
+        Name = "ainflue-spot-general-nodegroup"
+        Environment = "production"
+        Project = "ainflue"
+        NodeType = "spot-general"
+        CostOptimization = "spot-instance"
+        "k8s.io/cluster-autoscaler/enabled" = "true"
+        "k8s.io/cluster-autoscaler/ainflue-production" = "owned"
+      }
+      
+      depends_on = [
+        aws_iam_role_policy_attachment.eks_worker_node_policy,
+        aws_iam_role_policy_attachment.eks_cni_policy,
+        aws_iam_role_policy_attachment.eks_container_registry_policy,
+      ]
+    }
+    
+    # GPU Spot Instance Node Group for AI Workloads
+    resource "aws_eks_node_group" "ainflue_spot_gpu" {
+      cluster_name    = var.cluster_name
+      node_group_name = "ainflue-spot-gpu"
+      node_role_arn   = aws_iam_role.eks_node_role.arn
+      subnet_ids      = var.private_subnet_ids
+      
+      capacity_type  = "SPOT"
+      instance_types = ["g4dn.xlarge", "g4dn.2xlarge", "g4ad.xlarge", "g4ad.2xlarge"]
+      
+      scaling_config {
+        desired_size = 1
+        max_size     = 8
+        min_size     = 0
+      }
+      
+      update_config {
+        max_unavailable = 1
+      }
+      
+      labels = {
+        node-type = "spot-gpu"
+        gpu-enabled = "true"
+        spot-instance = "true"
+        cost-optimization = "enabled"
+        "nvidia.com/gpu.present" = "true"
+        "k8s.io/cluster-autoscaler/enabled" = "true"
+        "k8s.io/cluster-autoscaler/ainflue-production" = "owned"
+      }
+      
+      taint {
+        key    = "spot-instance"
+        value  = "true"
+        effect = "NO_SCHEDULE"
+      }
+      
+      taint {
+        key    = "gpu-workload"
+        value  = "true"
+        effect = "NO_SCHEDULE"
+      }
+      
+      taint {
+        key    = "nvidia.com/gpu"
+        value  = "true"
+        effect = "NO_SCHEDULE"
+      }
+      
+      tags = {
+        Name = "ainflue-spot-gpu-nodegroup"
+        Environment = "production"
+        Project = "ainflue"
+        NodeType = "spot-gpu"
+        CostOptimization = "spot-instance"
+        WorkloadType = "ai-processing"
+        "k8s.io/cluster-autoscaler/enabled" = "true"
+        "k8s.io/cluster-autoscaler/ainflue-production" = "owned"
+      }
+      
+      depends_on = [
+        aws_iam_role_policy_attachment.eks_worker_node_policy,
+        aws_iam_role_policy_attachment.eks_cni_policy,
+        aws_iam_role_policy_attachment.eks_container_registry_policy,
+      ]
+    }
+
+---
+# Spot Instance Interruption Handler DaemonSet
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: aws-node-termination-handler
+  namespace: kube-system
+  labels:
+    app: aws-node-termination-handler
+    environment: production
+  annotations:
+    description: "Handles spot instance interruptions gracefully"
+spec:
+  selector:
+    matchLabels:
+      app: aws-node-termination-handler
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: aws-node-termination-handler
+        environment: production
+    spec:
+      serviceAccountName: aws-node-termination-handler
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+      - name: aws-node-termination-handler
+        image: public.ecr.aws/aws-ec2/aws-node-termination-handler:v1.19.0
+        imagePullPolicy: Always
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: SPOT_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: DELETE_LOCAL_DATA
+          value: "true"
+        - name: IGNORE_DAEMON_SETS
+          value: "true"
+        - name: POD_TERMINATION_GRACE_PERIOD
+          value: "30"
+        - name: NODE_TERMINATION_GRACE_PERIOD
+          value: "120"
+        - name: ENABLE_SPOT_INTERRUPTION_DRAINING
+          value: "true"
+        - name: ENABLE_SCHEDULED_EVENT_DRAINING
+          value: "true"
+        - name: ENABLE_REBALANCE_MONITORING
+          value: "true"
+        - name: ENABLE_REBALANCE_DRAINING
+          value: "false"
+        - name: LOG_LEVEL
+          value: "info"
+        - name: JSON_LOGGING
+          value: "true"
+        - name: WEBHOOK_URL
+          value: ""
+        - name: DRY_RUN
+          value: "false"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: uptime
+          mountPath: /proc/uptime
+          readOnly: true
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      - operator: Exists
+        effect: NoExecute
+      volumes:
+      - name: uptime
+        hostPath:
+          path: /proc/uptime
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+
+---
+# ServiceAccount for Node Termination Handler
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: aws-node-termination-handler
+  namespace: kube-system
+  labels:
+    app: aws-node-termination-handler
+    environment: production
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::ACCOUNT_ID:role/aws-node-termination-handler-role"
+
+---
+# ClusterRole for Node Termination Handler
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: aws-node-termination-handler
+  labels:
+    app: aws-node-termination-handler
+    environment: production
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "patch", "update"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "get", "delete"]
+- apiGroups: [""]
+  resources: ["pods/eviction"]
+  verbs: ["create"]
+- apiGroups: ["extensions", "apps"]
+  resources: ["daemonsets"]
+  verbs: ["get"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+
+---
+# ClusterRoleBinding for Node Termination Handler
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: aws-node-termination-handler
+  labels:
+    app: aws-node-termination-handler
+    environment: production
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aws-node-termination-handler
+subjects:
+- kind: ServiceAccount
+  name: aws-node-termination-handler
+  namespace: kube-system

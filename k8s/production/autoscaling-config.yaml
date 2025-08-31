@@ -1,0 +1,631 @@
+# Comprehensive Autoscaling Configuration for Ainflue Platform Production
+# Integrates HPA, Cluster Autoscaler, Spot Instances, and SLA Monitoring
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+# Autoscaling Configuration Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-autoscaling
+  labels:
+    environment: production
+    component: autoscaling
+    cost-optimization: enabled
+  annotations:
+    description: "Namespace for autoscaling components and configurations"
+
+---
+# Autoscaling Configuration ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: autoscaling-config
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-config
+    environment: production
+    component: configuration
+  annotations:
+    description: "Central configuration for autoscaling policies and thresholds"
+data:
+  # HPA Configuration
+  hpa-config.yaml: |
+    # HPA Global Settings
+    global:
+      cpu_threshold: 70
+      memory_threshold: 80
+      scale_down_stabilization: 300  # 5 minutes
+      scale_up_stabilization: 60    # 1 minute
+      
+    # Service-specific HPA settings
+    services:
+      api:
+        min_replicas: 3
+        max_replicas: 20
+        cpu_threshold: 70
+        memory_threshold: 80
+        custom_metrics:
+          - name: http_requests_per_second
+            target: 1000
+      
+      frontend:
+        min_replicas: 3
+        max_replicas: 15
+        cpu_threshold: 70
+        memory_threshold: 75
+        custom_metrics:
+          - name: nginx_connections_active
+            target: 100
+      
+      ai_engine:
+        min_replicas: 2
+        max_replicas: 8
+        cpu_threshold: 75
+        memory_threshold: 85
+        gpu_threshold: 80
+        custom_metrics:
+          - name: ai_processing_queue_length
+            target: 10
+      
+      analytics:
+        min_replicas: 2
+        max_replicas: 12
+        cpu_threshold: 70
+        memory_threshold: 80
+        custom_metrics:
+          - name: analytics_events_per_second
+            target: 1000
+
+  # Cluster Autoscaler Configuration
+  cluster-autoscaler-config.yaml: |
+    # Cluster Autoscaler Global Settings
+    global:
+      scale_down_delay_after_add: 10m
+      scale_down_unneeded_time: 10m
+      scale_down_utilization_threshold: 0.5
+      max_node_provision_time: 15m
+      max_nodes_total: 50
+      
+    # Node Group Settings
+    node_groups:
+      spot_general:
+        min_size: 0
+        max_size: 15
+        instance_types:
+          - m5.large
+          - m5.xlarge
+          - m5a.large
+          - m5a.xlarge
+        spot_max_price: "0.10"
+        availability_zones:
+          - us-east-1a
+          - us-east-1b
+          - us-east-1c
+      
+      spot_gpu:
+        min_size: 0
+        max_size: 8
+        instance_types:
+          - g4dn.xlarge
+          - g4dn.2xlarge
+          - g4ad.xlarge
+        spot_max_price: "0.50"
+      
+      ondemand_critical:
+        min_size: 3
+        max_size: 6
+        instance_types:
+          - m5.xlarge
+        capacity_type: ON_DEMAND
+
+  # SLA Configuration
+  sla-config.yaml: |
+    # SLA Targets
+    sla_targets:
+      availability: 99.99  # 99.99% uptime target
+      latency_p95: 200     # 95th percentile < 200ms
+      error_rate: 0.01     # < 0.01% error rate
+      
+    # Error Budget
+    error_budget:
+      monthly_minutes: 4.32  # Minutes of downtime allowed per month
+      weekly_minutes: 1.01   # Minutes of downtime allowed per week
+      daily_minutes: 0.14    # Minutes of downtime allowed per day
+    
+    # Cost Optimization Targets
+    cost_optimization:
+      spot_instance_ratio: 70  # 70% of nodes should be spot instances
+      max_interruption_rate: 0.1  # Max 0.1 interruptions per hour
+
+  # Integration Policies
+  integration-policies.yaml: |
+    # HPA + Cluster Autoscaler Integration
+    integration:
+      hpa_cluster_autoscaler:
+        # Prevent conflicts between HPA and CA
+        priority: hpa_first  # HPA scales pods first, then CA scales nodes
+        coordination_delay: 30s  # Wait 30s between HPA and CA actions
+        
+      spot_instance_handling:
+        # How to handle spot instance interruptions
+        drainage_timeout: 120s
+        reschedule_policy: prefer_spot
+        fallback_to_ondemand: true
+        
+      sla_enforcement:
+        # Actions when SLA violations detected
+        emergency_scaling: true
+        max_emergency_nodes: 5
+        ondemand_fallback: true
+
+---
+# Autoscaling Policy Engine
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoscaling-policy-engine
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-policy-engine
+    component: autoscaling
+    environment: production
+  annotations:
+    description: "Policy engine that coordinates HPA, Cluster Autoscaler, and SLA compliance"
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: autoscaling-policy-engine
+  template:
+    metadata:
+      labels:
+        app: autoscaling-policy-engine
+        component: autoscaling
+        environment: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: autoscaling-policy-engine
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+      - name: policy-engine
+        image: ainflue/autoscaling-policy-engine:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        - name: metrics
+          containerPort: 9090
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: CLUSTER_NAME
+          value: "ainflue-production"
+        - name: PROMETHEUS_URL
+          value: "http://prometheus:9090"
+        - name: KUBERNETES_NAMESPACE
+          value: "ainflue-production"
+        - name: SLA_TARGET_AVAILABILITY
+          value: "99.99"
+        - name: ENABLE_SPOT_OPTIMIZATION
+          value: "true"
+        - name: ENABLE_COST_MONITORING
+          value: "true"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: config-volume
+        configMap:
+          name: autoscaling-config
+      - name: temp-storage
+        emptyDir: {}
+      nodeSelector:
+        node-type: ondemand-critical
+      tolerations:
+      - key: spot-instance
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - autoscaling-policy-engine
+              topologyKey: kubernetes.io/hostname
+
+---
+# Service Account for Autoscaling Policy Engine
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: autoscaling-policy-engine
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-policy-engine
+    environment: production
+
+---
+# ClusterRole for Autoscaling Policy Engine
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: autoscaling-policy-engine
+  labels:
+    app: autoscaling-policy-engine
+    environment: production
+rules:
+- apiGroups: [""]
+  resources: ["pods", "nodes", "services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch", "patch", "update"]
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["get", "list", "watch", "patch", "update"]
+- apiGroups: ["metrics.k8s.io"]
+  resources: ["*"]
+  verbs: ["get", "list"]
+- apiGroups: ["custom.metrics.k8s.io"]
+  resources: ["*"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+
+---
+# ClusterRoleBinding for Autoscaling Policy Engine
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: autoscaling-policy-engine
+  labels:
+    app: autoscaling-policy-engine
+    environment: production
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: autoscaling-policy-engine
+subjects:
+- kind: ServiceAccount
+  name: autoscaling-policy-engine
+  namespace: ainflue-production
+
+---
+# Service for Autoscaling Policy Engine
+apiVersion: v1
+kind: Service
+metadata:
+  name: autoscaling-policy-engine
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-policy-engine
+    environment: production
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+  selector:
+    app: autoscaling-policy-engine
+
+---
+# Pod Disruption Budget for Autoscaling Policy Engine
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: autoscaling-policy-engine-pdb
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-policy-engine
+    environment: production
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: autoscaling-policy-engine
+
+---
+# Autoscaling Metrics ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: autoscaling-metrics
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-metrics
+    environment: production
+  annotations:
+    description: "Custom metrics configuration for autoscaling decisions"
+data:
+  custom-metrics.yaml: |
+    # Custom Metrics for HPA
+    metrics:
+      http_requests_per_second:
+        query: 'rate(http_requests_total{job="ainflue-api"}[2m])'
+        target_type: AverageValue
+        
+      nginx_connections_active:
+        query: 'nginx_connections_active{job="ainflue-frontend"}'
+        target_type: AverageValue
+        
+      ai_processing_queue_length:
+        query: 'ai_processing_queue_length{job="ainflue-ai-engine"}'
+        target_type: AverageValue
+        
+      analytics_events_per_second:
+        query: 'rate(analytics_events_total{job="ainflue-analytics"}[2m])'
+        target_type: AverageValue
+        
+      elasticsearch_search_latency:
+        query: 'elasticsearch_search_latency{job="elasticsearch"}'
+        target_type: Value
+        
+      protection_scans_per_second:
+        query: 'rate(protection_scans_total{job="ainflue-content-protection"}[2m])'
+        target_type: AverageValue
+        
+      crawler_queue_length:
+        query: 'crawler_queue_length{job="ainflue-crawler"}'
+        target_type: AverageValue
+        
+      nginx_connections_per_second:
+        query: 'rate(nginx_connections_total{job="nginx-ingress-controller"}[2m])'
+        target_type: AverageValue
+
+---
+# Autoscaling Dashboard ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: autoscaling-dashboard
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-dashboard
+    environment: production
+  annotations:
+    description: "Grafana dashboard configuration for autoscaling monitoring"
+data:
+  autoscaling-dashboard.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Ainflue Production Autoscaling Dashboard",
+        "tags": ["autoscaling", "production", "sla"],
+        "timezone": "UTC",
+        "panels": [
+          {
+            "title": "SLA Compliance Overview",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "sla:platform_availability:5m",
+                "legendFormat": "Platform Availability"
+              },
+              {
+                "expr": "sla:monthly_availability:30d",
+                "legendFormat": "Monthly SLA"
+              }
+            ]
+          },
+          {
+            "title": "HPA Scaling Activity",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "kube_horizontalpodautoscaler_status_current_replicas",
+                "legendFormat": "Current Replicas - {{horizontalpodautoscaler}}"
+              },
+              {
+                "expr": "kube_horizontalpodautoscaler_status_desired_replicas", 
+                "legendFormat": "Desired Replicas - {{horizontalpodautoscaler}}"
+              }
+            ]
+          },
+          {
+            "title": "Cluster Autoscaler Activity",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "cluster_autoscaler_nodes_count",
+                "legendFormat": "Node Count"
+              },
+              {
+                "expr": "cluster_autoscaler_unschedulable_pods_count",
+                "legendFormat": "Unschedulable Pods"
+              }
+            ]
+          },
+          {
+            "title": "Spot Instance Utilization",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "sla:cost_optimization_score:5m",
+                "legendFormat": "Spot Instance Adoption %"
+              },
+              {
+                "expr": "rate(aws_node_termination_handler_actions_total{action=\"spot-interruption\"}[1h]) * 3600",
+                "legendFormat": "Spot Interruptions/Hour"
+              }
+            ]
+          },
+          {
+            "title": "Resource Utilization vs Thresholds",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "avg(rate(container_cpu_usage_seconds_total{namespace=\"ainflue-production\"}[5m])) * 100",
+                "legendFormat": "CPU Utilization %"
+              },
+              {
+                "expr": "avg(container_memory_usage_bytes{namespace=\"ainflue-production\"} / container_spec_memory_limit_bytes{namespace=\"ainflue-production\"}) * 100",
+                "legendFormat": "Memory Utilization %"
+              }
+            ]
+          },
+          {
+            "title": "Custom Metrics Trends",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "rate(http_requests_total{job=\"ainflue-api\"}[5m])",
+                "legendFormat": "API Requests/sec"
+              },
+              {
+                "expr": "ai_processing_queue_length{job=\"ainflue-ai-engine\"}",
+                "legendFormat": "AI Queue Length"
+              },
+              {
+                "expr": "nginx_connections_active{job=\"ainflue-frontend\"}",
+                "legendFormat": "Frontend Connections"
+              }
+            ]
+          },
+          {
+            "title": "Error Budget Remaining",
+            "type": "gauge",
+            "targets": [
+              {
+                "expr": "sla:error_budget_remaining:30d",
+                "legendFormat": "Monthly Error Budget %"
+              }
+            ]
+          },
+          {
+            "title": "Cost Optimization Metrics",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "sum(kube_node_labels{label_spot_instance=\"true\"}) / sum(kube_node_labels) * 100",
+                "legendFormat": "Spot Node Ratio %"
+              },
+              {
+                "expr": "sum(rate(container_cpu_usage_seconds_total{node=~\".*spot.*\"}[5m])) / sum(rate(container_cpu_usage_seconds_total[5m])) * 100",
+                "legendFormat": "Spot CPU Usage %"
+              }
+            ]
+          }
+        ],
+        "time": {
+          "from": "now-1h",
+          "to": "now"
+        },
+        "refresh": "30s"
+      }
+    }
+
+---
+# Autoscaling Test Job
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: autoscaling-validation
+  namespace: ainflue-production
+  labels:
+    app: autoscaling-validation
+    environment: production
+    test-type: validation
+  annotations:
+    description: "Validation job to test autoscaling configuration"
+spec:
+  template:
+    metadata:
+      labels:
+        app: autoscaling-validation
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: validator
+        image: curlimages/curl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Testing autoscaling configuration..."
+          
+          # Test HPA endpoints
+          echo "Checking HPA configurations..."
+          kubectl get hpa -n ainflue-production
+          
+          # Test Cluster Autoscaler
+          echo "Checking Cluster Autoscaler..."
+          kubectl get deployment cluster-autoscaler -n kube-system
+          
+          # Test Spot Instance configuration
+          echo "Checking spot instance nodes..."
+          kubectl get nodes -l spot-instance=true
+          
+          # Test SLA monitoring
+          echo "Checking SLA alert rules..."
+          curl -s http://prometheus:9090/api/v1/rules | grep -c "sla"
+          
+          echo "Autoscaling validation completed"
+      serviceAccountName: autoscaling-policy-engine

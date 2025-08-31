@@ -1,0 +1,454 @@
+# SLA Alert Rules for 99.99% Uptime Target
+# Comprehensive monitoring and alerting for production SLA compliance
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+groups:
+- name: sla.uptime.rules
+  interval: 15s
+  rules:
+  
+  # === SLA AVAILABILITY METRICS ===
+  
+  # API Availability SLA (99.99% target)
+  - alert: APIAvailabilitySLAViolation
+    expr: |
+      (
+        (
+          rate(http_requests_total{job="ainflue-api",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="ainflue-api"}[5m])
+        ) * 100 < 99.99
+      ) and 
+      (
+        rate(http_requests_total{job="ainflue-api"}[5m]) > 0
+      )
+    for: 1m
+    labels:
+      severity: critical
+      sla: uptime
+      service: api
+      tier: p0
+    annotations:
+      summary: "API availability SLA violation detected"
+      description: "API availability is {{ $value | humanizePercentage }} over the last 5 minutes, below the 99.99% SLA target."
+      impact: "Critical service degradation affecting user experience"
+      action: "Immediate investigation required - check API health, load balancers, and backend services"
+      runbook: "https://docs.ainflue.com/runbooks/api-availability-sla"
+      dashboard: "https://grafana.ainflue.com/d/api-sla/api-sla-dashboard"
+
+  # Frontend Availability SLA
+  - alert: FrontendAvailabilitySLAViolation
+    expr: |
+      (
+        (
+          rate(nginx_http_requests_total{job="ainflue-frontend",status!~"5.."}[5m]) /
+          rate(nginx_http_requests_total{job="ainflue-frontend"}[5m])
+        ) * 100 < 99.99
+      ) and
+      (
+        rate(nginx_http_requests_total{job="ainflue-frontend"}[5m]) > 0
+      )
+    for: 1m
+    labels:
+      severity: critical
+      sla: uptime
+      service: frontend
+      tier: p0
+    annotations:
+      summary: "Frontend availability SLA violation detected"
+      description: "Frontend availability is {{ $value | humanizePercentage }} over the last 5 minutes, below the 99.99% SLA target."
+      impact: "User-facing service degradation"
+      action: "Check frontend deployment, CDN, and load balancer status"
+
+  # AI Engine Availability SLA
+  - alert: AIEngineAvailabilitySLAViolation
+    expr: |
+      (
+        (
+          rate(http_requests_total{job="ainflue-ai-engine",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="ainflue-ai-engine"}[5m])
+        ) * 100 < 99.95
+      ) and
+      (
+        rate(http_requests_total{job="ainflue-ai-engine"}[5m]) > 0
+      )
+    for: 2m
+    labels:
+      severity: warning
+      sla: uptime
+      service: ai-engine
+      tier: p1
+    annotations:
+      summary: "AI Engine availability SLA violation detected"
+      description: "AI Engine availability is {{ $value | humanizePercentage }} over the last 5 minutes, below the 99.95% SLA target."
+      impact: "AI processing capabilities degraded"
+      action: "Check AI engine pods, GPU resources, and model loading"
+
+  # === SLA LATENCY METRICS ===
+
+  # API Response Time SLA (< 200ms for 95th percentile)
+  - alert: APILatencySLAViolation
+    expr: |
+      histogram_quantile(0.95, 
+        rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])
+      ) * 1000 > 200
+    for: 3m
+    labels:
+      severity: warning
+      sla: latency
+      service: api
+      tier: p1
+    annotations:
+      summary: "API latency SLA violation detected"
+      description: "95th percentile API response time is {{ $value | humanize }}ms over the last 5 minutes, above the 200ms SLA target."
+      impact: "Degraded user experience due to slow API responses"
+      action: "Check API performance, database queries, and resource utilization"
+
+  # Frontend Page Load Time SLA (< 2s for 95th percentile)
+  - alert: FrontendLatencySLAViolation
+    expr: |
+      histogram_quantile(0.95,
+        rate(nginx_http_request_duration_seconds_bucket{job="ainflue-frontend"}[5m])
+      ) * 1000 > 2000
+    for: 3m
+    labels:
+      severity: warning
+      sla: latency
+      service: frontend
+      tier: p1
+    annotations:
+      summary: "Frontend latency SLA violation detected"
+      description: "95th percentile frontend response time is {{ $value | humanize }}ms over the last 5 minutes, above the 2000ms SLA target."
+      impact: "Slow page load times affecting user satisfaction"
+      action: "Check CDN performance, static asset optimization, and server response times"
+
+  # AI Processing Latency SLA (< 5s for 95th percentile)
+  - alert: AIProcessingLatencySLAViolation
+    expr: |
+      histogram_quantile(0.95,
+        rate(ai_processing_duration_seconds_bucket{job="ainflue-ai-engine"}[5m])
+      ) * 1000 > 5000
+    for: 5m
+    labels:
+      severity: warning
+      sla: latency
+      service: ai-engine
+      tier: p1
+    annotations:
+      summary: "AI processing latency SLA violation detected"
+      description: "95th percentile AI processing time is {{ $value | humanize }}ms over the last 5 minutes, above the 5000ms SLA target."
+      impact: "Delayed AI processing affecting content generation"
+      action: "Check GPU utilization, model performance, and queue length"
+
+  # === SLA ERROR RATE METRICS ===
+
+  # API Error Rate SLA (< 0.01% error rate)
+  - alert: APIErrorRateSLAViolation
+    expr: |
+      (
+        rate(http_requests_total{job="ainflue-api",code=~"5.."}[5m]) /
+        rate(http_requests_total{job="ainflue-api"}[5m])
+      ) * 100 > 0.01
+    for: 2m
+    labels:
+      severity: critical
+      sla: error-rate
+      service: api
+      tier: p0
+    annotations:
+      summary: "API error rate SLA violation detected"
+      description: "API error rate is {{ $value | humanizePercentage }} over the last 5 minutes, above the 0.01% SLA target."
+      impact: "High error rate affecting API reliability"
+      action: "Investigate error logs, check dependencies, and validate service health"
+
+  # Database Connection Error Rate SLA
+  - alert: DatabaseConnectionSLAViolation
+    expr: |
+      (
+        rate(database_connection_errors_total[5m]) /
+        rate(database_connections_total[5m])
+      ) * 100 > 0.1
+    for: 1m
+    labels:
+      severity: critical
+      sla: error-rate
+      service: database
+      tier: p0
+    annotations:
+      summary: "Database connection error rate SLA violation"
+      description: "Database connection error rate is {{ $value | humanizePercentage }} over the last 5 minutes, above the 0.1% SLA target."
+      impact: "Database connectivity issues affecting all services"
+      action: "Check database health, connection pool, and network connectivity"
+
+  # === SLA RESOURCE UTILIZATION ===
+
+  # Cluster Resource Availability for SLA Compliance
+  - alert: ClusterResourceAvailabilitySLA
+    expr: |
+      (
+        (kube_node_status_allocatable{resource="cpu"} - kube_node_status_allocatable{resource="cpu"} * on(node) kube_node_status_condition{condition="Ready",status="false"}) /
+        kube_node_status_allocatable{resource="cpu"}
+      ) * 100 < 80
+    for: 5m
+    labels:
+      severity: warning
+      sla: capacity
+      service: cluster
+      tier: p1
+    annotations:
+      summary: "Cluster CPU capacity below SLA threshold"
+      description: "Available cluster CPU capacity is {{ $value | humanizePercentage }}, below the 80% SLA requirement."
+      impact: "Reduced capacity for scaling and failover"
+      action: "Add cluster capacity or scale up nodes"
+
+  # Memory Resource Availability for SLA Compliance
+  - alert: ClusterMemoryAvailabilitySLA
+    expr: |
+      (
+        (kube_node_status_allocatable{resource="memory"} - kube_node_status_allocatable{resource="memory"} * on(node) kube_node_status_condition{condition="Ready",status="false"}) /
+        kube_node_status_allocatable{resource="memory"}
+      ) * 100 < 80
+    for: 5m
+    labels:
+      severity: warning
+      sla: capacity
+      service: cluster
+      tier: p1
+    annotations:
+      summary: "Cluster memory capacity below SLA threshold"
+      description: "Available cluster memory capacity is {{ $value | humanizePercentage }}, below the 80% SLA requirement."
+      impact: "Reduced capacity for scaling and failover"
+      action: "Add cluster capacity or scale up nodes"
+
+  # === SLA INFRASTRUCTURE HEALTH ===
+
+  # Pod Restart Rate SLA (< 1 restart per hour per pod)
+  - alert: PodRestartRateSLAViolation
+    expr: |
+      rate(kube_pod_container_status_restarts_total[1h]) > 1
+    for: 10m
+    labels:
+      severity: warning
+      sla: stability
+      service: pods
+      tier: p1
+    annotations:
+      summary: "Pod restart rate exceeding SLA threshold"
+      description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is restarting {{ $value | humanize }} times per hour, above the 1/hour SLA threshold."
+      impact: "Service instability and potential data loss"
+      action: "Investigate pod logs and resource constraints"
+
+  # Node Ready Status SLA (All nodes should be ready)
+  - alert: NodeReadinessSLAViolation
+    expr: |
+      kube_node_status_condition{condition="Ready",status="false"} == 1
+    for: 2m
+    labels:
+      severity: critical
+      sla: infrastructure
+      service: nodes
+      tier: p0
+    annotations:
+      summary: "Node not ready - SLA violation"
+      description: "Node {{ $labels.node }} is not ready, affecting cluster capacity and SLA compliance."
+      impact: "Reduced cluster capacity and potential service disruption"
+      action: "Investigate node health and replace if necessary"
+
+  # === SLA AUTOSCALING HEALTH ===
+
+  # HPA Scaling Effectiveness SLA
+  - alert: HPAScalingSLAViolation
+    expr: |
+      (
+        rate(kube_horizontalpodautoscaler_status_current_replicas[10m]) == 0
+      ) and (
+        kube_horizontalpodautoscaler_status_desired_replicas > kube_horizontalpodautoscaler_status_current_replicas
+      )
+    for: 5m
+    labels:
+      severity: warning
+      sla: autoscaling
+      service: hpa
+      tier: p1
+    annotations:
+      summary: "HPA scaling effectiveness SLA violation"
+      description: "HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler }} is not scaling effectively. Desired: {{ $labels.desired_replicas }}, Current: {{ $labels.current_replicas }}"
+      impact: "Inadequate scaling response to load changes"
+      action: "Check HPA configuration, metrics availability, and resource constraints"
+
+  # Cluster Autoscaler Effectiveness SLA
+  - alert: ClusterAutoscalerSLAViolation
+    expr: |
+      increase(cluster_autoscaler_unschedulable_pods_count[10m]) > 0
+    for: 5m
+    labels:
+      severity: warning
+      sla: autoscaling
+      service: cluster-autoscaler
+      tier: p1
+    annotations:
+      summary: "Cluster Autoscaler effectiveness SLA violation"
+      description: "{{ $value }} pods have been unschedulable for over 10 minutes, indicating cluster autoscaler issues."
+      impact: "Pods cannot be scheduled due to insufficient cluster capacity"
+      action: "Check cluster autoscaler logs and node group configurations"
+
+  # === SLA SPOT INSTANCE MANAGEMENT ===
+
+  # Spot Instance Interruption Rate SLA
+  - alert: SpotInstanceInterruptionSLA
+    expr: |
+      rate(aws_node_termination_handler_actions_total{action="spot-interruption"}[1h]) > 0.1
+    for: 5m
+    labels:
+      severity: warning
+      sla: cost-optimization
+      service: spot-instances
+      tier: p2
+    annotations:
+      summary: "Spot instance interruption rate exceeding SLA threshold"
+      description: "Spot instance interruption rate is {{ $value | humanize }} per hour, above the 0.1/hour SLA threshold."
+      impact: "Frequent spot interruptions may affect service stability"
+      action: "Review spot instance diversification and consider adjusting instance types"
+
+  # === SLA COST OPTIMIZATION ===
+
+  # Cost Efficiency SLA (spot vs on-demand ratio)
+  - alert: CostEfficiencySLAViolation
+    expr: |
+      (
+        sum(kube_node_labels{label_spot_instance="true"}) /
+        sum(kube_node_labels)
+      ) * 100 < 70
+    for: 30m
+    labels:
+      severity: info
+      sla: cost-optimization
+      service: cluster
+      tier: p3
+    annotations:
+      summary: "Cost efficiency SLA not met"
+      description: "Spot instance usage is {{ $value | humanizePercentage }}, below the 70% cost optimization SLA target."
+      impact: "Higher than expected infrastructure costs"
+      action: "Review workload placement and spot instance adoption"
+
+  # === SLA RECORDING RULES ===
+
+- name: sla.recording.rules
+  interval: 30s
+  rules:
+  
+  # Overall Platform Availability (weighted by service criticality)
+  - record: sla:platform_availability:5m
+    expr: |
+      (
+        (
+          rate(http_requests_total{job="ainflue-api",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="ainflue-api"}[5m])
+        ) * 0.4 +
+        (
+          rate(nginx_http_requests_total{job="ainflue-frontend",status!~"5.."}[5m]) /
+          rate(nginx_http_requests_total{job="ainflue-frontend"}[5m])
+        ) * 0.3 +
+        (
+          rate(http_requests_total{job="ainflue-ai-engine",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="ainflue-ai-engine"}[5m])
+        ) * 0.2 +
+        (
+          rate(http_requests_total{job="ainflue-analytics",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="ainflue-analytics"}[5m])
+        ) * 0.1
+      ) * 100
+
+  # Monthly SLA Tracking (99.99% target = 4.32 minutes downtime per month)
+  - record: sla:monthly_availability:30d
+    expr: |
+      avg_over_time(sla:platform_availability:5m[30d])
+
+  # Weekly SLA Tracking
+  - record: sla:weekly_availability:7d
+    expr: |
+      avg_over_time(sla:platform_availability:5m[7d])
+
+  # Daily SLA Tracking
+  - record: sla:daily_availability:24h
+    expr: |
+      avg_over_time(sla:platform_availability:5m[24h])
+
+  # SLA Error Budget Remaining (monthly)
+  - record: sla:error_budget_remaining:30d
+    expr: |
+      max(
+        0,
+        (99.99 - (100 - sla:monthly_availability:30d)) / 0.01
+      )
+
+  # Infrastructure Capacity Utilization for SLA
+  - record: sla:infrastructure_capacity:5m
+    expr: |
+      (
+        (
+          sum(kube_node_status_allocatable{resource="cpu"}) -
+          sum(kube_node_status_allocatable{resource="cpu"} * on(node) kube_node_status_condition{condition="Ready",status="false"})
+        ) /
+        sum(kube_node_status_allocatable{resource="cpu"})
+      ) * 100
+
+  # Autoscaling Effectiveness Score
+  - record: sla:autoscaling_effectiveness:5m
+    expr: |
+      (
+        1 - (
+          sum(rate(cluster_autoscaler_unschedulable_pods_count[5m])) /
+          (sum(rate(kube_pod_status_phase{phase="Running"}[5m])) + 0.01)
+        )
+      ) * 100
+
+  # Cost Optimization Score (spot instance adoption)
+  - record: sla:cost_optimization_score:5m
+    expr: |
+      (
+        sum(kube_node_labels{label_spot_instance="true"}) /
+        (sum(kube_node_labels) + 0.01)
+      ) * 100
+
+# === SLA MONITORING DASHBOARD METRICS ===
+
+- name: sla.dashboard.rules
+  interval: 60s
+  rules:
+  
+  # SLA Compliance Summary
+  - record: sla:compliance_summary
+    expr: |
+      label_replace(
+        vector(1),
+        "sla_target", "99.99%",
+        "", ""
+      ) * on() group_left()
+      sla:monthly_availability:30d
+
+  # Service Level Indicators (SLIs)
+  - record: sla:sli_availability
+    expr: sla:platform_availability:5m
+    
+  - record: sla:sli_latency_p95
+    expr: |
+      histogram_quantile(0.95,
+        rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])
+      ) * 1000
+      
+  - record: sla:sli_error_rate
+    expr: |
+      (
+        rate(http_requests_total{job="ainflue-api",code=~"5.."}[5m]) /
+        rate(http_requests_total{job="ainflue-api"}[5m])
+      ) * 100
+
+  # Time to SLA Violation (predictive)
+  - record: sla:time_to_violation_hours
+    expr: |
+      (sla:error_budget_remaining:30d * 30 * 24) / 
+      max(0.01, 
+        rate(sla:platform_availability:5m[1h]) * 60
+      )
