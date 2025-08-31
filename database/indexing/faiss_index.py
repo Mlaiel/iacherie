@@ -1008,16 +1008,21 @@ class FAISSIndexManager:
         self.default_configs = {
             ContentEmbeddingType.AUDIO_SPECTRAL: {
                 'dimension': 512,
-                'index_type': FAISSIndexType.IVF_FLAT,
-                'nlist': 100,
-                'use_cosine': True
+                'index_type': FAISSIndexType.HNSW,  # Enhanced for 100M+ scale
+                'M': 64,  # High connectivity for precision
+                'efConstruction': 400,  # Build quality for >99.5% precision
+                'efSearch': 128,  # Search quality for <50ms matching
+                'use_cosine': True,
+                'max_elements': 100_000_000  # 100M+ capacity
             },
             ContentEmbeddingType.AUDIO_SEMANTIC: {
                 'dimension': 768,
                 'index_type': FAISSIndexType.HNSW,
-                'M': 32,
-                'efConstruction': 200,
-                'use_cosine': True
+                'M': 48,  # Optimized for industrial scale
+                'efConstruction': 300,
+                'efSearch': 64,  # Fast search for real-time
+                'use_cosine': True,
+                'max_elements': 100_000_000
             },
             ContentEmbeddingType.VIDEO_VISUAL: {
                 'dimension': 1024,
